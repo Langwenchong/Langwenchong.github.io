@@ -1,0 +1,79 @@
+<% if (theme.site_footer) { %>
+  <%
+  var layout = theme.site_footer.layout;
+  if (config.theme_config && config.theme_config.footer && config.theme_config.footer.layout) {
+    layout = config.theme_config.footer.layout;
+  }
+  %>
+  <footer class="footer clearfix">
+    <br><br>
+    <% layout.forEach(function(item){ %>
+      <% if (item == 'social') { %>
+        <br>
+        <div class="social-wrapper">
+          <% (theme.site_footer.social||[]).forEach(function(value){ %>
+            <% if (value.url && (value.icon || value.img || value.avatar)) { %>
+              <a href="<%= url_for(value.url) %>"
+                class="social <%- value.icon %> flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                <% if (value.img) { %>
+                  <img src="<%- value.img %>"/>
+                <% } else if (value.avatar) { %>
+                  <img src="<%- value.avatar %>" style="border-radius:120px"/>
+                <% } %>
+              </a>
+            <% } %>
+          <% }) %>
+        </div>
+      <% } else if (item == 'aplayer') { %>
+        <div class="aplayer-container">
+          <%- partial('../_third-party/aplayer/layout', {post: null, where: 'footer'}) %>
+        </div>
+        <!--  -->
+      <% } else if (item == 'license') { %>
+        <!-- <div><%- markdown(__('footer.license')) %></div> -->
+        <div>©2020 - 2021 By wenchong</div>
+		<div style="display:flex; align-items:center; justify-content:center;">
+			<img src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px">
+			<a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021004286号</a>
+		</div>
+      <% } else if (item == 'info') { %>
+        <%- __('footer.use') %>
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/<%- theme.info.theme_version %>" target="_blank" class="codename">Volantis</a>
+        <%- __('footer.theme') %><% if (theme.analytics.busuanzi) { %><%- __('symbol.comma') %><%- __('footer.total_views') %>
+          <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+          <%- __('footer.times') %>
+        <% } %>
+        <div class="webinfo-item">
+          <div id="runtime-count" publish_date="03/24/2020 21:34:09"></div>
+        </div>
+        <script>
+          setInterval(function(){
+            var BirthDay = new Date(new Date('2020-10-23'));
+            var today = new Date();
+            var timeold = (today.getTime() - BirthDay.getTime());
+            var daysold = Math.floor(timeold / (24 * 60 * 60 * 1000));
+            var hoursold=Math.floor((timeold - daysold * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minsold=Math.floor((timeold - daysold * (1000 * 60 * 60 * 24) - hoursold * (1000 * 60 * 60)) / (1000 * 60));
+            var secsold=Math.floor((timeold - daysold * (1000 * 60 * 60 * 24) - hoursold * (1000 * 60 * 60) - minsold * (1000 * 60)) / 1000);
+            document.getElementById('runtime-count').innerHTML = "🌹 我已于此等候你 "+daysold+" 天 " +hoursold+ " 时 "+minsold+" 分 "+secsold+" 秒 🌹";
+            },1000)
+        </script>
+      <% } else if (item == 'source') { %>
+        <%- markdown(__('footer.site_source', '[Volantis](https://github.com/volantis-x/hexo-theme-volantis/tree/'+theme.info.theme_version+')', 'GitHub', 'https://github.com/volantis-x/volantis-docs')) %>
+      <% } else if (item == 'copyright') { %>
+        <div class='copyright'>
+        <%- markdown(theme.site_footer.copyright) %>
+        </div>
+      <% } else { %>
+        <% if (item in theme.site_footer) { %>
+          <div><%- markdown(theme.site_footer[item]) %></div>
+        <% } %>
+      <% } %>
+	<% }) %>
+  </footer>
+<% } %>
+<!--???js-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src="https://cdn.jsdelivr.net/gh/Langwenchong/cdn@1.2/js/fish.js"></script>

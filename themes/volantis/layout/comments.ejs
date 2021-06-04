@@ -1,0 +1,279 @@
+<%- partial('_pre') %>
+<div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
+    <%- partial('_partial/article', {post: page, index: false}) %>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/Langwenchong/cdn@1.0/js/chunk1.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Langwenchong/cdn@1.0/js/chunk2.js"></script>
+<style>
+    .article-type-comments p {
+        padding-top: 0px !important;
+    }
+
+    .article-type-comments #top {
+        margin: 0px !important;
+    }
+
+    #comment {
+        max-width: 80%;
+        margin: 80px auto;
+        margin-bottom: 30px;
+        position: relative;
+        border: 2px solid #797979;
+        border-top: 0;
+        text-align: center;
+        font-family: "Linux Biolinum", "Noto Serif SC", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+    }
+
+    #comment .poem-border {
+        position: absolute;
+        height: 2px;
+        width: 27%;
+        background-color: #797979;
+    }
+
+    #comment .poem-left {
+        left: 0;
+    }
+
+    #comment .poem-right {
+        top: 0;
+        right: 0;
+    }
+
+    #comment p {
+        width: 70%;
+        margin: auto;
+        line-height: 30px;
+        color: #797979;
+        text-align: center;
+    }
+
+    #comment h1 {
+        border: 0px;
+        font-weight: 800;
+        position: relative;
+        margin-top: -130px;
+        display: inline-block;
+        letter-spacing: 4px;
+        color: #797979;
+        font-size: 30px;
+        font-family: "Linux Biolinum", "Noto Serif SC", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+    }
+
+    #comment #poem {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    #comment #info {
+        font-size: 15px;
+        margin: 15px auto;
+    }
+
+    .my_comment {
+        padding-bottom: 4px !important;
+        text-align: center !important;
+        font-weight: 700;
+        width: 100%;
+        margin: 0 auto;
+        line-height: 30px;
+        margin-bottom: 12px;
+        color: #797979;
+        text-align: center;
+        font-family: "Linux Biolinum", "Noto Serif SC", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+    }
+
+    #root a,
+    #root div,
+    #root img {
+        box-sizing: border-box
+    }
+
+    #root a {
+        line-height: 1.5
+    }
+
+
+
+    code {
+        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
+    }
+
+    .font-digit {
+        font-family: "Digital-7 Mono"
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    @font-face {
+        font-family: "Digital-7 Mono";
+        src: url(/static/media/digital-7-mono.ae951a18.ttf) format("truetype")
+    }
+
+    .hot-color {
+        -webkit-filter: saturate(110%);
+        filter: saturate(110%)
+    }
+
+    .cold-color {
+        -webkit-filter: saturate(90%);
+        filter: saturate(90%)
+    }
+
+    .ac-temperature {
+        text-shadow: 0 0 2px rgba(0, 0, 0, .1)
+    }
+
+    .css-xzq7kc-MuiTypography-root {
+        display: none !important;
+    }
+
+    .jss11 {
+        display: none !important;
+    }
+
+    .css-3utmb5-MuiTypography-root {
+        display: none !important;
+    }
+
+    .css-1icgf7x {
+        display: none !important;
+    }
+
+    .css-1f428mh {
+        /* color: var(--color-p); */
+        padding: 3px 5px !important;
+        box-shadow: inset -7px 10px 0 #d3d3d4, 0 3px 5px #000 !important;
+        font: 11px SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
+        border-radius: 25px !important;
+        border: 1px solid #d2d2d2 !important;
+        border-bottom-width: 2px !important;
+        background: #fafafa !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+    }
+
+    .jss16 {
+        background-color: #4ea5f5;
+        box-shadow: 0 1px 1px black !important;
+    }
+
+    .css-1wt0jtr {
+        top: 20px !important;
+    }
+
+    .css-rxkzja {
+        position: relative;
+    }
+
+    .css-rxkzja::before {
+        height: 440px;
+        width: 504px;
+        position: absolute;
+        content: '';
+        top: 0px;
+        left: 0;
+        background: url("https://gitee.com/Langwenchong/figure-bed/raw/master/f1083bae-a068-4218-84ee-4652bcacffad.png") center top no-repeat;
+        background-size: 110%;
+    }
+
+    .css-rxkzja {
+        padding-top: 160px !important;
+        height: auto;
+    }
+
+    #kongtiao {
+        height: 0;
+        overflow: hidden;
+        transition: 1s !important;
+    }
+
+    #kootiao h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        display: block !important;
+        background: none !important;
+        color: rgb(204, 204, 204) !important
+    }
+
+    #kongtiao h2::before,
+    h4::before,
+    h6::before {
+        display: none !important;
+    }
+
+
+
+    input[type="checkbox"] {
+        right: 0;
+        cursor: pointer;
+        position: relative;
+        width: 40px;
+        height: 20px;
+        -webkit-appearance: none;
+        /*设置成选中无反应*/
+        background: #c6c6c6;
+        outline: none;
+        /*选中状态外边沿无变化*/
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+        /*将外部阴影改为内部阴影*/
+        transition: .5s;
+    }
+
+    input:checked[type="checkbox"] {
+        background: #03a9f4;
+    }
+
+    input[type="checkbox"]:before {
+        /*白色圆按钮*/
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        top: 0;
+        left: 0;
+        background: #fff;
+        transition: .5s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+        transform: scale(1.1);
+    }
+
+    input:checked[type="checkbox"]:before {
+        left: 20px;
+    }
+
+    .jss19 {
+        box-shadow: unset;
+    }
+
+    input:checked[type="checkbox"]+#kongtiao {
+        height: 750px;
+    }
+
+    #root img {
+        width: 40px;
+    }
+
+    @media (max-width: 579px) {
+        .css-rxkzja::before {
+            display: none;
+        }
+
+        .css-rxkzja {
+            padding-top: 0px !important;
+        }
+
+        input:checked[type="checkbox"]+#kongtiao {
+            height: 695px;
+        }
+
+    }
+
+    /*# sourceMappingURL=main.b4277517.chunk.css.map */
+</style>

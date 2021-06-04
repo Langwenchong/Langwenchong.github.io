@@ -1,0 +1,39 @@
+<%- partial('_pre') %>
+<% page.comments = false; %>
+<div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
+  <% if (site.posts && site.posts.length > 0) { %>
+    <% if (page.layout == 'tag') { %>
+      <div class='post-wrapper'>
+          <article id="tag" class="post article white-box reveal <%- theme.custom_css.body.effect.join(' ') %>">
+              <h2><i class="fas fa-cloud"></i>&nbsp;标签云</h2>
+              <div class="all-tags">
+                <% let tc = theme.sidebar.widget_library.tagcloud; %>
+                <%- list_tags({}) %>
+              </div>
+              <script>colortag();</script>
+              <br>
+              <%- page.content %>
+       </article>
+      </div>
+    <% } else { %>
+      <%- partial('_partial/archive') %>
+    <% } %>
+  <% } %>
+</div>
+<%- partial('_partial/side') %>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    //???????
+    try {
+      var typed = new Typed(".l_side p", {
+        strings: ['?????????', '没有特别幸运,那么请先特别努力'],//???
+        startDelay: 50,//?????
+        typeSpeed: 200,//????
+        backSpeed: 100,//????
+        loop: true,//????
+        showCursor: false,//????
+        shuffle: false//????
+      });
+    } catch (err) {
+    }
+  </script>

@@ -1,0 +1,177 @@
+.article-title
+  font-weight: 500
+  margin-bottom: $gap * 0.75
+  line-height: 1.4
+  a
+    color: var(--color-h1)
+    &:hover
+      color: $color-hover
+  &[pin]
+    margin-right: 36px
+.post-v3
+  overflow: hidden
+  text-align: justify
+  .md
+    color: var(--color-p)
+
+  .pin
+    position: absolute
+    width: 20px
+    height: 20px
+    border-radius: 20px
+    right: $gap * 1.5
+    top: $gap * 1.5
+    z-index: 1
+    pointer-events: none
+
+.meta-v3[line_style='solid']
+  border-top: 1px solid alpha($color-text, 0.1)
+.meta-v3[line_style='dashed']
+  border-top: 2px dashed alpha($color-text, 0.1)
+.meta-v3[line_style='dotted']
+  border-top: 4px dotted alpha($color-text, 0.1)
+
+.meta-v3
+  margin-top: $gap
+  padding-top: $gap * 0.75
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  color: var(--color-meta)
+  >div
+    display: flex
+    align-items: center
+    user-select: none
+  time
+    font-size: $fontsize-meta
+  .category-link
+    font-size: $fontsize-meta
+    color: var(--color-meta)
+    -webkit-font-smoothing: auto
+    -moz-osx-font-smoothing: auto
+    &:hover
+      color: $color-hover
+  .readmore
+    font-weight: bold
+  .avatar
+    line-height: 0
+    margin-right: .75em
+    img
+      width: 24px
+      height: 24px
+      display: block
+      border-radius: 12px
+      object-fit: cover
+
+.headimg-div
+  display: block
+  margin-left: 0 - 1.5 * $gap
+  margin-top: 0 - 1.5 * $gap
+  margin-bottom: 1.25 * $gap
+  width: "calc(100% + 3 * %s)" % $gap
+  .headimg-a
+    display: block
+    overflow: hidden
+    height: 280px
+    @media screen and (max-width: $device-tablet)
+      height: 250px
+    @media screen and (max-width: $device-mobile)
+      height: 220px
+    @media screen and (max-width: $device-mobile-l)
+      height: 190px
+  .headimg
+    object-fit: cover
+    width: 100%
+    height: 100%
+    transition transform 3s ease-out
+    &:hover
+      transform: scale(1.1)
+    &.lazyload:not(.placeholder)
+      transition transform 3s ease-out, opacity .5s ease-out
+      &:not(.loaded)
+        opacity: 0
+      &.loaded
+        opacity: 1
+
+//readmore
+.link-fx-1 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: auto; // !important - set fixed height
+  right: 10px;
+  padding: 0 6px;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+
+  .icon {
+    width: 1.5rem;
+    position: absolute;
+    right: 0;
+    bottom: 1.5px;
+    -webkit-transform: translateX(100%) rotate(90deg);
+    transform: translateX(100%) rotate(90deg);
+
+    circle {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      transition: stroke-dashoffset .2s;
+    }
+
+    line {
+      transition: -webkit-transform .4s;
+      transition: transform .4s;
+      transition: transform .4s,-webkit-transform .4s;
+      -webkit-transform-origin: 13px 15px;
+      transform-origin: 13px 15px
+    }
+
+    line:last-child {
+      -webkit-transform-origin: 19px 15px;
+      transform-origin: 19px 15px
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    -webkit-transform-origin: right center;
+    transform-origin: right center;
+    transition: -webkit-transform .2s .1s;
+    transition: transform .2s .1s;
+    transition: transform .2s .1s,-webkit-transform .2s .1s
+  }
+
+  &:hover {
+    .icon {
+      circle {
+        stroke-dashoffset: 200;
+        transition: stroke-dashoffset .2s .1s;
+      }
+
+      line {
+        -webkit-transform: rotate(-180deg);
+        transform: rotate(-180deg)
+      }
+
+      line:last-child {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg)
+      }
+    }
+
+    &::before {
+      -webkit-transform: translateX(17px) scaleX(0);
+      transform: translateX(17px) scaleX(0);
+      transition: -webkit-transform .2s;
+      transition: transform .2s;
+      transition: transform .2s,-webkit-transform .2s
+    }
+  }
+}
