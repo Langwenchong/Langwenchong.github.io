@@ -575,6 +575,10 @@ plugins:
 
   ######## Plugins to optimize the experience:
 
+  #gitee文章日历
+  postCalendar: true 
+
+  
   # highlight.js
   highlightjs:
     enable: true # Please set hexo.config.highlight.enable = false !!!
