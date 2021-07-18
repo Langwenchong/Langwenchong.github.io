@@ -1,0 +1,3 @@
+[submodule "source/lib/darkmode-js"]
+	path = source/lib/darkmode-js
+	url = https://github.com/sandoche/Darkmode.js.git

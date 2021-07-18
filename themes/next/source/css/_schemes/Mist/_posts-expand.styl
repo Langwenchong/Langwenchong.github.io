@@ -1,0 +1,75 @@
+// Post Expand
+// --------------------------------------------------
+.posts-expand {
+  &.index {
+    .post-title, .post-meta {
+      text-align: center;
+
+      +mobile() {
+        text-align: center;
+      }
+    }
+
+    .post-meta {
+      margin: 5px 0 20px 0;
+    }
+  }
+
+  .post-eof {
+    display: none;
+  }
+
+  .post-block {
+    margin:60px 40px;
+    padding:30px 55px;
+    -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .7);
+    -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .7);
+  }
+  .post-block:last-child{
+    margin-top:20px;
+  }
+
+  .post-title, .post-meta {
+    text-align: center;
+  }
+
+  .post-body img {
+    margin-left: 0;
+  }
+
+  .post-tags {
+    text-align: left;
+
+    a {
+      background: $whitesmoke;
+      border-bottom: none;
+      padding: 1px 5px;
+
+      &:hover {
+        background: $grey-light;
+      }
+    }
+  }
+
+  .post-nav {
+    margin-top: 40px;
+  }
+}
+
+.post-button {
+  margin-top: 20px;
+  text-align: left;
+
+  .btn {
+    // color: $grey-dim;
+    background: none;
+    border: 0;
+    border-bottom: 2px solid var(--btn-default-border-color);
+    padding: 0;
+    transition-property: border;
+
+    &:hover {
+      border-bottom-color: var(--btn-default-hover-border-color);
+    }
+  }
+}

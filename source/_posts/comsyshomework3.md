@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-10-23 11:01:58
 tags: [计算机系统基础,C++,大作业,脆弱性实验,linux]
-categories: 计算机系统
+categories: 
+	- [项目总结,计算机系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704173312.png
 ---
 
 进一步理解代码注入攻击。你需要进行3次代码注入攻击。难度依次升级，是一次很好挑战 机会。 请仔细阅读实验操作手册，需要使用一些提供的工具生成攻击用的代码。

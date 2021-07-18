@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-10-22 10:06:20
 tags: [计算机系统基础,C++,大作业,nemu,pa1,linux]
-categories: 计算机系统
+categories: 
+	- [项目总结,计算机系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704162954.png
 ---
 
 ### 作业要求

@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-01-21 17:24:10
 tags: [ubuntu,磁盘分区空间不足]
-categories: 教程
+categories: 
+	- [教程,ubuntu配置]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704160701.png
 ---
 
 ### 📝问题描述

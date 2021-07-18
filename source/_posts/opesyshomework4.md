@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-01-04 11:10:10
 tags: [操作系统,C++,大作业,linux,文件物理结构,xv6]
-categories: 操作系统
+categories: 
+	- [项目总结,操作系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163627.png
 ---
 
 ### 🔧实验要求
@@ -15,6 +17,8 @@ categories: 操作系统
 4. 修改内核源代码fs.c，减少一个直接索引，增加一个二级间接索引，从而增大xv6能支持的文件大小。
 5. 编写用户程序big.c，验证修改后的内核正确性。
 
+<!-- more -->
+
 ### 📢实验声明
 
 需要运行在xv6-pulic下，你可以从以下方式选择下载：
@@ -23,8 +27,6 @@ categories: 操作系统
 2. git：https://github.com/mit-pdos/xv6-public
 
 这里注意，我们需要额外的一个文件Big.c用来测试，你可以从百度网盘中下载，也可以直接在下面的big.c代码中复制粘贴到文件夹下。
-
-<!-- more -->
 
 ### big.c
 

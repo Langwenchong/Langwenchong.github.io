@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-01-23 16:01:56
 tags: [ubuntu]
-categories: 教程
+categories: 
+	- [教程,ubuntu配置]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704153640.png
 ---
 
 虽然devC++和codeBlock都已经配置好了c环境可以直接使用，但是我还是更青睐于VScode即使他需要自己配置环境，但是多学一个本领也不是坏事~，本篇文章只是记录一下ubuntu上vscode配置c/c++环境的过程😊

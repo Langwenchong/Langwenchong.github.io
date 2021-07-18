@@ -3,8 +3,10 @@ title: git学习日志Part3
 comments: false
 top: false
 date: 2021-01-26 12:23:11
-tags: [git,分支,分支冲突]
-categories: 教程
+tags: [note,git]
+categories: 
+	- [教程,git学习]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704135502.png
 ---
 
 😃hello~本篇文章记录了翀翀学习[廖神git教程](https://www.liaoxuefeng.com/wiki/896043488029600)时的学习笔记，快来和我一起走进git世界吧！食用本篇博客的同时参照着廖雪峰大大的教程做一遍实验，保证你从此能够熟练使用git，成为一名顶级的CV工程师。

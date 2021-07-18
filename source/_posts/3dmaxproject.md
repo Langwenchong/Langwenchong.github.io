@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-01-04 11:44:27
 tags: [3dmax,公共艺术]
-categories: 艺术作品
+categories: 
+	- [艺术作品]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704160353.png
 ---
 
 😃hi!欢迎你，艺术家，我很开心能够在这里与你一起分享我的艺术处女作--《科技的力量》公共艺术品的设计初稿，相比您也一定是一位~~吃多了撑的没事干瞎看我的博客的~~审美高超，有高深艺术造诣的艺术家，那么就和我一起见证这个非凡的一位伟大艺术家诞生的时刻吧😝！

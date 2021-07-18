@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-03-03 15:42:02
 tags: [前端,标签,hexo]
-categories: 教程
+categories: 
+	- [教程,hexo美化]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704132715.png
 ---
 
 hello~，快来食用本篇博客与翀翀😛一起为自己的博客底部添加上漂漂亮亮的标签🔖吧，相信你一定会喜欢哒

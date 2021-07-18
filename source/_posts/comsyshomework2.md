@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-10-23 10:27:10
 tags: [计算机系统基础,C++,大作业,bomb,linux]
-categories: 计算机系统
+categories: 
+	- [项目总结,计算机系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704174311.png
 ---
 
 程序bomb是⼀个电⼦炸弹💣，当该程序运⾏时，需要按照⼀定的顺序 输⼊⼝令，才能阻 ⽌炸弹的引爆。当输⼊错误的密码时，炸弹将会引爆。当然只是输出一个信息，并不会炸毁 你的计算机，这一点请放心。认真阅读实验说明，以减少你的烦恼！ 祝你好运🙏

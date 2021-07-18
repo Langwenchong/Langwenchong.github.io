@@ -35,6 +35,11 @@ placeholder: 有什么想对我说的呢？
        bot_ui_ini()
     </script>
     </div>
+    <div id="disposition">
+      <h4>&nbsp;<ruby>chongchong的人格类型 🔮</ruby></h4>
+      <img width="80%" src="https://gitee.com/Langwenchong/figure-bed/raw/master/disposition.png">
+      <small>@数据来源:<a href="https://www.16personalities.com/ch/%E4%BA%BA%E6%A0%BC%E6%B5%8B%E8%AF%95">16 Personalities</a></small>
+    </div>
 <div id="skills">
     <h4>&nbsp;<ruby>⭐chongchong的技术栈 🗂️</ruby></h4>
         {% echarts 450 '500px' %}
@@ -134,6 +139,19 @@ placeholder: 有什么想对我说的呢？
 #github_container{
   width:100%;
 }
+#disposition{
+  top:-70px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-bottom:120px;
+}
+#disposition img{
+  width:100%;
+}
+#disposition small{
+  align-self:flex-start;
+}
 #skills{
     top:-70px;
   position:relative;
@@ -148,7 +166,7 @@ placeholder: 有什么想对我说的呢？
     overflow:hidden;
 }
 .item{
-  transition:.3s ease-in-out;
+  transition:.5s ;
   position: relative;
   width:200px;
   height:180px;
@@ -159,7 +177,7 @@ placeholder: 有什么想对我说的呢？
   overflow: hidden;
 }
 .item:hover{
-  background:url("https://ae01.alicdn.com/kf/H3342af90d24b4d62b9bbfec9688ccc25M.gif");
+  transform:rotate(360deg);
 }
 .item img{
     width:120px;

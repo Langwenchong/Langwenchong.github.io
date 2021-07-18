@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-11-20 20:38:06
 tags: [git,vue,教程]
-categories: 教程
+categories: 
+	- [教程,git学习]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704165505.png
 ---
 
 不会吧不会吧\~听说你还不会在github上拉取大佬的代码？作为一名老CV攻城狮，在github上~~寻找现有的源代码答案应付作业🙈~~拉取并借鉴大佬们的优秀代码作为学习参考可以说是家常便饭了，这可是一项必备技能哦😮。如果你也很想成为一名像我这样优秀的git仌，就赶紧来食用这篇文章吧~

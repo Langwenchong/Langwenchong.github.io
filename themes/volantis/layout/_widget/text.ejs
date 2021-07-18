@@ -2,6 +2,7 @@
 <section class="widget <%- item.class %> <%- page.widget_style %> <%- page.widget_platform %>">
   <%- partial('header', {item: item}) %>
   <div class='content'>
+      <div id="clock"></div>
     <% (item.content||[]).forEach(function(row){ %>
       <%- markdown(row) %>
     <% }) %>

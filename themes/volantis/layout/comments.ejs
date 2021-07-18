@@ -43,6 +43,7 @@
     #comment p {
         width: 70%;
         margin: auto;
+        margin-top:30px;
         line-height: 30px;
         color: #797979;
         text-align: center;
@@ -51,13 +52,21 @@
     #comment h1 {
         border: 0px;
         font-weight: 800;
-        position: relative;
-        margin-top: -130px;
+        position: absolute;
+        top: -20px;
+        /* margin-top: -130px; */
+        /* padding-bottom: 20px; */
         display: inline-block;
         letter-spacing: 4px;
         color: #797979;
         font-size: 30px;
         font-family: "Linux Biolinum", "Noto Serif SC", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    #comment h1::before{
+        display:none;
     }
 
     #comment #poem {

@@ -45,6 +45,9 @@
         )
         %>
       <% } %>
+      <!-- <div class='donate'>
+        <iframe src="/donate/drinks" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
+      </div> -->
       <% if (['post'].includes(page.layout) && footer_widget.copyright && footer_widget.copyright.enable == true && post.copyright != false) { %>
         <div class='copyright'>
           <blockquote>
@@ -57,9 +60,6 @@
             <% }) %>
           </blockquote>
         </div>
-        <div class='donate'>
-          <iframe src="https://wenchong.space/donate/drinks" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;"  frameborder="0" scrolling="no"></iframe>
-          </div>
       <% } %>
       <% if (['post'].includes(page.layout) && footer_widget.donate && footer_widget.donate.enable == true) { %>
         <div class='donate'>

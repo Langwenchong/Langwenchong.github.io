@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-11-19 20:04:44
 tags: [计算机系统基础,C++,大作业,nemu,pa2,linux]
-categories: 计算机系统
+categories: 
+	- [项目总结,计算机系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163146.png
 ---
 
 本次实验包含如下五个阶段：
@@ -139,7 +141,7 @@ categories: 计算机系统
 
 注意:此文件不包括编译相关文件,只含括任务编辑区域文件,切不可直切抄袭!!
 
-git仓库：https://github.com/Langwenchong/nemu/pa2
+git仓库：https://github.com/Langwenchong/NEMU2020/tree/pa2
 
 百度云：链接：https://pan.baidu.com/s/17iz1ynyEOxv8midT1ISnaQ 
 提取码：jelq 

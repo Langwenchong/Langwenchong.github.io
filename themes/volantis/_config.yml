@@ -39,6 +39,15 @@ navbar:
         - name: 归档
           icon: fas fa-archive faa-vertical
           url: archives/
+    - name: 专栏
+      icon: fas fa-scroll faa-vertical
+      rows: 
+        - name: 笔记
+          icon: fas fa-feather-alt faa-vertical
+          url: categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
+        - name: 刷题
+          icon: fas fa-keyboard faa-vertical
+          url: categories/%E5%88%B7%E9%A2%98%E6%97%A5%E5%BF%97/
     - name: 留言板
       icon: fas fa-comments faa-vertical
       url: comments/
@@ -47,10 +56,10 @@ navbar:
       url: friends/
     - name: 关于
       icon: fas fa-info-circle faa-vertical
-      url: about/
-    - name: 开往
-      icon: fas fa-subway faa-vertical
-      url: https://travellings.link 
+      url: about/ 
+    - name: 百宝箱
+      icon: fas fa-gifts faa-vertical
+      url: navigation/
     - name: 更多
       icon: fa fa-ellipsis-v faa-vertical
       rows: 
@@ -60,6 +69,9 @@ navbar:
         - name: 相册
           icon: fas fa-camera-retro faa-vertical
           url: picGallery/
+        - name: 开往
+          icon: fas fa-subway faa-vertical
+          url: https://travellings.link
     - name: 开/关灯
       icon: fas fa-moon 
       toggle: darkmode
@@ -646,10 +658,11 @@ plugins:
     fade: 1500
     images:               # For personal use only. At your own risk if used for commercial purposes !!!
       - https://gitee.com/Langwenchong/figure-bed/raw/master/1619516024594.jpeg
-      #- https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-523521.jpg
       - https://gitee.com/Langwenchong/figure-bed/raw/master/996885.jpg
       - https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-983501.jpg
+      - https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-1038374.jpg
 
+      
 
 
 
@@ -691,10 +704,10 @@ plugins:
   # 例如：
   # {% issues sites | api=https://api.github.com/repos/volantis-x/examples/issues?sort=updated&state=open&page=1&per_page=100 | group=version:latest,v6,v5,v4,v3,v2,v1,v0 %}
 
-  #  issues:
-  #  enable: true
-  #  js:
-  # {% issues sites | api=https://gitee.com/api/v5/repos/Langwenchong/仓库名/issues?sort=created&direction=asc&labels=active&state=open&page=1&per_page=100 %}
+  issues:
+    enable: true
+    js:
+    # {% issues sites | api=https://api.github.com/repos/Langwenchong/blogFriends/issues?sort=updated&state=open&page=1&per_page=100&labels=active | group=group:技术大佬,铁憨憨,小笨蛋 %}
 
   # 暗黑模式 darkmode
   # 样式：source/css/_plugins/dark.styl

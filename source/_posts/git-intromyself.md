@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-01-23 12:43:45
 tags: [git]
-categories: [教程]
+categories: 
+	- [教程,git学习]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704154504.png
 ---
 
 本篇文章~~一点也不水~~内容详实，非常值阅读，可以说掌握了这个技能，能够让你的git主页颜值爆表😂，还不点进来看一看？

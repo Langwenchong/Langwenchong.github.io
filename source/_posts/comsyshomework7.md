@@ -3,8 +3,10 @@ title: 计算机系统基础大作业--nemu(pa3)编写
 comments: false
 top: false
 date: 2021-01-18 11:34:41
-tags: [计算机系统基础,C++,大作业,nemu,pa2,linux]
-categories: 计算机系统
+tags: [计算机系统基础,C++,大作业,nemu,pa3,linux]
+categories: 
+	- [项目总结,计算机系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163041.png
 ---
 
 本次实验包含如下3个阶段：

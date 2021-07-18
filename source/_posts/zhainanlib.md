@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-11-16 22:33:42
 tags: [vue ,前端, html ,css ,js]
-categories: vue项目实战
+categories: 
+	- [项目总结,前端实战]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704170843.png
 ---
 
 本篇文章分享我的一次vue实战项目--宅男图书站。在学习前端知识一年后，我对html,css,js有了一定的了解，选择了更加简单而易于上手的前端框架vue，并运用了寒假时间自学了部分UI组件，在本次实战中都有应用。如果喜欢，可以从git上拉取参考，如果还不知道如何运行一个vue项目？请搭配本篇 [《论如何成为一名优雅的git仌&&查看vue实战项目的方法》](https://wenchong.space/2020/11/20/instruction/), 博客文章食用😋

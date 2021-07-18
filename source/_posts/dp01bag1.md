@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-02-24 14:41:56
 tags: [dp,算法,动态规划]
-categories: 算法导论
+categories: 
+	- [算法导论]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704133716.png
 ---
 
 本篇博客主要是受[《牛客网入学考试](https://ac.nowcoder.com/acm/problem/14370)》题目启发，拓展浅谈一下自己对于从用二维数组dp解决0/1背包问题优化成用一维数组dp解决0/1背包问题的算法理解。

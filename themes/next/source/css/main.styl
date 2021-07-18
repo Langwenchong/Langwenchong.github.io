@@ -1,0 +1,216 @@
+// CSS Style Guide: http://codeguide.co/#css
+@import "https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/font-awesome-animation.min.css"
+@import "https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css"
+
+$scheme    = hexo-config('scheme') ? hexo-config('scheme') : 'Muse';
+
+$variables = base $scheme;
+
+
+// Variables Layer
+// --------------------------------------------------
+for $variable in $variables
+  @import "_variables/" + $variable;
+for $inject_variable in hexo-config('injects.variable')
+  @import $inject_variable;
+
+// Mixins Layer
+// --------------------------------------------------
+@import "_mixins.styl";
+for $inject_mixin in hexo-config('injects.mixin')
+  @import $inject_mixin;
+
+// Dark mode colors
+// --------------------------------------------------
+@import "_colors.styl";
+
+// Common Layer
+// --------------------------------------------------
+
+// Scaffolding
+@import "_common/scaffolding";
+
+// Layout
+@import "_common/outline";
+
+// Components
+@import "_common/components";
+
+
+// Schemes Layer
+// --------------------------------------------------
+@import "_schemes/" + $scheme;
+
+
+// Custom Layer
+// --------------------------------------------------
+for $inject_style in hexo-config('injects.style')
+  @import $inject_style;
+
+if hexo-config('wobble')  {
+  .sidebar {
+    box-shadow: none;
+  }
+
+  .wobbleTransparentBK{
+    background-color: rgba(0,0,0,0) !important;
+  }
+
+  .wobbleTransparentLine{
+    border-color: rgba(0,0,0,0) !important;
+  }
+
+  //Next.Muse中为Header和Footer添加背景色
+  .header, .footer {
+    background-color: rgb(245, 245, 245);
+    overflow: hidden;
+  }
+
+  //防止sidebar和footer同时开启动效时堆叠异常
+  .sidebar, header {
+    z-index: 99 !important;
+  }
+
+  //防止挡住页末文章的阅读全文按钮
+  .main {
+    padding-bottom: 200px;
+  }
+}
+
+
+.local-search-popup #local-search-result {
+  padding: 25px 40px
+  height: calc(100% - 95px)
+}
+
+.music{
+  box-sizing: border-box
+  margin:20px auto;
+  filter: blur(0.5px);
+  opacity :.8;
+  transition: .5s;
+  cursor:pointer;
+
+}
+.music:hover{
+  filter: blur(0px);
+  opacity: 1;
+  }
+
+  .links-of-blogroll-title {
+    font-size: 1.3em!important;
+    font-weight: 600;
+    color: antiquewhite!important;
+    margin-top: 0;
+}
+
+#days{
+  font-family: 'STXingkai'!important;
+  font-size:1.2em;
+}
+.toggle{
+  bottom:100px!important;  
+}
+body{
+  cursor: url("https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur"),auto!important
+}
+a,
+img{
+  cursor: url("https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur"),auto!important
+}
+
+//滚动条
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #FC1944;
+  background-image: -webkit-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.4) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    transparent 75%,
+    transparent
+  );
+  border-radius: 2em;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-moz-selection {
+  color: #fff;
+  background-color: #49b1f5;
+}
+
+
+hr{
+  border: 2px dotted #dcdcdc!important;
+  box-sizing: content-box!important;
+  height: 0!important;
+  overflow: visible!important;
+  position: relative!important;
+  margin: 2rem auto!important;
+  width: calc(100% - 4px)!important;
+}
+
+hr::before{
+  position: absolute!important;
+  top: -13px!important;
+  left: 5%!important;
+  z-index: 1!important;
+  color: gold!important;
+  content: '\f0c4' !important;
+  font: normal normal normal 14px/1 FontAwesome!important;
+  font-size: 25px!important;
+  font-weight: 800;
+
+  transition: all 1s ease-in-out!important;
+}
+
+hr:hover::before{
+  left:95%!important;
+}
+
+//animate动画页面滚动效果
+.slideInUp {
+  -webkit-animation-name: slideInUp!important;
+  animation-name: slideInUp!important;
+}
+
+@-webkit-keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}

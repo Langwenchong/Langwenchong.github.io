@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-10-23 11:35:21
 tags: [计算机系统基础,C++,大作业,linux,缓存实验,cache]
-categories: 计算机系统
+categories: 
+	- [项目总结,计算机系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704172227.png
 ---
 
 🔎实验目的

@@ -455,20 +455,32 @@ img
 .fa-ellipsis-v:before 
   color: #CCCCCC;
 
+.fa-scroll:before
+  color:#CCCCFF
+
+.fa-keyboard:before 
+  color: #f96;
+
+.fa-feather-alt:before 
+  color: #f66;
+
+.fa-gifts:before 
+  color: #3c9;
+
 //valine背景图
-#veditor {
-	background-image: url(https://image.bestzuo.cn/images/20200708160947.gif!getwebp);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: right;
-	background-color: rgba(255, 255, 255, 0);
-	resize: vertical
-}
-@media screen and (max-width: 500px){
-  #veditor{
-    background:none;
-  }
-}
+// #veditor {
+// 	background-image: url(https://image.bestzuo.cn/images/20200708160947.gif!getwebp);
+// 	background-size: contain;
+// 	background-repeat: no-repeat;
+// 	background-position: right;
+// 	background-color: rgba(255, 255, 255, 0);
+// 	resize: vertical
+// }
+// @media screen and (max-width: 500px){
+//   #veditor{
+//     background:none;
+//   }
+// }
 
 //hx
 .md h3, .md h4, .md h5, .md h6 {
@@ -493,7 +505,17 @@ kbd
 
 
   #l_body
-    background-image: url('https://gitee.com/Langwenchong/figure-bed/raw/master/email-pattern.png');
+    // background-image: url('https://gitee.com/Langwenchong/figure-bed/raw/master/email-pattern.png');
+    background-image:url("https://gitee.com/Langwenchong/figure-bed/raw/master/20210716180957.png");
+  #l_body::before
+      display:block;
+      content:'';
+      position:absolute;
+      top:0;
+      width:0;
+      height:100%;
+      width:100%;
+      background: -webkit-linear-gradient(0deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.1) 15%, rgba(239, 78, 123, 0.1) 30%, rgba(161, 102, 171, 0.1) 44%, rgba(80, 115, 184, 0.1) 58%, rgba(16, 152, 173, 0.1) 72%, rgba(7, 179, 155, 0.1) 86%, rgba(109, 186, 130, 0.1) 100% );
 
 #l_cover
   position:relative
@@ -526,4 +548,9 @@ kbd
 }
 .card-background{
   margin:0!important;  
+}
+
+article#comments:nth-child(2){
+  margin-bottom:150px!important  
+  overflow:visible!important
 }

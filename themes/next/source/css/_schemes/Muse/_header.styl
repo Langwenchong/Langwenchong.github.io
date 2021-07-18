@@ -1,0 +1,69 @@
+.custom-logo {
+  .site-meta-headline {
+    text-align: center;
+  }
+
+  .site-title {
+    color: black;
+    margin: 10px auto 0;
+
+    a {
+      border: 0;
+    }
+  }
+}
+
+.custom-logo-image {
+  background: white;
+  margin: 0 auto;
+  max-width: 150px;
+  padding: 5px;
+}
+
+.brand {
+  padding:5px;
+  color:black;
+  background: transparent;
+  transition: .3s;
+  transform:scale(1.2);
+  overflow: hidden;
+  transition-delay: .2s;
+}
+.brand::after{
+  content:'';
+  display:block;
+  position:absolute;  
+  top:0px;
+  right:-169.37px;
+  width:0%;
+  height:100%;
+  background:black;
+  transition:.25s ease-in;
+  opacity 0;
+  z-index:-1;
+}
+.brand::before{
+  content:'';
+  display:block;
+  position:absolute;  
+  top:0px;
+  left:-169.37px;
+  width:0%;
+  height:100%;
+  background:black;
+  transition:.25s ease-in;
+  opacity 0;
+}
+.brand:hover{
+  color:white;
+}
+.brand:hover:before{
+  left:0px;
+  width:50%;
+  opacity :1;
+}
+.brand:hover:after{
+  right:0px;
+  width:50%;
+  opacity:1;
+}

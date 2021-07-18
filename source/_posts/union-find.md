@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2021-03-03 19:23:36
 tags: [算法,并查集]
-categories: 算法导论
+categories: 
+	- [算法导论]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704131855.png
 ---
 
 本篇博客主要是受[《牛客网经商》](https://ac.nowcoder.com/acm/problem/14545)题目启发，拓展浅谈一下自己对于并查集的由来、函数的实现以及对解决分组问题和关系网建立等问题的思考与理解。

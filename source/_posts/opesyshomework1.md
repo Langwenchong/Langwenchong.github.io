@@ -4,8 +4,9 @@ comments: false
 top: false
 date: 2020-10-22 09:05:47
 tags: [操作系统,C++,大作业,linux]
-categories: 操作系统
-
+categories: 
+	- [项目总结,操作系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704174801.png
 ---
 
 ### 作业要求

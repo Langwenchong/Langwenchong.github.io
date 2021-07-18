@@ -4,7 +4,9 @@ comments: false
 top: false
 date: 2020-10-28 09:06:25
 tags: [操作系统,C++,大作业,linux,多线程,pi值求解]
-categories: 操作系统
+categories: 
+	- [项目总结,操作系统大作业]
+headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704171432.png
 ---
 
 实验要求：用POSIX thead编写多线程代码，根据给定的公式求圆周率🍞。

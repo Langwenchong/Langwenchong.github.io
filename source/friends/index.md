@@ -72,7 +72,9 @@ cover: true
 
 <!-- more -->
 
- {% issues sites | api=https://api.github.com/repos/Langwenchong/blog_friends/issues?sort=updated&state=open&page=1&per_page=100 | group=group:技术大佬,铁憨憨,小笨蛋 %}
+ {% issues sites | api=https://api.github.com/repos/Langwenchong/blogFriends/issues?sort=updated&state=open&page=1&per_page=100&labels=active | group=group:技术大佬,铁憨憨,小笨蛋 %}
+
+
 
 {% tabs tab-id %}
 
@@ -80,12 +82,12 @@ cover: true
 {% timenode 第一步：先将本站链接添加至贵站 %}
 
 > * 名称：雨中的博客
-> * 链接：https://www.wenchong.space
+> * 链接：https://wenchong.space
 > * 头像：https://gitee.com/Langwenchong/figure-bed/raw/master/author.jpeg
-> * 网站截图：https://gitee.com/Langwenchong/figure-bed/raw/master/20210501191032.png
+> * 网站截图：https://pic.imgdb.cn/item/609a06bed1a9ae528ff429cc.jpg
 > * 描述：频繁记录，只因生活和你太值得❤
 {% endtimenode %}
-{% timenode 第二步：前往Github，新建[Issues](https://github.com/Langwenchong/blog_friends/issues)（👈点我）按照格式填写并提交 %}
+{% timenode 第二步：前往Github，新建[Issues](https://github.com/Langwenchong/blogFriends/issues)（👈点我）按照格式填写并提交 %}
 
 ```json
 ​```json
@@ -115,7 +117,7 @@ cover: true
 {% checkbox checked cyan, 原则上只接收博客类网站友链，资源站、视频站等一切非博客类网站不予交换 %}
 {% checkbox checked red, 页面保证无繁杂广告推广 %}
 
-{% checkbox checked yellow,  如果是自己创建的 [Issues](https://github.com/Langwenchong/blog_friends/issues) ，可以自己修改。 %}
+{% checkbox checked yellow,  如果是自己创建的 [Issues](https://github.com/Langwenchong/blogFriends/issues) ，可以自己修改。 %}
 
 {% checkbox checked orange, 如果是博主创建的，请自己重新创建一份，然后让博主删掉旧的。 %}
 

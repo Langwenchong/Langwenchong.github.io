@@ -3,8 +3,10 @@ title: 数字逻辑与数字系统笔记-第十二讲
 comments: false
 top: false
 date: 2021-04-25 18:55:03
-tags: [机组原理]
-categories: 计算机系统
+tags: [note,机组原理]
+categories: 
+	- [学习笔记]
+	- [408,计算机系统]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -277,7 +279,7 @@ module shiftreg #(parameter N=8)
 			//同时并行赋值同一时刻完成N位二进制数的加载
 			else if(load)q<=d;
 			//移位，注意要将sin拼接到最低位
-			else q<={q[N-2],sin};、
+			else q<={q[N-2],sin};
 			//同时记录sout值
 			assign sout=q[N-1]
 endmodule
