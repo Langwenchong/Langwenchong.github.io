@@ -24,58 +24,69 @@ navbar:
     icon:
     title:
   menu:
-    - name: 博客
-      icon: fas fa-fan faa-spin animated
-      url: /
     - name: 文章
-      icon: fas fa-book faa-vertical
+      icon: fad fa-books faa-vertical
       rows: 
         - name: 分类
-          icon: fas fa-folder-open faa-vertical
+          icon: fad fa-folder-open faa-vertical
           url: categories/
         - name: 标签
-          icon: fas fa-tags faa-vertical
+          icon: fad fa-tags faa-vertical
           url: tags/
         - name: 归档
-          icon: fas fa-archive faa-vertical
+          icon: fad fa-archive faa-vertical
           url: archives/
-    - name: 专栏
-      icon: fas fa-scroll faa-vertical
+        - name: 专栏
+          icon: fad fa-scroll faa-vertical
+          rows: 
+            - name: 笔记
+              icon: fad fa-pencil faa-vertical
+              url: categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
+            - name: 刷题
+              icon: fad fa-keyboard faa-vertical
+              url: categories/%E5%88%B7%E9%A2%98%E6%97%A5%E5%BF%97/
+    - name: 社交
+      icon: fad fa-fan faa-spin animated
       rows: 
-        - name: 笔记
-          icon: fas fa-feather-alt faa-vertical
-          url: categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
-        - name: 刷题
-          icon: fas fa-keyboard faa-vertical
-          url: categories/%E5%88%B7%E9%A2%98%E6%97%A5%E5%BF%97/
-    - name: 留言板
-      icon: fas fa-comments faa-vertical
-      url: comments/
-    - name: 友链
-      icon: fas fa-link faa-vertical
-      url: friends/
-    - name: 关于
-      icon: fas fa-info-circle faa-vertical
-      url: about/ 
-    - name: 百宝箱
-      icon: fas fa-gifts faa-vertical
-      url: navigation/
+        - name: 留言板
+          icon: fad fa-comments faa-vertical
+          url: comments/
+        - name: 友人帐
+          icon: fad fa-link faa-vertical
+          url: friends/
+        - name: 朋友圈
+          icon: fad fa-thumbs-up faa-vertical
+          url: friendsposts/
+        - name: 关于我
+          icon: fad fa-info-circle faa-vertical
+          url: about/ 
     - name: 更多
-      icon: fa fa-ellipsis-v faa-vertical
+      icon: fad fa-ellipsis-v faa-vertical
       rows: 
-        - name: 日志
-          icon: fab fa-leanpub faa-vertical
+        - name: 建站日志
+          icon: fad fa-leaf-maple faa-vertical
           url: history/
-        - name: 相册
-          icon: fas fa-camera-retro faa-vertical
+        - name: 时光相册
+          icon: fad fa-camera-retro faa-vertical
           url: picGallery/
-        - name: 开往
-          icon: fas fa-subway faa-vertical
-          url: https://travellings.link
+        - name: 网址收藏
+          icon: fad fa-box-full faa-vertical
+          url: navigation/
+        - name: 书单分享
+          icon: fad fa-bookmark faa-vertical
+          url: books/
+        - name: 哔哔点啥
+          icon: fad fa-microphone-alt faa-vertical
+          url: artitalk/
+    - name: 开往
+      icon: fad fa-subway faa-vertical
+      url: https://travellings.link
     - name: 开/关灯
-      icon: fas fa-moon 
+      icon: fad fa-cloud-sun
       toggle: darkmode
-  search: 翻一翻站主的仓库...   # Search bar placeholder
+    - name: 音乐
+      icon: fad fa-compact-disc
+  search: 翻一翻博主的仓库...   # Search bar placeholder
 ############################### Navigation Bar ############################### > end
 
 
@@ -200,35 +211,35 @@ article:
         url: /
       # 文章创建日期
       date:
-        icon: fas fa-calendar-alt
+        icon: fad fa-calendar-alt
         title: '发布于：'
         format: 'll' # 日期格式 http://momentjs.com/docs/
       # 文章更新日期
       updated:
-        icon: fas fa-edit
+        icon: fad fa-calendar-alt
         title: '更新于：'
         format: 'll' # 日期格式 http://momentjs.com/docs/
       # 文章分类
       category:
-        icon: fas fa-folder-open
+        icon: fad fa-folder-open
       # 文章浏览计数
       counter:
-        icon: fas fa-eye
+        icon: fad fa-eye
         unit: '次浏览'
       # 文章评论数量：支持 valine和waline
       valinecount:
-        icon: fas fa-comment-dots
+        icon: fad fa-comment-dots
         desc: '' # 条评论
       walinecount:
-        icon: fas fa-comment-dots
+        icon: fad fa-comment-dots
         desc: '' # 条评论
       # 文章字数和阅读时长
       wordcount:
-        icon_wordcount: fas fa-keyboard
-        icon_duration: fas fa-hourglass-half
+        icon_wordcount: fad fa-lamp-desk
+        icon_duration: fad fa-hourglass-half
       # 文章标签
       tags:
-        icon: fas fa-hashtag
+        icon: fad fa-hashtag
       # 分享
       share: 
         - id: qq
@@ -246,7 +257,7 @@ article:
 
 ############################### Comments ############################### > start
 comments:
-  title: <i class='fas fa-comments'></i> 评论
+  title: <i class='fad fa-comments'></i> 评论
   subtitle:
   service: twikoo # valine, twikoo, waline, minivaline, disqus, disqusjs, gitalk, vssue, livere, isso, hashover
   # Valine
@@ -395,7 +406,7 @@ sidebar:
       class: category
       display: [desktop] # [desktop, mobile]
       header:
-        icon: fas fa-folder-open
+        icon: fad fa-folder-open
         title: 文章分类
         url: /blog/categories/
     # ---------------------------------------
@@ -404,7 +415,7 @@ sidebar:
       class: tagcloud
       display: [desktop] # [desktop, mobile]
       header:
-        icon: fas fa-tags
+        icon: fad fa-tags
         title: 热门标签
         url: /blog/tags/
       min_font: 14
@@ -431,7 +442,7 @@ sidebar:
       class: webinfo
       display: [desktop, mobile]
       header:
-        icon: fas fa-award
+        icon: fad fa-award
         title: 站点信息
       type:
         article:
@@ -470,27 +481,27 @@ sidebar:
       class: grid
       display: [desktop, mobile]
       header:
-        icon: fas fa-map-signs
+        icon: fad fa-map-signs
         title: 站内导航
       fixed: false # 固定宽度
       rows:
-        - name: 建站历史
-          icon: fab fa-leanpub
+        - name: 建站日志
+          icon: fad fa-leaf-maple
           url: /history/
         - name: 时光相册
-          icon: fas fa-camera-retro
+          icon: fad fa-camera-retro
           url: /picGallery/
         - name: 外挂标签
-          icon: fas fa-quote-left
+          icon: fad fa-quote-left
           url: https://github.com/volantis-x/hexo-theme-volantis/issues/
         - name: 书单分享
-          icon: fas fa-quran
-          url: https://github.com/volantis-x/hexo-theme-volantis/issues/
-        - name: 未来之约
-          icon: fas fa-glass-cheers
-          url: https://github.com/volantis-x/hexo-theme-volantis/issues/
+          icon: fad fa-bookmark
+          url: /books/
+        - name: 哔哔点啥
+          icon: fad fa-microphone-alt 
+          url: /artitalk/
         - name: RSS订阅
-          icon: fas fa-rss
+          icon: fad fa-rss
           url: /atom.xml
 
     # ---------------------------------------     
@@ -499,7 +510,7 @@ sidebar:
       class: text
       display: [desktop,mobile] # [desktop, mobile]
       header:
-        icon: fas fa-bell
+        icon: fad fa-bells
         title: 公告信息
       content: 
         - "<div id='clock'></div>"
@@ -515,7 +526,7 @@ tag_plugins:
   note: # style for default note:
     icon: '\f054'
     color: ''
-    iconfont: 'Font Awesome 5 Free'
+    iconfont: 'Font Awesome 5 Pro'
   # {% checkbox %}
   checkbox:
     interactive: false # enable interactive for user
@@ -563,7 +574,9 @@ plugins:
   # jquery
   jquery: https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js
   # fontawesome
-  fontawesome: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css
+  # fontawesome: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css
+  fontawesome: https://cdn.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css 
+  # fontawesome: https://cdn.jsdelivr.net/gh/Langwenchong/cdn/css/fontawesome.css
   ################ optional plugins ################
 
   ######## Plugins to improve loading speed:
@@ -737,8 +750,8 @@ plugins:
   artitalk:
     # Set `layout: artitalk` to enable in page
     # 配置项按照yml格式继续填写即可
-    appId: ogP8qj3veMh0LFpFWMPOyF0X-MdYXbMMI # your appID
-    appKey: nHXLd3N3Jgh460t2iRQKWAtr # your appKEY
+    appId: 3LIBxfgrB8vepAKi56spHmqT-MdYXbMMI # your appID
+    appKey: AUsy0DNTTDT7XzvRYaLDSiin # your appKEY
     # serverURL:  #leancloud绑定的安全域名，使用国际版的话不需要填写
     # lang: # 语言设置，zh为汉语，en为英语，es为西班牙语。默认为汉语
     # pageSize: #每页说说的显示数量
@@ -754,9 +767,9 @@ plugins:
   # BBtalk https://bb.js.org
   bbtalk:
     js: https://cdn.jsdelivr.net/npm/bbtalk@0.1.5/dist/bbtalk.min.js # BBtalk.js
-    appId: 0KzOX4vC7Jsk6vzUGNeEiUaI-gzGzoHsz # your appID
-    appKey: HwCiWuxfpvKiLm4teCUgTIba # your appKEY
-    serverURLs: https://bbapi.heson10.com # Request Api 域名
+    appId: x3QDB0oHQHTSISszwsY95WKw-MdYXbMMI # your appID
+    appKey: DcXLArq7aNc9y0UGiS3DdbTN # your appKEY
+    serverURLs: https://x3qdb0oh.api.lncldglobal.com # Request Api 域名
 
   # Tidio聊天功能
   # https://www.tidio.com/
@@ -771,28 +784,36 @@ plugins:
 rightmenu:
   enable: true
   # hr: 分割线, music: 音乐控制器
-  layout: [home,hr,archives,category,comments, picGallery,dark_mode, hr, music]
+  layout: [home,archives,friends,comments, about,hr,dark_mode, hr, music]
   # 可选功能项
   archives:
-    name: 归档
-    icon: fas fa-archive  
+    name: 文章归档
+    icon: fad fa-archive  
     url : /archives/
   category:
     name: 分类
-    icon: fas fa-folder-open
+    icon: fad fa-folder-open
     url: /categories/
   tag:
     name:  标签
-    icon: fas fa-tags
+    icon: fad fa-tags
     url: /tags/
   comments:
-    name: 留言
-    icon: fas fa-comments
+    name: 站内留言
+    icon: fad fa-comment-alt-lines
     url: /comments/
+  about: 
+    name: 关于本站
+    icon: fad fa-smile-wink
+    url: /about/
   picGallery:
     name: 相册
-    icon: fas fa-camera-retro
+    icon: fad fa-camera-retro
     url: /picGallery/
+  friends: 
+    name: 小伙伴们
+    icon: fad fa-users
+    url: /friends/
   print:
     name: 打印页面
     icon: fa fa-print
@@ -820,7 +841,7 @@ rightmenu:
     url: https://github.com/volantis-x/hexo-theme-volantis/
   dark_mode:
     name: 开/关灯
-    icon: fas fa-moon
+    icon: fad fa-cloud-sun
     toggle: darkmode
 ############################### Rightmenu ############################### > end
 
@@ -947,8 +968,8 @@ custom_css:
   cursor:
     enable: true
     text: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/text.png
-    pointer: https://i.loli.net/2020/11/07/3RdwyxZMgFcVez7.png
-    default: https://i.loli.net/2020/11/07/3RdwyxZMgFcVez7.png
+    pointer: https://bu.dusays.com/2021/07/19/fc51671f29213.png
+    default: https://bu.dusays.com/2021/07/19/fc51671f29213.png
     not-allowed: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/circle.png
     zoom-out: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/zoom-out.png
     zoom-in: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/zoom-in.png

@@ -9,5 +9,55 @@
     new Artitalk(Object.assign(<%- JSON.stringify(theme.plugins.artitalk) %>, {}))
 </script>
 <style>
+.article-type-artitalk{
+    display:flex;
+    flex-direction: column-reverse;
+}
 #artitalk_main #lazy{background: transparent !important}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+1) .cbp_tmlabel:after {
+    border-right-color: #F56C6C;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+1) .cbp_tmlabel {
+    background: #F56C6C;
+    border: 3px solid #F56C6C;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+4) .cbp_tmlabel:after {
+    border-right-color: #E6A23C;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+4) .cbp_tmlabel {
+    background: #E6A23C;
+    border: 3px solid #E6A23C;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+3) .cbp_tmlabel:after {
+    border-right-color: #67C23A;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+3) .cbp_tmlabel {
+    background: #67C23A;
+    border: 3px solid #67C23A;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+2) .cbp_tmlabel:after {
+    border-right-color: #409EFF;
+}
+#artitalk_main .cbp_tmtimeline>li:nth-child(4n+2) .cbp_tmlabel {
+    background: #409EFF;
+    border: 3px solid #409EFF;
+}
+.at_button {
+    color:#444!important;
+    background: 0 0;
+    border-radius: 108px!important;
+    margin: 0 16px;
+    transition: all .3s ease;
+    font-size: 1em!important;
+    padding: 4px 20px!important;
+    border: 1.5px solid #444!important;
+    margin: 0 auto;
+    margin-bottom:15px;
+    background-color:transparent!important;
+}
+.at_button:hover {
+    background: rgba(230,60,94,.2)!important;
+    border: 1.5px solid #e63c5e!important;
+    box-shadow: none!important;
+}
 </style>

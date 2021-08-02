@@ -211,11 +211,14 @@ ul.nav-list-h
   display: flex
   align-items: stretch
   &>li
+    transition:.1s
     position: relative
     justify-content: center
     height: 100%
     line-height: 2.4
     border-radius: $border-button
+    &:hover
+      transform:scale(1.03)
     >a
       -webkit-font-smoothing: antialiased
       -moz-osx-font-smoothing: grayscale
@@ -232,6 +235,9 @@ ul.list-v
   margin-top: -2px - $border-card * 0.5
   border-radius: $border-card * 0.5
   padding: $gap * 0.5 0
+  animation: sub_menus;
+  aimation-duration: 0.3s;
+  -webkit-animation: sub_menus 0.3s;
   hr
     margin-top: $gap * 0.5
     margin-bottom: $gap * 0.5
@@ -392,3 +398,24 @@ ul.list-v
   .list-v
     li
       max-width: 270px
+
+@keyframes sub_menus {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    -o-transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}

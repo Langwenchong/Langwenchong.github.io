@@ -1,0 +1,32 @@
+<%- partial('_pre') %>
+<div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
+    <%- partial('_partial/article', {post: page, index: false}) %>
+</div>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?91e552959454d31844478e565ed355b6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<script src="https://cdn.jsdelivr.net/gh/Langwenchong/cdn/js/moment.js"></script>
+<style>
+#info_user_pool{
+    box-sizing:border-box;
+    margin: 0 0 !important;
+    border-left: 4px solid #E6A23C;
+    border-radius: 4px;
+    background: rgb(250, 236, 216);
+}
+#moments_container h2::before{
+    display:none!important;
+}
+.moments-item{
+    box-shadow: none!important;
+}
+.moments-item img{
+    border-radius: 50%!important;
+}
+</style>

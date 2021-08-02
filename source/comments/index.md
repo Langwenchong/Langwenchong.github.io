@@ -1,6 +1,7 @@
 ---
 layout: comments
 cover: true
+comments: true
 bottom_meta: false
 sidebar: []
 ---

@@ -1,30 +1,39 @@
 <%- partial('_pre') %>
 <% page.comments = false; %>
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?91e552959454d31844478e565ed355b6";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
 <div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
   <% if (site.posts && site.posts.length > 0) { %>
-    <% if (page.layout == 'category') { %>
-      <div class='post-wrapper'>
-        <article id="cat" class="post article white-box reveal <%- theme.custom_css.body.effect.join(' ') %>">
-          <h2><%- page.title %></h2>
-          <div class="all-cats">
-            <% if (site.categories.length){ %>
-              <% site.categories.sort('path').each(function(category){ %>
-                <a class="<%= category.parent ? ' child' : ''%>" href="<%= url_for(category.path) %>">
-                  <span><i class='fas fa-folder-open fa-fw' aria-hidden="true"></i>&nbsp;&nbsp;<%= category.name %></span>
-                  <span class="title">
-                    (<%- category.posts.length %>)
-                  </span>
-                </a>
-              <% }) %>
-            <% } %>
-          </div>
-          <br>
-          <%- page.content %>
-        </article>
+  <% if (page.layout == 'category') { %>
+  <div class='post-wrapper'>
+    <article id="cat" class="post article white-box reveal <%- theme.custom_css.body.effect.join(' ') %>">
+      <h2><%- page.title %></h2>
+      <div class="all-cats">
+        <% if (site.categories.length){ %>
+        <% site.categories.sort('path').each(function(category){ %>
+        <a class="<%= category.parent ? ' child' : ''%>" href="<%= url_for(category.path) %>">
+          <span><i class='fad fa-folder-open fa-fw' aria-hidden="true"></i>&nbsp;&nbsp;<%= category.name %></span>
+          <span class="title">
+            (<%- category.posts.length %>)
+          </span>
+        </a>
+        <% }) %>
+        <% } %>
       </div>
-    <% } else { %>
-      <%- partial('_partial/archive') %>
-    <% } %>
+      <br>
+      <%- page.content %>
+    </article>
+  </div>
+  <% } else { %>
+  <%- partial('_partial/archive') %>
+  <% } %>
   <% } %>
 </div>
 <%- partial('_partial/side') %>

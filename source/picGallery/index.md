@@ -2,8 +2,9 @@
 title: 
 layout: picGallery
 bottome_meta: false
-comments: false
+comments: true
 sidebar: []
+cover: true
 date: 2021-05-21 17:39:06
 ---
 

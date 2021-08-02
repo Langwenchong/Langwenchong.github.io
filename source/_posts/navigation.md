@@ -24,7 +24,7 @@ hello~今天带来一期百宝箱的制作教程，在日常生活中我们经�
 
 ### 百宝箱介绍
 
-{% note quote,  首先我需要说明一下，这个百宝箱的搭建你可以理解为是建立一个新的hexo网站，因此很显然他是基于一个主题搭建的，这个主题就是[hexo-theme-webstack](https://github.com/HCLonely/hexo-theme-webstack/)。但是它区别于我们之前搭建hexo博客，因为他可以不需要再次新建一个github仓库进行部署，我们只需要本地预览生成htnl即可，如果你没有理解也没有关系，跟着教程一步步来就好了。 %}
+{% note quote,  首先我需要说明一下，这个百宝箱的搭建你可以理解为是建立一个新的hexo网站，因此很显然他是基于一个主题搭建的，这个主题就是[hexo-theme-webstack](https://github.com/HCLonely/hexo-theme-webstack/)。但是它区别于我们之前搭建hexo博客，因为他可以不需要再次新建一个github仓库进行部署，我们只需要本地预览生成html即可，如果你没有理解也没有关系，跟着教程一步步来就好了。 %}
 
 我在原主题上进行了部分魔改美化，因此如果你想要使用原主题的配置，请参考
 

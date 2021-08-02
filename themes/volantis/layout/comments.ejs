@@ -2,6 +2,15 @@
 <div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
     <%- partial('_partial/article', {post: page, index: false}) %>
 </div>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?91e552959454d31844478e565ed355b6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 <script src="https://cdn.jsdelivr.net/gh/Langwenchong/cdn@1.0/js/chunk1.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/Langwenchong/cdn@1.0/js/chunk2.js"></script>
 <style>
@@ -43,7 +52,7 @@
     #comment p {
         width: 70%;
         margin: auto;
-        margin-top:30px;
+        margin-top: 30px;
         line-height: 30px;
         color: #797979;
         text-align: center;
@@ -64,9 +73,9 @@
         left: 50%;
         transform: translateX(-50%);
     }
-    
-    #comment h1::before{
-        display:none;
+
+    #comment h1::before {
+        display: none;
     }
 
     #comment #poem {

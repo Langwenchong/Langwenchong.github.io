@@ -357,6 +357,7 @@ var Debounce = (fn, t) => {
     },
     100);
   }
+  
 })(jQuery);
 
  //tag

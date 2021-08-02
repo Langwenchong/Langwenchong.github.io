@@ -1,5 +1,14 @@
 <%- partial('_pre') %>
 <div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?91e552959454d31844478e565ed355b6";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      </script>
   <article id="<%= page.layout %>" class="md post article article-entry l_friends white-box reveal <%- theme.custom_css.body.effect.join(' ') %> article-type-<%= page.layout %>" itemscope itemprop="blogPost">
     <%- partial('_partial/meta',{post: page, position: 'top'}) %>
     <%- page.excerpt %>
@@ -48,7 +57,7 @@
                       <% if (item.keywords) { %>
                         <div class='friend-tags-wrapper'>
                         <% (item.keywords||[]).forEach(function(keyword){ %>
-                          <p class="tags"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><%= keyword %></p>
+                          <p class="tags"><i class="fad fa-hashtag fa-fw" aria-hidden="true"></i><%= keyword %></p>
                         <% }) %>
                         </div>
                       <% } %>

@@ -2,7 +2,15 @@
 <div class='l_main<%- page.sidebar == false ? ' no_sidebar' : '' %>'>
     <%- partial('_partial/article', {post: page, index: false}) %>
 </div>
-
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?91e552959454d31844478e565ed355b6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 <link href="https://cdn.bootcss.com/botui/0.3.9/botui.min.css" rel="stylesheet">
 <link href="https://cdn.bootcss.com/botui/0.3.9/botui-theme-default.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
