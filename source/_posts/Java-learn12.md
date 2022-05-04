@@ -3,10 +3,9 @@ title: Java学习笔记-第十二讲
 comments: false
 top: false
 date: 2021-04-09 16:28:01
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -15,7 +14,7 @@ categories:
 
 #### java中的线程
 
-我们在[《操作系统》](https://wenchong.space/2020/12/17/opsys-note4/)已经学习过线程的相关知识了，这里不再赘述。在java中我们之前所学习的程序的指令都是串行执行的，也就是每一条语句一次执行。但是有时候Java中会使用到线程来实现程序的指令并行执行。
+我们在[《操作系统》](https://coolchong.cn/2020/12/17/opsys-note4/)已经学习过线程的相关知识了，这里不再赘述。在java中我们之前所学习的程序的指令都是串行执行的，也就是每一条语句一次执行。但是有时候Java中会使用到线程来实现程序的指令并行执行。
 
 因此我们这里来学习以下java中线程的相关知识。首先就是创建一个线程了，这里有两种实现方法。
 
@@ -300,11 +299,11 @@ class MyThread extends Thread {
 
 最终的结果必定是没有打印完100个数就停止了t1线程，所以运行结果如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210409204321.png)
+![](https://langwenchong.gitee.io/figure-bed/20210409204321.png)
 
 那么对于非Daemon线程，当main终止以后，这个t1线程还会继续执行任务直至打印完这100个数（我们只需要将setDaemon()改为false即可）。最终的结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210409204455.png)
+![](https://langwenchong.gitee.io/figure-bed/20210409204455.png)
 
 ##### 思考：除了上面的使用非Daemon线程以外，还有什么方法可以使得100个数都打印出来？
 
@@ -433,7 +432,7 @@ class Counter extends Thread {
 
 最终出现的结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410105657.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410105657.png)
 
 我们发现起初x和y还是相等的，但是经过一段时间以后x和Y就出现了差值，并且y大于了x，原因是由于两个线程启动的时间有一个细微的时间差，所以此时两个线程不是同时对x和y进行加1操作的，线程2会晚于线程1访问x和y来修改值，因此起初x和y会正常更新值相等，但是一段时间以后的某一时刻线程1和线程2会出现同时访问x的情况，此时由于x只能被一个线程访问，所以两个线程出现了冲突，其中一个线程胜出对x和y进行了修改，而另一个线程未能抢到x,因此只对y进行了修改（当然也有可能两者出现y的冲突），最终造成了x小于了y。
 
@@ -465,7 +464,7 @@ class Num
 
 此时在运行的结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410110659.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410110659.png)
 
 x和y永远是一致的了。上面的代码中多线程冲突会造成两个数字最终的结果不同，这还只是小问题，更严重的是当多线程同时对堆栈等进行更新时如果发生冲突会发生严重的异常，如下：
 
@@ -566,7 +565,7 @@ public class MyStack {
 
 此时由于多个线程会同时访问栈进行压入元素或者弹出元素的操作，那么可能会造成栈已满却要继续压入元素，或者栈已空却还要弹出元素的异常，因此此时会抛出异常：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410111724.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410111724.png)
 
 因此我们需要对push()和pop()上锁从而保证每一次栈只会被一个线程访问进行更新操作，从而避免了多线程访问的冲突，如下：
 
@@ -591,7 +590,7 @@ public synchronized boolean push(Object obj) {
 
 此时在运行就不会抛出异常了：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410111918.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410111918.png)
 
 ##### 思考：synchronized是如何实现避免多线程访问的？
 
@@ -599,7 +598,7 @@ public synchronized boolean push(Object obj) {
 
 #### synchronized造成的死锁现象
 
-既然在OS中PV锁会造成死锁的出现，那么Java也不例外，当使用synchronized不正确时可能会造成代码逻辑上的死锁现象出现（[《死锁是什么》](https://wenchong.space/2020/12/26/opsys-note10/)请看这里）：
+既然在OS中PV锁会造成死锁的出现，那么Java也不例外，当使用synchronized不正确时可能会造成代码逻辑上的死锁现象出现（[《死锁是什么》](https://coolchong.cn/2020/12/26/opsys-note10/)请看这里）：
 
 假设此时有两个线程分别执行自己的任务方法，其中他们自己的方法都已经上锁了，如下代码：
 
@@ -654,23 +653,23 @@ public class Operator implements Runnable {
 
 此时上面的程序最终的输出结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410113948.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410113948.png)
 
 出现这种情况的原因是两个线程都启动运行时，都会执行自己的method方法，因此此时线程1进入了自己的method方法，同时线程2进入自己的method方法，此时线程1想调用线程2的method(0)方法，线程2想调用线程1的method(0)方法。但是由于对方线程的method方法是加了锁的同时对方线程正在运行这个方法，因此两个线程都在同时等待对方先结束自己运行的任务，也就造成了线程1等待线程2，线程2等待线程1的死锁现象出现，此时就和OS中所讲的死锁问题一样了。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410114333.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410114333.png)
 
-在Java中不监测也不试图避免死锁情况，因而保证不发生死锁就成了程序员的责任。这里我们可以借鉴OS中的避免死锁的方法，控制锁的范围或者按序分配资源从而避免死锁现象的发生，当死锁出现时要能够抛出提示信息从而方便我们找到。具体的[《死锁预防和避免》](https://wenchong.space/2020/12/26/opsys-note10/)请看这里。
+在Java中不监测也不试图避免死锁情况，因而保证不发生死锁就成了程序员的责任。这里我们可以借鉴OS中的避免死锁的方法，控制锁的范围或者按序分配资源从而避免死锁现象的发生，当死锁出现时要能够抛出提示信息从而方便我们找到。具体的[《死锁预防和避免》](https://coolchong.cn/2020/12/26/opsys-note10/)请看这里。
 
 #### 线程的状态和生命周期
 
 在一个线程的生命周期中，他总处于某一个状态，线程的状态表示了线程正在进行的活动以及在这段时间内线程完成的任务。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410114637.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410114637.png)
 
 我们可以一个线程的状态细化为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410114816.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410114816.png)
 
 其中在java中每一个线程状态都是一个枚举类型，我们可以通过一定的方法监视线程所处的状态，方法请参考：[《获取线程状态》](https://www.runoob.com/java/thread-status.html)
 
@@ -790,7 +789,7 @@ class MyRunner implements Runnable {
 
 最终的运行结果为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410120641.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410120641.png)
 
 #### TimerTask计时任务
 
@@ -835,7 +834,7 @@ public class TimerTaskDemo {
 }
 ```
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210410122640.png)
+![](https://langwenchong.gitee.io/figure-bed/20210410122640.png)
 
 实际上此时new TimerTask就是一个匿名类，这种实现方法很常见。
 

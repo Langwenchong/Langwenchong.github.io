@@ -3,13 +3,13 @@ title: vue实战分享--宅男图书站
 comments: false
 top: false
 date: 2020-11-16 22:33:42
-tags: [vue ,前端, html ,css ,js]
+tags: [vue ,前端]
 categories: 
-	- [项目总结,前端实战]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704170843.png
+	- [知识分享,项目总结]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704170843.png
 ---
 
-本篇文章分享我的一次vue实战项目--宅男图书站。在学习前端知识一年后，我对html,css,js有了一定的了解，选择了更加简单而易于上手的前端框架vue，并运用了寒假时间自学了部分UI组件，在本次实战中都有应用。如果喜欢，可以从git上拉取参考，如果还不知道如何运行一个vue项目？请搭配本篇 [《论如何成为一名优雅的git仌&&查看vue实战项目的方法》](https://wenchong.space/2020/11/20/instruction/), 博客文章食用😋
+本篇文章分享我的一次vue实战项目--宅男图书站。在学习前端知识一年后，我对html,css,js有了一定的了解，选择了更加简单而易于上手的前端框架vue，并运用了寒假时间自学了部分UI组件，在本次实战中都有应用。如果喜欢，可以从git上拉取参考，如果还不知道如何运行一个vue项目？请搭配本篇 [《论如何成为一名优雅的git仌&&查看vue实战项目的方法》](https://coolchong.cn/2020/11/20/instruction/), 博客文章食用😋
 
 git地址：https://github.com/Langwenchong/zhainanlib.git
 
@@ -21,23 +21,23 @@ git地址：https://github.com/Langwenchong/zhainanlib.git
 
 ipad效果预览图
 
-<img src="https://pic.downk.cc/item/5fb3bea5b18d627113182900.png"  />
+<img src="https://pic.imgdb.cn/item/5fb3bea5b18d627113182900.png"  />
 
 web端效果预览图
 
-<img src="https://pic.downk.cc/item/5fb3bf16b18d627113184a98.png" style="zoom:80%;" />
+<img src="https://pic.imgdb.cn/item/5fb3bf16b18d627113184a98.png" style="zoom:80%;" />
 
 iphone等移动设备效果预览图
 
-![](https://pic.downk.cc/item/5fb3bf7fb18d627113186781.png)
+![](https://pic.imgdb.cn/item/5fb3bf7fb18d627113186781.png)
 
 其他页面效果图
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210414223058.png)
+![](https://langwenchong.gitee.io/figure-bed/20210414223058.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210414223119.png)
+![](https://langwenchong.gitee.io/figure-bed/20210414223119.png)
 
-![](https://pic.downk.cc/item/5fb3c1b5b18d6271131922ca.png)
+![](https://pic.imgdb.cn/item/5fb3c1b5b18d6271131922ca.png)
 
 ### 产品开发详情
 
@@ -63,31 +63,31 @@ iphone等移动设备效果预览图
 
 #### 路由跳转
 
-![](https://pic.downk.cc/item/5fb524beb18d6271136891ce.jpg)
+![](https://pic.imgdb.cn/item/5fb524beb18d6271136891ce.jpg)
 
 本项目使用了router.js路由实现异步更新组件来实现页面跳转，具体功能效果请参考导航栏跳转，其中在轮播图组件下方为子组件页面刷新预览区，每张页面对应一个子组件，分别为首页热门推荐，vip专区，特别策划，商店和论坛五大专题。所有专题子组件跳转都是使用的v-enter和v-leave两个类实现从下至上漂浮动画切换效果。
 
 #### 轮播图
 
-![](https://pic.downk.cc/item/5fb52345b18d62711368439a.jpg)
+![](https://pic.imgdb.cn/item/5fb52345b18d62711368439a.jpg)
 
 轮播图切换运用了纯css技术实现，借用overflow属性对其他照片进行了隐藏，是的一次性只呈现一张图片，其中切换按钮进行了定义美化，并且为轮播图设置了定时切换（但是存在小bug，随着时间迁移，切换图片队列会堆积是的切换频繁，如果有更好的建议请在下方评论区发表，谢谢😉)，在鼠标悬停效果上，引用率jQuery库中的slideUph和slideDown动画实现交互效果。
 
 #### 工作室logo
 
-![](https://pic.downk.cc/item/5fb523b6b18d627113685eea.jpg)
+![](https://pic.imgdb.cn/item/5fb523b6b18d627113685eea.jpg)
 
 这里是跳转到工作室介绍页面的链接，实现跳转时使用了模糊效果优化切换，并且在下滑到特定位置后logo文字部分会隐藏，这里可以使用opacity:0隐藏文字即可实现，但是由于这个logo是整张图片，所以这里使用了clip-peth进行遮挡来实现。
 
 #### 响应式布局移动适配
 
-![](https://pic.downk.cc/item/5fb520f0b18d62711367cad7.jpg)
+![](https://pic.imgdb.cn/item/5fb520f0b18d62711367cad7.jpg)
 
 可以通过控制台检查预览移动端效果，这里由于大量使用了flex布局，所以对于没有太大移动的div元素的子元素全部使用到的是spcae-around来实现相应式布局，对于侧面次级导航栏则选择了隐藏，顶部导航栏则以列表形式来实现交互，总体实现较为简单。
 
 #### 登录平台
 
-![](https://pic.downk.cc/item/5fb5212db18d62711367d5dc.jpg)
+![](https://pic.imgdb.cn/item/5fb5212db18d62711367d5dc.jpg)
 
 使用z-index隐藏于所有页面最底层，再加以动画使其流畅呈现，这里暂时没有加入第三方登录功能，只设置了两个不同权限账户（用来实现vip专区访问判断）。
 
@@ -100,13 +100,13 @@ iphone等移动设备效果预览图
 
 #### 个人设置列表
 
-![](https://pic.downk.cc/item/5fb5218fb18d62711367e819.jpg)
+![](https://pic.imgdb.cn/item/5fb5218fb18d62711367e819.jpg)
 
 运用了百叶窗式列表展现，由于hover只能改变所选中元素的属性值，而我们要实现的是在鼠标悬浮在头像时显示列表项，所以这里运用了js的mouseover和mouseout时间绑定来实现，其中mouseout设置为覆盖面积最大的父元素来实现鼠标移开列表时自动消失的功能。
 
 #### 左侧功能栏
 
-![](https://pic.downk.cc/item/5fb51a4eb18d627113666b2f.jpg)
+![](https://pic.imgdb.cn/item/5fb51a4eb18d627113666b2f.jpg)
 
 第一个是为工作室助力功能（说白了就是工作室白嫖咖啡钱），暂时没有实现跳转，但是这种可爱而优雅的UI交互效果属实吸引人，可能会加大消耗渲染性能吧，还是少做好，这里主要是初次尝试实现一些UI，然后第二个就是工作室二维码了，大部分网站都会有，实战嘛，我也弄了一个，使用的就是伪元素就可以实现，然后分享按钮，这里运用了Js将文本粘贴到了粘贴板上，很实用，最后一个收藏至浏览器书签功能暂时没有找到实现方法，以后在填坑吧（如果有更好的建议请在下方评论区发表，谢谢😉）。
 
@@ -114,7 +114,7 @@ iphone等移动设备效果预览图
 
 ##### 标题霓虹灯效果
 
-##### ![](https://pic.downk.cc/item/5fb516b9b18d62711365ae50.jpg)
+##### ![](https://pic.imgdb.cn/item/5fb516b9b18d62711365ae50.jpg)
 
 应用了text-clip和clip-path属性进行了背景切割，然后运用伪元素和@keyframes动画实现动态效果并添加了hover效果增强交互体验。代码实战参考：
 
@@ -123,21 +123,21 @@ iphone等移动设备效果预览图
 
 ##### 作者介绍
 
-![](https://pic.downk.cc/item/5fb51835b18d62711365fb47.jpg)
+![](https://pic.imgdb.cn/item/5fb51835b18d62711365fb47.jpg)
 
 上半部分为作者介绍，Hover效果使用了简单的放大效果和认证显现，感觉挺好看的。下半部分文案是对本小站的介绍，当然如果你是vuxUI组件库的热衷者，一定不难发现这个文案就是模仿那个库的介绍档案写得😂，这里主要是对这种intro类型的代码块进行了格式美化，即开头会以一个大红色双引号开始，然后左侧以红线划分区域的形式正是参考了note印象笔记的风格，简洁优雅，并且仔细观察，这里用到了text-align:justify属性实现了文本两端对齐（具体属性介绍可以参考《高级Web标准解决方案》）。
 
 ##### 右侧次级导航栏加功能栏
 
-![](https://pic.downk.cc/item/5fb51b8bb18d62711366a23b.jpg)
+![](https://pic.imgdb.cn/item/5fb51b8bb18d62711366a23b.jpg)
 
 次级导航栏仍然是参考了note印象笔记官网，这里由于技能水平有限，没有使用iframe实现，而是采用了div+span模拟，注意，这里的细节，选中和划过时都会触发白光效果，貌似是css和jQuery有冲突？这里的Hover效果需要加上!important属性，否则会出现划过后次级导航栏的链接全部变为白色的小bug。返回顶部就是运用的简单的不断判断窗口Y值，若不为0就递归减去Y/5来实现返回顶部，客服按钮是假链接，这里仍然是尝试模拟不同风格的UI。
 
 ##### 推荐组件板块
 
-![](https://pic.downk.cc/item/5fb51cc9b18d62711366dd93.jpg)
+![](https://pic.imgdb.cn/item/5fb51cc9b18d62711366dd93.jpg)
 
-![](https://pic.downk.cc/item/5fb51ceab18d62711366e5a7.jpg)
+![](https://pic.imgdb.cn/item/5fb51ceab18d62711366e5a7.jpg)
 
 ###### 亮点一：交叉渲染
 
@@ -151,17 +151,17 @@ iphone等移动设备效果预览图
 
 这里将页面缩小一定宽度，或者对比上图web端和iphone端效果图会发现style1类型的板块出现了大幅度变化，左右陈列变为了上下陈列，如下图
 
-![](https://pic.downk.cc/item/5fb51cc9b18d62711366dd93.jpg)
+![](https://pic.imgdb.cn/item/5fb51cc9b18d62711366dd93.jpg)
 
-​														<img src="https://pic.downk.cc/item/5fb52645b18d62711368ece6.png" style="zoom:33%;" />
+​														<img src="https://pic.imgdb.cn/item/5fb52645b18d62711368ece6.png" style="zoom:33%;" />
 
-![](https://pic.downk.cc/item/5fb521c6b18d62711367f0ec.jpg)
+![](https://pic.imgdb.cn/item/5fb521c6b18d62711367f0ec.jpg)
 
 所以可以看出这里需要用到flex布局进行分块，其中四个小方格和大方格分别是两个子元素，其中初始为space-between分布于两侧，然后运用flex-wrap在特定宽度下进行分行来实现，并且要注意这里的slideUp和slideDown动画并未使用jQuery库实现，而是纯CSS实现，只是可能readmore按钮出现时间又停顿的小bug,暂时未找到错因。
 
 ##### 官方推荐板块
 
-![](https://pic.downk.cc/item/5fb52293b18d627113681f1e.jpg)
+![](https://pic.imgdb.cn/item/5fb52293b18d627113681f1e.jpg)
 
 这里引入了swiper.js实现3d拖拽的功能，具体实现参考文档，这里主要是对Js引入的一次尝试，但是存在一个小bug,就是移动端适配时无法对容器元素进行宽度修改（如果有更好的建议请在下方评论区发表，谢谢😉）。
 
@@ -169,11 +169,11 @@ iphone等移动设备效果预览图
 
 ##### vip优势介绍
 
-![](https://pic.downk.cc/item/5fb650e6b18d627113ab3611.jpg)
+![](https://pic.imgdb.cn/item/5fb650e6b18d627113ab3611.jpg)
 
-<img src="https://pic.downk.cc/item/5fb52645b18d62711368ece6.png" style="zoom:33%;" />
+<img src="https://pic.imgdb.cn/item/5fb52645b18d62711368ece6.png" style="zoom:33%;" />
 
-![](https://pic.downk.cc/item/5fb7b7ccb18d6271130526d2.jpg)
+![](https://pic.imgdb.cn/item/5fb7b7ccb18d6271130526d2.jpg)
 
 使用了transform属性实现了并且使用:nth-child选择器实现交叉渲染不同颜色，这种好看的左右展开的抽屉式盒子效果，当然也在适配移动端进行了修改，当无法左右展开时，这里使用上下展开的方法。
 
@@ -182,13 +182,13 @@ iphone等移动设备效果预览图
 
 ##### vip充值
 
-![](https://pic.downk.cc/item/5fb6524ab18d627113ab843c.jpg)
+![](https://pic.imgdb.cn/item/5fb6524ab18d627113ab843c.jpg)
 
 模仿的是b站的大会员充值窗口，其中二维码不要尝试扫描付费，除非想请我咖啡，这里的布局稍微暴力，就是固定父元素设置为relative然后所有子元素设置为absolute来进行布置（当时写的有点小😡），当然六个选项使用了flex-wrap来适配移动端（效果自己看吧，这里不放图了），虽然很简单，但是实战必备锻炼板块。
 
 ##### 萤火button
 
-![](https://pic.downk.cc/item/5fb65657b18d627113aca9c4.jpg)
+![](https://pic.imgdb.cn/item/5fb65657b18d627113aca9c4.jpg)
 
 相当好看，不要被外表迷惑，实际上实现很简单，这里同样给出实战代码：
 
@@ -197,19 +197,19 @@ iphone等移动设备效果预览图
 
 ##### vip用户倒计时板块
 
-![](https://pic.downk.cc/item/5fb65666b18d627113acaca8.jpg)
+![](https://pic.imgdb.cn/item/5fb65666b18d627113acaca8.jpg)
 
 相当惊艳的效果，这里首先运用了css较为新颖的reflect属性设置了倒影来和下面的板块建立优雅的分界线，然后这里还引用了vue组件时钟（vue封装组件的一大亮点），上网可以自行查询，倒计时需要提供一个时间戳，感觉很好看，就保存了下来。
 
 ##### 数据分析饼状图
 
-![](https://pic.downk.cc/item/5fb65677b18d627113acb06c.jpg)
+![](https://pic.imgdb.cn/item/5fb65677b18d627113acb06c.jpg)
 
 emm，炫酷值拉满，常用于提供数据等直观分析必备技能，同样是引入的组件，这里我使用的是echarts的饼状图组件，可以去官网寻找，当然我也推荐使用有中文文档更为友好的ui库vux,elementUI的饼状图同样可以实现，我这里同样有个小bug,由于饼状图的大小是由加载Js时提前写死的，所以在窗口逐渐缩小时不能适配，饼状图会被遮挡一部分（有更好的建议评论区见😄）。
 
 ##### 可隐藏式气泡
 
-![](https://pic.downk.cc/item/5fb65689b18d627113acb457.jpg)
+![](https://pic.imgdb.cn/item/5fb65689b18d627113acb457.jpg)
 
 很好用，也很简单，这里的亮点主要是圆环的外层实际上应用的是box-shadow可以设置多个的技巧来实现的，很新颖，同样增加了适配，这里宽度过窄时会隐藏一个按钮。实战代码:
 
@@ -218,7 +218,7 @@ emm，炫酷值拉满，常用于提供数据等直观分析必备技能，同�
 
 ##### 瀑布流图片墙
 
-![](https://pic.downk.cc/item/5fb65622b18d627113ac9e4d.jpg)
+![](https://pic.imgdb.cn/item/5fb65622b18d627113ac9e4d.jpg)
 
 这里的亮点是并没有引用任何Js实现了瀑布流，并且更加神奇的是可以实现移动适配，当然缺点是排列顺序是从上到下，从左到右一条龙式陈列的，这也就使得在加载更多图片时只会在右半部分出现新图片的动画效果，当然这种纯CSS，不借助外界Js实现的方法还是很实用的，实战代码：
 
@@ -231,25 +231,25 @@ Button就是简单一个颜色填充效果，主要的功能实现则是修改in
 
 #### 数字滚动时钟
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210414231620.png)
+![](https://langwenchong.gitee.io/figure-bed/20210414231620.png)
 
 仔细观察，这里的数值变化是滚动更新的，我这里引用了vue-odometer.js来实现的，也是前端数据呈现的一种常用手段。
 
 #### post文章交叉渲染
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210414231758.png)
+![](https://langwenchong.gitee.io/figure-bed/20210414231758.png)
 
 这里的post文章是交叉渲染的，图片一左一右使用:nth-child实现，同时你会发现图片时呈现梯形样式的，这里使用的是css3的clip-path属性来实现的。同时鼠标悬停时，图片旋转放大使用的是rototate()函数实现的。
 
 #### 3d卡片自动旋转
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/image-20210414231955422.png)
+![](https://langwenchong.gitee.io/figure-bed/image-20210414231955422.png)
 
 这里的明信片以一种由内到外，从小到大的方式呈现的，但是这里并没有使用js而是使用的纯css实现的，就是使用animationh动画属性以及opacity透明度属性来实现的。
 
 #### 评论区
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210414232226.png)
+![](https://langwenchong.gitee.io/figure-bed/20210414232226.png)
 
 这里的边框效果很惊艳，左右下三侧是通过border实现的，而上侧的两个短线是使用伪元素::before和::after来实现的。同时评论区可以进行评论发表，并且有对输入文字的检查，当为空字符串（即没有填写内容时）是不能发表评论的。这里的实时发表评论内容，是通过将每一个人的评论设置为一个obj，然后用一个总的comments数组存储每一条评论，当我们要发表自己的评论时，js会获取input框中的文本内容，然后创建一个obj对象存储我们的名称，文本信息，同时还会调用js的Date对象的getMoth()等方法获取当前的时间，最终将封装好的obj评论对象push到comments数组中从而显示我们发表的内容。
 
@@ -261,27 +261,27 @@ Button就是简单一个颜色填充效果，主要的功能实现则是修改in
 
 ##### 侧栏
 
-![](https://pic.downk.cc/item/5fb65837b18d627113ad1b52.jpg)
+![](https://pic.imgdb.cn/item/5fb65837b18d627113ad1b52.jpg)
 
 基本上100%还原了主题样式，这里巧妙运用z-index实现了上半部分的元素切割效果，并且下方三个链接则是运用了next主题下划线延长的动画效果（优雅至极😆），原理很简单，设置伪元素并设置1px高度，0px宽度，然后选中时过渡伸长就好了，四个小按钮也很可爱~
 
 ##### 内容板块
 
-![](https://pic.downk.cc/item/5fb6590bb18d627113ad4b9c.jpg)
+![](https://pic.imgdb.cn/item/5fb6590bb18d627113ad4b9c.jpg)
 
-![](https://pic.downk.cc/item/5fb65944b18d627113ad58ac.jpg)
+![](https://pic.imgdb.cn/item/5fb65944b18d627113ad58ac.jpg)
 
 没什么特别的，就是对相应的段落格式都进行了相对应的格式标准化，比如一，二至五级标题，正文，引用段落，表格，链接，代码块规定了样式，并且文章右上侧添加了时间戳。
 
 ##### 夜间模式
 
-![](https://pic.downk.cc/item/5fb659dfb18d627113ad7d73.jpg)
+![](https://pic.imgdb.cn/item/5fb659dfb18d627113ad7d73.jpg)
 
 每次实战项目都会尝试实现的一个版块，这里更改了代码块，链接，背景的颜色，并且实现了跳转其他页面时仍保持夜间模式的功能（感觉这里逻辑代码不好构建），这里用了一个笨方法，就是每次页面生命周期钩子函数beforemounted调用一个函数接受一个参数用来判断是否为夜间模式，如果是，就集成上一个页面的样式，较为复杂（如果有更好的建议，评论区不见不散~）。
 
 ##### 移动适配
 
-![](https://pic.downk.cc/item/5fb65a9fb18d627113adaa7a.jpg)
+![](https://pic.imgdb.cn/item/5fb65a9fb18d627113adaa7a.jpg)
 
 左右排列改为上下排列，这里使用的可不是flex-wrap属性实现了，而是手动更改布局格式，仍然模仿的事yilia主题。
 

@@ -3,10 +3,9 @@ title: Java学习笔记-第八讲
 comments: false
 top: false
 date: 2021-03-26 16:22:53
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -87,7 +86,7 @@ equals()方法默认比较的是对象的地址值，但是Integer等基本类�
 
 我们来看一个例子理解一下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210326202602.png)
+![](https://langwenchong.gitee.io/figure-bed/20210326202602.png)
 
 上面的name1和name分别是通过实例化两个String类从而得到的两个不同的字符串对象指向变量，因此name1会指向一个存储内容为LiMing的对象的存储单元X，而name2会指向另一个存储内容为LiMing的对象的存储单元Y。所以虽然内容相同，但是由于两个变量引用指向了不同的存储单元，因此第一个判断返还了false,而第二个通过equals判断返还true就不难理解了，因为两个对象的状态完全相同，因此equals返还的是true。那么底下的该如何解释呢？下面的name3相当于指向了一个内容为LiMing的对象的存储单元Z，但是当再次使用String name4="Li"+"Ming"时首先java会进行简单的数据处理将其右边的值就处理为一个字符串“LiMing",然后他会现寻找是否一定有一个存储相同内容的对象的存储单元，如果有，那么就不会再次创建一个相同内容的对象（除非你是用new再次声明一个对象），而只是将这个引用指向已经存在的存储大院，所以此时name4引用会指向已经存储了LiMing的对象的存储单元，因此此时name3和name4实际上指向的是同一个存储单元Z。因此此时使用连等判断就会正确，当然equals也会正确。
 
@@ -210,7 +209,7 @@ charAt()截取一个字符，这里我们要注意由于不同于C，java中Stri
 
 toCharArray()将String转换成char数组。这里我们来演示一下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210326211044.png)
+![](https://langwenchong.gitee.io/figure-bed/20210326211044.png)
 
 equals()和equalsIgnoreCase()都是比较两个字符串的内容是否相同（前面讲过了比较引用要用==）。
 
@@ -268,7 +267,7 @@ insert()将括号中的某种数据类型的变量插入到StringBuffer
 
 ##### 思考：String和StringBuffer的区别？
 
-我们前面一直在讲String是一个不可变字符串，StringBuffer是一个可变字符串，那么到底是什么意思呢？实际上两者是针对于存储单元的修改问题而不同。我们前面已经讲过了String修改的一个细节问题（详见[《按引用传递》](https://wenchong.space/2021/03/16/Java-learn4/)）：
+我们前面一直在讲String是一个不可变字符串，StringBuffer是一个可变字符串，那么到底是什么意思呢？实际上两者是针对于存储单元的修改问题而不同。我们前面已经讲过了String修改的一个细节问题（详见[《按引用传递》](https://coolchong.cn/2021/03/16/Java-learn4/)）：
 
 ```java
 public class TestValue {
@@ -304,11 +303,11 @@ public class TestValue {
 
 在java中有几种不同的存储数据的集合类，他们的存储结构不相同，具体可以分为下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327104244.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327104244.png)
 
 即集合类有set和list,他们都是将数据存储到一个集合中，但是存储方式是不同的。set集合类又可以分为TreeSset类和HashSet类，而Liset类同样也可以分为LinkedList类，Vector类和ArrayList类。我们以后会逐一学习。同时还有一种不是以数据为单位存储而是以key-value键值对存储数据的数据结构即Map:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327104552.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327104552.png)
 
 其中也可以分为HashMap和TreeMap。
 
@@ -320,7 +319,7 @@ Set类要求数据数据唯一存在并且允许无序存储，而List类允许�
 
 Set是最简单的集合，这个集合的对象不按照特定的方式排序，并且没有重复的对象。Set接口主要有两个实现类：HashSet和TreeSet。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327104911.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327104911.png)
 
 Set集合中存储的都是对象，并且没有重复的对象。Java中实现Set接口的类有很多，HashSet只是其中一种，他的构建形式：
 
@@ -353,7 +352,7 @@ HashSet类继承于Set类，他有一些特有功能，他是按照哈希算法�
 
 HashSet类使用散列技术进行存储，就是把对象的哈希码直接用一个固定的公式计算，得出存储的方法。这样很容易快速命中搜索的目标。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327110117.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327110117.png)
 
 上图是一个例子，加入HashSet使用模9来计算存储位置，那么26就会被放到8处，24会被放到6处，22会被放到4处，但是此时发现15模9的余数也是6，但是此时6单元格已经存储了24，此时会产生冲突，所以解决冲突的方法就是对于每一个地方都使用链表来存储，所以这就是一个线性表了，此时15就会存储到24后面，也就是说此时的存储方式是6标志单元格->存储24的单元格->存储15的单元格，因此6也会加到15的后面，所以6标志单元格->存储24的单元格->存储15的单元格->存储6的单元格。而其他没有存储数据的单元格就占用极少的空间，空间复杂度并不高，同时查找时就不需要用极慢的顺序查找了，而是使用模9运算查找，比如现在要查找15，那么模9后为6，只需要在6链表进行逐位的顺序查找，速度会快很多。所以上面的存储中，24,15,6的哈希码都是6,22的哈希码是4,26的哈希码是8，显然哈希码不同的值是不同的元素。
 
@@ -368,7 +367,7 @@ HashSet类使用散列技术进行存储，就是把对象的哈希码直接用�
 
 如果不满足上面的要求，那么就会看成是不同的元素。我们思考一下上面的判断意义，首先假如24和15，他们是不同的值，在set中首先比较hashcode是否相同，发现hashcode都是6，那么会再次比较用equals，equals默认查找的是Integer对象内容是否相同，发现不同，所以24和15是不同的元素。我们发现这种方法很容易出现hashcode相同的情况，你可能会认为是模9计算hashcode导致的多次出现相同hashcode的情况出现，确实，在实际hashcode计算方法中，一般是根据一个对象在jvm堆的地址来计算hashcode使得元素的hashcode尽可能不同，但是hashcode是int型，是一个有限集合，无论怎样计算都难以避免出现hashcode相同的情况，所以我们还要使用equals函数进行进一步的判断。但是貌似对于不同地址的内容相同的对象此种方法就会出现bug:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327113408.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327113408.png)
 
 假设我们现在想要存储两个内容相同的并且存储于不同内存单元的st1和st2，我们的本意是这两个元素是不同的，因为他们的存储地址并不相同仅仅是内容相同，我们通过上面的==也可以看出这两个对象却是来自于不同的存储单元，但是在存储到set时我们发现只存储了一次。原因就是此时两个对象的hashcode相同了，但是此时调用equals仍然返还的是true,因为他们的内容相同，因此set会把他们识别为相同的元素，因此只会存储一次未能达到我们的预期。为什么这两个字符串刚刚好哈希code相同呢？这就和Java中字符串哈希code的设置方法有关了，他是首位字符再加上33，因此这两字符串刚好哈希数总是相同。
 

@@ -11,7 +11,9 @@
   &.auto
     transition: opacity .4s ease
     visibility: hidden
+    transform: translateY(-100%) !important;
     &.show
+      transform: translateY(0)!important
       opacity: 1 !important
       visibility: visible
   .container
@@ -385,7 +387,8 @@ ul.list-v
       .nav-sub
         width: 100%
         .title
-          overflow-y: scroll
+          // overflow-y: scroll
+          overflow-y:hidden
           margin-top: 2px
           padding: 8px $gap
       .switcher

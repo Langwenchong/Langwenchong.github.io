@@ -3,10 +3,9 @@ title: 计算机系统基础笔记--Part6
 comments: false
 top: false
 date: 2021-02-18 14:07:45
-tags: [note,408,计组原理]
+tags: [408,机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,计算机组成原理]
 ---
 
 本系列记录翀翀😛学习计算机组成原理的部分核心笔记，这部分是408最重要的部分，需要极大的毅力坚持学完，学习之前分享一句话与君共勉：你所有的迷茫，可能只是因为想得太多却做得太少。与其整日纠结，不如立即行动。也许不是每次出发都能找到正确的方向，不是每次尝试都能收获鲜花和掌声，但进一步自有进一步的欢喜。人生那么宝贵，既然渴望改变，就别畏首畏尾。
@@ -19,13 +18,13 @@ categories:
 
 #### 存储器的分类
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218141503.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218141503.png)
 
 存储器只是一个总名称，其种类繁多有许多种，首先我们可以按照几个不同的角度将存储器分类。
 
 ##### 按在计算机中的作用（层次）分类
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218143608.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218143608.png)
 
 - 主存储器：又称为主存，内存，用来存放计算机运行期间所需的大量程序和数据，CPU可以直接对齐进行访问，他也可以和告诉缓存cache以及辅助存储设备交换数据。特点是容量小，存取速度较快，每位价格高。
 - 辅助存储器：又称为辅存，外存，是后援存储器，用来存放当前暂时用不到的数据和程序，以及一些永久性保存的信息，他不能够直接和CPU进行信息交换。特点是容量大，存取速度慢，单位成本低。
@@ -96,23 +95,23 @@ $$
 
 ###### 思考：存取时间和存取周期的区别？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218145702.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218145702.png)
 
 存取时间不等于存取周期，通常存取周期大于存取时间，这是因为任何一个存储器，在读写操作之后一定还需要一段时间恢复内部状态，这段时间我们成为恢复时间。对于破坏性读出的存储器，存取周期往往比存取时间大得多，甚至存取周期是存取时间的两倍之大。因为存储器中的信息读出后需要迅速进行再生。
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218150031.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218150031.png)
 
 ### 存储器的层次化结构
 
 为了解决存储系统大容量、高速度、低成本3个相互制约的矛盾。在计算机系统中，通常采用多级存储结构来存储信息。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218150229.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218150229.png)
 
 在图中越靠上的部分造价越高，容量越小但是同时存取速度就越快，CPU的访问频率就越大。CPU,Cache,主存和辅存组成了最经典的三级存储系统结构如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218150459.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218150459.png)
 
 存储系统的层次结构主要体现在“Cache-主存”层次和“主存-辅存”层次。前者是为了解决CPU和主存的速度不匹配问题而产生的，后者则是为了解决存储系统容量问题的。在存储体系中，Cache,主存可以和CPU直接进行信息交换，而辅存中的信息需要先导入都主存以后才可以被cpu进行存取访问。
 
@@ -124,4 +123,4 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210218151734.png)
+![](https://langwenchong.gitee.io/figure-bed/20210218151734.png)

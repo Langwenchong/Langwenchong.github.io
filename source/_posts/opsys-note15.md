@@ -3,10 +3,9 @@ title: 操作系统笔记--Part15
 comments: false
 top: false
 date: 2020-12-29 14:50:26
-tags: [note,操作系统,OS,408,页面置换算法]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -21,7 +20,7 @@ categories:
 
 与基本分页管理相比，请求分页管理中，为了实现“请求调页”，操作系统需要知道每个页面是够已经掉入内存，如果还没有调入内存，那么也需要知道该页面在外存中存放的位置。并且当内存空间不够时，要实现“页面置换”，操作系统需要通过某些指标来决定到底换出哪个页面（页面置换算法），有的页面没有被修改过，就不用再浪费时间写回外存。有的页面修改过，需要将外存中的旧数据覆盖，因此操作系统需要记录各个页面是否被修改的信息。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229150245.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229150245.png)
 
 从上图我们可以看出请求分页存储管理的页表中存储了所有的页表，即使没有放入到内存中页记录在一个页表项。例如x现在就没有在内存中。
 
@@ -29,11 +28,11 @@ categories:
 
 假设现在某进程要使访问的逻辑地址为（页号，页内偏移量）=（0，1024），那么经过查表发现此时0号页不在页表中，所以产生一个缺页中断，然后然后由操作系统对缺页中断进行处理。首先是将缺页的进程阻塞，然后放入阻塞队列，调页完成后再将其唤醒，放回就绪队列。如果内存中还有空闲块，那么就为进程分配一个空闲块，将所缺页面装入该快，并修改页表中相应的页表项。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229151202.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229151202.png)
 
 如上图就是将0号页表项内存块号修改为a并且状态为1，并且还要将x号块内的页面装入内存中去：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229151246.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229151246.png)
 
 ##### 思考：如果内存块此时是满的怎么办？
 
@@ -43,7 +42,7 @@ categories:
 
 我们知道缺页中断是因为当前执行的指令想要访问的目标页面未调入内存而产生的，因此属于内中断。一条指令在执行期间，可能会产生多次缺页中断（如copy A to B,即将逻辑地址A的数据复制到逻辑地址B，而A,B属于不同的页面，就可能产生两次中断，即A的页不在内存中，B的页也不再内存中，可能会产生两次中断）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229152210.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229152210.png)
 
 
 
@@ -53,15 +52,15 @@ categories:
 
 因为不能保证逻辑地址访问的页在内存中，所以我们首先是需要确定页是否在页表中，如果不在还需要调入页面并修改表项，当然如果内存满了，那么还需要页面置换。所以新增的步骤有：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229152741.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229152741.png)
 
 当然后面的步骤就是根据页号找到内存块号了，然后拼接物理地址最后再访问目标内存单元。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229152825.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229152825.png)
 
 这里我们尤其要注意TLB的机制，他只存放现在在内存中的刚刚被访问过得页表项，所以TLB里的页一定是存在的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229153116.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229153116.png)
 
 这里面的一些小细节直接用图片给出，这里我们一定要注意绿框中的提示要点。我们可以看出当产生缺页中断时换出旧页面并调入新的页面到内存块后发生了几个重要的事件：
 
@@ -78,7 +77,7 @@ categories:
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229153849.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229153849.png)
 
 ### 页面置换算法
 
@@ -92,7 +91,7 @@ categories:
 
 那么最终的过程如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229155134.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229155134.png)
 
 首先不用想，第一次填入时肯定都是缺页的（这个很重要容易被忽视）所以内存块填入7,0,1就先缺页3次，然后接下来到2，我们需要调出一个页面，此时我们看一下未来的访页顺序发现7最长时间不会被访问了，所以调出7接入2又缺页1次，继续执行到3发现又该调出了，还是看未来的顺序，调出1,....一直这样看未来顺序调出页面最终缺页率还是可观的才45%。这里我们可以看出缺页率的计算公式：
 $$
@@ -128,11 +127,11 @@ $$
 
 例题：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229162345.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229162345.png)
 
 缺页率=9/12=75%,说实话优点小高。那么你一定想到了如果多分几个内存块是不是缺页次数会变得更少，答案是未必，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229162636.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229162636.png)
 
 缺页率=10/12=83%缺页率反而更大了。只有FIFO会产生这种Belady异常现象，所以FIFO算法虽然实现简单，但是该算法与进程实际运行时的规律是不适应的，因为先进入的页面也有可能经常被访问，所以算法性能差，不推荐使用。
 
@@ -150,9 +149,9 @@ NRU和SC的R位都是被访问的意思，但是NRU的R位是最近被访问的�
 
 对第二次机会算法的改进，我们发现第二次机会算法总是需要在链表中移动页面，这很低效没必要。所以更好的做法是把所有的页面都保存在一个类似钟面的环形链表中，一个表指针指向最老的页面（即最先进入内存的页面）。当发生缺页中断时，首先检查指针指向的页面，如果R位是0，那么就淘汰该页面，并把新的页面插入到这个位置，然后把表指针移到下一个页面，如果R位是1就将R位置为0然后检验下一个位置，重复这个过程一直到找到一个R位为0的页面为止。当所有的R位都是1时，则指针转一圈将所有的页面的R位都清为0。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229164503.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229164503.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229164520.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229164520.png)
 
 我们发现实际上CLOCK算法和SC算法思想一模一样，只不过是换了一个数据结构来减少操作的开销。并且我们发现简单的CLOCK算法选择淘汰一个页面最多经过两轮扫描。
 
@@ -193,11 +192,11 @@ NRU和SC的R位都是被访问的意思，但是NRU的R位是最近被访问的�
 
 实现方法：赋予每个页面对应的页表项中，用访问字段记录该页面自上次被访问以来所经历的时间t，当需要淘汰一个页面时，选择现有页面中t值最大的，即最近最久未使用的页面。很明显这个非常的科学。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229171411.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229171411.png)
 
 我们以一道例题讲解，假设某系统为某进程分配了4个内存块，并考虑到有以下页面号引用串：1,8,1,7,8,2,7,1,8,3,8,2,1,3,1,7,1,3,7
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229171545.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229171545.png)
 
 缺页率=6/20=33%很小。在手动做题时，若需要淘汰页面，可以逆向检查此时在内存中的几个页面号。在逆向扫描过程中最后一个出现的页号就是要淘汰的页面。我们发现这个方法太好啦，就用这个吧，但是实际上这个算法不常见，因为需要专门的硬件支持且实现困难，开销极大。
 
@@ -293,7 +292,7 @@ NRU和SC的R位都是被访问的意思，但是NRU的R位是最近被访问的�
 
 ###### 思考：分配策略和置换策略的关系？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229195451.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229195451.png)
 
 固定分配局部置换：系统为每个进程分配一定数量的物理块，在整个运行期间都不改变。若进程在运行中发生缺页，则只能从该进程在内存中的页面中选出一页换出，然后再调入需要的页面。这种策略缺点是很难在刚开始就确定应该为每个进程分配多少个物理块才算合理。（采用这种策略的系统可以根据进程大小，优先级，或是根据程序猿给出的参数来确定为一个进程分配的内存块数）
 
@@ -321,19 +320,19 @@ NRU和SC的R位都是被访问的意思，但是NRU的R位是最近被访问的�
 
 当系统拥有足够的对换区空间：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229201151.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229201151.png)
 
 那么页面的调入和调出都是内存和对换区之间进行，这样可以保证页面的调入和调出速度很快，在进程运行前，需要将进程相关的数据从文件区复制到对换区。
 
 当系统缺少足够的对换区空间：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229201444.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229201444.png)
 
 凡是不会被修改的数据都直接从文件区调入，由于这些页面不会被修改，因此换出时不必写回磁盘，下次需要时再从文件区调入即可。对于可能被修改的 部分，换出时需写回磁盘对换区，下次需要时再从对换区调入。
 
 独特的UNIX方式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229201606.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229201606.png)
 
 运行之前进程有关的数据全部放在文件区，故未使用过的页面，都可从文件区调入。若被使用过的页面需要换出，则写回对换区，下次需要时从对换区调入。
 
@@ -347,11 +346,11 @@ NRU和SC的R位都是被访问的意思，但是NRU的R位是最近被访问的�
 
 工作集：在某段时间内，进程实际访问页面的集合。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229201926.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229201926.png)
 
 所以工作集大小可能会小于窗口尺寸，系统会根据工作集大小和窗口尺寸的关系动态更改驻留集。比如某个进程的窗口尺寸为5，但是一段时间的检测发现进程的工作集一般最大就是3，那么物理块大小更改为3即可满足需要。所以一般驻留集的大小不能小于工作集的大小，否则就会导致进程运行过程中频繁缺页。
 
 #### 总结
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20201229202213.png"  />
+<img src="https://langwenchong.gitee.io/figure-bed/20201229202213.png"  />
 

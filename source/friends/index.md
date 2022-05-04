@@ -82,8 +82,8 @@ cover: true
 {% timenode 第一步：先将本站链接添加至贵站 %}
 
 > * 名称：雨中的博客
-> * 链接：https://wenchong.space
-> * 头像：https://gitee.com/Langwenchong/figure-bed/raw/master/author.jpeg
+> * 链接：https://coolchong.cn
+> * 头像：https://langwenchong.gitee.io/figure-bed/author.jpeg
 > * 网站截图：https://pic.imgdb.cn/item/609a06bed1a9ae528ff429cc.jpg
 > * 描述：频繁记录，只因生活和你太值得❤
 {% endtimenode %}

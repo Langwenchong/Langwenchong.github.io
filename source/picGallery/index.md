@@ -15,7 +15,7 @@ date: 2021-05-21 17:39:06
 
 <div class="picGallery">
 <figure class="sample">
-    <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/SKY_20210520_232331__edit_72000279020263.jpg" alt="sample1" />
+    <img src="https://langwenchong.gitee.io/figure-bed/SKY_20210520_232331__edit_72000279020263.jpg" alt="sample1" />
     <figcaption>
       <h3>Sky World</h3>
       <!-- 随机文本，Lorem -->
@@ -24,7 +24,7 @@ date: 2021-05-21 17:39:06
     <a href="/sky" title="点进去看以后就是我的人啦~"></a>
   </figure>
   <figure class="sample">
-    <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/IMG_20201207_175710_edit_72801560243057.jpg" alt="sample2" />
+    <img src="https://langwenchong.gitee.io/figure-bed/IMG_20201207_175710_edit_72801560243057.jpg" alt="sample2" />
     <figcaption>
       <h3>Life Pieces</h3>
       <p>The fragmented pieces of life are secret tunnels to a happy planet </p>

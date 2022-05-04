@@ -3899,7 +3899,7 @@ function bot_ui_ini() {
             }).then(function () {
                 botui.message.add({
                     delay: 1500,
-                    content: "现在是一名软件工程的大二学生👨‍💻"
+                    content: "现在是一名软件工程的大三学生👨‍💻"
                 }).then(function () {
                     botui.message.add({
                         delay: 1200,
@@ -3920,7 +3920,7 @@ function bot_ui_ini() {
                                     botui.action.button({
                                         delay: 1100,
                                         action: [{
-                                            text: "博客的域名有什么特殊意义吗？🤔",
+                                            text: "博客的名字有什么特殊意义吗？🤔",
                                             value: "why-mashiro"
                                         }]
                                     }).then(function (a) {
@@ -3936,7 +3936,7 @@ function bot_ui_ini() {
         thirdpart = function () {
             botui.message.add({
                 delay: 1e3,
-                content: "文翀寓意文采飞扬，因此博客名为wenchong.space"
+                content: "文翀最后一个字拆开即为羽中(雨中)啦🤭,这就是博客名字的由来"
             }).then(function () {
                 botui.action.button({
                     delay: 1500,
@@ -3977,7 +3977,7 @@ function bot_ui_ini() {
             }).then(function () {
                 botui.message.add({
                     delay: 1600,
-                    content: "与君初相识犹如故人归，留言板处赠吾一言作为纪念可好？"
+                    content: "与君初相识犹如故人归，很高兴能够认识你这位朋友！"
                 })
             })
         }

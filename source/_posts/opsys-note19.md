@@ -3,10 +3,9 @@ title: 操作系统笔记--Part19
 comments: false
 top: false
 date: 2021-01-01 11:30:33
-tags: [note,操作系统,OS,408,磁盘调度算法]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。LL
@@ -57,7 +56,7 @@ Ta=Ts+Tn+Tt=s+m*n+1/2r+b/rN
 
 根据进程请求访问磁盘的先后顺序进行调度。例如：假设磁头的初始位置为100号磁道，有多个进程先后陆续地请求访问55、58、39、18、90、160、150、38、184号磁道，那么按照FCFS的规则，按照请求的顺序，磁头需要一次移动到55、58、39、18、90、160、150、38、184号磁道。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101124146.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101124146.png)
 
 磁头一共移动了45+3+19+21+72+70+10+112+146=498个磁道。响应一个请求平均需要移动489/9=55.3个磁道。（平均寻找长度）。
 
@@ -71,7 +70,7 @@ SSTF算法优先处理的是离当前磁头最近的磁道，可以保证每次�
 
 例如：假设磁头的初始位置为100号磁道，有多个进程先后陆续地请求访问55、58、39、18、90、160、150、38、184号磁道：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101124605.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101124605.png)
 
 磁头总共移动了(100-18)+(184-18)=248个磁道，响应一个请求平均移动248/9=27.5个磁道（平均寻道长度）
 
@@ -85,7 +84,7 @@ SSTF产生饥饿的原因是磁头有可能会在一个小区域内来回的移�
 
 假设某磁道为0~200号，磁头的初始位置是100号，此时磁头正在往磁道号增大的方向移动，那么此时有多个进程的请求访问：55、58、39、18、90、160、150、38、184号磁道。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101125043.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101125043.png)
 
 一定要注意必须移动到磁道最边缘处才可以更改移动方向即使没有请求访问最边缘磁道也要经过。
 
@@ -101,7 +100,7 @@ SSTF产生饥饿的原因是磁头有可能会在一个小区域内来回的移�
 
 假设某磁道的磁盘为0~200号，磁头的初始位置为100号磁道，且此时磁头正在往磁道号增大的方向移动，有多个进程先后陆续的请求访问55、58、39、18、90、160、150、38、184号磁道。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101130004.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101130004.png)
 
 那么响应一个请求平均寻道长度为250/9=27.5磁道
 
@@ -115,7 +114,7 @@ SCAN算法对于各个位置磁道的响应频率不平均，而C-SCAN就是解�
 
 假设某磁盘的磁道为0~200号，磁头的初始位置为100号磁道，且此时磁头正在向磁道号增大的方向移动，那么有多个进程陆续的请求访问55、58、39、18、90、160、150、38、184号磁道。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101130522.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101130522.png)
 
 优点：比起SCAN算法，对于各个位置的响应频率很平均
 
@@ -127,7 +126,7 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 假设某磁盘的磁道为0~200号，磁头的初始位置为100号磁道，且此时磁头正在向磁道号增大的方向移动，那么有多个进程陆续的请求访问55、58、39、18、90、160、150、38、184号磁道。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101130837.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101130837.png)
 
 优点：比起C-SCAN算法来，不需要每次移动到最外侧或者最内侧才改变刺头方向，同时响应频率也很均匀。
 
@@ -135,23 +134,23 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101131029.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101131029.png)
 
 ### 减少延迟时间的方法
 
 我们知道延迟时间就是磁头等待到目标扇区的时间，那么磁盘扇区的不同排列方式也会对延迟时间造成影响。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101134423.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101134423.png)
 
 如果排列如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101134448.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101134448.png)
 
 那么假设现在要连续读取橙色区域的2,3,4区域，那么磁头读取一块的内容（也就是一个扇区的内容后）需要一小段的处理时间，而此时盘片还在不停地旋转。因此如果2,3号扇区相邻着排列，则读完2号扇区后无法连续不断的读入3号扇区。必须等待盘片继续旋转，3号扇区再次滑过磁头，才可以完成扇区读入。所以我们可以得到如下结论：磁头读入一个扇区数据后需要一小段时间处理，如果逻辑上相邻的扇区在物理上也相邻，那么读入几个连续的逻辑扇区，可能需要很长的延迟时间。
 
 #### 减少延迟的方法：交替编号
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101134818.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101134818.png)
 
 很明显，此时采用交替编号后，逻辑相邻的磁盘块物理结构上并不是相邻的，这样可以使读取连续的逻辑扇区所需要的延迟时间更小。
 
@@ -159,9 +158,9 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 我们思考一个问题，为什么在设计磁盘的物理地址时使用的表示方法为（柱面号，盘面号，扇区号）而不是（盘面号，柱面号，扇区号）？这里的原因如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101135154.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101135154.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101135515.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101135515.png)
 
 假设现在某个磁盘有8个柱面即8个磁道（且最内侧磁道编号为0），4个盘面，8个扇区。那么可以用3个二进制位表示柱面，2个二进制位表示盘面，3个二进制位表示扇区。
 
@@ -171,11 +170,11 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 #### 减少延迟的方法：错位命名
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101140205.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101140205.png)
 
 如果按照上面这样命名，即不同盘面的相对位置处编号相同，那么假设要连续读入物理地址为(000,00,000)\~(000,01,111)时当读取完磁盘块（000,00,111）之后需要短暂的时间处理，而盘面又在不停地旋转，那么当（000,01,000）第一次滑过1号盘面的磁头下方时，并不能读取数据，只能再等扇区再次滑过磁头。所以我们可以错位命名如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101140507.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101140507.png)
 
 即此时的两个盘面相对位置处的编号都有错位。那么就可以做到当读取完磁盘块（000,00,111）之后，还有一段时间处理，当（000,01,000）第一次滑过1号盘面的磁头下方时，就可以直接读取数据了，从而减少了延迟时间。
 
@@ -185,7 +184,7 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101140940.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101140940.png)
 
 ### 磁盘的管理
 
@@ -197,7 +196,7 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 2. 将磁盘分区，每个分区由若干柱面组成（即分为C,D,E盘等）
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101141347.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210101141347.png)
 
    我们可以看出越靠近里面的盘数据密度也就越大。
 
@@ -217,13 +216,13 @@ C-SCAN算法的主要缺点是只有到达最边缘的磁道才可以返回到�
 
 #### 坏块的管理
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101142747.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101142747.png)
 
 对于简单的磁盘，可以在逻辑格式化时（建立文件系统时）对整个磁盘进行坏块检查，标明那些是坏扇区比如在FAT表上标明（在这种方式中，坏块对操作系统不透明）。对于复杂的磁盘，磁盘控制器（磁盘设备内部的一个硬件部位）会维持一个坏块链表。在磁盘出厂前进行低级格式化（物理格式化）时就将坏块链进行初始化。当然也可以保留一些备用扇区用于替换坏块。这种方案称为扇区备用，且这种处理方式中，坏块对操作系统透明。我们这里介绍几种策略：
 
 ##### RAID0
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101142821.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101142821.png)
 
 RAID0又称为Stripe或者Striping,他代表着所有RAID级别中最高性能的存储性能。RAID0的原理就是把连续的数据分散到多个磁盘上存取，这样当系统有数据请求时就可以多个磁盘并行的执行，每一个磁盘运行属于它自己的那部分数据请求。这种并行操作请求的方法显著提高了存储性能。并且磁盘的读/写操作也会提高，假设RAID0将某一个请求分成了三个部分，那么每个磁盘只运行自己的那部分任务，那么理论上运行速度会提升为原来的3倍，但是由于总线带宽等影响，会低于理论值，但是也明显提升了速度。
 
@@ -236,7 +235,7 @@ RAID0又称为Stripe或者Striping,他代表着所有RAID级别中最高性能�
 
 ##### RAID1
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101143404.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101143404.png)
 
 其实就是镜像备份了，这样就实现了数据冗余，在成对的独立磁盘上产生互相备份的数据。当原始数据繁忙时，可以镜像拷贝读取数据，所以读取性能提高了。并且由于每一个盘都有镜像备份，所以磁盘阵列中单位成本很高。但是也提供了数据的安全性和可用性，当一个磁盘损坏失效，系统可以快速切换到备份的镜像磁盘上读写，不会立刻停止工作。当然两个都损坏了也是无法工作的，但概率太小。所以RAID1中总是有一个保持完整数据的备份盘，可靠性更好。
 
@@ -251,7 +250,7 @@ RAID0又称为Stripe或者Striping,他代表着所有RAID级别中最高性能�
 
 ##### RAID10
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101144429.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101144429.png)
 
 其实可以看出特点，就是RAID1和RAID0的组合，对于整体来看组合是RAID0而局部看来每一个不分都是RAID1这样的好处是，整体上的读写性能很好，并且也不容易损坏因为每一个部分都有备份盘即使损坏了也可以立刻用备份盘替换。
 
@@ -266,7 +265,7 @@ RAID0又称为Stripe或者Striping,他代表着所有RAID级别中最高性能�
 
 ##### RAID5
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101144905.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101144905.png)
 
 RAID 5是RAID 0和RAID 1的折中方案。RAID 5具有和RAID0相近似的数据读取速度，只是多了一个奇偶校验信息，写入数据的速度比对单个磁盘进行写入操作稍慢。同时由于多个数据对应一个奇偶校验信息，RAID5的磁盘空间利用率要比RAID 1高，存储成本相对较低，是目前运用较多的一种解决方案。当然我们发现每一组类型的盘都有一个备份盘随时准备顶替损坏的磁盘工作，并且备份盘每一个都分布在不同的disk上，而相应的有备份盘的disk就么有哪一种类的工作原盘。这样既便于维护整体性能也还不错，当有一个盘损坏时也可以继续工作，当然仅限于坏掉一个，当再坏掉一个或者备份盘先坏掉此时又有盘坏掉时也是会停止工作的。
 
@@ -279,5 +278,5 @@ RAID 5是RAID 0和RAID 1的折中方案。RAID 5具有和RAID0相近似的数据
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101145317.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101145317.png)
 

@@ -3,17 +3,17 @@ title: 操作系统大作业--多线程求解pi值
 comments: false
 top: false
 date: 2020-10-28 09:06:25
-tags: [操作系统,C++,大作业,linux,多线程,pi值求解]
+tags: [操作系统,linux,c++]
 categories: 
-	- [项目总结,操作系统大作业]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704171432.png
+	- [知识分享,项目总结]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704171432.png
 ---
 
 实验要求：用POSIX thead编写多线程代码，根据给定的公式求圆周率🍞。
 
 通过下图中的近似公式，使用多线程编程实现pi的计算；通过控制变量N的数值以及线程的数量，观察程序的执行效率。
 
-![](https://pic.downk.cc/item/5f9928501cd1bbb86b77b382.jpg)
+![](https://pic.imgdb.cn/item/5f9928501cd1bbb86b77b382.jpg)
 
 具体实验要求见手册：链接：https://pan.baidu.com/s/1MPYRcAoR4qum1MfrTSxHPA 
 提取码：wjjq 
@@ -46,7 +46,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704171432.png
 
    ​       返回值：成功，返回0；出错，返回-1。
 
-   所以这个函数是用来创建多线程并触发函数的功能函数，其中要注意返回值，可以用来检验多线程是否创建成功，因为第一个是指针，所以传进数组的值（当然这个数组需要提前声明），然后第二个设置为NULL即可无特殊要求属性，然后就会触发thread（）函数分线程计算各自的值了（手册源代码已给出提示），最后一个参数就是要传递给thread()函数的参数，如下图。![](https://pic.downk.cc/item/5f99288d1cd1bbb86b77d045.jpg)
+   所以这个函数是用来创建多线程并触发函数的功能函数，其中要注意返回值，可以用来检验多线程是否创建成功，因为第一个是指针，所以传进数组的值（当然这个数组需要提前声明），然后第二个设置为NULL即可无特殊要求属性，然后就会触发thread（）函数分线程计算各自的值了（手册源代码已给出提示），最后一个参数就是要传递给thread()函数的参数，如下图。![](https://pic.imgdb.cn/item/5f99288d1cd1bbb86b77d045.jpg)
 
    其中malloc就是为声明的数组申请相应大小的地址。
 
@@ -64,9 +64,9 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704171432.png
 
    同上，也是先传递值，第二个参数设置为NULL即可，并且也可以根据返回值进行判断是否正常结束线程并返回值。
 
-   ![](https://pic.downk.cc/item/5f9928c61cd1bbb86b77f439.jpg)
+   ![](https://pic.imgdb.cn/item/5f9928c61cd1bbb86b77f439.jpg)
 
-3. 然后就是thread函数来进行对每一个单线程的计算了，根据提示，每次计算i是从id\*length~(id+1)\*length（注意，不包括他），所以根据公式进行相应的计算即可，最后在用互斥锁分别在每次计算完后，进行累加求和即可，这里的关键点在于如何能够得到累加求和的值，有两种思路：（1）第一种是每次返还一个值存入结果数组，然后统一在main()函数中进行求和，这种方法好处是避开了累加涉及到的对同一变量的修改（2）也可以使用全局变量sum,在每次累加求和时只需sum加上返回值即可，我采用的是第二种，变量要声明为全局变量，这样thread就可以调用这个变量了，最后再补上读入n和t的代码块就基本上完成了。![](https://pic.downk.cc/item/5f99293d1cd1bbb86b7831ad.jpg)
+3. 然后就是thread函数来进行对每一个单线程的计算了，根据提示，每次计算i是从id\*length~(id+1)\*length（注意，不包括他），所以根据公式进行相应的计算即可，最后在用互斥锁分别在每次计算完后，进行累加求和即可，这里的关键点在于如何能够得到累加求和的值，有两种思路：（1）第一种是每次返还一个值存入结果数组，然后统一在main()函数中进行求和，这种方法好处是避开了累加涉及到的对同一变量的修改（2）也可以使用全局变量sum,在每次累加求和时只需sum加上返回值即可，我采用的是第二种，变量要声明为全局变量，这样thread就可以调用这个变量了，最后再补上读入n和t的代码块就基本上完成了。![](https://pic.imgdb.cn/item/5f99293d1cd1bbb86b7831ad.jpg)
 
    变量均为全局变量，同时因为thread在最后面，要现在main()前面声明。
 
@@ -84,11 +84,11 @@ gcc test.c -o test -lpthraed
 
 这里我用我的本地虚拟机进行了机组测试结果均正确。
 
-![](https://pic.downk.cc/item/5f9929b11cd1bbb86b787f0f.jpg)
+![](https://pic.imgdb.cn/item/5f9929b11cd1bbb86b787f0f.jpg)
 
 实验结果分析：不难发现，伴随着N增大，结果值越来越精确。
 
-![](https://pic.downk.cc/item/5f9cd3141cd1bbb86b867b20.jpg)
+![](https://pic.imgdb.cn/item/5f9cd3141cd1bbb86b867b20.jpg)
 
 且不难发现，线程越多耗时越大。
 

@@ -3,10 +3,9 @@ title: 计算机系统基础笔记--Part3
 comments: false
 top: false
 date: 2021-02-01 11:57:15
-tags: [note,408,计组原理]
+tags: [408,机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,计算机组成原理]
 ---
 
 本系列记录翀翀😛学习计算机组成原理的部分核心笔记，这部分是408最重要的部分，需要极大的毅力坚持学完，学习之前分享一句话与君共勉：你所有的迷茫，可能只是因为想得太多却做得太少。与其整日纠结，不如立即行动。也许不是每次出发都能找到正确的方向，不是每次尝试都能收获鲜花和掌声，但进一步自有进一步的欢喜。人生那么宝贵，既然渴望改变，就别畏首畏尾。
@@ -19,15 +18,15 @@ categories:
 
 无符号数就是我们通常所说的非负数，所以整个机器字长的全部二进制位都为数值位，没有符号位，所以无法表示负数，相当于数的绝对值。例如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201120210.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201120210.png)
 
 这里要记住一个小知识点，一个数值串后面是B表示二进制，D表示十进制,H表示十六进制。所以对于n位机器字长，无符号数可以表示的数量是2^n个数：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201120719.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201120719.png)
 
 例如对于8位机器字长的计算机，他可以表示的无符号数范围是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201120819.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201120819.png)
 
 所以n位无符号数表示的范围是：0~2^n-1。
 
@@ -35,7 +34,7 @@ categories:
 
 有符号数即会最高位符号位来决定数值的正负，0是正数，1是负数。并且有符号数的机器表示会有多种形式如原码、补码、反码和移码。为了对上面四中形式进行区分，我们规定用X表示真值：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201121406.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201121406.png)
 $$
 [X]_原表示原码，[X]_补表示补码，[X]_反表示反码，[X]_移表示移码
 $$
@@ -51,18 +50,18 @@ $$
 
 约定小数点位置在符号位之后，有效值位最高位之前，那么后面的位权分别是2\^(-1),2^(-2)等。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201122506.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201122506.png)
 
 这里我们一定要区分一个概念，机器里的小数真的就只是小数点后面的数值，例如3.14虽然是小数，但是在机器中3看为整数又称为纯整数，0.14才看为一个真正的小数又称为纯小数。所以对于一个定点小数默认为就是有符号数，所以对于一个数值有效位n位的定点小数(x1~xn)。可以表示的范围是
 
 - 当x0=0,x1~xn均是1时是最大值，真值就是1-2^(-n)。
 - 当x0=1,x1~xn均是1时是原码所能表示的最小值，真值是-(1-2^(-n))。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201123145.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201123145.png)
 
 此时存储解码时默认就全部是按照小数的位权进行解码：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201123115.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201123115.png)
 
 那么我们如何知道对于一个二进制数值串要按照定点小数进行解码呢？可以根据参量之前的声明格式得知。
 
@@ -70,13 +69,13 @@ $$
 
 其实定点整数就是我们广泛所指的纯整数，因为纯整数没有小数部分，所以小数点就固定在有效数值位最后一位即可。解码时位权全部按照2\^0,2\^1,2^2赋值即可。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201123541.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201123541.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201123552.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201123552.png)
 
 我们发现同样是对于011进行计算真值，但是此时由于要按照定点整数计算，所以计算处的真值就是+3D了。那么定点整数同样是有符号数，所以可以表示的范围是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201123710.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201123710.png)
 
 #### 原码、补码、反码、移码
 
@@ -91,7 +90,7 @@ $$
 			1-x=1+|x|&-1<x<=0
        \end{cases}
 $$
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201131508.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201131508.png)
 
 对于纯整数的原码，我们规定规则如下“
 $$
@@ -100,7 +99,7 @@ $$
 			2^n-x=2^n+|x|&-2^n<x<=0
        \end{cases}
 $$
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201131813.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201131813.png)
 
 一定要注意对于机器字长更长的，位数不全的时候要补0，但是对于小数是在有效数值位后面补0，而对于纯整数是在符号位和有效数值位中间补0。
 
@@ -112,7 +111,7 @@ $$
 
 对于纯小数的补码，我们规定规则如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201135957.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201135957.png)
 
 我们发现了如下规律：
 $$
@@ -128,11 +127,11 @@ $$
 
 比如上面的x2=-0.1001的原码是1,1001000，那么他的补码就是符号位不变，数值位取反再加一即可得1,0111000。又因为x2和x1是正负数，所以x2的补码也可以由x1的补码推得，即x1的补码是0,1001000，所以x2的补码就是x1的补码整体取反加一得1,1001000。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201142110.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201142110.png)
 
 对于纯整数的补码，我们规定规则如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201141232.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201141232.png)
 
 同样也是遵循上面的规律：
 $$
@@ -146,7 +145,7 @@ $$
 [X]_补->[-X]_补：连同符号位整体取反加一
 $$
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201142101.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201142101.png)
 
 ###### 思考：为什么对于补码，会比原码多表示一个数，那个数的由来是什么?
 
@@ -158,7 +157,7 @@ $$
 
 对于纯小数的反码，我们规定规则如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201142637.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201142637.png)
 
 满足以下规律：
 $$
@@ -169,13 +168,13 @@ $$
 $$
 我们发现实际上和由原码转换成补码的过程相比就少了一个加一而已。并且上面的规则同样适用于反码转换成原码。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201142916.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201142916.png)
 
 和原码表示的数值数量一样。
 
 对于纯整数的反码，我们规定规则如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201143040.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201143040.png)
 
 满足以下规律：
 $$
@@ -184,13 +183,13 @@ $$
 	对于负数，原码符号不变，数值部分按位取反
 \end{cases}
 $$
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201143105.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201143105.png)
 
 和原码表示的数值数量一样。
 
 ##### 原码、反码、补码之间的转换
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201143355.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201143355.png)
 
 我们要能看懂上面这张转换表，实际上很好看懂，对于原码永远都是符号位+数值位的拼接所以有正0和负0两种情况，对于补码，正数部分和原码没有区别，只是补码对于0000000既可以解释为正0也可以表示为负0，而负数部分就是原码的数值位取反+1或者正数补码整体取反加1。而反码正数部分和原码也没有区别，负数部分就是原码的数值位取反，或者正数反码整体取反，或者补码-1。
 
@@ -246,7 +245,7 @@ $$
 
 这里我们给出一个关系图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201144435.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201144435.png)
 
 ##### 移码
 
@@ -256,7 +255,7 @@ $$
 $$
 比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201145056.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201145056.png)
 
 移码有如下几个特点：
 
@@ -264,7 +263,7 @@ $$
 
 2. 一个真值的移码和补码只是符号位相反，即在移码中1表示正，0表示负，而原码，反码，补码都是0表示正，1表示负
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201151955.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210201151955.png)
 
 3. 移码全0时，是真值的最小值为-2\^n，移码全1时，对应真值最大值2^n-1。
 
@@ -272,7 +271,7 @@ $$
 
 
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201145905.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201145905.png)
 
 ###### 思考：怎么根据移码求得真值？
 
@@ -294,7 +293,7 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201151642.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201151642.png)
 
 这部分内容很难理解，计算较难，重点是要掌握真值和码相互转换的方法。不会了可以看看上面的例题和转换公式。
 
@@ -304,7 +303,7 @@ $$
 
 我们知道在数学计算中经常会形容小数点左移或者右移几位，比如
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201152303.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201152303.png)
 
 但是在计算机的定点表示中我们不可能移动小数点，所以我们采取的就是数据移位，移位分为两种：①算术移位，算术移位的对象是有符号数②逻辑移位，逻辑移位的对象是逻辑代码，又可视为无符号数
 
@@ -314,13 +313,13 @@ $$
 
 我们知道对于原码，反码，补码的正数部分，即符号位是0的部分，他们的真值是一样的，所以都是移位后空位以0添之。其效果相当于左移乘以2右移除以2（类似于10进制左移乘以10，右移除以10），但是由于原码，反码，补码的负数部分表示有差异，所以移位到底是补0还是补1是不同的，规律见下表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201153216.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201153216.png)
 
 ###### 思考：上面的规律是怎么来的？
 
 我们知道负数的原码部分和正数的原码相同，都是数值位就是真值的绝对值，所以只要移位过程中，符号位不变，补0即可。而观察负数的反码，他除符号位其他的数值位刚刚好和负数的原码相反，所以反码移位填1相当于原码的移位填0。而分析由原码到补码的过程我们发现，当对其由低位向高位找到第一个1时在此1的左边即高位的各位与对应的反码相同，而此1的右边的各位（包括这个1）即低位都与原码相同。所以左移时产生低位填的代码要与原码移位规则相同，所以左移填0，而右移时产生高位，所以右移时代码要与反码移位规则相同，所以右移填1。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201153953.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201153953.png)
 
 对于原码，我们一定要关注的是左移和右移是否会丢1，如果左移那么必定丢位，如果丢的是0不是1，那么计算正确，就是扩大两倍，但是如果左移丢1了，那么计算就会出错误，不是扩大两倍了，右移时如果丢0那么就是缩小两倍，但是一旦丢1，那么精度就不准确了，大约缩小两倍，但是不准确比如上图中的53/2=26，主要是因为后面的小数部分无法表示导致的。
 
@@ -341,7 +340,7 @@ $$
 
 循环移位主要的作用不是用来计算的，而是将数据的低字节数据和高字节数据互换用的，一般有四种情况，主要的特点就是移出的数位会再移入到数据中，而是否带进位就要看是否将进位标志位也加入到循环移位中去。所以有如下四种情况：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210201155559.png)
+![](https://langwenchong.gitee.io/figure-bed/20210201155559.png)
 
 对应着的结果是
 
@@ -445,11 +444,11 @@ $$
 
 我们再计算两个式子，假设A=15,B=-24，C=124。那么此时计算[A+C]补和[B-C]补。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202120258.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202120258.png)
 
 我们会发现结果计算错误了，为什么？我们看一下计算过程，发现A+C时数值位无法表示这个更大的正数绝对值了，从而进1使得1占了符号位导致结果变成负数，这种因为两个正数相加而导致结果过超出了最大正数值表示范围我们成为上溢。而B-C可以看成两个负数-24和-124相加，我们发现两个符号位相加后产生了一个新的符号位0而后面的数值位相加又没有产生进位1导致了结果变成了正数，这种两个负数相加而导致结果超出了最小负数值表示范围的我们成为下溢。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202122848.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202122848.png)
 
 ##### 思考：那么难道只要是两个负数相加就一定下溢吗？因为符号位两个1相加一定产生0。
 
@@ -537,11 +536,11 @@ V=0表述无溢出，V=1（01或者10）表示有溢出。
 
 ##### 判断方法三：采用一位符号位根据数据位的进位情况判断溢出
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202124837.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202124837.png)
 
 我们再观察一下这两种溢出情况的特点，发现上溢时是之前的符号位为0，然后最高位数的进位是1，而下溢时是之前的符号位为1，然后最高位数的进位是0。即符号位和最高数位的进位总是相反的，而对于无溢出的情况，要么最高数位不产生进位(比如正+正不溢出）或者最高数位产生的进位和符号位相同(比如负+负不溢出)。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202125121.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202125121.png)
 所以逻辑表达式如上图。我们对比一下这三个方法，我认为还是方法二比较简洁易于理解。但是无论是哪个方法，归根结底都是V=0无溢出，V=1有溢出。
 
 #### 乘法运算
@@ -552,7 +551,7 @@ V=0表述无溢出，V=1（01或者10）表示有溢出。
 
 顾名思义，是使用原码进行乘法计算，这很符合我们人类的思维，但是又有一些变化。原码一位乘法的特点是符号位和数值位要分开求，首先我们单独判断一下结果的正负，这个可以使用乘数和被乘数取异或操作即可得到结果的正负。那么接下来重点是我们要看一下数值位（那么就必定是绝对值了，正数）的乘法操作了。首先我们参考一下规则：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202140228.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202140228.png)
 
 1. 被乘数和乘数均取绝对值参加运算，符号位为异或即可
 2. 部分积的长度同被乘数，取n+1位，以便存放乘法过程中绝对值大于等于1的值，初值为0.
@@ -569,11 +568,11 @@ V=0表述无溢出，V=1（01或者10）表示有溢出。
 
 设x=-0.1101，y=0.1011，采用原码一位乘法求解x*y。我们首先用我们之前学过的乘法计算一下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202141031.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202141031.png)
 
 那么计算过程如上图所示，可以看出乘数的某一位位权决定被乘数是否本次加上乘数，然后4个每次的中途计算结果都要左移一位，最后累加4个中间结果得到一个2倍被乘数长的结果。但是我们知道计算机是不可能自己理解这种计算方法的，单单中途结果左移就很难实现，所以我们使用了上面的计算规律：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202141542.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202141542.png)
 
 可以看出，对于每一次高位部分积是否加上乘数主要取决于乘数的最后一位。而每次的中间结果和乘数都要右移，但是中间结果是逻辑右移，而乘数每次右移后新增加的高位要添加中间结果逻辑右移时丢失的地位，因为最后还要用到这些中间结果右移丢失的地位来组成低位部分积，这样当乘数全部右移出去以后，存储乘数的寄存器里存储的就是低位部分积了，最终高位部分积和低位部分积拼接即得到了最终结果的原码。
 
@@ -581,35 +580,35 @@ V=0表述无溢出，V=1（01或者10）表示有溢出。
 
 首先第一步1101最后一位是1所以高位部分积加一次被乘数：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202143830.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202143830.png)
 
 然后中间结果逻辑右移同时乘法寄存器中乘数右移，然后中间结果的丢弃低位保存到乘数寄存器的空高位
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202145614.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202145614.png)
 
 然后继续乘，此时乘数寄存器中的乘数还剩三位101且最后一位是1所以还要进行高位部分积加被乘数（一定要注意此时的乘数寄存器中的最高位不是乘数的一部分了，而是之前中间结果的丢弃的低位1，实际上后来这个位1会用来组成低位部分积）：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202150102.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202150102.png)
 
 然后再次将中间结果逻辑右移，乘数也右移，并且同时中间结果的最低位1移到乘数的空高位：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202151031.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202151031.png)
 
 然后继续乘，此时乘数寄存器中的乘数还剩两位10且最后一位是0所以高位部分积进行加被0（一定要注意此时的乘数寄存器中的高2位不是乘数的一部分了，而是之前中间结果的丢弃的低位，实际上后来这2个位会用来组成低位部分积）：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202151326.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202151326.png)
 
 然后中间结果再次逻辑右移，同时乘数右移，再将中间结果右移丢弃的低位移到乘数寄存器的空高位：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202151516.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202151516.png)
 
 然后继续乘，此时乘数寄存器中的乘数还剩一位1且最后一位是1所以还要进行高位部分积加被乘数（一定要注意此时的乘数寄存器中的高3位不是乘数的一部分了，而是之前中间结果的丢弃的低位，实际上后来这3个位会用来组成低位部分积）：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202152056.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202152056.png)
 
 然后中间结果逻辑右移，乘数右移，然后中间结果的丢弃低位移到乘数寄存器的空高位：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202153033.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202153033.png)
 
 这样我们就通过原码一位乘法完成了计算，再加上符号是负号所以最终结果就是-0.100001111。我们最后来总结一下这个过程，发现实际上高位部分积寄存器中的每一次逻辑右移就相当于将中间结果左移了，乘数寄存器的每一次右移就相当被乘数下一次乘以乘数的前一位。而为什么高位部分积寄存器中中间结果右移的丢弃位要用掉乘数寄存器中呢？实际上是因为这个被丢弃位就是低位部分积的组成部分需要保留下来以便后面拼接出最终结果，而刚好可以存储到乘数寄存器中，这样就充分利用了空间，使得计算过程只需要两个寄存器即可完成。现在我们再对比之前的纸质乘法图就可以轻易理解原码乘法规则了。
 
@@ -631,7 +630,7 @@ $$
 
 4. 根据（yn,yn+1)的取值来确定操作，见下表：
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202155932.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210202155932.png)
 
 5. 移位按补码右移规则进行
 
@@ -641,7 +640,7 @@ $$
 
 我们还是求解上面的例题：设x=-0.1101，y=0.1011，采用补码一位乘法求解x*y。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210202160306.png)
+![](https://langwenchong.gitee.io/figure-bed/20210202160306.png)
 
 最终我们拼接得到结果是1.01110001，但是要注意这是补码，如果是正数那么就直接可以看成原码求真值了，但是现在还是补码，我们还要将它转换成原码最终结果是-0.10001111。
 
@@ -672,7 +671,7 @@ $$
 
 我们以一道例题讲解：机器字长为5位（含一位符号位，n=4），x=0.1011,y=0.1101，采用原码加减交替除法求x/y。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203123241.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203123241.png)
 
 一定要注意在最开始先进性一次减去除数，然后再开始商。所以虽然进行了5次操作，但是商只是左移了4位刚好将数值位填满了，商的符号位仍应为正。而上面这到题最终余数刚好为正，所以没有进行最后一步即可。这样我们就求解出来商是+0.1101，余数是0.0111\*2\^(-4)。这里一定要注意余数后面的级数，为什么会产生2\^(-4)呢？因为实际上我们最终得到的只是余数的数值位，他的每一次左移都会缩小2倍，所以就没一次左移（我们发现实际上就是逻辑左移）对余数产生一个\*2^(-1)。并且一定要注意虽然说是原码除法，但是实际上操作时加减的除数使用的是补码但是最终结果得到的是原码所以叫原码除法运算即余数和商都是原码。
 
@@ -695,7 +694,7 @@ $$
 [Y]_原=11.1011,[Y]_补=11.0101,[-Y]_补=00.1011
 $$
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203132739.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203132739.png)
 
 注意到此时使用的是双符号位，并且对于字长为5，执行了5次加减操作，4次移位，并且此时商和余数也都是逻辑左移。最终的商的补码是1.0101所以原码是1.0101也就是-0.0101，余数的补码是00.0111，为正数，所以原码也是00.0111，所以余数就是0.0111*2\^(-4)。一定不要忘记逻辑左移会让余数每次都乘一个2^(-1)即缩小两倍。
 
@@ -771,7 +770,7 @@ int main(){
 
 所以y的原码如上我们可以计算出真值就是-1，我们用机器验证一下得到结果却时是我们预测的值：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203142220.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203142220.png)
 
 这就是无符号数和有符号数之间的强制转换方法。
 
@@ -795,7 +794,7 @@ int main(){
 
 最终的结果如下:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203142617.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203142617.png)
 
 我们发现数值发生了很大的变化，并且连正负号都发生了变化，这是为什么？我们用16进制输出一下上面各值。
 
@@ -820,7 +819,7 @@ int main()
 
 输出结果：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203143745.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203143745.png)
 
 我们发现他只是将高位部分截取了，这样我们就不难理解为什么会发生数值的正负变化了，肯定是之前的最高位为0所以解释为正数，但是当截断以后最高位变成了1，那那么就自然就解释成了负数。但是这是长->短使用了截断的方法，那么如果是短->长呢？
 
@@ -843,7 +842,7 @@ int main()
 
 输出结果：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203144438.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203144438.png)
 
 我们发现对于short类型的短负数x再强制转换为int类型的长负数y以后真值并没有改变，而将x转换为无符号数u以后再转换为长int型v以后数值也没有发生变化，我们再观察一下此时这四个值的16进制代码：
 
@@ -868,7 +867,7 @@ int main()
 }
 ```
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203144924.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203144924.png)
 
 我们发现对于x->y的负数形式增长时高位全部补得是十六进制的f，也就是说对于二进制代码高位全部补1，而对于u->v的正数形式增长时高位补得是十六进制的0，也就是说二进制的高位补得全部是0。所以我们可以总结出一个规律，对于短->长的代码扩展，新添加的高位补得数和原先代码的最高位一致，这样我们就可以保证增长位数的强制转换以后数的真值没有发生变化了。并且我们还可以总结出只有长整数->短整数的强制转换真值不发生变化，其他情况都是会发生改变的，当然了了，长->短的字长强制转换也有小概率不会发生改变。前三个例子的转换规则都是保证相应的位值相等，而短字长到长字长的转换，在位值相等的条件下还要补充高位的符号位，可以理解为数值的相等。但是注意，char类型为8位ASCII码整数，其转换为int时，在高位部分补0即可。
 
@@ -876,4 +875,4 @@ int main()
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210203152904.png)
+![](https://langwenchong.gitee.io/figure-bed/20210203152904.png)

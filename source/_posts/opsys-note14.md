@@ -3,10 +3,9 @@ title: 操作系统笔记--Part14
 comments: false
 top: false
 date: 2020-12-29 08:41:40
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -21,7 +20,7 @@ categories:
 
 地址空间：按照程序自身的逻辑关系将程序划分为若干个段，每个段都有一个段名（在低级语言中，程序猿使用段名来编程），每段从0开始编制。而分段的内存分配规则就是：以段为单位进行分配，每个段在内存占据连续空间，但各个段可以离散存储不相邻，所以大小也是可以不相等的（不像分页必须规定固定大小的页帧）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229095936.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229095936.png)
 
 ##### 思考：为什么要引进分段的概念？
 
@@ -29,17 +28,17 @@ categories:
 
 那么分段系统中同样有逻辑地址此时的逻辑地址是由段号（段名）和段内地址（段内偏移量）组成，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229100626.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229100626.png)
 
 段号决定每个进程最多可以分为几个段，而段内偏移量决定了每个段的最大长度是多少。如上图这样的32位划分，那么如果系统是按照字节编址，那么段号16位，因此程序最多可以分为2\^16=64K个段，段内地址为16位，因此每个段最大长度为2\^16=64KB。
 
 同样的和分页查找地址类似，段中的某一个地址也是根据段号+段内偏移量找到具体的位置，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229100924.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229100924.png)
 
 那么
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229100946.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229100946.png)
 
 段号一般是用[]包裹，然后根据逻辑地址和段号就可以求得段内偏移量同样也需要段表查找到段的物理起始地址然后就可以找到真正的物理地址进行相应的读/写操作了(实际上和分页存储的查找方式是一样的)。
 
@@ -47,7 +46,7 @@ categories:
 
 问题：程序会被分为许多个段，各段离散地装入内存中，为了保证程序能正常运行，就必须从物理内存中找到各个逻辑段的存放位置。因此同样需要建立一张段映射表简称“段表”。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229101320.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229101320.png)
 
 不同的是此时段表没有块号而是改为基址，并且有新添加了一栏段长，这是因为分段存储中段的大小长度不固定而导致的。所以物理块的起始地址也就不能使用X+4*M这种来计算了。
 
@@ -76,7 +75,7 @@ categories:
 
 具体的变换演示如图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229103519.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229103519.png)
 
 我们一定要注意此时还多了一个步骤就是步骤4需要进行检查段内偏移量是否越界了。这个可千万不要忘记。所以也是需要进行两次访存一次是查表，一次是访问数据。
 
@@ -110,7 +109,7 @@ categories:
 
 很简单，就是使表项的基址指向同一个段即可：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229104910.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229104910.png)
 
 而页不是按照逻辑模块划分的，这就很难实现共享。因为假设一个函数模块被放在了两个页A,B，那么如果想让这个函数模块被共享，那么就需要A,B页都是可以允许共享的，但是如果此时A只有一半存的是函数模块，另一半存的是不允许共享的资源，那么显然现在A就很难实现共享，那么这个函数模块就也不能被共享了，这种冲突就造成了分页很难实现共享，同时风险也就更大。
 
@@ -124,7 +123,7 @@ categories:
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229105608.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229105608.png)
 
 ### 段页式管理方式
 
@@ -141,13 +140,13 @@ categories:
 
 我们前面说过页可以再分页，但是段不能再分段，但是我们可以用分段后在分页的方式存储，这样逻辑模块功能划分的优点保存的同时也可以将较大的段离散存储。所以首先要知道段页式存储一定是先分段再分页并且是对相同的段分页。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229111153.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229111153.png)
 
 #### 段页式管理的逻辑地址结构
 
 那块此时逻辑地址的结构也是变化的，我们此时会将逻辑地址变为如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229111248.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229111248.png)
 
 此时就没有段内偏移量了，“分段”对用户是可见的，程序猿编程时需要显式地给出段号、段内地址。而将各段“分页”对用户是不可见的，系统会根据内地址自动划分页号和页内偏移量来具体存储段的位置。因此段页式管理的地址结构也是二维的。
 
@@ -159,19 +158,19 @@ categories:
 
 显然此时段表和页表也是有变化的，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229111850.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229111850.png)
 
 此时每个段对应一个段表项，每个段表项由段号，页表长度（实际上就是段长度），页表存放块号（可以算出页表其实地址）组成。每个段表项长度相同，段号是隐含的。所以段表变化很大，页表基本上不变。每个页表对应一个页表项，每个页表项由页号和页面存放的内存块号组成。每个页表项长度相同，页号是隐含的。当然对于页表为了连续存储公式计算方便，最好还是一个页帧可以放入整数个页表项。
 
 #### 地址变换
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229112514.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229112514.png)
 
 注意此时一般来说就需要三次访存了，一次查段表，二次查页表，三次访存目标内存单元。当然如果加入了快表，那就只需要一次访存就是访存目标内存单元。
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229112708.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229112708.png)
 
 ### 虚拟内存的基本概念
 
@@ -179,7 +178,7 @@ categories:
 
 #### 传统存储管理方式的特征与缺点
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229113841.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229113841.png)
 
 所以我们之前讲的都是属于传统存储管理的部分。缺点是长期占用内存，所以可以使用虚拟存储技术解决。在传统的存储管理方式中有以下特点：
 
@@ -202,7 +201,7 @@ categories:
 
 在操作系统的管理下，在用户看来似乎有一个比实大的多的内存，这就是虚拟内存。（操作系统虚拟性的体现）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229114834.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229114834.png)
 
 ##### 思考：覆盖技术，交换技术，虚拟存储技术的区别？
 
@@ -229,15 +228,15 @@ categories:
 
 虚拟内存技术允许一个作业多次调入内存，如果是采用的连续分配方式很明显不方便，所以虚拟内存的实现方式需要建立在离散分配的内存管理方式基础上。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229120054.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229120054.png)
 
 但是区别于传统的离散分配存储管理，虚拟内存不是一次性装入全部，所以才会像之前所说的出现缺页中断等现象，此时就需要请求调入内存了，所以在虚拟内存技术中很明显会频繁的发生"请求"所以在虚拟内存技术下的存储方式叫做
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229120231.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229120231.png)
 
 所以主要区别就是在程序执行过程中，当所访问的信息不在内存时，有操作系统负责将所需要的信息从外存调入到内存中，然后继续执行程序。若内存空间不够了，就由操作系统将内存中暂时不需要的信息换出到外存。所以操作系统需提供请求页面功能和页面置换功能，当然后面会讲解页面置换算法决定具体该将那个信息暂时调出内存。
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201229120512.png)
+![](https://langwenchong.gitee.io/figure-bed/20201229120512.png)
 

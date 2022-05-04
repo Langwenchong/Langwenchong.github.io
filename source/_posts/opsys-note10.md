@@ -3,10 +3,9 @@ title: 操作系统笔记--Part10
 comments: false
 top: false
 date: 2020-12-26 10:35:06
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -21,7 +20,7 @@ categories:
 
 在提出信号量后我们确实可以借用信号量+PV操作实现进程互斥关系但是我们发现这对编程人员极其不友好，编写程序困难，易出错。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226110253.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226110253.png)
 
 我们知道这种P操作顺序错误会造成死锁，但是在编程中我们确实需要时刻注意P,V操作的顺序，这非常困难，所以能不能设计一个机制，让程序猿写程序时不需要关心复杂的PV操作，让写代码更轻松呢？可以，1973年，Brinch Hanson首次在程序设计语言（Pascal)中引入了"管程"的概念--一种高级同步机制，自此我们不需要在关心复杂P,V操作了，而是由编译器负责实现各进程的互斥进入管程操作。
 
@@ -130,7 +129,7 @@ static class monitor{
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226114418.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226114418.png)
 
 ### 死锁
 
@@ -179,7 +178,7 @@ static class monitor{
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226140203.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226140203.png)
 
 ### 死锁的处理策略
 
@@ -193,7 +192,7 @@ static class monitor{
 
 如果我们把只能互斥使用的资源改造为允许共享使用，那么系统就不会再进入死锁状态了，比如：SPOOLing技术。操作系统可以采用SPOOLing技术把独占设备在逻辑上改造成共享设备，比如用SPOOLing技术将打印机改造成共享设备。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226142208.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226142208.png)
 
 这个策略的缺点是并不是所有的资源都可以改造成共享使用的设备，并且为了系统的安全，很多地方还必须保护这种互斥性，因此很多时候无法破坏互斥条件。
 
@@ -219,7 +218,7 @@ static class monitor{
 
 可以采用静态分配方法，即进程在运行前一次申请完他所需要的全部资源，在它的资源未满足之前，不让他投入运行，一旦投入运行，这个资源就一直归他所有，该进程就不会再请求别的任何资源了。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226143454.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226143454.png)
 
 该策略实现起来简单，但也有明显的缺点：有些资源可能只需要很短的时间，因此如果进程的整个运行期间都一直保持着所有资源，就会造成严重的资源浪费，资源利用率低，另外该策略也会导致某些进程饥饿。
 
@@ -235,7 +234,7 @@ static class monitor{
 
 我们假设现在有10个资源，编号1~10。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226144004.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226144004.png)
 
 该策略的缺点：
 
@@ -245,7 +244,7 @@ static class monitor{
 
 ##### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226144243.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226144243.png)
 
 #### 避免死锁
 
@@ -261,7 +260,7 @@ static class monitor{
 
 然而有个不成文规定，如果你借给企业的钱总数达不到企业提出的最大要求那么值钱借给企业的钱就都拿不回来了。刚开始B,A,T三个企业分别借了20,10,30亿，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226145031.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226145031.png)
 
 此时我们手里还剩下40亿，此时A又提出要借款20亿，那么我们能否借给A呢？
 
@@ -269,7 +268,7 @@ static class monitor{
 
 我们思考，此时借给A20亿，如下:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226145249.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226145249.png)
 
 那么此时我们手中还剩下20亿，此时如果按照T->B->A或者A->T->B的顺序追债是可以把之前借的钱都要回来的，所以此时没有三家公司的钱都要不回来的风险，所以此时是安全的，我们可以借给A20亿。
 
@@ -277,13 +276,13 @@ static class monitor{
 
 很简单，假设此时我们手上还有40亿，此时B也要借钱借30亿，那么此时如果我们借出去，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226145928.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226145928.png)
 
 那么此时我们手中还剩下10亿，我们发现此时就不安全了，因为三家公司的钱我们都要不回来了。所以此时就是不安全的，我们不能再借给B30亿了。
 
 根据上面的例子我们知道所谓安全序列，就是指如果系统按照这种序列分配资源，则每个进程都能顺利完成，只要能找出一个安全序列，系统就是安全的，当然安全序列可能有多个。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226150205.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226150205.png)
 
 如果分配了资源之后，系统找不出任何一个安全序列，系统就进入了不安全状态，这也就意味着之后可能所有进程都无法顺利的执行下去了，当然如果有进程提前归还了一些资源（比如A先归还了10亿，那么手里有20亿按照T->B->A），那么系统也有可能重新回到安全状态，不过我们在分配资源之前总是要考虑到最坏的情况。
 
@@ -299,7 +298,7 @@ static class monitor{
 
 我们思考在BAT借贷的例子中只有一种类型的资源--钱，但是在实际的计算机系统中会有多种多样的资源，应该怎么把算法拓展为多种资源的情况呢？这里我们可以把单维的数字拓展为多维的向量，比如：系统中有5个进程P0\~P4，3中资源R0\~R2，初始数量为(10,5,7)，则某一时刻的情况可用下表方式表示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226151316.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226151316.png)
 
 对于上面的例子我们分析一下能否安全。首先第一次分配后剩余的资源数如下表：
 
@@ -347,7 +346,7 @@ $$
 
 假设系统有n个进程，m中资源，每个进程在运行前先声明对各种资源的最大需求数，则可以用一个n\*m的矩阵（可以用二维数组实现）表示所有进程对各种资源的最大需求数。不妨称为最大需求矩阵Max,Max[i,j]=K表示进程Pi最多需要K个资源Rj,同理，系统可以使用一个n\*m的分配矩阵Allocation表示对所有进程的资源分配情况，Max-Allocation=Need矩阵，表示各进程最多还需要多少各类资源。另外还要用一个长度为m的一维数组Available表示当前系统还有多少可用资源。某进程Pi向系统申请资源，可用一个长度为m的一维数组Requesti表示本次申请的各种资源量。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226154409.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226154409.png)
 
 可用银行家算法预判本次分配是否会导致系统进入不安全状态：
 
@@ -380,7 +379,7 @@ $$
 
 ###### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226155222.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226155222.png)
 
 #### 死锁的检测和解除
 
@@ -395,9 +394,9 @@ $$
 
 我们一般可以用资源分配图来保存资源的请求和分配信息，有以下两点两边的定义：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226160346.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226160346.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226160401.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226160401.png)
 
 如果系统中剩余的可用资源数足够满足进程的需求，那么这个进程暂时是不用阻塞的，可以顺利执行，如果这个进程执行结束了把资源归还给系统，就可能使某些正在等待资源的进程被激活，并顺利的执行下去。相应的，这些被激活的进程执行完了之后又会归还一些资源，这样可能又会激活另外一些阻塞的进程。
 
@@ -418,5 +417,5 @@ $$
 
 ##### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201226162801.png)
+![](https://langwenchong.gitee.io/figure-bed/20201226162801.png)
 

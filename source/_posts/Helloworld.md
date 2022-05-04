@@ -5,7 +5,7 @@ date: 2020-10-21
 tags: 简介
 categories: 简介
 pin: true
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704131441.png
+headimg: https://langwenchong.gitee.io/figure-bed/20210704131441.png
 ---
 
 hi👋~，看这里，博主在这里发表了重要的讲话！还不来看一看😊?

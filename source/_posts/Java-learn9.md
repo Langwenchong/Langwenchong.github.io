@@ -3,10 +3,9 @@ title: Java学习笔记-第九讲
 comments: false
 top: false
 date: 2021-03-29 16:24:02
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -44,7 +43,7 @@ public int x.compareTo(y){
 
 例如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331194610.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331194610.png)
 
 我们在TreeSet中插入0,5,2,01这几个数，最终打印发现输入的是0,1,2,5。首先我们不难看出确实是按照排序规则打印输出的，其次我们发现1和01只存了一次，说明集合认为这两个元素是相同的，因此可知Java将01先进行了预处理为1，然后比较时发现已经存储过一次了，所以就只存储了一次1。
 
@@ -54,7 +53,7 @@ public int x.compareTo(y){
 
 %} 
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331194948.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331194948.png)
 
 很明显这三个对象元素是不同的，因此这三个对象都存入集合，同时输出时是按照第一个字符串的大小排序规则进行输出的。
 
@@ -100,7 +99,7 @@ public int x.compareTo(y){
 
 按未改变之前的情况下，每一个新创建的对象应该都是指向一个新的存储单元，因此下面的三个对象应该都能存储进去，但是，此时由于compareTo()重定义了为比较第一个字符串成员，因此set会将第一个对象和第三个对象看成是相同的，因此他们的字符串成员变量id相同即指向同一个存储单元，compareTo会返还true，即表示判断为相同。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331195201.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331195201.png)
 
 因此上面的集合set会只存两个对象。
 
@@ -164,11 +163,11 @@ ArrayList实际上和顺序线性表类似，是通过数组来存储元素的�
 
 而LinkedList就类似于链表，他的随机访问速度略慢，但是查找和删除元素就很快。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331200855.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331200855.png)
 
 每一个元素存储在一个存储块中，每一个存储块有一个指向下一个存储块的方法（注意不是指针，因为Java中没有指针概念）。那么很明显这种查找方式只能从前向后，速度慢，所以就有了双向链表形式。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331201057.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331201057.png)
 
 这种组合形式插入和删除的速度快，随机访问的速度略有增强，但是还是慢于ArrayList。他单独具有addFirst(),addLast(),getFirst(),getLast(),removeFirst(),removeLast()方法。
 
@@ -189,7 +188,7 @@ for(int i=0;i<list.size();i++){
 
 因此List会保持原来加入时候的顺序来排列元素，同时List中可以存储重复的元素。同时我们还发现List本身并不具备排序的功能，但是Collection类是对Java集合类库的辅助类，他提供了操纵集合的各种静态方法。又因为List是Collection的子类
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327104244.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327104244.png)
 
 因此List可以调用Collection.sort(List list)方法对List中的对象进行自然排序（也就是和TreeSet的排序规则相同）。同样对于无需的Set我们也可以调用Collection.sort(Set set)来对set进行自然规则的排序。
 
@@ -253,7 +252,7 @@ while(it.hasNext()){
 
 我们分析一下下面出现错误的原因：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331205324.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331205324.png)
 
 实际上就是用多次调用next()方法导致的。首先我们在HashSet()中添加了1,2,3,4,5这五个数，然后通过下面的Iterator进行遍历。报错原因如下：
 
@@ -269,15 +268,15 @@ while(it.hasNext()){
 
 我们发现上面的报错是因为迭代器不能再向后移动了因为后面没有元素了，这就说明hesNext()方法并没有保证next()方法安全调用，这是因为我们在一次hasNext()方法后进行了两次next()方法，显然特不能保证安全调用。其次输出和求和结果也和我我们预期的不同，这是因为每一次next()方法都会导致it一次后移，当我们要对一个元素进行多次操作时，需要先存储下来，以防出现上面的跳跃bug。即修改为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331211518.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331211518.png)
 
 此时结果就正确了。然后我们再来说明一下Iterator自身并不具备排序功能，当他在遍历一个集合时，会按照集合的存储规则遍历：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331211721.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331211721.png)
 
 我们先在List中添加了“天津”和“大学”两个字符串，那么很明显List会按照插入的先后存入两个字符串，所以Iterator遍历List时也是先输出“天津”再输出“大学”。但是当我们是用Set存储时，他会按照Set的存储规则遍历输出：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331211953.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331211953.png)
 
 此时HashSet将“大学”排在了前面，因此Iterator遍历时先输出了“大学”。
 
@@ -295,7 +294,7 @@ for(String it:Set){
 
 接下来我们再学习一下Map，Map集合中的每一个元素包含一对键对象和值对象，集合中没有重复的键对象，值对象可以重复。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331212252.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331212252.png)
 
 每一次向Map中使用Map.put()方法加入元素，加入元素时，必须提供一对键对象和值对象，Map有HashMap和TreeMap两类。实际上Map最基本的用法，就是类似于字典的功能，在Map中检索元素时，只要给出键对象，就会返还值对象：
 
@@ -318,11 +317,11 @@ System.out.println(map.get("one"));//返还Monday
 
 这是一个统计语句中出现最高频率的单词的demo：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331213450.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331213450.png)
 
 我们在用String.split(" ")将单词存入word数组以后，使用map统计每一个单词的出现次数，其中单词是键对象，值对象是单词的出现次数。那么对于map中已经存在的键值，那么就说明这个单词是重复出现，只需要将次数+1即可，对于第一次出现的单词加入到map中并设置频率为1。统计完以后，我们遍历map，这里注意it的实例化语句，是map.keySet().iterator()，所以返还的是map中键对象的集合，所以it.next()是遍历的每一个键对象。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331213826.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331213826.png)
 
 而此时的情况是使用的map.entrySet().iterator()，所以返还的是键值对集合，此时it.next()遍历的时每一个键值对，因此首先我们需要先用entry存储每一个键值对，然后在使用entry.getKey()和entry.getValue()来分别获取一个键值对的键索引对象和值对象。
 
@@ -339,7 +338,7 @@ Map中的两大类HashMap和TreeMap的区别就是：
 
 无论是哪个，都是按照键进行一定规则的存储。这里我们来学习一下TreeMap的排序方法：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210331214335.png)
+![](https://langwenchong.gitee.io/figure-bed/20210331214335.png)
 
 我们发现再存入元素后，Map按照键的字符串大小排序规则进行了排列。
 

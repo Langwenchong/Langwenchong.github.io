@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第三讲
 comments: false
 top: false
 date: 2021-03-12 16:37:15
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -17,7 +16,7 @@ categories:
 
 我们学习了标准与或式和标准或与式以后，那么以后对于任何一个逻辑表达式都可以使用这种方法进行化简了，最终表示成标准与或式或者标准或与式。如下面这道题：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315103156.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315103156.png)
 
 #### 根据布尔表达式绘制原理图
 
@@ -27,7 +26,7 @@ categories:
 $$
 Y=\bar{A}\bar{B}\bar{C}+A\bar{B}\bar{C}+A\bar{B}C
 $$
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315104330.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315104330.png)
 
 我们先分别用一级与门分别表示出了三个最小项，然后在使用了一个三输入或门相加就得到了上面的逻辑表达式。
 
@@ -43,23 +42,23 @@ $$
 6. 两条线交叉的地方有一个点，表示有连接
 7. 两条线交叉的地方没有点，表示没有连接
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315104654.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315104654.png)
 
 并且还要尽可能的使用更少的门以降低成本，例如下图中右侧的德摩根表示电路就要好于左边，因为右边的门更少：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315104851.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315104851.png)
 
 #### 多输出电路
 
 多输出电路顾名思义就是有多个输出出口的电路，一般他也会对应着多个输入入口，但是每次只有一个输出出口的信号有效，比如我们这里介绍一下优先级电路。优先级电路，是一种特殊的电路，他在所有输入为真的信号中，选择其中最重要的信号所对应的输出为1，其余输出为0。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315105122.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315105122.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315105133.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315105133.png)
 
 这里的Ai中i越大表示优先级越高，所以当A3为0时，那么Y3就输出0了，，A2A1A0无论是多少都为0。这就是一个多输出的优先级电路。那么我们是如何实现的呢？实际上我们只需要三个门就可以实现如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315105319.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315105319.png)
 
 我们发现为了减少门的使用，实际上使用了更加复杂的三输入甚至四输入门，并且还有不同的取非功能。
 
@@ -71,15 +70,15 @@ $$
 
 所有的逻辑表达式都可以转化为与或式，理论上与或式可以使用两级门电路来实现即先与后或，但是二级逻辑可能会带来更高的成本，所以使用多输入门又称为扇入门。但是门电路的扇入数不可能无限制的增加（受工艺、成本等方面的制约）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315105821.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315105821.png)
 
 这里我们以三输入异或门的实现为例：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315105905.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315105905.png)
 
 我们发现三输入异或门可以用来顶替右侧的复杂的组合逻辑电路，这无疑是更加高效的，但是三输入异或门同样造价高昂，且实现起来很复杂，更不要说五输入异或门等了。所以有时候我们需要在门数和们元件的选择上作一个这种考虑如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315110049.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315110049.png)
 
 实际上我们也可以使用两个造价更便宜的异或门来顶替三输入异或门。所以减少硬件的目的并不是盲目追求组合逻辑电路的门数量减少，而是尽可能的使用更加直观简单的电路形式来表示逻辑表达式。
 
@@ -87,7 +86,7 @@ $$
 
 实际上我们发现对于一个标准与或式或者标准或与式的逻辑表达式总是会使用与非门和或非门，即器件上有许多小圆圈符号表示取非，但是我们在绘制组合逻辑电路时如果照搬表达式会有许多取非的过程（同时一般商家也不会卖最后输出端取非的门元件），这很不直观同时也不符合实际情况，但是又难以直接化简逻辑表达式。所以我们可以在照搬逻辑表达式绘制出组合逻辑电路后使用推气泡的方法来简化电路。首先我们介绍一下推气泡的规则：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315110435.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315110435.png)
 
 {% note info, 
 
@@ -97,7 +96,7 @@ $$
 
 那么现在我们就可以优化电路了，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315110550.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315110550.png)
 
 此时我们推完气泡以后发现有4个气泡，实际上是取非输出后又取非了，那么就相当于双重取反等于没去反，所以可以将这四个气泡都消掉。所以我们给出一个规则：
 
@@ -108,19 +107,19 @@ $$
 
 最终我们就会得到一个所有取非都在输入端的门电路，这个才是一个逻辑清晰同时符合实际的电路，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315111905.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315111905.png)
 
 我们推完气泡以后得到了如下电路（逻辑功能完全相同）：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315112037.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315112037.png)
 
 （画的丑，见谅，但是注意门也改变了）。具体的推气泡过程如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315112135.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315112135.png)
 
 #### 非法值（illegal):X
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315112554.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315112554.png)
 
 我们其实前面已经讲过了讲个输出电路不能直接相交汇，即节点不能同时连接两个输出，否则会出新冲突，实际上就是节点同时被0和1驱动，0是对应着电压0,1是对应着VDD，那么如果冲突了电压值就会介于0~VDD，那么这个信号可能是0也可能是1，也可能处于禁止区域内（前面将多有一个禁区表示既不是0也不是1，不懂了请看第1讲）。这时我们就成为交汇后的信号值为非法值X，一般出现这种竞争情况都是电路设计缺陷引起的，我们要避免此种情况，因为他会导致电路功耗变大，电路发热，并导致电路损坏。
 
@@ -128,7 +127,7 @@ $$
 
 无关项一般会出现在优先级电路中，例如之前讲过的优先级电路：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315112659.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315112659.png)
 
 那么很显然如果输入信号A3位输入，那么就不需要考虑其他输入量，此时对于不需要考虑的输入信号量就是用X来表示。
 
@@ -146,7 +145,7 @@ $$
 
 三态缓冲器就是使用了浮空，他可以用来防止节点处于竞争状态，具体实现如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315113654.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315113654.png)
 
 当一个节点同时连接了n个输出时，若其中n-1个输出处于浮空状态（即断开状态），那么当前的节点值就等于驱动正常电平输出端的值。所以使用三态缓冲器就可以允许节点连接多个输出端了，这无疑优化了电路。例如上面的三态缓冲器，有三种输出状态：高电平VDD表示1信号，低电平0表示0信号以及浮空状态表示线路断开。
 
@@ -156,7 +155,7 @@ $$
 
 那么很明显在连接多个芯片的总线时，会用到三态缓冲器，许多不同的设备同时连接到同一总线上，但是某一时刻只允许一个芯片的信号有效，并向总线输出数据，其他芯片的输出必须浮空，以防止总线竞争，任何芯片在任何时刻都可以通过总线读取信息：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315114355.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315114355.png)
 
 to bus表示的就是从设备向总线输出数据的信号，每一次只有一个设备的三态缓冲器使能端为1表示每一次总线只会接受一个设备的信号。但是from bus表示的是设备从总线获取的信号，那么如果这个设备需要，就可以让from bus线上的三态缓冲器使能端为1接受来自总线的信号，并且同一时刻可以有多个设备都接受总线的信号，但是他们接受的信号是相同的。
 
@@ -166,7 +165,7 @@ to bus表示的就是从设备向总线输出数据的信号，每一次只有�
 
 卡诺图的思想很简单，他就是通过合并项来化简布尔表达式。那么我们该合并哪些项呢？就是相邻最小项，比如PA和P非A，他们相加合并就可以变成P。卡诺图化简法是将逻辑表达式用一种称为“卡诺图”的图形来表示，然后在卡诺图上进行函数化简。下图就是几个卡诺图化简时的中间过程：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315215202.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315215202.png)
 
 我们首先来介绍一下卡诺图的构成：
 
@@ -189,7 +188,7 @@ to bus表示的就是从设备向总线输出数据的信号，每一次只有�
 
 如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315215742.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315215742.png)
 $$
 \begin{cases}
 \bar{A}\bar{B}\bar{C}和\bar{A}\bar{B}C是左右相邻\\
@@ -205,7 +204,7 @@ $$
 
 那么接下来我们来举例几个卡诺图熟悉一下卡诺图的特点，首先我们来观察一下二变量和四变量卡诺图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315220809.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315220809.png)
 
 {% note info, 
 
@@ -215,7 +214,7 @@ $$
 
 那么接下来我们看一个较为复杂的五变量卡诺图，他一共会有32个方格，一种编号如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315221040.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315221040.png)
 
 一定要注意CDE和AB的排列编号要保证相邻的只有一位取值不同。
 
@@ -227,7 +226,7 @@ F(A,B,C)=\bar{A}BC+A\bar{B}C+ABC
 $$
 那么我们的卡诺图应该如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315221400.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315221400.png)
 
 3,5,7处对应的最小项就是布尔表达式中出现的，所以这几个地方填0。那么接下来我们来介绍一下卡诺图上合并最小项的规则，即化简的规则：
 
@@ -238,13 +237,13 @@ $$
 
 根据上面的规则，我们可以将卡诺图中的5,7合并，3,7合并：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315221721.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315221721.png)
 
 5,7左右相邻，且标号均为1同时观察菜单栏发现B的标号不同，所以可以消去变量B，同时3,7号合并，变量A取值不同，所以可以消去A，这样我们就得到了F的化简表达式了。
 
 但是规则还没有结束，这只是对应着一种相邻的情况，我们知道还有对称的情况，所以下面的卡诺图也可以进行合并：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315222009.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315222009.png)
 
 0000和0010由于对称相邻，所以可以合并，C取值不同所以合并后消去C，1101和1111左右相邻，可以合并，C不同，所以消去C，所以我们根据上面的卡诺图可以得知这个布尔表达式的原先表达和化简后的表达应为：
 $$
@@ -257,25 +256,25 @@ $$
 
 所以我们发现补1法是将布尔表达式转换成标准与或式，而卡诺图化简就是逆过程，是将复杂的标准与或式化简成简单的形式。那么接下来我们再来尝试相除4个格的，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315222842.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315222842.png)
 
 同样的，四个格同在一行，或者同在一列或者同在一个田字格也可以进行合并消除化简。并且此时是2^2个相邻格，所以可以一次消除两个变量，我们横看可以消除一个变量，纵看又可以消除一个方格。
 
 ##### 思考：如果我就要按照两个两个的消除可不可以？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315224226.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315224226.png)
 
 可能你会产生疑惑，为什么要按照4个格相邻进行消除，而不是继续看成许许多多个2个格相邻进行消除，我们知道最终要得到的式子尽可能的最简，对比上面两个图我们发现右边的式子最终并不是最简式，因此为了得到最简式，我们必须用尽可能最大的圈去包裹1矩阵。
 
 那么接下来我们练习一下四个格相邻的消除，同时你也可以自己尝试按照2个格消除，最终对比一下化简得到的布尔表达式是否一样。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315223335.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315223335.png)
 
 那么既然可以合并4个，当然也就可以合并8个啦，那么合并8个格的规则是8个格子相邻组成一个8元素矩阵或者有对称的行和列也可以：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315223441.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315223441.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210315223451.png)
+![](https://langwenchong.gitee.io/figure-bed/20210315223451.png)
 
 最终我们会消除3个变量。如上图图1最终只剩下了一个非A，图2只剩下了非B。
 

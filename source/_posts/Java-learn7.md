@@ -3,10 +3,9 @@ title: Java学习笔记-第七讲
 comments: false
 top: false
 date: 2021-03-19 16:21:13
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -27,7 +26,7 @@ if(fp==NULL){
 
 上面的代码中我们加入了空文件时的判断以保证fp非空指针，但是实际上如果不加这个特判，C语言也不会报错，这就意味着这个fp有可能会以空指针的形式进行后面的操作，此时就会造成严重的错误，结果不可预料。因此我们需要对这种异常情况进行判断并做出处理。此时我们可能会想到使用if进行各种异常的情况的特判然进行处理，但是实际开发中可能会有各种异常情况，我们不可能对所有的特殊情况都单独添加一个特判函数，并且有一些异常情况我们不好预料，只有触发以后才能发现，所以我们需要一个可以自动发现异常并抛出异常以便我们进行处理的功能类。而Java就提供了各种异常情况的类，他们可以发现异常并抛出提示开发人员进行处理，一般异常情况有以下三种：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322103629.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322103629.png)
 
 异常分为三类，第一种就是Error，准确说应该是错误，即非常严重的错误，此时就需要优先处理错误了。然后是Checked异常，即代码自身具有逻辑错误导致的异常，此时就需要我们来进行处理了，一般这种情况都是根据不同的代码逻辑有不同的异常，所以我们可以给这种异常进行不同的类的创建，然后命名为我们定义的异常情况，当然Exception是所有自定义异常的父类，然后最后一种就是自身代码逻辑没有问题，而是调用者或者代码接受的参数有问题，那么此时属于Runtime异常，这种异常一般是确定的，一定是这几种子异常情况之一，所以直接使用提供的即可。
 
@@ -139,7 +138,7 @@ public static void main(String[] args){
 
 #### 三种可抛出类的区别
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322103629.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322103629.png)
 
 我们前面给出的那张图中有三个可以抛出并接受的Throwable类型，他们分别是Error,Exception和RuntimeException，只有他们的对象或者他们子类的对象可以使用throw和catch来进行抛出和接收。这里我们详细讲解一下如何区分一个异常时属于哪一个类。
 
@@ -275,7 +274,7 @@ public class ExceptionDemo {
 
 他的运行结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322152438.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322152438.png)
 
 即getNewBalance1中try语句执行了this.getBalance触发了异常，此时他就会立刻catch到抛出的异常然后输出错误信息，然后再返回到main函数继续执行（注意异常并不意味这程序结束，除非是资源不足或者虚拟机崩溃）。
 
@@ -318,7 +317,7 @@ public class ExceptionDemo {
 
 他的运行结果是
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322152828.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322152828.png)
 
 此时getBalance2中的this.getBalance触发了异常，但是他自己并不catch这个异常处理，而是继续执行，当返还到main函数中以后main会catch这个异常然后进行处理。上面的这两种都可以，看自己的代码习惯。当然有的时候未必只有一个异常，可能会有多个异常，如下图可以对于不同的异常都有一个对应的catch：
 
@@ -399,7 +398,7 @@ public class ExceptionDemo {
 
 他的运行结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322153837.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322153837.png)
 
 我们发现上面的例子中并没有throws关键字声明异常类，但是他仍然可以catch到，因为这是一个除0的算术异常属于RuntimeException的子类，同时由于RuntimeException是Exception的子类，所以catch写成catch(Exception e)就可以接受到这个算术异常。
 
@@ -440,7 +439,7 @@ public class ExceptionDemoExit {
 
 我们发现由于try最后面有System.exit(0)语句也就导致了可能try语句执行完就退出了。我们一定要注意这个问题，他经常在有返还类型的函数中导致编译错误，原因是因为返回出口的缺失或者某些代码无法。比如下面的代码：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322154949.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322154949.png)
 
 上面的报错原因是在catch语句执行完以后没有返还值，所以我们最好在这种有返还值的函数中在最下方加上finally代码块，这个代码块即使没有其他操作也可以输入一个return语句以保证函数的出口没有缺失。
 
@@ -550,7 +549,7 @@ public class ExceptionDemo {
 
 此时我们throw是加了一段话为"用户"+user+"不存在"，那么当catch后使用e.getMessage后就会得到这个信息，然后此时我们调用e.printStackTrace()就会输出错误信息和堆栈状态：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322161338.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322161338.png)
 
 我们要注意e.getMessage只管接受错误信息，而e.printStackTrace()函数才是打印语句。当我们没有e.printStackTrace()函数时就不会有任何异常信息打印到控制台上。如：
 
@@ -579,7 +578,7 @@ public static void main(String[] args) {
 
 最终的运行结果会是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322161630.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322161630.png)
 
 什么也没有，所以我们为了方便定位异常，最好catch异常时加上打印语句。
 

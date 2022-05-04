@@ -1,3 +1,12 @@
+// 字体
+@font-face {
+  font-family: 'SentyGoldenBell';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url(https://cdn.jsdelivr.net/gh/Langwenchong/cdn/font/SentyGoldenBell.woff2) format('woff2');
+}
+
 #l_cover
   min-height: $navbar-height
   transition:.3s linear
@@ -95,7 +104,8 @@
   .bottom
     margin-top: $gap * 2
   .title
-    font-family: $fontfamily-logo
+    // font-family: $fontfamily-logo
+    font-family: "SentyGoldenBell","Ubuntu Regular","Varela Round","PingFang SC","Microsoft YaHei"
     font-size: $fontsize-large * 1.25
     line-height: 1.2
     text-shadow: 0 1px 2px rgba(0, 0, 0, .1)
@@ -299,3 +309,5 @@
       filter blur(12px)
     100%
       opacity: 1
+
+

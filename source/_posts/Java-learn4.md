@@ -3,10 +3,9 @@ title: Java学习笔记-第四讲
 comments: false
 top: false
 date: 2021-03-12 16:15:48
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -163,11 +162,11 @@ public void setAge(int age){
 
 小贴士：在eclipse中，有一键生成setter和getter函数，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210313134656.png)
+![](https://langwenchong.gitee.io/figure-bed/20210313134656.png)
 
 他会自动将XXXX换成参量名字：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210313134729.png)
+![](https://langwenchong.gitee.io/figure-bed/20210313134729.png)
 
 %} 
 
@@ -223,7 +222,7 @@ abstract returnType abstractMethod([paramlist]);
 
 我们可以这样理解abstract方法，就好像老师留了一篇作文《我的Java学习之路》，那么老师不需要具体写出作文，只是统一了每一个学生必须按照这个标题来写，而学生按照这个标题标准来写出作文内容，作文内容可以不同。因此我们就可以理解为abstract修饰的方法只是同一了每一个子类的方法类型和参量，但是每一个子类可以对于这个函数有不同的实现功能。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210316183321.png)
+![](https://langwenchong.gitee.io/figure-bed/20210316183321.png)
 
 abstract还可以修饰类使之成为抽象类，这个抽象类可以不包含abstract方法。但是一旦某个类中包含了abstract方法，那么这个类就必须声明为abstract类。抽象方法大在子类中必须被实现，否则这个子类必须仍然是abstract的。
 
@@ -250,7 +249,7 @@ abstract不能和private,static,final,native同时修饰。abstract方法只能�
 
 我们发现有许多种可以的继承关系，但是无论是哪个方案貌似都有点奇怪，难道这几个几何图形就一定是继承关系吗？一定谁是谁的父类吗？貌似并不是，这是有一些共同特点和异同点而已，并无强烈的继承关系。再比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210313144257.png)
+![](https://langwenchong.gitee.io/figure-bed/20210313144257.png)
 
 那么难道游客就不是孩子吗，售货员就不能同时是父母吗？这些都是难以用继承关系来写清楚的，究其原因是因为他们只是一些具有异同点的同级兄弟子类而已。而不是父子类关系。所以我们引出了接口的概念。
 
@@ -430,7 +429,7 @@ public class Test {
 
 上面是一道例题，他要求我们定义接口或类A,B,C,D,E使得上面的所有代码同时能够编译运行。由于java中只能使用单继承，因此如果按照A,B,C,D,E全是类来写的话上面的例题是无法通过的（主要是继承链无法写出）。这也就说明上面的题中有几个是接口。首先由于接口不能直接通过new来实例化，因此凡是new X(),那么X必定是类，因此我们可以推断出A,D,E是类，所以B,C可以是接口。那么我们根据上面的代码逻辑可以写出继承链：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405145729.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405145729.png)
 
 所以此时D实现了接口A和接口C，并且同时接口C继承于接口B，而类E又实现了接口C。那么此时上面的代码就可以解释为：
 

@@ -2,6 +2,7 @@
   <div class='top'>
     <% if (theme.cover.logo) { %>
       <img no-lazy class='logo' src='<%- url_for(theme.cover.logo) %>'/>
+      <p id="type" style="font-size:1.2rem; height:38px"></p>
     <% } %>
     <% if (theme.cover.title) { %>
       <p class="title"><%- theme.cover.title ? theme.cover.title : config.title %></p>

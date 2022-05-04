@@ -3,10 +3,10 @@ title: git学习日志Part4
 comments: false
 top: false
 date: 2021-01-28 15:41:12
-tags: [note,git]
+tags: [git]
 categories: 
-	- [教程,git学习]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704135540.png
+	- [知识分享,学习心得]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704135540.png
 ---
 
 😃hello~本篇文章记录了翀翀学习[廖神git教程](https://www.liaoxuefeng.com/wiki/896043488029600)时的学习笔记，快来和我一起走进git世界吧！食用本篇博客的同时参照着廖雪峰大大的教程做一遍实验，保证你从此能够熟练使用git，成为一名顶级的CV工程师。
@@ -17,15 +17,15 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704135540.png
 
 我们这里在讨论一种特殊的情况，这个场景一般发生在实际的业务开发工作中，我们假设现在某个项目已经开发出来一个不稳定的版本readme.txt存在于dev分支上，然后我们现在自己的分支myjob上正在开发自己的业务功能板块，实现一个矩阵相乘的c文件maxtrix-mul.c，但是我们现在还处于中途开发阶段，还没有commit。即此时我们的分支情况下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128161809.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128161809.png)
 
 此时我们假设现在matrix-mul.c还没有开发完，即如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128155833.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128155833.png)
 
 那么显然此时我们就还没有将matrix-mul开发完不能commit为一个版本（在实际开发中，一般只有开发完一个阶段形成一个版本后才会commit,而不是随心所欲的提交）。但是此时我们已经修改了matrix-mul.c，此时老板告诉我们开发的dev分支上的新版本中readme.txt有Bug需要修改并且要求我们现在就要修改这个bug。此时我们第一想法就是切换到dev分支，然后新建一个Issue分支来解决这个bug，然后再将这个issue上改完bug的分支合并到dev上从而达到修改bug的目的（注意这种创建新分支修改bug再合并到dev分支的策略，我们一般不能够直接修改dev分支上的文件以防破坏了dev分支）。但是此时我们发现当尝试切换到dev分支再创建issue分支时是不行的，会报错：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128161318.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128161318.png)
 
 我们发现他报错还没有对已被修改的文件matrix-mul.c进行保存，所以切换分支的行为被终止了。我们分析一下发现确实此时我们编辑了matrix-mul.c文件但是此时还没有commit到一个新节点保存。理论上来说我们未尝不可已先将这个文件的修改提交为一个版本然后注释为"不是一个新版本，而是临时需要改bug切换分支而保存的行为"以此来达到在git日志中记录我们这次上传的提示。但是我们想一想平常工作中肯定需要时常进行修改bug的任务，难道每次都要这样暂存一个版本吗？那这样git日志里绘充斥了许多没有意义的切换分支的信息记录，无疑阻碍工作。所以此时我们需要一个办法来暂存这个已被修改的matrix-mul.c文件同时不会记录到git日志上成为一个节点，然后我们可以切换到dev分支上先解决bug，解决完后在切换回来继续工作直至开发成一个阶段了再提交commit。这时我们需要输入以下指令：
 
@@ -35,31 +35,31 @@ git stash
 
 这样git会将myjob分支上的我们现在开发到一半的matrix-mul.c存到一个特殊的地方并且不会新增commit,此时我们再查看工作区状态
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128161346.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128161346.png)
 
 我们发现此时git认为myjob分支是干净的，即假装认为此时所有被修改的文件都已经存储了(实际上此时myjob分支的被修改的matrix-mul.c只是被暂存到了一个地方)。然后此时我们就可以切换到了dev分支上了。此时我们就到达了如下图的情况
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128162032.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128162032.png)
 
 然后我们现在查看一下这个有bug的readme.txt文件，他的内容如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128162405.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128162405.png)
 
 果然有bug,我们现在修改一下readme.txt的bug，修复成无bug的版本：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128162509.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128162509.png)
 
 然后在issue上提交这个修改好bug的版本，此时分支情况如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128162756.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128162756.png)
 
 所以新的issue分支现在领先dev一个版本是修复好bug的版本，我们采用Fast forward模式的分支合并将dev分支也移到这个无bug版本：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128163105.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128163105.png)
 
 我们发现此时dev分支上的最新版本确实修复了bug:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128163144.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128163144.png)
 
 所以dev分支上的版本已经修改好了bug了，所以我们可以删除issue分支了并切换到myjob分支继续我们的板块开发了。
 
@@ -73,7 +73,7 @@ git branch -d issue
 
 即可，但是如果此时我们是先切换到了myjob分支上在删除issue分支时会有一个小报错如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128164903.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128164903.png)
 
 此时我们需要输入如下的指令进行强制删除
 
@@ -85,7 +85,7 @@ git branch -D issue
 
 那么此时我们就回到了issue分支了，分支分布情况如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128165107.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128165107.png)
 
 此时我们的myjob分支上的文件还在被暂存处呢，我们输入以下指令：
 
@@ -95,7 +95,7 @@ git stash list
 
 可以查看暂存处确实还存储这之前的文件：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128165323.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128165323.png)
 
 接下来我们从暂存处取出这个文件版本，这里有两种方式
 
@@ -114,13 +114,13 @@ git stash pop
 
 此时我们在查看stash list 发现确实清空了暂存处同时恢复了文件工作区有记录了被修改的但是还没有被保存的文件:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128165756.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128165756.png)
 
 我们现在思考一个问题，dev分支上的bug确实是修复好了，但是我们想一下我们的myjob分支的版本肯定是在之前的dev分支上clone来的基础上进行开发的，所以我们的myjob当前版本肯定也存在和dev分支上的bug,所以我们也需要将myjob分支上同样的bug进行修复，但是此时就不需要再重复创建分支-修改bug-合并等过程了，可以直接使用下面的方法一步修改相同的bug：
 
 我们查看一下dev分支的git log:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128170547.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128170547.png)
 
 我们可以找到之前修复bug的提交commit ID是4857ad1c，然后切换回myjob分支：
 
@@ -132,9 +132,9 @@ git cherry-pick 4857ad1c
 
 即可以将dev分支上修复bug的操作（注意仅仅是修复bug的操作，而不是dev上的文件）复制同步到了myjob分支上，这样myjob分支就修复好了和dev相同的bug了，并且一定要注意此时git会自动生成一次新的提交即git日志上新增加了一次提交历史并且commit信息就是dev修复bug的信息。我们此时查看一下myjob分支上的readme.txt文件：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128170954.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128170954.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128171219.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128171219.png)
 
 确实修复好了相同的bug。并且此时myjob分支上确实新增加了一个提交"reapai bug"和dev的commit信息相同，但是注意这真的是一个新的提交所以commit ID是不同于dev分支的git日志的commit ID。这样我们就可以继续开发我们的myjob分支了。
 
@@ -154,7 +154,7 @@ git remote //查看远程仓库信息
 
 可以查看远程仓库的名字：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128195611.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128195611.png)
 
 如果没有更改过一般就是origin，然后我们使用以下指令可以查看远程仓库的地址：
 
@@ -164,7 +164,7 @@ git romote -v //查看远程仓库详细信息
 
 我们可以查看到远程仓库的地址：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128195751.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128195751.png)
 
 这里会显示两个地址一般是一样的，你可能是https协议的也有可能是我这种git协议的，通过上面我们就可以知道抓取和推送的远程仓库origin的地址。但是要注意如果你没有推送权限，比如你克隆了别人的仓库的git地址，你会发现你没有push的地址。
 
@@ -214,7 +214,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 一般如上面这样，我们分析一下为什么会报错，此时分支情况如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128202959.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128202959.png)
 
 此时就是这种情况，你会发现在我们推送2.0版本之前小明已经将1.1推送到了远程仓库dev分支上，那么此时如果我们要将我们的2.0版本推送到远程仓库的2.0分支时git就会出现报错，原因是此时远程仓库已经是1.0->1.1了，而要推送的是1.0->2.0，那么就产生了歧义，2.0版本到底是推送到1.0和1.1版本之间还是1.1版本之后？所以我们需要先同步一下远程分支。
 
@@ -226,7 +226,7 @@ git pull //同步远程仓库分支到本地仓库分支
 
 那么就会变成如下图所示情况：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210128203520.png)
+![](https://langwenchong.gitee.io/figure-bed/20210128203520.png)
 
 那么此时我们的本地分支已经同步更新了，此时在git push到远程仓库就可以上传我们的2.0版本了。当然在git pull时由于版本不同可能会产生冲突即版本1.1和版本2.0之间有冲突（毕竟你们两个人个能同时对同一个文件进行了修改），那么我们就需要手动解决一下即可。所以在本地仓库的分支必须领先远程仓库的分支才可以推送。
 

@@ -21,7 +21,7 @@ date: 2021-07-18 14:34:40
                         <a href="https://book.douban.com/subject/6038371/" target="_blank" rel="noreferrer noopener"
                             class="book-container">
                             <div class="book" title="Javascript Dom编程艺术">
-                                <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210718205927.png" alt="Javascript Dom编程艺术">
+                                <img src="https://langwenchong.gitee.io/figure-bed/20210718205927.png" alt="Javascript Dom编程艺术">
                             </div>
                         </a>
                         <div class="info-card">
@@ -47,7 +47,7 @@ date: 2021-07-18 14:34:40
                 <li>
                     <div class="info"><a href="https://book.douban.com/subject/30450258/" target="_blank"
                             rel="noreferrer noopener" class="book-container">
-                            <div class="book" title="精通 CSS（第3版）"><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210718210343.png"
+                            <div class="book" title="精通 CSS（第3版）"><img src="https://langwenchong.gitee.io/figure-bed/20210718210343.png"
                                     alt="精通 CSS（第3版）"></div>
                         </a>
                         <div class="info-card">
@@ -67,7 +67,7 @@ date: 2021-07-18 14:34:40
                     <div class="info"><a href="https://book.douban.com/subject/3923575/" target="_blank"
                             rel="noreferrer noopener" class="book-container">
                             <div class="book" title="数据库系统基础教程">
-                                <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210718211241.png" alt="数据库系统基础教程"></div>
+                                <img src="https://langwenchong.gitee.io/figure-bed/20210718211241.png" alt="数据库系统基础教程"></div>
                         </a>
                         <div class="info-card">
                             <div class="hidden-content">
@@ -86,7 +86,7 @@ date: 2021-07-18 14:34:40
                     <div class="info"><a href="https://book.douban.com/subject/4838430/"
                             target="_blank" rel="noreferrer noopener" class="book-container">
                             <div class="book" title="数据库系统实现">
-                                <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210719101210.png" alt="数据库系统实现"></div>
+                                <img src="https://langwenchong.gitee.io/figure-bed/20210719101210.png" alt="数据库系统实现"></div>
                         </a>
                         <div class="info-card">
                             <div class="hidden-content">
@@ -116,7 +116,7 @@ date: 2021-07-18 14:34:40
                         <a href="https://book.douban.com/subject/6038371/" target="_blank" rel="noreferrer noopener"
                             class="book-container">
                             <div class="book" title="嫌疑人X的献身">
-                                <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210719102345.png" alt="嫌疑人X的献身">
+                                <img src="https://langwenchong.gitee.io/figure-bed/20210719102345.png" alt="嫌疑人X的献身">
                             </div>
                         </a>
                         <div class="info-card">
@@ -142,7 +142,7 @@ date: 2021-07-18 14:34:40
                 <li>
                     <div class="info"><a href="https://book.douban.com/subject/30450258/" target="_blank"
                             rel="noreferrer noopener" class="book-container">
-                            <div class="book" title="白夜行"><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210719102745.png"
+                            <div class="book" title="白夜行"><img src="https://langwenchong.gitee.io/figure-bed/20210719102745.png"
                                     alt="白夜行"></div>
                         </a>
                         <div class="info-card">
@@ -162,7 +162,7 @@ date: 2021-07-18 14:34:40
                     <div class="info"><a href="https://book.douban.com/subject/3923575/" target="_blank"
                             rel="noreferrer noopener" class="book-container">
                             <div class="book" title="冰与火之歌">
-                                <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210719103203.png" alt="冰与火之歌"></div>
+                                <img src="https://langwenchong.gitee.io/figure-bed/20210719103203.png" alt="冰与火之歌"></div>
                         </a>
                         <div class="info-card">
                             <div class="hidden-content">
@@ -181,7 +181,7 @@ date: 2021-07-18 14:34:40
                     <div class="info"><a href="https://book.douban.com/subject/4838430/"
                             target="_blank" rel="noreferrer noopener" class="book-container">
                             <div class="book" title="三体">
-                                <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210719103633.png" alt="三体"></div>
+                                <img src="https://langwenchong.gitee.io/figure-bed/20210719103633.png" alt="三体"></div>
                         </a>
                         <div class="info-card">
                             <div class="hidden-content">

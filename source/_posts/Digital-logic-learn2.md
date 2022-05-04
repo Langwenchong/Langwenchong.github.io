@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第二讲
 comments: false
 top: false
 date: 2021-03-09 16:35:24
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -55,7 +54,7 @@ $$
 
 数字逻辑电路是一个可以处理离散值变量的网络。它主要是使用一种逻辑门电路图来显示各种逻辑计算的实现原理，例如我们上面画的非门和异或门的图就是数字逻辑电路。数字逻辑电路具有如下几个特点：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311162339.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311162339.png)
 
 1. 一个或多个离散值输入端
 2. 一个或多个离散值输出端
@@ -64,7 +63,7 @@ $$
 
 #### 结点和模块
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311162613.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311162613.png)
 
 电路由结点和模块组成，结点是一段导线，通过电压传递离散值变量，结点可以分为如下几种：
 
@@ -94,7 +93,7 @@ $$
 
 一定要注意基本上每一个模块都是一个组合逻辑模块（毕竟一般是多个逻辑门的组合，功能会复杂）。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311163805.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311163805.png)
 
 对于组合逻辑电路，每一个电路节点或者叫线交汇点只可能是两种情况：①电路的输入结点②只连接电路模块的一个输出端。毕竟如果一个电路结点连接着两个输出端的话，当两个输出不同即一个信号为1一个信号为0时，那么交汇结点就会出现信号冲突。
 
@@ -104,7 +103,7 @@ $$
 
 #### 组合逻辑电路的错误状况
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311164049.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311164049.png)
 
 图二错误，就是因为存在回路可能会造成冲突。比如假设此时传入的两个信号都是1，那么经过异或门后应该输出的是0，但是还有一部分1信号却通过短接的回路到达了输出导线上，那么此时输出导线上同时有接收到的0和1会产生信号冲突，所以不正确。
 
@@ -124,7 +123,7 @@ $$
 
 实际上就是一些布尔代数的复杂运算表达公式，一般是来描述组合逻辑电路中输入与输出之间的功能规范的。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311165228.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311165228.png)
 
 实际上我们不难发现上面的这个布尔表达式就是模拟的加法。这种加法运算实际上已经是需要复杂的布尔表达式来表示的了。
 
@@ -132,24 +131,24 @@ $$
 
 下面我们给出以下布尔代数常用的公理，理解最重要：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311165523.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311165523.png)
 
 #### 对偶规则
 
 F为任意逻辑表达式，若将F中所有运算和常量作如下变换：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311165735.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311165735.png)
 
 所得到的的新的表达式就是F的对偶式F'，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311165925.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311165925.png)
 
 我们发现就是分别将数值和符号进行了上面的对偶规则的改变，那么我们可以得出以下结论:
 
 1. 对偶式相互的，F和F'互为对偶式
 2. 对偶规则：两个逻辑表达式F和G相等，那么对偶式F'和G'也是相等的
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311170039.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311170039.png)
 
 {% note info, 
 
@@ -159,19 +158,19 @@ F为任意逻辑表达式，若将F中所有运算和常量作如下变换：
 
 #### 单变量定理
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311170238.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311170238.png)
 
 那么对于上面这几种定理，我们都可以使用组合逻辑电路表示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311170508.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311170508.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311170521.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311170521.png)
 
-如果你对门的符号还不太熟悉，请快速跳转[《机组原理门符号》](https://wenchong.space/2021/02/09/comsys-note5/)
+如果你对门的符号还不太熟悉，请快速跳转[《机组原理门符号》](https://coolchong.cn/2021/02/09/comsys-note5/)
 
 #### 多变量定理
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311170636.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311170636.png)
 
 {% note info, 
 
@@ -183,17 +182,17 @@ F为任意逻辑表达式，若将F中所有运算和常量作如下变换：
 
 我们以左边的式子为例：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/QQ图片20210311184613.jpg)
+![](https://langwenchong.gitee.io/figure-bed/QQ图片20210311184613.jpg)
 
 实际上就是补1法，缺哪个就用X+非X补。右边的式子也类似，我就不讲解了。同样的买也可以使用组合逻辑电路表示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311185443.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311185443.png)
 
 #### 最小项
 
 最小项就是一种特殊的乘积项（或者叫做"与"项）。即元素之间只能是乘积，并且还要求对于n个变量逻辑函数的每一个最小项，必须同时包含有n个因子的乘积，即各个最小项中，每一个变量必须以原变量或者反变量形式作为因子出现一次，而且仅出现一次，（毕竟n个变量只够每一个变量因子出现一次）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311185858.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311185858.png)
 
 如上面，都是最小项，我们就可以理解每一个元素因子为什么只能出现一次了，如果有一个元素出现了两次，那就必定有一个元素没出现过，那么就不是最小项了，因为最小项要求n位最小项必须由n个元素。并且我们可以知道：
 $$
@@ -204,13 +203,13 @@ $$
 
 最小项用mi来编号（i从0开始递增），最小项的编号值是由使最小项取值为1决定的，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311190153.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311190153.png)
 
 那么很明显编号为零的就会非A非B非C，只有三个元素取值都为0整体才为1。这里我们给出三变量的最小项：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311190315.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311190315.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311190338.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311190338.png)
 
 我们不难看出每一个最小项只有一组变量能使其值为1，而其他各组取值该最小项都为0.由于这种函数真值表中1的个数最少，因此称为最小项。
 
@@ -220,7 +219,7 @@ $$
 
 变量任取一组值，仅有一个最小项为1，其他最小项为0
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311190626.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311190626.png)
 
 ##### 性质2
 
@@ -237,25 +236,25 @@ n个变量任意两个不同的最小项相与，结果恒为0，毕竟每次只
 
 如果两个最小项仅有一个变量因子不同，那么我们就成这两个最小项相邻。两个最小项相邻，相邻最小项相或，可以合并成一项，并且可以消去一个变量因子，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311192324.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311192324.png)
 
 ##### 性质5
 
 任一n变量的最小项，必定有n个不同最小项相邻（即n位变量因子有一个取反就成为了他的相邻最小项），比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311192506.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311192506.png)
 
 #### 最大项
 
 最大项是一种特殊的和项（又称为"或"项）。即元素之间只能是或，并且还要求对于n个变量逻辑函数的每一个最大项，必须同时包含有n个因子的或，即各个最大项中，每一个变量必须以原变量或者反变量形式作为因子出现一次，而且仅出现一次，（毕竟n个变量只够每一个变量因子出现一次）。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311192730.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311192730.png)
 
 #### 最大项的编号
 
 最大项用Mi来编号（i从0开始递增），最大项的编号值是由使最大项取值为0决定的，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311192832.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311192832.png)
 
 如上面，都是最大项，我们就可以理解每一个元素因子为什么只能出现一次了，如果有一个元素出现了两次，那就必定有一个元素没出现过，那么就不是最大项了，因为最大项要求n位最小项必须由n个元素。并且我们可以知道：
 $$
@@ -265,9 +264,9 @@ $$
 
 那么很明显编号为零的就会ABC，只有三个元素取值都为0整体才为0。这里我们给出三变量的最大项：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311193011.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311193011.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311193023.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311193023.png)
 
 每一个最大项只有对应的一组变量取值为0，而其他各组取值该最大项都为1.由于这种函数真值表中1的个数最多，因此称为最大项。
 
@@ -292,7 +291,7 @@ $$
 
 两个最大项如果仅有一个变量因子不同，其他变量均相同，则称这两个最大项相邻。两个相邻的最大项相"与"，可以合并成一项（等于相同因子之和），并且可以消去一个因子。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311193854.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311193854.png)
 
 ##### 性质5
 
@@ -306,17 +305,17 @@ $$
 $$
 M_i=\overline{m_i}或者m_i=\overline{M_i}
 $$
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311194306.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311194306.png)
 
 #### 标准与或式
 
 由最小项之和构成且最小项之间取或的运算逻辑表达式，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311194439.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311194439.png)
 
 我们可以使用编号和运算求和符号来简写表达式。那么他的真值表如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311194510.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311194510.png)
 
 我们发现有如下几个特点：
 
@@ -329,7 +328,7 @@ $$
 
 我们发现一个规律：任一逻辑函数都可以表达为最小项之和的形式，而且是唯一的，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311194927.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311194927.png)
 
 %} 
 
@@ -337,7 +336,7 @@ $$
 
 由最大项之积构成且最大项之间取乘积的运算逻辑表达式，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311195041.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311195041.png)
 
 我们可以使用编号和运算求乘积符号来简写表达式。那么他的真值表也和标准与或式一样有以下几个特点：
 
@@ -360,7 +359,7 @@ F=\sum_{i}{m_i}=\prod_{j≠i}{M_j}
 $$
 证明如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311195709.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311195709.png)
 
 那么也就是说对于3位逻辑表达式F如果标准与或式使用了编号1,3,7的最小项，那么标准或与式就是用了编号0,2,4,5,6的最大项。
 
@@ -374,11 +373,11 @@ $$
 
 我们对于一个布尔表达式，可以将它表示为标准式，然后使用编号就可以轻易求得一个式子取得不同值所需要的变量组了。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311200300.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311200300.png)
 
 我们将这个非标准化布尔表达式首先用补1法转换成标准式，然后转换成标准与或式，那么编号有3,6,7的最小项，所以只有ABC取011,110和111时可以使表达式为1，其他情况都是0，并且是3位表达式，所以一共真值表有8行对应8个情况：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210311200458.png)
+![](https://langwenchong.gitee.io/figure-bed/20210311200458.png)
 
 我们可以用标准或与式再求解以下上面的布尔表达式，那么F就会转化成标准或与式：
 $$

@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第八讲
 comments: false
 top: false
 date: 2021-03-31 16:42:38
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -17,17 +16,17 @@ categories:
 
 结构化建模也称为层次化建模，特点是将一个比较复杂的数字逻辑电路划分为多个子模块，再分别为每一个子模块建模，然后将这些子模块组合在一起，完成所需要的电路。因此，结构化建模描述了一个模块是怎样由简单的模块组成的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405202339.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405202339.png)
 
 其中根据建模的过程分为自顶向下的设计和自底向上的设计，两者只是在模块构建逻辑上有所差异，但是最终达到的效果是一样的。
 
 我们以一道例题体会一下结构建模，比如我们要将3个2-1多路选择器组合成一个4-1多路选择器。我们可以轻易写出2-1多路选择器的建模形式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405202628.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405202628.png)
 
 因此接下来我们只是需要用适当的方式自底向上组成4-1多路选择器。因此在4-1多路选择器的建模过程中需要引入二路选择器的实例组件。假设我们现在已经得到了4-1多路选择器的结构图如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405202817.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405202817.png)
 
 思路很简单，sel[0]用来决定lowmux和highmux的两个二路选择器的选择信号，sel[1]充当finalmux的选择信号。因此lowmux和highmux分别都有2种可能输出的信号，而finalmux又决定了选择lowmux或者highmux的其中一个输出信号，因此又有2中选择，因此一共有2*2=4可能选择的情况，刚好和4路选择器的功能一致。接下来我们只需要根据上图进行建模了：
 
@@ -87,7 +86,7 @@ module mux2(input logic D0,D1,intput logic [1:0]s,output logic y);
 
 接下来我们以mux4的两种实例化方法直接对比：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405204644.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405204644.png)
 
 #### 门级建模
 
@@ -101,11 +100,11 @@ module mux2(input logic D0,D1,intput logic [1:0]s,output logic y);
 
 其中实例名可以忽略不写，即为一个匿名门元件实例。一般常用到的门级元件有：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405205024.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405205024.png)
 
 假设我们现在要使用门级建模构造一个mux2二路选择器，那么根据下面的图
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405205109.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405205109.png)
 
 我们可以建模:
 
@@ -130,13 +129,13 @@ endmodule
 
 在SystemVerilog HDL中，参数化建模是指使用关键字“parameter"声明一个标识符来代表一个常量，程序中凡是出现这个常量的位置，都可以用这个标识符来代替，从而大大增加了设计的灵活度和程序的可读性。参数化建模最常见的用法就是参数化建模，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405205859.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405205859.png)
 
 左边的模块中定义了字符"#"同时声明为WITH代表位宽8，那么所有的[WIDTH-1:0]代表的都是一个位宽为8的线信号量，当我们需要修改时只需要修改定义语句即可完成对全部模块的相对应的位宽信号的修改。我们再看中间的模块和右侧模块定义的都是一个4路选择器，只是中间定义的是位宽为8的信号，那么当我们需要修改为32位宽时，只能手动逐一的对每一个[7:0]进行修改为[31:0]，这很麻烦耗时，而右侧的使用了参数化建模，所有的#只要定义为32位宽即可完成所有的信号的位宽更新，这就是参数化建模的优点。
 
 我们可以将parameter语句置于模块内部，与参数化建模的区别是对模块化实例化时无法修改该参数的值。并且通过预编译指令\`define(即宏定义指令)可以声明一个标识符来代表一个常量，通常位于模块外部，该常量是一个全局常量，其作用范围是从定义起点到整个程序的结束，既可以对多个文件起作用。这样parameter只能决定一个模块自身内部的信号的更新，而`define指令定义的是对多个模块起修改作用的全部常量语句，两者搭配，可以高效的完成所有文件的信号的更新操作。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405210606.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405210606.png)
 
 parameter语句只对mux2内部的信号量起作用，而通过`define指令声明的WIDTH可以修改所有文件的信号位宽。同时要注意宏定义指令结尾处不需要分号。
 
@@ -148,7 +147,7 @@ generate语句通过“generate...endgenerate"来确定生成的代码范围，�
 
 如下图是generate生成一个由多个2路选择器组成的N路选择器的模块：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405211333.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405211333.png)
 
 这里的几个注意事项见上图。
 
@@ -160,7 +159,7 @@ generate语句通过“generate...endgenerate"来确定生成的代码范围，�
 
 前面我们简单学习过仿真验证的概念，他是在线平台上通过模拟来对一个为构建的组合逻辑电路模块进行建模检测，查看是否完美符合预期功能。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405211928.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405211928.png)
 
 电路验证是确认所设计的电路功能正确性的过程，而仿真是进行电路验证的主要手段，它可以及早发现所存在的设计问题，从而降低了设计风险，节约了设计成本。通常，仿真是通过编写测试程序完成的，测试程序也称为测试台，他是用于测试待测模块功能是否正确的一端SystemVerilog HDL代码，是不可综合的，由激励信号、DUT和输出响应三部分组成。
 
@@ -170,15 +169,15 @@ generate语句通过“generate...endgenerate"来确定生成的代码范围，�
 
 我们看一个测试程序的例子：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405212405.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405212405.png)
 
 上面的代码就是用于验证的测试代码，它是用来测试一个数学计算模块是否正确的语句：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405212448.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405212448.png)
 
 我们从上面的例子中不难看出我们分别测试的激励信号组合分别是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405212521.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405212521.png)
 
 也就是说每一次在验证时输入的信号是持续的，当改变信号时，只需要输入需要被修改的信号值即可，未被修改的信号是维持不变的。如上面的第一组激励信号测试组合为a=0,b=0,c=0并且持续时间为10个单位时间，然后我们修改了c的信号值为1，因此第二个激励信号组合为a=0,b=0,c=1并且测试时间也是10个单位长度。因为每一个激励信号的测试时间都是10个单位长度，因此最终屏幕上的输出脉冲为等宽。
 
@@ -205,7 +204,7 @@ endmodule
 
 首先，通过initial块施加激励就和上图的那个例子一样，每一个仿真时刻只用列出需要改变的信号值，initial只执行一次改变语句。在一个测试程序中可以包含多个initial块，并且他们都是同时并行执行。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405213629.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405213629.png)
 
 {% note info, 
 
@@ -215,7 +214,7 @@ endmodule
 
 当通过文件施加激励时，只需要将激励（测试向量）存放在一个文本文件中，测试程序从文件中读取激励，对DUT进行测试。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405213758.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405213758.png)
 
 这种方式更加高效，可以预先存储上万个不同的测试样例，测试验证时只需导入测试文件即可。
 
@@ -260,7 +259,7 @@ $monitor($time,"显示格式控制符",<输出变量(信号)列表>);
 
 例如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405215139.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405215139.png)
 
 ``$display``和``$monitor``的区别在于前者只有执行到该语句时才进行显示操作，而后者就像一个监视器，只要输出变量列表中的某个变量发生变化，就执行一次显示操作，后者更加方便实用。
 
@@ -298,15 +297,15 @@ $readmemh("数据文件名",数据(存储器)名，<起始地址>,<结束地址>
 
 假设现在有一个输入文件如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405215918.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405215918.png)
 
 现在我们打开这个文件：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405215941.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405215941.png)
 
 那么最终我们读取文件到stim数组的地址数据如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405220009.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405220009.png)
 
 也就是前三个地址是连续的，然后从3-255是空缺的没有地址，然后从256（十六进制的@100）有一个单独的地址数据为1111_1100，然后257-1022又是空缺的，到达1023时再继续存储定义的地址。
 
@@ -328,9 +327,9 @@ $fclose(MCD);//一定要记住关闭文件呀
 
 我们思考一下无论上面的那种测试方法，最终我们还是需要自己去对比输出结果是否正确，这对于上万个输出响应的测试程序来说，人工复查太难了，因此我们需要机器来自动帮助我们比对判断输出响应是否正确，因此就产生了自动化测试。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405221019.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405221019.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210405221032.png)
+![](https://langwenchong.gitee.io/figure-bed/20210405221032.png)
 
 实际上自动化测试的过程和仿真验证类似，只是多了一步自动将输出响应和预期结果比对的过程。具体的写法见上图。
 

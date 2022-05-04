@@ -24,7 +24,7 @@
   <div id="rightmenu-wrapper">
     <ul class="list-v rightmenu" id="rightmenu-content">
       <li class='option'>
-        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick="document.execCommand('copy')"><i class='fa fa-copy fa-fw'></i><%- __('rightmenu.copy_text') %></a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick="document.execCommand('copy')"><i class='fad fa-copy fa-fw'></i><%- __('rightmenu.copy_text') %></a>
         <hr id='hr-text'>
         <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fad fa-link fa-fw'></i><%- __('rightmenu.copy_link') %></a>
         <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fad fa-external-link-square-alt fa-fw'></i><%- __('rightmenu.open_in_new_tab') %></a>
@@ -48,6 +48,12 @@
       <% theme.rightmenu.layout.forEach(function(item){ %>
         <% if (item == 'hr') { %>
           <hr>
+        <% } else if (item == 'reading') { %>
+          <li class='option menuOption-Content'>
+            <span class='vlts-menu opt fix-cursor-default' id='readingModel'>
+              <i class='<%= theme.rightmenu.reading.icon %> fa-fw '></i> <%- trim(theme.rightmenu.reading.name) %>
+            </span>
+          </li> 
         <% } else if (item == 'music' && theme.plugins.aplayer.enable == true) { %>
           <li class='music name'>
             <p class='nav music-title fix-cursor-default'></p>

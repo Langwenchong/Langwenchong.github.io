@@ -3,10 +3,9 @@ title: Java学习笔记-第一讲
 comments: false
 top: false
 date: 2021-03-04 16:09:18
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -37,7 +36,7 @@ Java与C最大的不同在于，Java编写为.class文件以后，可以到任�
 
 究其原因是因为.class文件永远运行在java虚拟机上，所以任何一个操作系统上都有java虚拟机可以直接用来执行java可执行文件class文件，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210305155215.png)
+![](https://langwenchong.gitee.io/figure-bed/20210305155215.png)
 
 #### Java程序运行模式
 
@@ -57,7 +56,7 @@ Java可以有如下三种方式运行：
 
 对于一个java文件HelloWorldApp.java，我们将这个文件新建到src/ch02文件夹下。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210305161151.png)
+![](https://langwenchong.gitee.io/figure-bed/20210305161151.png)
 
 那么src文件夹下存放的是许许多多个包package(可以理解为vue中的vue组件)，那么首先我们要在第一行引入如上图package ch02。然后下方是一个大的类并且名字必须和java文件相同，所以也是HelloWorldApp。最后里面必须至少有一个main类，它相当于一个代码进入入口。
 
@@ -75,7 +74,7 @@ public static void main(String args[]){
 
 那么现在我们联系一下，要在src/com/huawei/classroom/student/h01下建立一个Home01.java文件并且输出hello world，那么最终应该如下图:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210305161747.png)
+![](https://langwenchong.gitee.io/figure-bed/20210305161747.png)
 
 注意package处的路径是使用.来间隔的
 

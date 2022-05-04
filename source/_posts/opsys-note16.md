@@ -3,10 +3,9 @@ title: 操作系统笔记--Part16
 comments: false
 top: false
 date: 2020-12-31 09:19:03
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -15,7 +14,7 @@ categories:
 
 ### 初识文件管理
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231092256.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231092256.png)
 
 那么我们现在要了解一席文件内部的数据的组织方式与文件之间的组织方式。并且思考从下往上看OS是提供哪些服务方便用户、应用程序使用文件，而从上往下看文件数据又要怎么存放到外存（磁盘）的问题。
 
@@ -34,17 +33,17 @@ categories:
 1. 无结构文件：如文件文件，就是一些由二进制或者字符流组成，又称“流式文件”
 2. 有结构文件：如数据库表，由一组相似的记录组成，又称"记录式文件"，这里要注意记录是一组相关数据项的集合，而数据项才是文件系统中最基本的数据单位。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231093259.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231093259.png)
 
 
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231093326.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231093326.png)
 
 #### 文件之间的组织组织方式
 
 实际上就是通过目录来实现分层，这里的层最好不要太少（这样会造成目录下文件密度过大），同时也不要太多，否则分层太多，搜索查找文件时间开销大。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231093517.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231093517.png)
 
 ##### 思考：文件夹是有结构文件吗？
 
@@ -52,7 +51,7 @@ categories:
 
 #### OS向上提供的服务
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231093811.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231093811.png)
 
 
 
@@ -67,7 +66,7 @@ categories:
 
 #### 文件如何存放至外存
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231094524.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231094524.png)
 
 我们发现其实这个就是分页存储的思想，所以外存中与内存一样也是分成一个一个存储单元然后将文件切割离散存储，当然如果文件特别小，那么一个存储单元就可以放下整个文件，所以明显外存中也会有内部碎片。
 
@@ -75,7 +74,7 @@ categories:
 
 肯定是有的，这里也有固定分区分配的存储思想和分页存储思想两种方式存储文件。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231094745.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231094745.png)
 
 #### 操作系统需要完成的其他文件管理的操作
 
@@ -86,11 +85,11 @@ categories:
 
 大部分都是概念性知识点，记住即可
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231094910.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231094910.png)
 
 ### 文件的逻辑结构
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231094950.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231094950.png)
 
 类似于数据结构的“逻辑结构”和“物理结构”，如线性表就是一种逻辑结构，在用户看来，线性表就是一组有先后顺序的元素序列。而线性表这种逻辑结构可以通过许多种物理结构实现，不如顺序表和链表均可以，顺序表是元素在逻辑和物理上都是连续相邻的，而链表是物理上不相邻但是逻辑上相邻的数据结构。所以顺序表的线性表可以随机访问，而链表形式的线性表就不可以了。所以算法的具体实现与逻辑结构和物理结构都有关（文件也是一样，文件操作的具体实现和文件的逻辑结构，物理结构有关)
 
@@ -104,35 +103,35 @@ categories:
 
 记录式文件，每条记录都是由若干个数据项组成的集合。一般来说，每一条记录的一个数据项都是一个关键字（可以作文识别不同记录的ID）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231095642.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231095642.png)
 
 根据各条记录的长度我们可以将记录分为定长记录和可变长记录：
 
 - 定长记录：一般每条记录的长度是必须等长的，每一个数据项所在位置也都是相同不变的。
 
-  ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231095754.png)
+  ![](https://langwenchong.gitee.io/figure-bed/20201231095754.png)
 
 - 可变长记录：数据项的长度不一定相同因此记录的长度也是各不相同的，甚至某一个数据项没有是可以删掉的即下图中如果无特长可以直接删掉。
 
-  ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231095955.png)
+  ![](https://langwenchong.gitee.io/figure-bed/20201231095955.png)
 
 ##### 顺序文件
 
 文件中的记录一个一个的地顺序排列（逻辑上），记录可以是定长或者变长的。各个记录在物理上可以是顺序存储或者链式存储。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231100209.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231100209.png)
 
 根据记录之间的顺序是否与关键字有关我们分成：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231100248.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231100248.png)
 
 ###### 思考：加入现在知道文件的起始位置，那种文件可以快速找到第i个记录的位置？那种文件又可以找到某个关键字对应的记录的位置？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231100501.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231100501.png)
 
 首先链式存储肯定是不可能实现随机随机存放的，所以每次都需要从头开始查找这样很难快速找到第i个文件的位置。所以快速查找只能在顺序存储中，又由于可变长记录长度不相同不能使用X+i*M的连续查找公式所以也不能和实现快速查找，所以只有定长记录的顺序存储才可以实现，同时只有采用顺序结构即存储的顺序和关键字有关的才可以找到关键字对应的记录的位置。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231100817.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231100817.png)
 
 很明显从上图我们就可以看出可变长记录不能随机存取的原因了，由于长度不同，连续查找公式是不能使用的。定长记录的顺序文件，如果采用物理上的顺序存储那么就可以实现随机存取。如果还能保证记录的顺序结构那么就可以关键字快速检索了。一般上，考试题中的“顺序文件”指的是逻辑结构和物理结构上都是顺序存储的文件。所以顺序文件一般如果不说都是默认定长记录所以可以随机存放，但是缺点是增加/删除一个记录就很复杂，需要整体记录前移或者后移，但是如果是串结构那么就相对简单。
 
@@ -140,7 +139,7 @@ categories:
 
 对于很多场景都需要快速查找都第i个记录的位置，但是又是可变长记录文件，那么这时就需要索引文件的逻辑结构形式，即建立一张索引表，每个索引表都有唯一的索引号，长度m(毕竟是可变长的需要记录)以及一个指针ptr指向文件再外存中存放的地址，所以索引文件在结构上还顺序的，但是物理结构上是可以离散存储的，当然如果你非得在物理结构上也顺序存储也可以。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231101420.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231101420.png)
 
 其实感觉就是分页存储的思想，只不过那个是讨论内存存放时提出的方法，现在这种思想应用在了文件管理上，实际上思想类似。索引表本身是定长记录的顺序文件（这里指的是物理结构上也顺序存储，否则不能实现随机存取），因此可以快速找到第i个文件的索引项。并且可以在索引表中以关键字作为索引号内容，若按照关键字顺序排列，那么还可以实现按照关键字折半查找。这是我们在尝试删除/增加一个记录时就是对索引表进行修改。因为索引表有很快的检索速度，所以主要用于对信息处理的及时性要求很高的场合。并且，可以用不同的数据项建立很多个索引表，如：学生信息表可以用关键字“学号”“姓名”都各建立一张索引表。这样就可以根据不同的关键字检索文件了。
 
@@ -148,7 +147,7 @@ categories:
 
 我们思考一个问题，每个记录都会对应一个索引表项，因此索引表可能会非常巨大。比如：文件的每个记录平均只占8B，而每个索引表项占32个文件，那么索引表都要比文件本身还要大4倍，这样就降低了空间利用率。所以提出了索引顺序文件。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231102246.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231102246.png)
 
 我们可以看出索引顺序文件的索引项不需要按关键字顺序排列，这样就极大方便新表项的插入，同时在上图中我们发现学生记录按照学生的姓名开头字母进行分组，每一个分组就是一个顺序文件，分组内的记录不需要按关键字排序。索引顺序文件就是索引文件和顺序文件思想的结合。索引顺序文件同样会为每个文件建立一个索引表，但是不是每一个记录对应一个索引表项，而是每一组数据对应一个索引表项。然后每一组文件中顺序存储，这样就大大瘦身了。
 
@@ -168,7 +167,7 @@ categories:
 
 我们发现如果是10^6个记录，那么此时索引顺序文件的查找次数还是很大，所以此时多建几层次级索引表就好了（毕竟每建一层索引表理论上会减少查找没有必要的多组文件），所以此时就是多级索引顺序文件如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231104335.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231104335.png)
 
 此时对于一个10^6记录的文件(注意还是可变长记录文件），可以先为该文件建立一张低级索引表，每100个记录为一组，所以总共会有10000个表项，即10000个定长的表项，然后再把这10000个定长记录再次分组为每组100个再为其建立顶级索引表，那么顶级索引表就有100个定长表项。
 
@@ -180,7 +179,7 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231105036.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231105036.png)
 
 ### 文件目录
 
@@ -188,9 +187,9 @@ $$
 
 思考当我们双击照片这个文件夹后OS是如何找到文件夹下的文件和显示到我们屏幕上的呢？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231105816.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231105816.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231110125.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231110125.png)
 
 实际上此时是借助文件控制块实现的，我们双击“照片”后，操作系统会在这个目录表中找到关键字“照片”对应的目录项（也就是记录，毕竟记录就是存得许多不同的数据项也就是关键字），然后从外存中将“照片”目录的信息读入内存，于是“照片”目录中的内容就可以显示出来了。所以我们所说的目录实际上就是一个索引表。
 
@@ -210,7 +209,7 @@ $$
 
 早期的操作系统不支持多级目录，所以整个系统只建立一张目录表，每个文件占据一个目录项，单机目录实现“按名存取”，不允许有任何文件重名。在创建一个文件时，需要先检查目录中有没有重名文件，只有确定不重名后才能建立文件，并将新文件对应的目录项插入到目录表中。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231111051.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231111051.png)
 
 很显然，不适合多用户(这里的用户值得是多程序,应用软件)操作系统。想一想也知道现在的应用程序肯定都有许多重名文件例如：data,dist.source,js等
 
@@ -218,7 +217,7 @@ $$
 
 早期的多用户操作系统采用两级目录结构，分为主目录(MFD,Master File Directory)和用户文件目录(UFD,User File Directory)。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231111300.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231111300.png)
 
 此时就允许有重名文件了只要不在一个FCB下，但是此时还是不够灵活，毕竟用户文件夹可能也需要有自己的目录，所以就有了多级目录结构。
 
@@ -226,7 +225,7 @@ $$
 
 又称树形目录结构，灵活高效，解决了上面两种目录结构的缺陷。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231111548.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231111548.png)
 
 此时因为有许多可能重名的文件但是他们所在的位置是不同的，所以要访问某个文件时要用文件路径标识文件，文件路径是一个字符串。各级目录之间用"/"隔开，从根目录出发的就是绝对路径，从当前位置或者当前位置的父目录出发就是相对路径。例如：./就是相对路径表示从现在的位置出发，../是从当前位置的父文件开始出发明显也是相对路径，但是.../或者/就是根目录出发就是绝对路径了。
 
@@ -238,7 +237,7 @@ $$
 
 ##### 无环图目录结构
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231112640.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231112640.png)
 
 可以用不同的文件名指向一个文件，甚至可以指向同一个目录（共享一个目录下的所有内容）。需要为每一个共享节点设置一个共享计数器，用于记录此时有多少个地方在共享该节点。用户提出删除节点的请求时，只是删除该用户FCB、并且使共享计数器减1，并不会直接删除共享节点。直至共享计数器为0时，才删除节点。
 
@@ -250,11 +249,11 @@ $$
 
 瘦身前：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231113513.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231113513.png)
 
 瘦身后：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231113603.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231113603.png)
 
 ###### 思考：好处是什么？
 
@@ -264,4 +263,4 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101115352.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101115352.png)

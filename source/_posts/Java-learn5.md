@@ -3,10 +3,9 @@ title: Java学习笔记-第五讲
 comments: false
 top: false
 date: 2021-03-15 16:18:09
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -202,7 +201,7 @@ public static void main(){
 
 其实我们第一讲就介绍了，但是当时可能并不了解这种划分有何意义，现在我们再来看一下划分关系：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210305164117.png" style="zoom: 150%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210305164117.png" style="zoom: 150%;" />
 
 基本数据类型和引用数据类型，后者可以看成就是对象关系。并且我们也学习到了只有对象才会有Java帮助赋予一个默认值，而对于基本数据类型是不会赋予默认值的。
 
@@ -210,7 +209,7 @@ public static void main(){
 
 Java帮助赋予默认值的机制很重要，这意味着当数组或者类，接口中的成员变量没有初始化初始值时，Java会帮我们赋予一个初始值比如int的0，String的""。但是对于基本数据类型，则必须我们手动赋予一个值，才可以使用（这里和C/C++不同，C中基本数据类型的默认值是一个随机值）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210316201954.png)
+![](https://langwenchong.gitee.io/figure-bed/20210316201954.png)
 
 比如上面的b没有初始化就是用了所以报错，但是a数组中的值会被Java都赋予一个默认值0。
 

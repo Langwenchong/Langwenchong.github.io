@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第十讲
 comments: false
 top: false
 date: 2021-04-22 15:30:29
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -25,7 +24,7 @@ categories:
 
 时序逻辑电路是按照一定输入和输出时序实现的功能电路模块，它具有记忆性，并且输出与输入之间具有反馈电路，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422153723.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422153723.png)
 
 {% note info, 
 
@@ -48,7 +47,7 @@ categories:
 
 首先双稳态电路是其他存储模块的基础，其他的存储电路状态的模块都是根据双稳态电路衍生而来的。如下图是常见的双稳态电路图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422154239.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422154239.png)
 
 我们可以看出双稳态电路有以下几个特点：
 
@@ -56,7 +55,7 @@ categories:
 2. 有两个输出：Q和`非Q`
 3. 没有输入
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422154925.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422154925.png)
 
 我们分析一下双稳态电路是如何稳定存储电路的1比特状态的。首先我们知道电路理论上只有两种状态即1和0，因此我们想要Q和`非Q`可以稳定存储这两个状态。那么假设此时Q存储的是0，那么很明显`非Q`可以很稳定的存储1，并且反过来他又会影响Q的输入从而维持Q稳定存储0状态，因此两者相互影响从而实现稳定存储电路的0和1两个状态。同样的，假设Q存储的是1，那么不难看出此时`非Q`也会稳定存储0状态。
 
@@ -66,7 +65,7 @@ categories:
 
 为了解决双稳态电路的这一缺陷，因此改良产生了SR锁存器，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422155019.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422155019.png)
 
 此时就是在双稳态电路中加入了R和S两个输入端，同时门元件换成了或非门，因此在SR锁存器中：
 
@@ -79,7 +78,7 @@ categories:
 
 当S=1,R=0时，那么此时SR锁存器的状态稳定为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422155304.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422155304.png)
 
 即Q永远存储的是1，而`非Q`永远存储的是0，此时这种状态我们称之为置位。
 
@@ -87,7 +86,7 @@ categories:
 
 当S=0,R=1时，那么，此时SR锁存器的状态稳定为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422155448.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422155448.png)
 
 即Q永远存储的是0，而`非Q`永远存储的是1，此时这种状态我们称之为复位。
 
@@ -101,7 +100,7 @@ categories:
 
 当S=R=0时，那么次此时我们既没有置位，也没有复位，此时Q和`非Q`的值会保持之前的状态。我们先看一下保持态的图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422160437.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422160437.png)
 
 我们不难看出当S=0,R=0时，上面的Q和`非Q`的两种状态是都有可能出现的，那么何时出现的是左侧的图，何时出现的是右侧的电路状态呢？这取决于在保持态出现之前的状态，加入，保持态出现之前是置位态，那么切换到保持态时就会稳定成右侧的状态图，若保持态出现之前是复位态，那么切换到保持态后就会维持成左侧的状态图。因此保持态实际上就是时序逻辑电路中最能体现具有记忆性特点的状态。
 
@@ -109,13 +108,13 @@ categories:
 
 这种情况一般出现在S=R=1时出现，他是一种非稳态会导致输出端出现随机的状态，因此一般是避免的：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422160850.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422160850.png)
 
 我们发现虽然S=R=1时确实电路状态维持成了Q=`非Q`=1的状态，当时当切换成其他状态时就会出现Q和`非Q`不可预测的情况。因此这种状态称为非稳态，他并不是指自身不能稳定，而是值切换到其他状态时会导致不稳定的输出状态，因此称为非稳态，一般我们要避免这种情况出现。
 
 ###### 四个状态总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422161449.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422161449.png)
 
 - SR锁存器是一个基于双稳态电路衍生改良出现的可以存储1比特电路状态的功能模块，其中两个输入端S表示置位（Set)，R表示复位（Reset)
 - 通过控制S和R的信号输入，我们可以控制切换SR锁存器的输出稳定状态（这是比双稳态电路优秀的地方）：
@@ -124,7 +123,7 @@ categories:
   - 保持：S=R=0->使Q和`非Q`维持保持态之前的状态
   - 非稳态：S=R=1，禁止出现
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422161552.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422161552.png)
 
 上图是一个SR锁存器的状态波形图，他展示了输入不同的激励信号S和R后产生的状态切换过程。我们可以假设一开始初始状态为0，那么初始时S=R=0，也就是保持态，因此Q维持为初始态0，当S=1时，此时R=0，切换成为了置位态，因此Q变成了1，然后S又变成了0，那么此时又处于S=R=0的保持态，但是此时保持态会维持之前的置位态的输出，因此此时Q=1，然后R=1，此时S=0因此切换成了复位态，因此Q复位成0，然后R又变成了0，此时S=R=0，因此电路又变成了保持态，因此Q又维持复位态的输出，即Q=0。我们从上面的过程可以直观的感受到SR锁存器的强大的存储状态的功能，同时我们还可以看到上面的过程中总是保证了S和R只有一个为高电平，从而避免了非稳态的出现。
 
@@ -132,17 +131,17 @@ categories:
 
 D锁存器同样是一种可以存储电路状态的功能模块，他的电路符号如下图:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422162049.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422162049.png)
 
 D锁存器的特点是包含了两个输入端CLK和D，CLK控制存储器状态发生改变的时间，D是数据输入端，控制下一个状态的值。
 
 实际上CLK可以更加形象的理解为使能端，当CLK=1时，那么Q跟随输入端D随时变化，即D锁存器此时可以看成是透明不存在的，此时就是一个组合逻辑电路的特点，输出随时跟随输入端变化， 但是当CLK=0时，那么Q就维持之前的状态，即类似于SR锁存器的保持态，此时输出端并不会跟随D改变，因此体现了“锁存”的特点，是时序逻辑电路具有记忆性特点的体现。其具体的功能实现：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422162416.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422162416.png)
 
 我们不难看出实际上D锁存器是在SR锁存器的基础上进行改良的版本，他的主要优点是即实现了与SR锁存器相同的置位、复位、保持功能，同时还避免了非稳态的出现，更加安全。也就是此时D锁存器只有三个状态，没有了非稳态：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422162559.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422162559.png)
 
 {% note info, 
 
@@ -152,7 +151,7 @@ D锁存器的特点是包含了两个输入端CLK和D，CLK控制存储器状态
 
 我们同样可以分析一下他的波形图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422162640.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422162640.png)
 
 如上图，初始时CLK为0，因此此时是保持态，Q保持为初始态0，因此当D升为1以后由于此时CLK=0，因此是保持态，Q不会跟随D发生变化，当CLK变成1以后，D同时为1时，Q才会跟着变成1信号。
 
@@ -160,7 +159,7 @@ D锁存器的特点是包含了两个输入端CLK和D，CLK控制存储器状态
 
 D触发器实际上并没有相较于D锁存器有什么改进，因为D锁存器已经很完美了，D触发器只是另一种不同的状态切换方式的模块。D触发器的电路符号如下图:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422163732.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422163732.png)
 
 {% note info, 
 
@@ -174,7 +173,7 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 主从式D触发器的实现电路如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422164157.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422164157.png)
 
 可以看到D触发器是通过两个D锁存器实现的。两个D锁存器L1和L2顺序串联，同时有一组相反的时钟信号所控制。
 
@@ -190,7 +189,7 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 同样的我们分析一下他的状态波形图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422164640.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422164640.png)
 
 起初CLK是0，因此是保持态，即Q（触发器）此时是初始态1，而当CLK处于第一次上升沿时由于此时D=0，而Q（触发器）处于1与D不同，因此Q（触发器）变成0，而Q（锁存器）同样也变成0是因为最终CLK会处于1状态，那么Q（锁存器）就可以更改Q跟随D取值。但是当CLK还保持为1的同时，D变成1的时候我们可以看到此时D触发器和D锁存器的输出端发生了不同的情况，对于Q（触发器）由于此时CLK=1，因此Q还可以跟随D变化，因此Q（锁存器）变成了与D相同的1状态，但是此时触发器由于CLK一直稳定为状态1而不是上升沿，因此此时Q（触发器）不发生变化还维持0。因此我们可以总结出D锁存器和D触发器还是有区别的，即D触发器中CLK=0或是CLK=1时都是保持态，这是和D触发器最大的不同。
 
@@ -198,7 +197,7 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 寄存器可以存储CPU暂时不需要的信息，那么寄存器是如何实现的呢？实际上一个N为寄存器就是由一个共享的CLK输入和N个D触发器组成的，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422165532.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422165532.png)
 
 由于此时N个D触发器共享一个CLK，因此寄存器的N个D触发器肯定是同时更新数据的，并且只有在CLK处于上升沿的时候才能更新数据，寄存器的所有位同时被更新，这是大多数时序逻辑电路中的关键组件。
 
@@ -210,7 +209,7 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 实际上就是在D触发器的基础上有添加了一个使能端EN如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422165955.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422165955.png)
 
 使能端EN是用来控制D是否能被触发器存储的，此时功能是：
 
@@ -223,7 +222,7 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 我们思考一个问题，前面我们学习D触发器的时候，学习到D=0且CLK处于上升沿时可以将Q置位0，即类似于SR锁存器的复位功能，但是我们发现D触发器想实现这个功能条件过于严苛了，需要同时满足D=0且CLK处于上升沿，我们想改进为D=1时也可以对Q进行恢复为0的复位功能，此时就产生了带复位功能的D触发器。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422170515.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422170515.png)
 
 此时Reset=1时，那么无论D是何值，都可以将Q强制设置为0，Reset=0是就是正常的D触发器，此时我们又可以将带复位功能的D触发器分类为同步复位和异步复位：
 
@@ -234,7 +233,7 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 同样的，我们也可以类比得到带置位功能的D触发器：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422170930.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422170930.png)
 
 当Set=1时无论D取何值，Q都被强制设置为1，当Set=0时D触发器正常工作。同样的也有同步置位和异步置位的区分。
 
@@ -242,11 +241,11 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 非稳态电路是一种特殊的时序逻辑电路，他的特点是输出端不稳定，会发生周期性的翻转变化，如下图是一个非稳态电路：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422171413.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422171413.png)
 
 此时这个电路是一个具有回路的，且输出端会反馈到输入端的时序逻辑电路，我们分析一下可以轻松的发现输出结果会发生周期性的翻转变化，即X,Y,Z不断的在0和1信号之间切换，此时他们的波形图是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422171637.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422171637.png)
 
 上面的这种非稳态电路可以应用为环形振荡器。
 
@@ -274,13 +273,13 @@ D触发器的特点是包含两个输入端CLK和D，实际上和D锁存器一�
 
 下面我们看一下一个最简单的同步时序逻辑电路模块：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422183636.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422183636.png)
 
 一个D触发器本身实际上就是一个最简单的同步时序逻辑电路，它包含一个输入D，一个时钟信号CLK和一个输出Q，同时也具有两个离散的不同状态{0,1}，并且D触发器下一个状态就是D，Q就是当前状态,，而D触发器本身就是一个寄存器。
 
 ##### 思考：下列哪些电路是同步时序电路？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210422183834.png)
+![](https://langwenchong.gitee.io/figure-bed/20210422183834.png)
 
 对于上面的`CL`符号表示逻辑电路，因此上面的这些电路模块中，只有4,5是同步时序电路，其他的模块之所以不是同步时序逻辑电路的原因是：
 

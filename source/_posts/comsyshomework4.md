@@ -3,10 +3,10 @@ title: 计算机系统基础大作业--机组原理大闯关
 comments: false
 top: false
 date: 2020-10-23 11:21:37
-tags: [计算机系统基础,C++,大作业,linux]
+tags: [机组原理,C++,linux]
 categories: 
-	- [项目总结,计算机系统大作业]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704172856.png
+	- [知识分享,项目总结]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704172856.png
 ---
 
 一共8道题，请在文档中给出每道题的计算结果并说明计算思路（最后一题只需要给出结果 即可）, 请在文档中答题.
@@ -20,7 +20,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704172856.png
 
 #### question1
 
-![](https://pic.downk.cc/item/5f92a2631cd1bbb86bf7ff12.jpg)
+![](https://pic.imgdb.cn/item/5f92a2631cd1bbb86bf7ff12.jpg)
 
 A: 插入单个寄存器会得到一个两级管道。为了最大化吞吐量，寄存器应该插入到哪里?吞吐量和延迟是多少?
 
@@ -48,7 +48,7 @@ D: 能产生具有最大可实现吞吐量的设计的最小阶段数是多少?�
 
 #### question2
 
-![](https://pic.downk.cc/item/5f92a2991cd1bbb86bf80af8.jpg)
+![](https://pic.imgdb.cn/item/5f92a2991cd1bbb86bf80af8.jpg)
 
 A：作为k的函数，系统的延迟和吞吐量是多少?
 
@@ -68,7 +68,7 @@ B: 吞吐量的最终限制是什么?
 
 估计访问下列磁盘上扇区的平均时间(以ms为单位):
 
-![](https://pic.downk.cc/item/5f92a2cc1cd1bbb86bf81615.jpg)
+![](https://pic.imgdb.cn/item/5f92a2cc1cd1bbb86bf81615.jpg)
 
 第一行为转速：1500RPM，即每分钟1500转，第二行为平均寻道时间：8ms,第三行为扇区平均数量：500
 
@@ -78,7 +78,7 @@ B: 吞吐量的最终限制是什么?
 
 假设一个由512字节的逻辑块组成的1 MB文件被存储在一个具有以下特征的磁盘驱动器上:
 
-![](https://pic.downk.cc/item/5f92a2ea1cd1bbb86bf819f8.jpg)
+![](https://pic.imgdb.cn/item/5f92a2ea1cd1bbb86bf819f8.jpg)
 
 对于下面的每一种情况，假设一个程序依次读取文件的逻辑块，并且在第一个块上放置磁头的时间是Tavg seek + Tavg rotation。
 
@@ -94,7 +94,7 @@ B: 随机情况:如果块随机映射到磁盘扇区，估计读取文件所需�
 
 图中的三个函数以不同的空间局部性程度执行相同的操作。根据每个人所享有的空间局部性对功能进行排序。解释你是如何获得你的排名的
 
-![](https://pic.downk.cc/item/5f92a30f1cd1bbb86bf81fa5.jpg)
+![](https://pic.imgdb.cn/item/5f92a30f1cd1bbb86bf81fa5.jpg)
 
 Clear1第一，clear2第二，clear3第三
 
@@ -112,7 +112,7 @@ Clear1第一，clear2第二，clear3第三
 
 B：考虑在此系统上运行的以下代码。在任何时间点，缓存中存储的数组块的最大数量是多少? 
 
-<img src="https://pic.downk.cc/item/5f92a3441cd1bbb86bf82949.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5f92a3441cd1bbb86bf82949.jpg" style="zoom:150%;" />
 
 
 

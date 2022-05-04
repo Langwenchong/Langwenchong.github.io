@@ -5,8 +5,8 @@ top: false
 date: 2021-01-22 11:28:47
 tags: [ubuntu]
 categories: 
-	- [教程,ubuntu配置]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704155405.png
+	- [知识分享,魔改攻略]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704155405.png
 ---
 
 本教程是在我进行了尝试并且成功安装以后总结出来的新手向傻瓜式教程，适用于第一次安装虚拟机的小白参考，基本上安装完以后可以实现虚拟机上所有的基本操作同时也进行了MACOS风格美化保证你从此爱上虚拟机😄！
@@ -17,7 +17,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704155405.png
 
 ![](https://img.imgdb.cn/item/600a49d93ffa7d37b3f189c2.jpg)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122114837.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122114837.png)
 
 第一张图片是美化以后的虚拟机桌面显示，下图是虚拟机的配置，基本上实现了对于一个同学学习使用虚拟机的全配置。其中我这篇教程将帮助你实现以下功能：
 
@@ -31,39 +31,39 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704155405.png
 
 首先你需要下载两个文件，分别是[VirtualBox](https://www.virtualbox.org/)和[UbuntuDesktop](https://ubuntu.com/#download)(由于是新手向，怕你不知道点那个键，我给你截图画出了需要点击的键咯~)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122115534.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122115534.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122115608.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122115608.png)
 
 可能你安装的时候版本已经更新了，没事安装最新的即可，毕竟有新版本为何不使用呢？如果你实在是想安装老版本那强烈推荐ubuntu18.04版本比较稳定，我这里就是安装的当前最新版本ubuntu20.04，但是没关系，无论过对于那个版本，本教程都适用。你下下来的VirtualBox应该是一个安装程序exe点击启动安装，而ubuntu应该是一个压缩包文件，千万不要解压缩。
 
 安装好VM(后面VirtualBox简称为VM)后打开，应该出现下图界面：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122115950.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122115950.png)
 
 你那里应该还没有虚拟机，所以接下来就是新建一个虚拟机啦，点击新建然后弹出下图
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122120208.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122120208.png)
 
 这里我强烈推荐你将名称命名为ubuntu+版本的格式，因为你以后也许会创建许多个不同版本的虚拟机，为了易于区分，这样命名更加友好。至于下方的文件夹你应该默认的是C盘，一定要改成D盘的VirtualBox VMs，应该是没有这个文件夹的你需要自己在D盘新建文件夹命名为这个然后选择这个文件夹存储。至于为什么不存储在C盘，因为以后随着的配置的增加和使用次数的频繁这个文件夹大约会暴增到10G左右放到C盘迟早要炸。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122120617.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122120617.png)
 
 至于内存开到2G就行了没必要开太大，内存≠磁盘空间。然后就到了关键步骤，为磁盘分配空间：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122120753.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122120753.png)
 
 选择创建虚拟硬盘，然后选择VDI就行，下一步以后出现物理硬盘的分配方式选择动态分配即可再下一步然后关键步骤：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122120921.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122120921.png)
 
-这里也是选择D盘存储，最重要的是下面的硬盘空间大小他默认的是开10G，千万不要以为这很大，实际上这个完全不够用，很容易导致未来磁盘空间不足无法开机的报错情况类似于[《ubuntu磁盘空间不足》](https://wenchong.space/2021/01/21/ubuntu-problem1/)，因为一旦分配了硬盘空间后以后就不好扩容了（当然是可以扩容的，但是很复杂），我推荐你一次性开的足够大，大约>=60G比较好，我开的是100G，你自己斟酌。然后我们就完成了基础配置，接下来先别急着启动，打开设置。
+这里也是选择D盘存储，最重要的是下面的硬盘空间大小他默认的是开10G，千万不要以为这很大，实际上这个完全不够用，很容易导致未来磁盘空间不足无法开机的报错情况类似于[《ubuntu磁盘空间不足》](https://coolchong.cn/2021/01/21/ubuntu-problem1/)，因为一旦分配了硬盘空间后以后就不好扩容了（当然是可以扩容的，但是很复杂），我推荐你一次性开的足够大，大约>=60G比较好，我开的是100G，你自己斟酌。然后我们就完成了基础配置，接下来先别急着启动，打开设置。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122121722.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122121722.png)
 
 对控制器IDE分配光驱这里应该可以直接选择刚刚下载的iso文件就是那个压缩包。然后在点击ok退出到主界面启动此时第一次启动他会进行虚拟机的安装出现下图的界面：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122121932.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122121932.png)
 
 这个界面就是选择安装时的显示语言，实际上选英语也没啥事，当然选中文的话你能够清晰看到安装进度但是实际上也看不懂随便选吧。关键是点击右边的install ubuntu进行安装，然后你就可以去玩几把游戏去了，这个安装大概一般在1小时左右，不用动虚拟机等待他自己安装即可。安装完成后他会要求重新启动虚拟机重启即可，在这里部分电脑可能会出现报错然后重启后再次安装虚拟机的情况，那么就再安装一次这次安装就一定会成功了，如果你启动成功了那么就应该可以进入到桌面啦（貌似，还有一个注册账户的环节，你就直接注册就好了）。
 
@@ -75,7 +75,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704155405.png
 
 其中FCITX请安装以下这个：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122133457.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122133457.png)
 
 当然如果你没有上面这个那么就打开终端，在桌面中单机鼠标右键，选择open in terminal即可打开终端，然后输入
 
@@ -97,7 +97,7 @@ sudo apt install fcitx
 
 打开后选择区域语言（Rgion&Language)选择中文格式和拼音输入源：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/@Q`JULO7DE$962@34%S6ZWG.png)
+![](https://langwenchong.gitee.io/figure-bed/@Q`JULO7DE$962@34%S6ZWG.png)
 
 配置完这些后请重启虚拟机，再次进入以后应该就实现了中文显示和中文输入法了，此时你在观察右上角应该多了一个语言栏选择
 
@@ -113,19 +113,19 @@ sudo apt install fcitx
 
 ubuntu默认安装了火狐浏览器，这个就很好用了，不用换成chrome了，更不要在使用360，金山毒霸，QQ浏览器等了，首先是虚拟机上不好安装这些浏览器，同时身为一名程序猿，我们要更加优雅的使用浏览器，当然得选择可以支持插件扩展的浏览器了，所以早日习惯使用火狐和chrome更好，我感觉火狐就挺好的，chorme占用的内存较大并且还得再次安装太麻烦，这里就是用火狐了。打开火狐浏览器，你应该还不能直接使用搜索引擎，因为他默认使用的google搜索，我国国内不支持，请刚换成必（推荐）应或者百度。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122135457.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122135457.png)
 
 怕你不知道在哪里，点击这个如果是英文的话应该是preference然后选择搜索引擎更换为必应
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122135558.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122135558.png)
 
 同时顺便将浏览器语言改为中文，这个就自己改吧，有手就行。接下来我们顺便美化一下浏览器，点击左下角的扩展和主题搜索infinity插件，这种插件还有许多你可以自己搜索进行安装。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122135808.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122135808.png)
 
 然后选择安装这个插件，然后浏览器桌面壁纸就会变得非常的好看了。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122135849.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122135849.png)
 
 如果不喜欢可以自己更改壁纸，例如这是我美化以后的：
 
@@ -159,11 +159,11 @@ sudo apt install git
 
 实际上两个系统间的文件也不能共享，之前我们一直使用的方法是邮箱传递，但是这很不优雅，这里可以选择建立一个共享文件夹，网上的办法讲的都很繁复，实际上很简单。首先我们在主机win新建一个文件夹命名为ubuntushare，然后打开VM配置，在共享文件夹中挂载：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/JVB0QUGPOPEDE9Z]EPJ_H3V.png)
+![](https://langwenchong.gitee.io/figure-bed/JVB0QUGPOPEDE9Z]EPJ_H3V.png)
 
 路径就是Ubuntushare的文件夹地址，然后名称他会默认使用ubuntushare即可，最后选择自动挂载，不用固定分配。这样配置完成后如果
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122151948.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122151948.png)
 
 共享文件夹中显示数量为1说明就挂载成功了我们进入虚拟机打开文件夹应该新增了一个栏目就是新增的共享文件夹。
 
@@ -173,7 +173,7 @@ sudo apt install git
 
 然后我们在终端中输入指令df -h，可以查看磁盘的使用情况
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122142006.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122142006.png)
 
 我们可以看到sda6（可能你的是sda1,2或者5)等这个是磁盘的主文件空间，一定不能让他满了，我们可以看到这个分配的空间大约是我们给磁盘空间分配的50%,那么另外的50%是分配给了系统的，我们一般是无权访问修改的。所以这个就类似于C盘了，我们的文件就放到了这里，所以不能让他满了。如果要满了，可以选择扩容，这里我们介绍一下Gparted（我之前让下载的软件）
 
@@ -195,7 +195,7 @@ sudo apt-get install gnome-tweak-tool
 
 这里我直接给的是Mcmojave主题的，这个就挺好看的，省的你自己犯选择焦虑症，然后点击右边的download选择一个你喜欢的主题下载即可，我选择的是暗黑主题(Mcmojave-dark)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122144459.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122144459.png)
 
 下载以后我们将其解压缩，这是个两级压缩我们分别输入
 
@@ -212,29 +212,29 @@ sudo nautilus
 
 然后选择复制这个Mcmojave文件夹，将其移动到其他位置/计算机/usr/share/themes中。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122145136.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122145136.png)
 
 然后我们打开优化(tweaks)将主题换成Mcmojave即可，然后神奇的地方就行，我们就会发现出现了标志性的三色标志。
 
 接下来我们在将icon换成mac版本，这里用到的方法和上面的差不多，我们访问这个网站（还是使用虚拟机的浏览器打开）：[GnomeLookicon](https://www.gnome-look.org/p/1305429/)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122145637.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122145637.png)
 
 还是选择下载一个我选择的是01-Mcmojave-circle，然后还是将其解压缩，这次移动到其他位置/计算机/usr/share/icons中，然后再次打开优化将图标改为相应的mac风，自此已经非常像MACl了，然后我们再将dock栏也改成mac风格。如果你是ubuntu18.04那么直接在ubuntu应用市场中的附加组件中选择dash-to-dock组件安装后应用即可。如果你使用的是和我一样的Ubuntu20.04以上，那么应用市场没有附加组件选项，我们选择另一种方法安装。打开虚拟机上的浏览器访问[GNOME插件](https://extensions.gnome.org/extension/307/dash-to-dock/)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122150246.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122150246.png)
 
 然后应用这个插件我们浏览器的右上角就出现了小脚印的插件标志点击这个标志
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122150504.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122150504.png)
 
 搜索dash to dock安装这个插件然后返回桌面发现dock栏变成了mac风格。然后右键dock栏可以进行配置将其调到下方。此时就完成了dock栏的配置，如果有个人需求请自己再修改。然后我们再将桌面上的垃圾桶和个人目录隐藏，打开优化(tweaks)然后选择扩展，点击Desktop icons右边的小齿轮
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210122150820.png)
+![](https://langwenchong.gitee.io/figure-bed/20210122150820.png)
 
 隐藏垃圾桶和个人文件夹即可。自此我们的虚拟机美化就完成了。
 
-现在我们再回看一下虚拟机整体，空间足够，应用齐全（不要在虚拟机上安装QQ,WECHAT，很麻烦），并且优雅至极，你还有什么理由不爱上使用虚拟机学习呢？还不赶快使用虚拟机做几个实验感受一下优雅的学习氛围：[ubuntu上进行的实验学习](https://wenchong.space/tags/%E5%A4%A7%E4%BD%9C%E4%B8%9A/)。那么你一定很疑惑虚拟机还能干些什么吧？首先学习linux肯定是很好的，毕竟Ubuntu操作系统内核就是linux，其次任何具有破坏性的造作的项目学习都可以在这里学习，例如git本地仓库的学习，漏洞实验等等，如果不小心搞坏了，没有任何负担，删了虚拟机重新配置就是啦😋。
+现在我们再回看一下虚拟机整体，空间足够，应用齐全（不要在虚拟机上安装QQ,WECHAT，很麻烦），并且优雅至极，你还有什么理由不爱上使用虚拟机学习呢？还不赶快使用虚拟机做几个实验感受一下优雅的学习氛围：[ubuntu上进行的实验学习](https://coolchong.cn/tags/%E5%A4%A7%E4%BD%9C%E4%B8%9A/)。那么你一定很疑惑虚拟机还能干些什么吧？首先学习linux肯定是很好的，毕竟Ubuntu操作系统内核就是linux，其次任何具有破坏性的造作的项目学习都可以在这里学习，例如git本地仓库的学习，漏洞实验等等，如果不小心搞坏了，没有任何负担，删了虚拟机重新配置就是啦😋。
 
 ### 🍻结尾语
 

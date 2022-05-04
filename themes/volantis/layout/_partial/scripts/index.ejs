@@ -13,6 +13,9 @@
   loadCSS("<%- theme.plugins.highlightjs.css %>", window.volantis.loadcss);
   <% } %>
 </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css">
+<script defer type="text/javascript" src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+
 <!-- required -->
 <%- js(theme.plugins.jquery) %>
 <%- partial('../../_third-party/fancybox/script') %>
@@ -94,6 +97,8 @@
 <%- partial('../../_third-party/parallax/script') %>
 
 <%- partial('toc') %>
+
+<%- partial('message') %>
 
 <!-- more -->
 <% if (config.import && config.import.script) { %>

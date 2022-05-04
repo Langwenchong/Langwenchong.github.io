@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第十二讲
 comments: false
 top: false
 date: 2021-04-25 18:55:03
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -28,7 +27,7 @@ categories:
 
 下面我们用一个案例来学习根据电路原理图导出状态机：如下图是一个键盘锁电路，包含两个输入和一个输出，当输出为1时表示开锁成功，试分析，如何进行输入才能使电路产生开锁信号
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425191332.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425191332.png)
 
 首先我们要检查电路图，标明输入，输出和状态位：
 
@@ -53,31 +52,31 @@ Unlock=S_1
 $$
 接下来我们要根据上面的方程枚举所有的情况列出状态表和输出表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425191851.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425191851.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425191819.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425191819.png)
 
 然后我们将状态表填写完整，进行不可达状态的删除：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425191935.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425191935.png)
 
 我们发现状态S1:0=11从未在表中作为次态出现过，即无论输入A1,A0取何值都不可能计算得到次态的11，因此将状态表和输出表对应不可达状态S1:0=11的一栏删除。同时对于现态S1:0=10，总是得到次态S1:0=00，因此此时与输入无关，可以使用无关项X来进一步化简。最终我们得到化简后的状态表和输出表如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425192148.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425192148.png)
 
 接下来我们为状态表和输出表中的每一个有效状态编码指定状态名称，从而使得更容易知道输入情况同时也方便后面进行状态转换图的绘制：
 
 我们规定有效状态编码对应的名称如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425192316.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425192316.png)
 
 因此将上面的化简后的两个表使用新的名称来表示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425192401.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425192401.png)
 
 此时我们根据已经用状态名称标注的状态表和输出表进行状态转换图的绘制，要注意因为是Moore型状态转换机，因此输出应该是写在状态圆圈的内部的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425193206.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425193206.png)
 
 最后我们再观察状态转换图，进行以下逻辑整理，便可以描述出这个电路图要实现的功能了，如上图，在复位状态下，只有先后输入了3和1才能到达解锁状态S2，这也就说明这个键盘输入锁的密码就是31。
 
@@ -106,7 +105,7 @@ sensitivity list是敏感事件列表，当列表中的事件产生时，过程�
 
 寄存器是一个典型的时序逻辑器件，他在同一时刻更新存储多位信息。其结构如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425194707.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425194707.png)
 
 那么我们的建模代码如下
 
@@ -128,7 +127,7 @@ endmodule
 
 这里我们给出两种不同复位方式的寄存器建模代码：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425195615.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425195615.png)
 
 我们可以看到对于同步复位功能的寄存器，他的敏感事件只有clk，因此只有clk处于有效沿时才能执行always内部的代码，因此只有在clk有效时才可能进行reset的判断以及复位。但是对于异步复位的寄存器，敏感事件有两个即新增了一个reset，也就是说此时只要reset或者clk处于有效沿，都可以执行过程块内部的语句，因此此时是异步复位。
 
@@ -140,7 +139,7 @@ endmodule
 
 进一步我们还可以为具有复位功能的寄存器添加一个使能端，只有使能端en=1时才能将Q更新为采样的输入值D：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425200125.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425200125.png)
 
 #### 锁存器建模
 
@@ -148,7 +147,7 @@ endmodule
 
 我们思考一下锁存器的功能，实际上就是只有在clk=1有效状态时，才能让Q时刻跟随采样的输入值D变化，否则就维持之前的值。因此建模代码很简单：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425200422.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425200422.png)
 
 ```verilog
 module latch(input logic clk,
@@ -168,7 +167,7 @@ endmodule
 
 但是当时我们很难理解两者的应用上有何异同，接下来我们使用一个案例来分析一下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425200822.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425200822.png)
 
 我们发现上面的两个建模代码很相似，只是在赋值的时候使用了不同的赋值语句，最终对应的电路图有很大的区别，这就是非阻塞赋值语句和阻塞赋值语句造成的。首先我们分析一下左侧使用非阻塞赋值语句的建模代码，由于非阻塞赋值语句是并行执行的，而不是阻塞式的串行，因此上面两个赋值代码是同时执行的，也就是说q被赋予的是n1还没被更新成d的值。举个例，假设初始时n1=0,d=1，那么执行上面的非阻塞赋值语句后n1=1,q=0，我们发现q的值是n1之前的值0，而不是被更改为d后的1值，这是因为n1和q同时更新值，从q的视角来看，此时n1还是0值，只有当q更新为0以后n1才变成了新的值1。
 
@@ -223,13 +222,13 @@ end
 
 N位二进制计算器如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425202159.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425202159.png)
 
 他的输入有时钟信号clk,复位信号reset，同时输出就是一个N位二进制计数结果。功能是每次在时钟上升沿到达时将结果加1并输出。能够实现循环计数：000,001,010，...。因此这是一个时序逻辑器件，他常用数字时钟和程序计数器（PC）中。
 
 下面我们来对他进行建模：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425202424.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425202424.png)
 
 ```verilog
 module counter #(paramer N=8)
@@ -247,13 +246,13 @@ endmodule
 
 #### 移位寄存器
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425202907.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425202907.png)
 
 移位寄存器输入有时钟信号clk,串行输入信号Sin,输出由串行输出Sout以及N位并行输入的Qn-1:0。移位寄存器的功能就是在时钟信号的每一个上升沿，从Sin移入一个新的位，并将寄存器的整体向前（高位）移动一位，因此最前面（最高位）会出来位移如Sout。我们可以将其看成是一个串行到并行的转换器，每一个周期从Sin输入一位，N个周期后可以通过Qn-1:0直接访问N位输入。因此在将内容整体移位时很明显是需要并行同时执行赋值更新操作的，因此是用非阻塞赋值语句的同步时序逻辑来实现，使用的实现器件就是将N个D触发器串联即可。
 
 下面我们对这个移位寄存器进行优化，使其可以并行加载，什么意思？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425203401.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425203401.png)
 
 此时输入增加了Load信号和并行输入信号Dn-1:0。我们思考一下，之前如果我们想要先将这个N位寄存器加载一个N位数，那么需要先执行N次移位操作，才能将这个N为二进制码加载进去，这很麻烦，因此使用并行输入信号同一时刻并行的为每一个位进行赋值从而实现单位时间不用移位就完成移位寄存器对于一个N为二进制数的加载。此时功能是：
 
@@ -262,7 +261,7 @@ endmodule
 
 那么此时可以实现串行转并行：Sin到Qn-1:0，同时还有并行转串行Dn-1:0到Sout。那么此时我们来实现一个建模：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425203748.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425203748.png)
 
 ```verilog
 module shiftreg #(parameter N=8)
@@ -289,7 +288,7 @@ endmodule
 
 我们之前学习的建模都是只是将最核心的同步时序电路部分进行了建模，使用的是always_ff实现的，但是实际上对于一个状态机来说，他在状态寄存器的两侧还存在输入到现态的计算的组合逻辑电路，还有右侧连接的根据现态计算出输出的组合逻辑电路，因此实际上在对一个有限状态机进行建模时即需要alwalys_ff的同步时序过程块，也需要alwyas_comb组合逻辑过程块。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425204642.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425204642.png)
 
 这是一个最简单的3分频计数器，他就是一个moore型的有限状态机，输入是一个时钟输入信号，一个输出，功能是每3个周期后输出产生一个周期的高电平。因此状态转换图如上图，输出是时钟的3分频。因此建模代码如下：
 
@@ -333,7 +332,7 @@ endmodule
 - 数据：存储的内容
 - 地址：数据的索引
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425205654.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425205654.png)
 
 存储器由一个二维存储单元阵列构成，每一各位单元存储一位数据，每一行存储的是一个M位二进制码数据，由于地址编码是N为，因此一共有2\^N行，也就是说可以存储2^N个M位二进制码数据。
 
@@ -347,7 +346,7 @@ endmodule
 
 例如一个2位地址和3位数据的存储器阵列：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210425210723.png)
+![](https://langwenchong.gitee.io/figure-bed/20210425210723.png)
 
 他的阵列深度会是4行，同时数据字个数也就是4个，每一个字的字长是3位。如上图所示，10地址存放的数据就是100。
 

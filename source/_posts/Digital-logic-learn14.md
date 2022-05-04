@@ -3,10 +3,9 @@ title:  数字逻辑与数字系统笔记-第十四讲
 comments: false
 top: false
 date: 2021-06-07 10:25:41
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -21,7 +20,7 @@ categories:
 
 我们前面讲到了操作系统是本质上一个服务软件，因此他如果想在不同的硬件系统中进行运行，也需要可兼容性，因此需要指令集体系结构来实现翻译功能，因此指令集体系结构更靠近底层。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607103907.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607103907.png)
 
 如上图是一个计算机不同层次的模块，可以看到指令集体系结构更靠近底层，因此他会向os提供服务。并且指令集体系结构属于硬件模块层次。
 
@@ -37,13 +36,13 @@ categories:
 
 下面这些功能也都属于指令集体系结构中：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607105111.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607105111.png)
 
 软件就是使用指令集体系结构给出的规则恰当的使用硬件来完成功能。
 
 ##### 拓展：ISA中的“五朵金花”
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607105404.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607105404.png)
 
 五大主流生产指令集体系结构的厂商，x86常用于桌面，arm，power常用于移动端设备,mips常出现于通信系统中。
 
@@ -61,7 +60,7 @@ categories:
 
 微体系结构是指令集体系结构的一种具体硬件实现，如指令的数据通路结构，计算单元的电路结构（加法器等），存储器体系（寄存器文件、主存的结构）等等。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607111527.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607111527.png)
 
 我们可以看到x86进一步拆分出了许多微体系结构，不同的微体系结构模块有不同的功能。
 
@@ -73,7 +72,7 @@ categories:
 
 我们以加减法指令为例，学习一下汇编语言得基本格式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607155649.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607155649.png)
 
 ```asm
 助记符 目的操作数 源操作数
@@ -113,7 +112,7 @@ MIPS定义了32个32位的寄存器组成的寄存器文件，我们学习过OS�
 
 为了对我们使用的寄存器加以区分，我们对每一个不同的寄存器都设置了唯一的寄存器编号，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607161837.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607161837.png)
 
 {%note info,
 
@@ -130,7 +129,7 @@ MIPS定义了32个32位的寄存器组成的寄存器文件，我们学习过OS�
 
 下面我们最后看几个包含寄存器的汇编指令：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210607162319.png)
+![](https://langwenchong.gitee.io/figure-bed/20210607162319.png)
 
 #### MIPS存储器
 
@@ -140,7 +139,7 @@ MIPS定义了32个32位的寄存器组成的寄存器文件，我们学习过OS�
 
 #### 按字编址和寻址
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609204643.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609204643.png)
 
 按字编址时，一个字对应一个地址，如上图此时是一个词（字）对应着一个地址，而不是，他相较于按字节编址，一个地址对应着更多的数据（四个字节）。
 
@@ -171,7 +170,7 @@ sw $s0,5($t1)
 
 #### 按字节编址
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609205838.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609205838.png)
 
 此时一个字节对应着一个地址，因此一个字会分成4个字节存储到4个存储器的地址单元中。此时根据一次性读/写1,2,4个字节可以分类成一下几种指令，他们都是读/写存储器的指令，但是一次性读/写对应的数据字节大小不同：
 
@@ -223,9 +222,9 @@ sw $t7,44($0)
 
 我们以下面的例子来具体区分一下大端和小端存储的区别：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609212012.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609212012.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609212026.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609212026.png)
 
 因此我们发现对于一个数00112233H，大端存储就是正常的高位数从左到右存储，因此高位有效数存储到了低字节地址处。而小端存储反而相反，高位有效数存储到了高字节地址处，也就造成了实际上一个字的数拆分成4个字节后是从右到左存储的，因此读出来的数要逆序一下才是真正的数值。
 
@@ -261,13 +260,13 @@ bool big_little_endian(){
 
 实际上上面我们所学习的按字/字节编寻址与大小端存储方式在之前的计算机系统基础中都有学习过，可以参考下面的文章：
 
-{% link 数据的存储方式, https://wenchong.space/2021/02/03/comsys-note4/, %}
+{% link 数据的存储方式, https://coolchong.cn/2021/02/03/comsys-note4/, %}
 
 #### 操作数--立即数
 
 立即数既不来自寄存器，也不来自存储器，而是直接来自指令，他通常使用16位二进制补码来表示，直接嵌入在汇编指令中使用。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609213741.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609213741.png)
 
 如上图所示，4和-12就是立即数，他们可以直接在指令中嵌入使用，而不是通过寄存器，存储器等方式进行取操作后再使用。
 
@@ -281,7 +280,7 @@ bool big_little_endian(){
 
 ##### 寄存器类型指令（R型指令）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609214502.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609214502.png)
 
 MIPS指令集是32位的，因此每一个指令都使用32位代码，其中按照上面的规则进行划分，每一个区域都有特定的功能：
 
@@ -293,11 +292,11 @@ MIPS指令集是32位的，因此每一个指令都使用32位代码，其中按
 
 上面的指令由两个源操作加上一个目的操作数，并且所有的操作数都来源与寄存器，因此称为寄存器类型指令（Register command),也就是R-型指令。下面是一个寄存器类型指令的例子：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609215349.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609215349.png)
 
 他们的指令划分（下表中的数据都使用十进制真值来表示)如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609215413.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609215413.png)
 
 我们一定要注意rs,rt,rd各对应的是谁，在mips指令add和sub等寄存器指令，书写时的规则是
 
@@ -309,13 +308,13 @@ sub		$t0		$t3		$t5
 
 和划分的区域略有顺序的不同。因此在机器中的代码存储如下;
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609215754.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609215754.png)
 
 然后在使用16进制代码表示整个的32位指令，因此一个指令是由8为十六进制数表示。
 
 ##### 立即数类型指令（I型指令）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609215957.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609215957.png)
 
 划分规则：
 
@@ -335,15 +334,15 @@ lw			rt,			rs
 sw			rt,			rs
 ```
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609220630.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609220630.png)
 
 最终再机器码中还要将十进制真值数改用二进制数表示，然后最终的汇编代码再将32位的二进制码转换为8位16进制码来表示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609220743.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609220743.png)
 
 ##### 跳转型指令（J型指令)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609222121.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609222121.png)
 
 - op字段表示操作码，用于确定指定的类型
 
@@ -361,7 +360,7 @@ sw			rt,			rs
 
 ##### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210609222845.png)
+![](https://langwenchong.gitee.io/figure-bed/20210609222845.png)
 
 {% note info,
 

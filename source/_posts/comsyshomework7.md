@@ -3,10 +3,10 @@ title: 计算机系统基础大作业--nemu(pa3)编写
 comments: false
 top: false
 date: 2021-01-18 11:34:41
-tags: [计算机系统基础,C++,大作业,nemu,pa3,linux]
+tags: [机组原理,c++,nemu,linux]
 categories: 
-	- [项目总结,计算机系统大作业]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163041.png
+	- [知识分享,项目总结]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704163041.png
 ---
 
 本次实验包含如下3个阶段：
@@ -39,35 +39,35 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163041.png
 
 实验要求是实现cache来加速运行，这里必做任务1加上选做任务1一起实现，是一个一级cache和二级cache的高速缓存方法，阅读指导说明书可以得知首先是在cache1中查找，找到就直接命中提供即可耗时少，如果未命中就加入到cache1中，并且这里的cache1回收时并不是立刻删除该项，而是先加入到cache2中，这样如果又需要该项即可立刻从cache2中写回，并且可以利用已经提供的宏unalign_rw()来完成对于读写不对齐的操作。所以首先我们需要自己定义cache结构，cache的每一个表项block需要有一个valid位来标志是否在cache1中，同时对于替换算法实现这里使用随机算法就可以，cahce2相对于cahce1多了一个dirty为。所以首先声明两个数据结构如下，这里我是在nemu/include/memory下新建文件cahce.h用来声明两个数据结构：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117133657.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117133657.png)
 
 当然这里同时也声明了两个数据结构接下来要实现的读写函数，其中声明的CACHE_BLOCK_SIZE代表一个表项的实际大小，EIGHT_WAY是cache1中一个表项地址所占位数，SIXTEEN_WAY是二级cache一个地址所占位数以便后面操作。然后需要实现一、二级cache的初始化操作，就是对于每一个表项的标志位全部设置为0，因为是以数组的形式存储，所以使用memset函数进行初始化（这里同样我在nemu/src/memory文件夹下新建了cahce.c用来存储有关cache函数的具体实现）：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117134058.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117134058.png)
 
 这里需要引入一些头文件，首先common.h,burst.h必须引入，cache.h是刚刚我们声明的文件里面包括了两个数据结构这里要用到也需要引入。然后init_cache就是初始化函数具体实现，这里一定要注意i的限制条件不同，因为两个cache大小有一定的差异所以用两个for分别对两个cache进行初始化。然后上面还引入了一些函数dram_read,call_ddr3_read,call_ddr3_write是来自nemu/cpu/src/memory/dram.c中已经提前声明好的可以直接使用的对于磁盘读写操作的函数。但是这里要注意后两个call_ddr3函数需要我们自己实现如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117134514.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117134514.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117134531.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117134531.png)
 
 实际上就是调用了dram.c中的ddr3函数，这里需要自己重新写的call函数然后引入到cache.c中这样cache.c下的函数才可以使用ddr3函数，原因是ddr3使用了static声明不可以直接在cache.c中调用会报错，小细节要注意到。并且上面的初始化函数中和cache.h中还声明了tol_time并初始化为0是为后面最后计时使用cache后运行时间的（貌似不能用time会报错因为重名了）。接下来就是实现两个cache的读写操作。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117134847.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117134847.png)
 
 首先需要声明hit代表是否能够命中，然后检查是否能够命中，如果命中率就可以直接进行读取操作了，所以时间消耗少这里对tol_time进行+2操作，非常迅速。如果未命中那么就需要调用second_cache_read函数进行检查命中了同时需要在一级cache中添加这个表项，如果一级cache满了那么就要调用srand实现随机抽取淘汰一个表项。接下来就是调用二级cache读操作（这里不粘贴详细代码，只是给出关键核心部分，具体请查看源代码文件。）：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117135251.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117135251.png)
 
 这里要注意当二级cache也为命中时那么就需要通过dram.c的call_ddr3_write进行磁盘的读写操作了当然如果二级cache满了也需要进行随机抽取淘汰算法。具体的cache写操作函数请查看源代码。用时如果是二级cache命中那么tol_time+20，但是如果二级cache也未命中那么时间开销将会很大所以tol_time+200。然后我们再将Memory.c文件下的hwaddr_raed和hwaddr_write进行完善，即不是直接调用ddr3函数了，而是先调用cache_read和cahce_write。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117140651.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117140651.png)
 
 这里一定要注意说明书提到的如果地址太长一次无法进行访问需要再次裁剪即上图代码的情况就是如果过长了需要进行裁剪。同时注意最下方要加上输出时间这样每次进行地址的读写操作都会打印记录的时间。最后我们再在nemu/src/monitor/monitor.c中引入init_cache来启动对cache的初始化。
 
 至此必做任务1和选做任务1同时实现一、二级cache来加快运行速度的目标就实现了，接下来我们在观察一下运行时间吧！说明书上说运行matrix-mul来观察时间，我知道本意是为了运行一个大文件来体现cache对于提速性能的功能的强大，但是奈何我的电脑性能有限😂，尝试做此都以崩溃告终，所以这里我给出了成功运行Mov-c后的实验截图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/QQ图片20210115152505.png)
+![](https://langwenchong.gitee.io/figure-bed/QQ图片20210115152505.png)
 
 很快就可以输出结果并且时间也显示出来了。当然如果愿意可以在每次命中时输出hit!来更加直观的观察。
 
@@ -75,41 +75,41 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163041.png
 
 任务2是要求实现分段存储，首先我们根据指导书上的步骤进行，先声明gdtr的结构体，这里我们要在cpu/include/cpu/reg.h中完成对于分段存储所用的几种数据结构的声明：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117141609.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117141609.png)
 
 我们先对GDTR进行声明,然后同时在下方声明cr0和cr3（这里需要在reg.h中引入x86-inc/cpu.h)两个x86-inc中的数据结构，cr0需要立刻用到cr3在分页存储需要用到。然后同时还需要声明es,cs等段寄存器，那么接下来我们需要具体声明段寄存器的格式，这里实际上只有4个可以用上，另两个fs,gs声明后貌似没有用到。具体的声明我们写在Segment_Reg数据结构中，其中我们参考指导书给出的结构声明：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117141833.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117141833.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117141956.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117141956.png)
 
 这里需要base1,2,3进行拼接组成base,还有limit同样需要拼接，用时其他的属性值也参考上面的结构进行位数的规定。并且需要划分成两个32为的部分分别命名为first_part和second_part，同时我们还需要声明以下数据结构并且同样模仿上面将六个寄存器组成一个集合：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117142214.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117142214.png)
 
 至此准备阶段就完成了，然后我们在根据指导书将cr0的PE为（Protect_enable)设置为1这个操作需要在monitor.c中声明init_cr0实现并且同时还需要初始化cs如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117142716.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117142716.png)
 
 cr0.paging是分页存储需要的暂时不需要，ini_cs()操作在指导书下面的操作中有说明，这里照着写就是了。然后还需要实现ljmp指令这里写到jmp-template.h中：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117143009.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117143009.png)
 
 然后还需要在自定义lgdt指令这个就是类似于PA2的操作，我们需要自建lgdt.h、lgdt.c、lgdt-template.h完成操作后在all-instr.h中引入然后在运行make run找到i386指令第一次无法识别的地方进行完善填写lgdt指令函数即可。让还需要对Mov指令进行完善并且同样需要运行找到i386无法识别指令的位置进行相对应的函数名称填写，这里需要另外实现两个cr2r和r2cr具体请参考实验源代码。并且需要修改swaddr_read()和swaddr_write()函数进行地址的转换，这里的具体操作需要在segment.c中自己实现的segment_translate()函数中实现，我们这里新建nemu/src/cpu/memory/segment.c文件并实现;
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117143500.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117143500.png)
 
 当未处于保护模式直接返还addr,如果处于保护模式在使用段存储的地址转换方法通过段寄存器的Base地址和addr进行拼接实现。然后在将Operand添加新成员就是sreg了，并且修改raed_ModR_M来将段寄存器DS,SS和进行捆绑。接下来进行的步骤是参照下面给出的和i386手册给出的对于每一中情况捆绑正确的段寄存器。这里我一开始的思路是修改swaddr函数的原型以及MEM_W,MEM_R函数的原型，但是发现这样实在是工作量复杂，所以不如声明一个变量curent_sreg来记录当前的段寄存器，这个变量在reg.h中声明。然后根据每一种情况进行对current_sreg的正确赋值正确的段寄存器。例如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117144121.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117144121.png)
 
 并且修改最重要的是修稿reg.c文件来对堆栈隐式操作绑定SS寄存器然后instr_fetch()使用CS寄存器，并且还需要对string类的指令捆绑合适的寄存器（这里需要参考i386手册），然后x,p操作和bt操作也需要捆绑相对应的寄存器。这里对堆栈操作的绑定在nemu/src/cpu/decode/modrm.c中实现：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117144857.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117144857.png)
 
 最后还声明sreg_load()函数并且在reg.c中实现sreg_load来实现对于addr,limit等属性的拼接：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117144616.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117144616.png)
 
 自此就完成了分段存储，必做任务2完成。
 
@@ -117,11 +117,11 @@ cr0.paging是分页存储需要的暂时不需要，ini_cs()操作在指导书�
 
 我们这里要实现分页存储。首先需要装载cr0的paging位上面我们已经完成了，然后需要重构lnaddr_read和lnaddr_write同样是要重定位需要先经过page_translate的转换，这里page_translate函数也是需要自己完成，我们同样新建page.c然后实现。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117145340.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117145340.png)
 
 同样先进行检验，只有PE,PG位为1后才可以进行，否则返还addr,如果经过检验那么根据分页存储我们需要分别获得内存块号和块内偏移量。然后还需要在common.h中声明IA32_PAGE（忘记说了，分段存储也需要开启相对应的）。并且修改Makefile的起始地址。然后为了加载分配物理块，我们需要在elf.c中进行mm_malloc函数的调用。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117145815.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117145815.png)
 
 自此就完成了必做任务3，接下来我们顺便完成选做任务2实际上和上面思路差不多。
 
@@ -129,11 +129,11 @@ cr0.paging是分页存储需要的暂时不需要，ini_cs()操作在指导书�
 
 我们需要完成一个建议调试器，他可以给出地址addr的转换结果，如果失败需要输出失败信息。很明显我们需要自定义一个新的指令，所以我们需要借鉴PA1的思路，现在monitor/debug/ui.c中声明新的指令为cmd_page:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117150058.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117150058.png)
 
 同时记住要在help中添加page指令，这里需要调用page_translate_monitor函数，实际上和page_translate函数思路完全相同，只是这次需要返还一个flag信息以判断是够成功转换，所以代码不在给出，请参考源代码程序。然后即完成选做任务2，这里我也给出答案截图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/QQ图片20210117112233.png)
+![](https://langwenchong.gitee.io/figure-bed/QQ图片20210117112233.png)
 
 可见代码转换成功。
 
@@ -141,11 +141,11 @@ cr0.paging是分页存储需要的暂时不需要，ini_cs()操作在指导书�
 
 实现一个tlb,实际上就是在分页存储的基础上类似于cache加上一个高速缓存，所以肯定也是有命中与不命中，每次读入时先判断是否表项已经在tlb中，如果存在则可以直接使用，只有在不命中时才需要地址的转换（时间开销大的操作），然后将未命中的项写入tlb上，tlb满的时候同样需要使用随机抽取算法淘汰。所以我们先声明tlb结构体，这里我新建了nemu/include/memory/tlb.h：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117150610.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117150610.png)
 
 我们发现实际上和cache非常类似。同样要声明初始化，读取和写操作的函数，然后在新建nemu/src/memory/tlb.c完成函数的具体操作：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117150734.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117150734.png)
 
 同样的，也是需要将标志位初始化为0，然后读写操作实际上类似于cache,详细请参考源代码。然后在Page_translate中加入tlb的读，写函数上面已经给出，同时还需要在Mov-template中完成对tlb的函数的调用。自此，就完成了tlb的实现，并未对kernel进行任何更改。
 
@@ -173,9 +173,9 @@ GDT最终是使用了数组的形式存储每一个段描述符的地址，又�
 
 我们在机组原理和操作系统中都多次学到了段式存储管理，段式存储中：我们熟悉的数据段，代码段都是分段的概念。他是直接将进程按照固定大小切成许多小部分存到了不同的页。但是这里会涉及到一个尴尬的问题，就是大部分页要不存的全是代码，要不存的全是数据，但是总是会有那么几个页且在了数据和代码的交界处，这样这个页就会同时存储着数据和代码的混合体，这种页对于系统管理当然是没有问题的，但是对于编程人员来说就会可读性很差，不友好，导致用户编程不方便。按照人类的正常思维，最好将程序的不同的种类分段，这一段全存储数据，这一段全存储数据等等这样就会对人类可读友好。所以引进了段的概念。即分页是按照物理大小划分，分段是按照逻辑功能模块划分。所以段式存储逻辑性强，和分页查找地址类似，段中的某一个地址也是根据段号+段内偏移量找到具体的位置，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117151901.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117151901.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117151910.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117151910.png)
 
 段号一般是用[]包裹，然后根据逻辑地址和段号就可以求得段内偏移量同样也需要段表查找到段的物理起始地址然后就可以找到真正的物理地址进行相应的读/写操作了(实际上和分页存储的查找方式是一样的)。
 
@@ -185,7 +185,7 @@ GDT最终是使用了数组的形式存储每一个段描述符的地址，又�
 
 们知道地址分为两种逻辑地址（相对地址）和物理地址（绝对地址）两者有一定的映射关系。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117152321.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117152321.png)
 
 是我们发现这种存储只能连续存储，这很不方便，所以引出了分页存储的概念。
 
@@ -195,7 +195,7 @@ GDT最终是使用了数组的形式存储每一个段描述符的地址，又�
 
 因为一个地址是由页块号+页内偏移量拼接完成为一个整体。而表项中只是存储块号，所以只需要记录块号即可，一般页内偏移量需要占12位，而一个地址现在都是32位，所以块号需要20位，所以一个表项的基地址信息为20位。是必须的，虚拟地址和线性地址会变化，不能够应用。之所以不采用一级页表而采用二级页表和多级页表是因为当数据块很多时，一个一级页表会非常大甚至装不下整个块号，而采用二级页表甚至多级页表就可以经过层层块号的映射关系最终存储更多的块号。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210117153107.png)
+![](https://langwenchong.gitee.io/figure-bed/20210117153107.png)
 
 这样的存储方式既不需要申请非常大的连续空间同时保证了每一个表存储了全部的块号信息，避免了一个页表需要占据多个页块的尴尬情况。
 

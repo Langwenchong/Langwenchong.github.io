@@ -3,10 +3,9 @@ title: 计算机网络笔记--Part1
 comments: false
 top: false
 date: 2021-03-03 09:48:20
-tags: [note,408,计算机网络]
+tags: [408,计算机网络]
 categories: 
-	- [学习笔记]
-	- [408,计算机网络]
+	- [个人笔记,计算机网络]
 ---
 
 这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战争。在这种时候，你的心被颠倒了，但在别人眼里，你只是比平时安静一点，没有人会觉得奇怪。这种战争注定是单枪匹马的。
@@ -55,11 +54,11 @@ categories:
 
 计算机网络（主要指Internet)可以分为边缘部分和核心部分。边缘部分由所有连接到因特网上，供用户直接使用的主机组成，用来进行通信（如传输数据音频或视频）和资源共享。核心部分由大量的网络和连接这些网络的路由器组成，它为边缘部分提供连通性和交换服务。如下图所示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303102404.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303102404.png)
 
 网络的一个结构如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303102600.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303102600.png)
 
 这里的比特流可以看成是不同协议的互联传送信息的数据信号，网络里面确实是许许多多多主机系统的集合。
 
@@ -137,7 +136,7 @@ categories:
 
 按网络的拓扑结构，主要分为总线形，星形，环形和网状形网络等，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303111902.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303111902.png)
 
 星形和环形网络多用于局域网都是广播式结构，网状网多用于广域网都是点对点式结构。
 
@@ -167,4 +166,4 @@ categories:
 
 ### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303115747.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303115747.png)

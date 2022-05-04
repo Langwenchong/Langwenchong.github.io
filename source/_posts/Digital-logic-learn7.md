@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第七讲
 comments: false
 top: false
 date: 2021-03-26 16:41:18
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -41,7 +40,7 @@ logic b=7;
 
 其实就是组合逻辑电路与时序逻辑电路的区别。我们前面学习了时序逻辑电路并不是接收到变化后立刻发生改变，而是需要等待所有的条件全部具备以后在发生变化，因此非阻塞语句就是等待全部变化赋值以后才可以执行。而阻塞语句就是接收到改变立刻修改赋值的语句，只能用于逻辑组合电路。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327154501.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327154501.png)
 
 很明显上面额y想要变化，首先需要a和b更新赋值才可以。这就是逻辑上的串行，但是同时这几条指令是同时执行的，即a和b时同时发生变化的，因此是并行的，当y接收到a和b的变化后会立刻发生改变。
 
@@ -49,7 +48,7 @@ logic b=7;
 
 在SystemVerilog中，分支结构有if...else语句和case语句。If...else语句是可综合的，主要用于生成多路选择器，其格式如下。if...else语句支持多层嵌套，可以使用begin...end增加可读性（类似于大括号）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327154839.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327154839.png)
 
 {% note info, 
 
@@ -59,21 +58,21 @@ logic b=7;
 
 也就是说即使某些情况我们不需要进行任何操作，最好也要加以讨论，如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327155139.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327155139.png)
 
 我们发现水位最高位14m,而我们使用的是4位表示，那么最高可以表示15，即使15的时候什么等也不亮，我们最好也加上一个灭灯的操作使得讨论完整。即总是要加上一个else总是好的。不要像写oj题一样只写if不写else。
 
 同样的case语句也是一种分支结构语句，也是可以综合的，他主要用于生成多路选择器、译码器等。格式如下，同样的，对于case尽量也要考虑全面，这样才能产生组合逻辑电路，否则，将综合出带有锁存器的时序电路。也就是说，最后要加上default使得讨论完整。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327155559.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327155559.png)
 
 并且某个分支项item_expr中的某位无关值，用？表示，那么该位的比较就不予考虑，即意味着比较结过永远为“真”。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327160652.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327160652.png)
 
 下面我们来看一下如果未讨论完整所有的情况，那么综合时就会出现锁存器。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327161015.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327161015.png)
 
 对于上面将2位的4中情况全部都讨论了，那么没事正常运行。如果出现下面这种少讨论的情况，那么就会出现锁存器，实际上锁存器很好理解。EN是使能端，只有EN为1时，输出端才会随着输入端立刻变化，即如果是a,b,c的某一种情况，那么Dout也会瞬间会根据不同的情况输出相对应的值，但是如果是未讨论的d情况出现了，那么此时EN会变为0，但是此时他和三态缓冲器不同，他的输出端并不是变为浮空，而是被锁住一直维持最后一次的输出状态，即如果在d情况之前Dout一直输出的是a的输出信号，那么锁住以后就一直维持输出a情况的输出信号直至d情况结束。如果d情况之前Dout一直输出的是c的输出信号，那么此时就会一直维持c情况的输出。
 
@@ -86,7 +85,7 @@ logic b=7;
 - while()：满足条件时执行
 - forever:一直循环下去
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210327155732.png)
+![](https://langwenchong.gitee.io/figure-bed/20210327155732.png)
 
 在这4种循环语句中，for语句是可综合的，可以用于数字电路的建模，其他三种语句多用于仿真当中，不一定能被综合工具支持。
 

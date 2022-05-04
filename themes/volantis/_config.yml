@@ -20,7 +20,7 @@ info:
 navbar:
   visiable: auto # always, auto
   logo: # choose [img] or [icon + title]
-    img: https://gitee.com/Langwenchong/figure-bed/raw/master/宇航员.SVG.png
+    img: https://langwenchong.gitee.io/figure-bed/宇航员.SVG.png
     icon:
     title:
   menu:
@@ -36,15 +36,9 @@ navbar:
         - name: 归档
           icon: fad fa-archive faa-vertical
           url: archives/
-        - name: 专栏
-          icon: fad fa-scroll faa-vertical
-          rows: 
-            - name: 笔记
-              icon: fad fa-pencil faa-vertical
-              url: categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
-            - name: 刷题
-              icon: fad fa-keyboard faa-vertical
-              url: categories/%E5%88%B7%E9%A2%98%E6%97%A5%E5%BF%97/
+        - name: 笔记
+          icon: fad fa-pencil faa-vertical
+          url: notes/
     - name: 社交
       icon: fad fa-fan faa-spin animated
       rows: 
@@ -69,15 +63,15 @@ navbar:
         - name: 时光相册
           icon: fad fa-camera-retro faa-vertical
           url: picGallery/
-        - name: 网址收藏
-          icon: fad fa-box-full faa-vertical
-          url: navigation/
-        - name: 书单分享
-          icon: fad fa-bookmark faa-vertical
-          url: books/
         - name: 哔哔点啥
           icon: fad fa-microphone-alt faa-vertical
           url: artitalk/
+        - name: 书单分享
+          icon: fad fa-bookmark faa-vertical
+          url: books/
+        - name: 网址收藏
+          icon: fad fa-box-full faa-vertical
+          url: navigation/
     - name: 开往
       icon: fad fa-subway faa-vertical
       url: https://travellings.link
@@ -98,9 +92,9 @@ cover:
     home: true
     archive: true
     others: false # can be written in front-matter 'cover: true'
-  background: #https://gitee.com/Langwenchong/figure-bed/raw/master/1619516024594.jpeg
+  background: #https://langwenchong.gitee.io/figure-bed/1619516024594.jpeg
   # background: https://bing.ioliu.cn/v1/rand?w=1920&h=1200
-  logo: https://gitee.com/Langwenchong/figure-bed/raw/master/logo.png
+  logo: https://langwenchong.gitee.io/figure-bed/logo.png
 
   title: ''
   subtitle: ''
@@ -206,7 +200,7 @@ article:
       # 默认文章作者（可在 _data/author.yaml 中增加其他作者，并在 front-matter 中设置）
       # https://volantis.js.org/advanced-settings/#多人协同
       author:
-        avatar: https://gitee.com/Langwenchong/figure-bed/raw/master/author.jpeg
+        avatar: https://s3.bmp.ovh/imgs/2022/01/a714525bf61d4a6a.png
         name: Langwenchong
         url: /
       # 文章创建日期
@@ -364,7 +358,7 @@ comments:
 ############################### Sidebar ############################### > start
 sidebar:
   # 主页、分类、归档等独立页面
-  for_page: [blogger,repos,feedback,category, webinfo, tagcloud]
+  for_page: [blogger,repos,feedback,category, webinfo, tagcloud,recommend]
   # layout: docs/post 这类文章页面
   for_post: [toc]
   # 侧边栏组件库
@@ -374,7 +368,7 @@ sidebar:
     blogger:
       class: blogger
       display: [desktop, mobile] # [desktop, mobile]
-      avatar: https://gitee.com/Langwenchong/figure-bed/raw/master/author.jpeg
+      avatar: https://s3.bmp.ovh/imgs/2022/01/a714525bf61d4a6a.png
       shape: circle # circle, rectangle
       url: /about/
       title: Lang wenchong
@@ -435,6 +429,45 @@ sidebar:
         # - https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png
 
     
+    #---------------------------------------
+    # recommend widget
+    recommend:
+      class: recommend
+      sticky: true
+      display: [desktop]
+      header:
+        icon: fad fa-thumbs-up
+        title: 好文推荐
+      posts:
+        - title: ubuntu美化教程
+          url: https://blog.coolchong.cn/2021/01/22/ubuntu-problem2/
+          img: https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/002.jpg
+          info: 本教程是在我进行了尝试并且成功安装以后总结出来的新手向傻瓜式教程，适用于第一次安装虚拟机的小白参考，基本上安装完以后可以实现虚拟机上所有的基本操作同时也进行了MACOS风格美化保证你从此爱上虚拟机😄！
+        - title: github主页美化
+          url: https://blog.coolchong.cn/2021/01/23/git-intromyself/
+          img: https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/046.jpg
+          info: 掌握了这个技能，能够让你的git主页颜值爆表😂，还不点进来看一看？
+        - title: git学习日志
+          url:  https://blog.coolchong.cn/2021/01/24/git-learn1/
+          img: https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/003.jpg
+          info: 参照本教程学习,成为一名顶级的CV工程师。
+
+
+
+          
+      
+    # # 随机文章模块
+    # recommended_posts:
+    #   enable: true
+    #   title: '随便看看'
+    #   limit: 3
+    
+    # # 随机图片
+    # featureImages:              
+    #   - https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/001.jpg
+    #   - https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/002.jpg
+    #   - https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/003.jpg
+    #   - https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/004.jpg
     # ---------------------------------------
     
     # webinfo widget
@@ -486,14 +519,14 @@ sidebar:
       fixed: false # 固定宽度
       rows:
         - name: 建站日志
-          icon: fad fa-leaf-maple
+          icon: fad fa-leaf-maple 
           url: /history/
         - name: 时光相册
           icon: fad fa-camera-retro
           url: /picGallery/
         - name: 外挂标签
           icon: fad fa-quote-left
-          url: https://github.com/volantis-x/hexo-theme-volantis/issues/
+          url: https://volantis.js.org/v5/tag-plugins/
         - name: 书单分享
           icon: fad fa-bookmark
           url: /books/
@@ -603,7 +636,6 @@ plugins:
   #gitee文章日历
   postCalendar: true 
 
-  
   # highlight.js
   highlightjs:
     enable: true # Please set hexo.config.highlight.enable = false !!!
@@ -650,30 +682,30 @@ plugins:
 
   # Slide Background
   backstretch:
-    enable: false
+    enable: true
     js: https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js
     position: cover      # cover: sticky on the cover.   fixed: Fixed as background for the site.
     shuffle: false        # shuffle playlist
     duration: 10000       # Duration (ms)
     fade: 1500            # fade duration (ms) (Not more than 1500)
     images:               # For personal use only. At your own risk if used for commercial purposes !!!
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/1619516024594.jpeg
-      #- https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-523521.jpg
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/996885.jpg
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-983501.jpg
+      - https://langwenchong.gitee.io/figure-bed/1619516024594.jpeg
+      - https://langwenchong.gitee.io/figure-bed/996885.jpg
+      - https://langwenchong.gitee.io/figure-bed/thumb-1920-983501.jpg
+      - https://langwenchong.gitee.io/figure-bed/thumb-1920-1038374.jpg
 
   #parallax
   parallax:
-    enable: true
+    enable: false
     js: /js/jquery.parallax.min.js # 2.0.0-alpha
     shuffle: false        # shuffle playlist
     duration: 1000       # Duration (ms)
     fade: 1500
     images:               # For personal use only. At your own risk if used for commercial purposes !!!
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/1619516024594.jpeg
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/996885.jpg
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-983501.jpg
-      - https://gitee.com/Langwenchong/figure-bed/raw/master/thumb-1920-1038374.jpg
+      - https://langwenchong.gitee.io/figure-bed/1619516024594.jpeg
+      - https://langwenchong.gitee.io/figure-bed/996885.jpg
+      - https://langwenchong.gitee.io/figure-bed/thumb-1920-983501.jpg
+      - https://langwenchong.gitee.io/figure-bed/thumb-1920-1038374.jpg
 
       
 
@@ -701,16 +733,16 @@ plugins:
     list_folded: true
   pjax:
     enable: true
-    cover: true          # 封面是否pjax处理 false：每次切换页面封面都重载，适合封面较少的情况 true：封面经过Pjax处理，适合封面较多的情况
+    cover: true           # 封面是否pjax处理 false：每次切换页面封面都重载，适合封面较少的情况 true：封面经过Pjax处理，适合封面较多的情况
     timeout: 5000        # The timeout in milliseconds for the XHR requests. Set to 0 to disable the timeout.
-    cacheBust: false     # When set to true, Pjax appends a timestamp  to skip the browser cache.
-    animation: nprogress # false, nprogress, circle
+    cacheBust: false    # When set to true, Pjax appends a timestamp  to skip the browser cache.
+    animation: boat # false, nprogress, circle
     banUrl:              # 被屏蔽的 url 地址将不启用 pjax 跳转，可以在控制台下使用 window.location.pathname 获取
-      # - '/artitalk/'   # artitalk 不支持 pjax
+      - '/artitalk/'   # artitalk 不支持 pjax
       # - '/bb/'         # bbtalk 不支持 pjax
       - '/'          
-      - '/about'
-      - '/tags'
+      # - '/about'
+      # - '/tags'
 
   # 从 issues 加载动态数据
   # {% issues sites/timeline/friends | api=xxx | group=key:a,b,c %}
@@ -840,7 +872,7 @@ rightmenu:
     icon: fa fa-code-branch
     url: https://github.com/volantis-x/hexo-theme-volantis/
   dark_mode:
-    name: 开/关灯
+    name: 明暗切换
     icon: fad fa-cloud-sun
     toggle: darkmode
 ############################### Rightmenu ############################### > end
@@ -874,29 +906,29 @@ color_scheme:
   # 通用颜色
   common:
     # 主题色
-    theme: '#44D7B6'
+    theme: '#1dd1a1'
     # 链接色
-    link: '#2196f3'
+    link: '#ff7675'
     # 按钮色
     button: '#44D7B6'
     # 鼠标放到交互元素上时的色
-    hover: '#ff5722'
+    hover: '#54a0ff'
     # 主题色块内部的文字颜色
     inner: '#fff'
     # 选中区域文字的背景颜色
-    selection: 'alpha(#2196f3, 0.2)'
+    selection: '#ffeaa7'
   # ------------
   # 亮色主题（默认）
   light:
     # 网站背景色
-    site_bg: '#f4f4f4'
+    site_bg: '#f7f9fe'
     # 网站背景上的文字
     site_inner: '#fff'
     # 网站页脚文字
     site_footer: '#666'
 
     # 卡片背景色
-    card: '#fff'
+    card: 'rgba(255, 255, 255, .6)'
     # 卡片上的普通文字
     text: '#444'
 
@@ -926,22 +958,25 @@ color_scheme:
   # 暗色主题
   dark:
     # 网站背景色
-    site_bg: '#222'
+    # site_bg: '#222'
+    site_bg: '#1d1b26'
     # 网站背景上的文字
     site_inner: '#eee'
     # 网站页脚文字
     site_footer: '#aaa'
     # 卡片背景色
-    card: '#292a2d'
+    # card: '#292a2d'
+    card: '#1d1b26'
     # 卡片上的普通文字
     text: '#eee'
 
     # 区块和代码块背景色
-    block: '#3a3a3a'
+    # block: '#3a3a3a'
+    block: '#2f2e38'
     # 代码块高亮时的背景色
     codeblock: '#343a3c'
     # 行内代码颜色
-    inlinecode: '#D56D28'
+    inlinecode: '#c74f00'
 
     # 文章部分
     h1: '#eee'
@@ -968,7 +1003,7 @@ custom_css:
   cursor:
     enable: true
     text: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/text.png
-    pointer: https://bu.dusays.com/2021/07/19/fc51671f29213.png
+    pointer: https://pic.imgdb.cn/item/610fa67c5132923bf8752b84.png
     default: https://bu.dusays.com/2021/07/19/fc51671f29213.png
     not-allowed: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/circle.png
     zoom-out: https://cdn.jsdelivr.net/gh/inkss/common@master/cursor/zoom-out.png
@@ -984,7 +1019,7 @@ custom_css:
     width: auto # auto, max
     effect: [shadow, blur,floatable] # [shadow, floatable, blur]
   sidebar:
-    effect: [shadow,floatable] # [shadow, floatable, blur]
+    effect: [shadow,] # [shadow, floatable, blur]
   body:
     effect: [shadow] # [shadow, floatable, blur]
     highlight:
@@ -1021,18 +1056,18 @@ custom_css:
     code: .8125rem
     footnote: .78125rem
   fontfamily:
-    logofont:
-      fontfamily: '"Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial'
-      name: 'Varela Round'
-      url: https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/VarelaRound/VarelaRound-Regular.ttf
-      weight: normal
-      style: normal
-    bodyfont:
-      fontfamily: 'UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial'
-      name: 'UbuntuMono'
-      url: https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/UbuntuMono/UbuntuMono-Regular.ttf
-      weight: normal
-      style: normal
+    # logofont:
+    #   fontfamily: '"Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial'
+    #   name: 'Varela Round'
+    #   url: https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/VarelaRound/VarelaRound-Regular.ttf
+    #   weight: normal
+    #   style: normal
+    # bodyfont:
+    #   fontfamily: Roboto,"Noto Serif SC","PingFang SC","Microsoft Yahei UI","Microsoft Yahei",sans-serif,Menlo,Monaco,monospace,sans-serif,Menlo,Monaco,monospace,sans-serif
+    #   name: 'UbuntuMono'
+    #   url: https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/UbuntuMono/UbuntuMono-Regular.ttf
+    #   weight: normal
+    #   style: normal
     codefont:
       fontfamily: 'Menlo, UbuntuMono, Monaco'
       # name: 'Monaco'
@@ -1046,8 +1081,8 @@ custom_css:
 analytics:
   busuanzi: #https://cdn.jsdelivr.net/gh/volantis-x/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js
   leancloud: # 请使用自己的 id & key 以防止数据丢失
-    app_id: u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI
-    app_key: jfHtEKVE24j0IVCGHbvuFClp
+    app_id: 7gGoHMxYmUat9XCyQFA1LGk9-MdYXbMMI
+    app_key: rftxDckSTQovPetBJB9vxFKi
     custom_api_server: # 国际版一般不需要写，除非自定义了 API Server
 ############################### Analytics ############################### > end
 
@@ -1065,3 +1100,5 @@ seo:
     tag: noindex,follow
     # robots can be written in front-matter
 ############################### SEO ############################### > end
+
+

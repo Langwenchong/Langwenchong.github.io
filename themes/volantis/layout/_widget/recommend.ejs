@@ -1,0 +1,20 @@
+<%- partial('_pre') %>
+<section class="widget <%- item.class %> <%- page.widget_style %> <%- page.widget_platform %>">
+    <%- partial('header', {item: item}) %>
+    <div class='content'>
+        <div class="recommend">
+            <section class="recommend-erapper">
+                <% (item.posts||[]).forEach(function(post){ %>
+                <div class="recommend-box">
+                    <a href='<%- url_for(post.url) %>'>
+                        <img src="<%- url_for(post.img) %>">
+                        <div class="background"></div>
+                        <p id="post-id"><%- post.title %></p>
+                        <p id="post-info"><%- post.info %></p>
+                    </a>
+                </div>
+                <% }) %>
+            </section>
+        </div>
+    </div>
+</section>

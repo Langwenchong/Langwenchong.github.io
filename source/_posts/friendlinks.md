@@ -3,10 +3,10 @@ title: hexo主题美化--友链编写
 comments: false
 top: false
 date: 2020-12-07 14:36:59
-tags: [前端,友链,hexo]
+tags: [友链,hexo]
 categories: 
-	- [教程,hexo美化]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704164955.png
+	- [知识分享,魔改攻略]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704164955.png
 ---
 
 还在为没有优雅简介的友链页面而苦恼吗？还在为Next主题的反人类侧栏友链而心烦吗？还在为无法找到对移动设备友好的友链页面而心累吗？不妨来试试这个吧😀~
@@ -39,7 +39,7 @@ hexo new page links
 
 然后查看path/source/下是否生成了links文件夹，如果生成了，进入并打开index.md，并在设置栏里加入type属性如下：
 
-![](https://pic.downk.cc/item/5fcdd21a3ffa7d37b3abbe89.jpg)
+![](https://pic.imgdb.cn/item/5fcdd21a3ffa7d37b3abbe89.jpg)
 
 这里只需要注意第二行是否与我这里写的一致即可，请仔细检查第二行是否与我完全一致，这里的title你那里应该是links，删掉即可，这样友链就不会出现令人尴尬的大写标题了😊。
 
@@ -49,11 +49,11 @@ hexo new page links
 
 next/layout:
 
-![](https://pic.downk.cc/item/5fcdd5043ffa7d37b3ae52be.jpg)
+![](https://pic.imgdb.cn/item/5fcdd5043ffa7d37b3ae52be.jpg)
 
 next/layout/_links:
 
-![](https://pic.downk.cc/item/5fcdd52f3ffa7d37b3ae802f.jpg)
+![](https://pic.imgdb.cn/item/5fcdd52f3ffa7d37b3ae802f.jpg)
 
 然后进入swig文件，选择vscode打开或者其他ide都行，复制下列代码粘贴至此swig文件
 
@@ -447,7 +447,7 @@ next/layout/_links:
 
 我们先在这里（大约13行附近）
 
-![](https://pic.downk.cc/item/5fcdd67b3ffa7d37b3afec89.jpg)
+![](https://pic.imgdb.cn/item/5fcdd67b3ffa7d37b3afec89.jpg)
 
 添加红框所包围代码，这里直接复制粘贴即可
 
@@ -458,7 +458,7 @@ next/layout/_links:
 
 然后在这里（大约62行附近）
 
-![](https://pic.downk.cc/item/5fcdd7363ffa7d37b3b08b7f.jpg)
+![](https://pic.imgdb.cn/item/5fcdd7363ffa7d37b3b08b7f.jpg)
 
 添加红框所包围代码，这里直接复制粘贴即可
 
@@ -480,7 +480,7 @@ next/layout/_links:
   info: 回过头来看，那些让你寝食难安的事，大多败给了想象，加油干，没那么难 #友链说明
   warehouse: https://wwww.github.com/Langwenchong #git个人主页
   qq: http://wpa.qq.com/msgrd?v=3&uin=1422257646&site=qq&menu=yes
-  background: https://pic.downk.cc/item/5fcdd8a93ffa7d37b3b1b0c9.jpg #博客页面预览
+  background: https://pic.imgdb.cn/item/5fcdd8a93ffa7d37b3b1b0c9.jpg #博客页面预览
 ```
 
 既然都用博主大大的友链页面啦，交个朋友加上我的友链不过分吧，嘿嘿😆（当然加上我的友链了记得在评论区或私信我加上你的友链，祝我们友谊长存🍻）。
@@ -491,7 +491,7 @@ next/layout/_links:
 
 还是这个_config.yml下寻找nemu，加入下面这个选项：
 
-![](https://pic.downk.cc/item/5fcdda203ffa7d37b3b30d72.jpg)
+![](https://pic.imgdb.cn/item/5fcdda203ffa7d37b3b30d72.jpg)
 
 保存退出。综上，你已经完成了web端友链部署啦，输入以下指令
 
@@ -575,7 +575,7 @@ hexo s
 
 如果你仔细观察你会发现官方链接处是写死的，没错，我就是懒，所以这里并没有写成下方动态增加删减的形式，如果你觉的你不想感谢上述的官方地址，那么完全可以自己更改，更改规则如下：.lb元素块报过来所有的a链接块，每一个a链接块如下：
 
-![](https://pic.downk.cc/item/5fcddd5e3ffa7d37b3b57598.jpg)
+![](https://pic.imgdb.cn/item/5fcddd5e3ffa7d37b3b57598.jpg)
 
 这里的--color:#FDCB6E是颜色啦，你可以更改为自己喜欢的颜色，注意是修改--color:后面的颜色值代码，i标签是图标了，你也可以更改，这里我使用的是fontawesome上的图标，更改图标只需更改class属性即可，你可以去fontawesome.com上寻找自己心仪的图标（但貌似是得科学上网，否则上不去，祝你成功！）
 
@@ -587,6 +587,6 @@ hexo s
 
 这是第一次自己编写hexo页面，纯100%手写属实难搞，但是感觉对于拥有一定前端基础的小伙伴来说是一次锻炼自己的技术，了解hexo静态渲染的好机会，虽然过程艰辛，但是收获颇多，这里仅写下我的思考，如有错误，请谅解：我们发现实际上hexo就是根据_config.yml的data来进行页面类型和组件功能是否开启等判断然后进行渲染页面，并且每一个page对应着一个type属性，page.swig则是根据这个type属性进行不同的swig模块引入来渲染页面，swig就是有点像vue里的组件化的意思，他只是为不同的子页面提供一个大纲，一个渲染的规则，然后不同的页面根据不同的swig规则呈现不同的页面，当然这里的每个swig的css样式最终貌似都会被写入一个总的style文件里，这个style文件就是main.style，我们可以通过下图来确定：
 
-![](https://pic.downk.cc/item/5fcde0933ffa7d37b3b7ea52.jpg)
+![](https://pic.imgdb.cn/item/5fcde0933ffa7d37b3b7ea52.jpg)
 
 他们最终都被写入了main.css文件，所以我们知道所有主体部分的css代码最会都会写入到main.css中去，所以我在上文中推荐不是next主题的小伙伴将移动适配的代码最终写入到main.styl文件中去，然后为了避免出现优先级冲突问题，我们将自己的移动适配的css代码全部加上了!important来提升优先级。至于动态渲染，也与vue思路类似，从theme.friendlinks获取一个大的数据集，然后用for循环来进行渲染，参数全部都是用双大括号包裹，组件化程度叹为观止，可能这就是nextv8.0+取得的最大的进步，当然带来的麻烦也是必不可少的（寻找bug可是够费劲，毕竟代码利用率提高，代码分散性强，动一处而牵全身😵），那么本次发分享就告于段落啦，希望你有所收获！）

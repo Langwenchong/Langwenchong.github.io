@@ -3,10 +3,9 @@ title: Java学习笔记-第十讲
 comments: false
 top: false
 date: 2021-03-31 16:25:11
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -17,7 +16,7 @@ categories:
 
 在Java中有一个Comparator类可以用于对set,list等进行排序，他调用compare(x,y)方法来对set和list中的元素进行大小比较，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210403154156.png)
+![](https://langwenchong.gitee.io/figure-bed/20210403154156.png)
 
 我们调用Collection.sort方法对list进行排序，由于list我们存储的是键值对，因此不是默认实现Comparable的元素，我们需要自己定义一个针对于键值对的排序方法，因此实例化一个新的Comparator类的实例对象，并且我们重写这个对象的比较方法compare，这里我们实现的是从大到小排序。
 
@@ -103,13 +102,13 @@ Collections.sort(list, new Comparator<Map.Entry<Character, Integer>>() {
 	}
 ```
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210403155715.png)
+![](https://langwenchong.gitee.io/figure-bed/20210403155715.png)
 
 此时我们调用的就是list.sort函数来实现排序，由于list.sort是使用compareTo()方法对对象进行比较，并且我们重写了compareTo()是比较id的引用存储单元是否相同，因此此时会按照id的升序排序如上图结果。
 
 当然对于TreeSet集合类在插入时即可自动直接使用compareTo()进行排序：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210403160358.png)
+![](https://langwenchong.gitee.io/figure-bed/20210403160358.png)
 
 实际上上面的排序方法就是默认调用了comparable下的compareTo方法进行了自然排序规则的插入。因此我们可以总结一下排序的方法：
 
@@ -173,15 +172,15 @@ comparator()就是直接进行数值计算来返还大小，同时返还值>0时
 
 我们学习完成以后知道了List，Set都是Collections的子类，同时他们都实现了Collection接口，因此List和Set有许多相同的来自于Collection接口的方法：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210403162531.png)
+![](https://langwenchong.gitee.io/figure-bed/20210403162531.png)
 
 同时List还又增加了一些特有方法：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210403162559.png)
+![](https://langwenchong.gitee.io/figure-bed/20210403162559.png)
 
 而Map也是Collections的子类（实际上所有的存储集合类都属于Collections），他的特点是键值必须是唯一的，并且每一个元素是一个Entry键值对，当给出键对象时即可返还值对象，排序时默认是按照键对象进行比较排序，我们通常用map来进行频率统计。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210403162831.png)
+![](https://langwenchong.gitee.io/figure-bed/20210403162831.png)
 
 我们可以通过以下方法快速找到最大值对象所对应的键对象：
 

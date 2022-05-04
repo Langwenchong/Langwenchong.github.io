@@ -5,8 +5,8 @@ top: false
 date: 2021-03-03 19:23:36
 tags: [算法,并查集]
 categories: 
-	- [算法导论]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704131855.png
+	- [知识分享,学习心得]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704131855.png
 ---
 
 本篇博客主要是受[《牛客网经商》](https://ac.nowcoder.com/acm/problem/14545)题目启发，拓展浅谈一下自己对于并查集的由来、函数的实现以及对解决分组问题和关系网建立等问题的思考与理解。
@@ -28,7 +28,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704131855.png
 
 其实我们前面提到了，在并查集中，会选择一个节点Y作为一个集合的代表，那么对于任意一个元素X，如果它属于集合Y，那么通过Find(X)就会返还这个集合的代表根节点Y。因此虽然集合中的元素应该都是同级的，但是实际上在并查集中根节点代表元素会是根节点因此处于最高级。而Union函数若想将两个集合合并最简单的思想，就是将两个集合的代表元素放到一个集合建立关系，那么也就是集合A的代表元素A成为集合B的代表元素B的父节点（即将集合B并入到A集合中）或者也可以将集合B的代表元素成为集合A的父节点（即将集合A并入到B集合中）。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303195013.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303195013.png)
 
 此时A,C,D在一个集合中，且A是集合的代表元素，所以A是根节点，他是C,D的父节点。B,E,F,G在一个集合中并且B是集合的代表元素，所以B是根节点，同时每一个节点一直向上查找最终都会找到B。所以我们就可以写出Find函数的伪代码了：
 
@@ -55,13 +55,13 @@ void Union(int x,int y){
 
 所以上面函数的功能是将x的集合并入y的集合，因此y的根节点仍会是新的合并集合的代表元素。比如我们现在要使用Union(C,F),那么最终树的结构如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303195834.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303195834.png)
 
 那么最终F的集合的代表元素B会成为C的集合代表元素A的父节点，因此最终所有元素都会纳入B集合。因此Union函数会用到Find函数，同时Union函数的后一个参数是会成为根节点。
 
 现在如果我们写的是Union(G,D)，那么最终树的结构会如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303200119.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303200119.png)
 
 实际上从功能上来，这两个貌似没有什么区别，最终都是实现了两个集合的合并。但是我们对比一下上面两个结果图，发现第一种方法最终实现后树的深度不变还是3，但是对于第二种方法最终树的深度会变为4，如果每一次深度大的树总是合并到右子树，那么最终整体树会变得很不平衡，且深度很大。所以我们在合并时可以要求每一次都是深度小的子树合并到深度大的子树上，这样就不会影响合并后的树深度变大了。但是如果刚好两个树深度相同，那么就随意了，深度肯定是会加一的。因此Union函数伪代码优化为：
 
@@ -107,31 +107,31 @@ int Find(int x){
 
 比如现在知道B是E的父节点，同时E是F和G的父节点，那么也就下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303201715.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303201715.png)
 
 现在我们Find(E)后，会返还B，又因为此时B就是E的父节点，那么树结构不变，但是现在要Find(F)后，会一直向上查找到根节点B同时更新F直接连接根节点B，所以变成下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303201846.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303201846.png)
 
 一定要注意Find函数是将查找路径上的所有节点都连接到根节点上，这是由于递归先执行内递归层，再返还执行外递归层导致的。比如现在知道了H是G的子节点，即如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303202138.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303202138.png)
 
 那么我们触发了Find(H)后会return Find(G)所以在Find(H)还没有返还根节点之前又触发了Find(G)，所以又会执行Find(G),因此G会连接到根节点。Find(G)执行完以后且Find(H)未return前的树结构图如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303202423.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303202423.png)
 
 然后Find(H)执行完以后即return B以后也连接到了B上，因此树结构会变成：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303202544.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303202544.png)
 
 因此这种Find函数保证了树的结构扁平化，永远保持秩为2，因此操作更快。同时由于Union函数中也有Find函数，因此Union后也会变成上图这样的深度为2的数。比如
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303195013.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303195013.png)
 
 此时我们触发Union(D,F)以后，最终结果会变成
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303202830.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303202830.png)
 
 因此我们现在知道了树与节点的Find和Union方法了。
 

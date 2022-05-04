@@ -3,10 +3,10 @@ title: hexo主题美化--底部添加标签
 comments: false
 top: false
 date: 2021-03-03 15:42:02
-tags: [前端,标签,hexo]
+tags: [hexo]
 categories: 
-	- [教程,hexo美化]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704132715.png
+	- [知识分享,魔改攻略]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704132715.png
 ---
 
 hello~，快来食用本篇博客与翀翀😛一起为自己的博客底部添加上漂漂亮亮的标签🔖吧，相信你一定会喜欢哒
@@ -15,7 +15,7 @@ hello~，快来食用本篇博客与翀翀😛一起为自己的博客底部添�
 
 ### 成果预览
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303155842.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303155842.png)
 
 ### 操作步骤
 
@@ -109,11 +109,11 @@ hello~，快来食用本篇博客与翀翀😛一起为自己的博客底部添�
 
 然后打开next主题文件yml，在footer中加入一个新的参数开关，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303160229.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303160229.png)
 
 如果你是其他的主题也不要担心，我们回去查看一下代码，分析一下为何要加入badge。在代码的最上层有一个If判断句，他是根据这个参数的真值来判断下方的代码是否要插入的。由于我这里设置的参数是badge，所以上面的代码判断句才写成：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303160421.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303160421.png)
 
 theme表示的是你的主题，footer是位置，badge是开关参数名称，如果你想在A处添加一个名字叫badge的参数开关，那么你就应该写成
 
@@ -123,12 +123,12 @@ theme表示的是你的主题，footer是位置，badge是开关参数名称，�
 
 总之无论哪种主题都可以，但是必须先写上theme参数，后面是你自己添加的。然后我们了解了yml具体的运行机制以后，接下来就是要将代码粘贴到布局代码中了。如果你和我的主题与版本一致，那么请在themes/next/layout/_partials/footer.swig中的如下位置添加
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303160911.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303160911.png)
 
 注意前面的theme.footer.powered就可以注释掉了，因为和我们添加的标签功能重叠了。这里由于使用的是swig文件，他就是一个渲染成html之前的初始化文件，因此渲染后就会成为html。如果你的主题下布局文件使用的是njk或者其他的文件也可以尝试，但是大体思路是一样的，添加完成后再Hexo三剑客步骤以后，就完成了。
 
 如果你想更改标签的内容，请在
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210303161221.png)
+![](https://langwenchong.gitee.io/figure-bed/20210303161221.png)
 
 图中四个画圈的位置都进行更改，其中href是跳转链接，title是鼠标悬浮后显示的信息。

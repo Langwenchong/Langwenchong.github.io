@@ -3,10 +3,10 @@ title: 操作系统大作业--6.828shell编写
 comments: false
 top: false
 date: 2020-10-22 09:05:47
-tags: [操作系统,C++,大作业,linux]
+tags: [操作系统,linux,c++]
 categories: 
-	- [项目总结,操作系统大作业]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704174801.png
+	- [知识分享,项目总结]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704174801.png
 ---
 
 ### 作业要求
@@ -34,7 +34,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704174801.png
 
 这里经常会出现while(s<es&&strchr(whitespace,*s))函数或者while(s<es&&!strchr(whitespace,*s)&&!strchr(symbols,*s))循环语句,查找发现whitespace和symbols是两个字符串数组  
 
-<img src="https://pic.downk.cc/item/5f9136cf1cd1bbb86bb048fb.jpg"  /> 所以两个循环语句就是用来跳过无意义的字符如空格等,直至查找到重定向或者管道符号.    
+<img src="https://pic.imgdb.cn/item/5f9136cf1cd1bbb86bb048fb.jpg"  /> 所以两个循环语句就是用来跳过无意义的字符如空格等,直至查找到重定向或者管道符号.    
 
 然后,对于管道原理也进行了温习,这里建立管道实际上应用的是无名管道对近亲文件进行管道构建,原理如下:  
 
@@ -97,7 +97,7 @@ cat t.txt //查看内容
 
 ### 实验正确结果截图
 
-<img src="https://pic.downk.cc/item/5f91368e1cd1bbb86bb03e9e.jpg" style="zoom: 80%;" />
+<img src="https://pic.imgdb.cn/item/5f91368e1cd1bbb86bb03e9e.jpg" style="zoom: 80%;" />
 
 其中橙色线所标出的是实验所涉及的文件,其他为文件夹下瞎存放的文件不用关心,很明显实验正确达到了预设目标.
 
@@ -127,7 +127,7 @@ cat t.txt //查看内容
 
      int open(const char * pathname, int flags, mode_t mode);相关的参数有以下:
 
-   <img src="https://pic.downk.cc/item/5f9138cc1cd1bbb86bb098f3.jpg"  />
+   <img src="https://pic.imgdb.cn/item/5f9138cc1cd1bbb86bb098f3.jpg"  />
 
 4. dup函数()
 

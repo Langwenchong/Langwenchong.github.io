@@ -3,10 +3,9 @@ title: Java学习笔记-第十一讲
 comments: false
 top: false
 date: 2021-04-01 16:26:39
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -177,7 +176,7 @@ public class UseFile {
 
 创建完成后我们进行了打印文件和删除文件的操作，最终的代码运行结果如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210404135731.png)
+![](https://langwenchong.gitee.io/figure-bed/20210404135731.png)
 
 由于创建文件时，我们都是先创建了文件实例f，然后检验f是否存在，如果不存在，那么就创建这个f实例。因此我们可以知道new File(String Filename)只是创建一个文件实例，无论其是否存在都是可以创建的，只是如果这个文件不存在，那么是无法输出信息的，所以后面我们会先检验是否存在，不存在那么在将这个文件f创建，因此new File()一定会成功创建一个File对象，只是如果这个对象访问的文件存在，那么这个f就可以直接使用，否则是一个空对象，我们需要先通过createFile()创建这个文件。其次我们发现打印文件时，只传进去了dir1，但是最终所有的dir1文件夹下的所有子文件都被打印出来了，这里就是使用的递归来实现的，这是输出文件夹下所有文件的一个常用方法。我们写了两个输出信息的语句，如果是文件夹，那么就不打印大小，如果是文件，那么还需要打印这个文件的大小。我们可以看出是使用isFile()函数来判断一个文件是不是文件夹的，当isFile()为false时说明是一个文件夹，同样的，这里我们也可以通过使用isDirectory()函数来实现。并且我们从上面的输出信息还可以理解递归的特点，就是不断深入，外层函数等待内层函数执行并返回后才会继续执行。比如上面我们首先打印了dir1的信息，然后dir1下有dir2和dir3以及mytest.txt，接下来我们递归调用了list(dir2)，然后打印dir2下的文件，我们发现dir2下的test.txt打印了两次，一次没有输出大小一次输出了大小，这是因为第一次输出是调用的for循环语句打印dir2的所有文件list[i]，因此没有输出大小，然后再次递归调用list(test.txt)，发现test.txt不是文件夹，因此第二次的打印信息是通过isFile()下的打印语句输出的test.txt,所以第二次打印包含了大小信息，之后这个list(test.txt)结束，返回到list(dir2)下，发现list(dir2)也打印完了，然后再返回到list(dir1)递归执行dir(3)。所以我们发现递归调用可以只接受一个参数就可以打印其层级下的所有文件并自动结束。同样的，在删除时，我们也要注意，需要递归调用由低层级逐渐向高层级删除文件，即dir2想要删除，首先需要删除dir2下的所有文件，只有dir2,dir3,mytest全部被删除以后再删除dir1，很显然，删除同样是递归实现的。
 
@@ -185,7 +184,7 @@ public class UseFile {
 
 大部分程序都需要输入/输出处理，比如从键盘读取数据、向屏幕中输出数据从文件中读或者写数据、在一个网络连接上进行读写操作等。在java中，把这些不同类型的输入，输出源抽象为流stream。按照流的方向，我们将其分为了输入流和输出流：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210404141313.png)
+![](https://langwenchong.gitee.io/figure-bed/20210404141313.png)
 
 我们不难看出输入输出流是通过数据流实现的，这里的数据流流有两种形式：
 
@@ -525,7 +524,7 @@ public static void main(String[] args) {
 
 所以我们知道处理流实际上并不是一个新定义的流，只是对于一个已经存在的流的封装。节点流和处理流的关系如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210404165634.png)
+![](https://langwenchong.gitee.io/figure-bed/20210404165634.png)
 
 节点流是直接可以接收数据helloworld(上图中不难看出是字符流)，但是处理流，确实将这个节点流封装了，我们使用时需要调用封装好的readLine()才能使用这个节点流的read()。所以节点流与节点（或文件）直接相连，而处理流对节点流或其他处理流进一步进行处理（如缓冲以平衡读写速度，封装成对象方便使用等等），总之处理流是有必要的。
 
@@ -543,11 +542,11 @@ BufferedReader in2=new BufferedReader(InputstReamreader(new FileInputStream(file
 
 常用的节点流有：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210404170331.png)
+![](https://langwenchong.gitee.io/figure-bed/20210404170331.png)
 
 常用的处理流有：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210404170359.png)
+![](https://langwenchong.gitee.io/figure-bed/20210404170359.png)
 
 我们来看一下节点流的构造方法：
 

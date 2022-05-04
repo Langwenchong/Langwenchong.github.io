@@ -7,13 +7,13 @@ valine:
 placeholder: 有什么想对我说的呢？
 ---
 
-<div id="about">
-    <link href="https://cdn.bootcss.com/botui/0.3.9/botui.min.css" rel="stylesheet">
+<div id="about">  
+<link href="https://cdn.bootcss.com/botui/0.3.9/botui.min.css" rel="stylesheet">
 <link href="https://cdn.bootcss.com/botui/0.3.9/botui-theme-default.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
   <div id="me">
     <div class="item">
-      <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/author.jpeg">
+      <img src="https://s3.bmp.ovh/imgs/2022/01/a714525bf61d4a6a.png">
     </div>
      <div id="hello-mashiro">
         <center>
@@ -35,14 +35,16 @@ placeholder: 有什么想对我说的呢？
        bot_ui_ini()
     </script>
     </div>
+    </div>
     <div id="disposition">
       <h4>&nbsp;<ruby>chongchong的人格类型 🔮</ruby></h4>
-      <img width="80%" src="https://gitee.com/Langwenchong/figure-bed/raw/master/disposition.png">
+      <img width="80%" src="https://langwenchong.gitee.io/figure-bed/disposition.png">
       <small>@数据来源:<a href="https://www.16personalities.com/ch/%E4%BA%BA%E6%A0%BC%E6%B5%8B%E8%AF%95">16 Personalities</a></small>
     </div>
 <div id="skills">
-    <h4>&nbsp;<ruby>⭐chongchong的技术栈 🗂️</ruby></h4>
-        {% echarts 450 '500px' %}
+<h4>&nbsp;<ruby>⭐chongchong的技术栈 🗂️</ruby></h4>
+
+  {% echarts 450 '500px' %}
   			option = {
                 legend: {
                     top: 'bottom'
@@ -73,14 +75,15 @@ placeholder: 有什么想对我说的呢？
                             { value: 30, name: 'C/C++' },
                             { value: 28, name: 'Javascript' },
                             { value: 26, name: 'CSS' },
-                            { value: 22, name: 'SQL' },
-                            { value: 18, name: 'Verilog' }
+                            { value: 22, name: 'Mysql' },
+                            { value: 18, name: 'Python' }
                         ]
                     }
                 ]
             };
       {% endecharts %}
   </div>
+
   <div class="container archive-calendar">
     <div class="card">
         <div id="post-calendar" class="card-content"></div>
@@ -89,6 +92,9 @@ placeholder: 有什么想对我说的呢？
 <div id="calendar">
     <h4>&nbsp;<ruby>⭐积跬步,成千里🗓️</ruby></h4>
     <div id="github_container"></div>
+</div>
+
+
 
 
 
@@ -106,6 +112,9 @@ placeholder: 有什么想对我说的呢？
   align-items: center;
   margin-bottom:15px;
 }
+    #me:hover{
+        background:url(https://cdn.jsdelivr.net/gh/ihewro/handsome-static@8.2.0.2/assets/img/snow.gif)
+    }
 #about h4{
   margin:0!important;
     display:block;
@@ -113,7 +122,7 @@ placeholder: 有什么想对我说的呢？
 }
 #me #hello-mashiro{
   position:relative;
-  top:-70px;
+  top:-30px;
   width:80%;
   display:flex;
   flex-direction:column;
@@ -195,6 +204,7 @@ placeholder: 有什么想对我说的呢？
   }
 }
 </style>
+
 
 
 

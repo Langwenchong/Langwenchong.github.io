@@ -3,10 +3,10 @@ title: 手撕算法日记--贪心思想
 comments: false
 top: false
 date: 2020-12-13 12:55:36
-tags: [算法,贪心,贪婪]
+tags: [算法,贪心]
 categories: 
-	- [算法导论]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704164729.png
+	- [知识分享,学习心得]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704164729.png
 ---
 
 记录翀翀👴手撕算法的历程，本文算法专题--贪心思想，我变强了，也没变秃，如果学不秃，就往秃里学，奥利给💪，干就完了！
@@ -87,7 +87,7 @@ public static int greedySelector(int [] s,int [] f,boolean a[]){
 
 按照贪心策略：那么每次我们都将遇到重叠任务时加一台机器，且每次都尽可能将任务放到所有空闲机器中完成时间最小的机器上。如下图：
 
-![](https://pic.downk.cc/item/5fd5a7fa3ffa7d37b322724c.jpg)
+![](https://pic.imgdb.cn/item/5fd5a7fa3ffa7d37b322724c.jpg)
 
 这里一共有7和任务，我们按照贪心策略，每次都尽量使用旧机器，实在迫不得已了在开新机器，然后每台用过的机器的可用时间为这台机器上最近执行任务的完成时间。如果一个新任务的起始时间>=这些机器的最小可用时间，则安排在这个旧机器上，否则就只能使用新机器了，如上图，M2是在M1在执行a，而f无法执行时开始使用的，M3是在执行c却发现M1,M2都繁忙时使用的，d其实用M2,M3均可以，这里因为每次都尽可能保证三台机器平均使用寿命相同，每次都选择空闲时间更长的机器。这里的任务并不是按照开始时间非递减顺序排列的，所以我们首先可以使用Min-堆存放每台机器的可用时间即进行堆排序重排列，这样每次取出的新任务一定是当前开始时间最早的，所以时间复杂度为O(nlogn)。
 
@@ -99,7 +99,7 @@ public static int greedySelector(int [] s,int [] f,boolean a[]){
 
 例如下面这道例题，我们寻找从1到5的最短路径：
 
-<img src="https://pic.downk.cc/item/5fd5b9d93ffa7d37b3365c1b.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fd5b9d93ffa7d37b3365c1b.jpg" style="zoom:150%;" />
 
 按照贪婪策略应该为1->3->4->2->5，路径长度为2+2+1+5=10,但是对于1->4->5只需要6就可以到达，所以按照贪心法找大的一般都不是整体最短路径，而只是一个优化组合。
 
@@ -199,7 +199,7 @@ $$
 
 哈夫曼编码是广泛地用于数据文件压缩的十分有效的编码方法。其压缩率通常在20%～90%之间。哈夫曼编码算法用字符在文件中出现的频率表来建立一个用0，1串表示各字符的最优表示方式。给出现频率高的字符较短的编码，出现频率较低的字符以较长的编码，可以大大缩短总码长。例如一个包含100,000个字符的文件，各字符出现频率不同，如下表所示。定长变码需要300,000位，而按表中变长编码方案，文件的总码长为：（45×1+13×3+12×3+16×3+9×4+5×4）×1000=224,000。
 
-![](https://pic.downk.cc/item/5fd5d6ab3ffa7d37b356d38e.jpg)
+![](https://pic.imgdb.cn/item/5fd5d6ab3ffa7d37b356d38e.jpg)
 
 这样使用更频繁的字符如a变长码长度更短仅仅为1个位，比用定长码的情况总码长度少了约45%。
 
@@ -225,7 +225,7 @@ $$
 
 对于上面的表格，那个哈夫曼编码是怎么得到的，我们做一次推导：
 
-![](https://pic.downk.cc/item/5fd5da973ffa7d37b35b1bdd.jpg)
+![](https://pic.imgdb.cn/item/5fd5da973ffa7d37b35b1bdd.jpg)
 
 首先我们将5个字符和其使用次数一次从小到大列出，然后按照贪婪策略，每次选取两个小的合并来当做底层树枝，相对应的他们的01串位数也就相对应的会更长。这里先选取了f和e进行合并，合并后的使用次数为14，然后在观察发现，c和b是使用次数最少的，所以合并c和b,次数为25，此时14是由f和e合并得到的，25是由a和b得到的，每次合并后都要重现从小到大排列，此时还剩下14,16,25,45,我们接下来要合并的是14和16得到30，然后重排列后为25,30,45，合并25和30得55，最后45和55得到根节点，根节点代表所有字符频率之和。最后树就是右下角这个样子，由于每次都是从小到大排序，所以检查是不是左边的节点永远小于右边的节点，是不是上一层的节点永远比下一层的节点权值要大，这样我们就实现了权值大的节点即使用频率多的字符更靠近上层，相对应的其01表示串的位数也就少了，最后按照左0右1编码就得到了a是0，b是101，c是100，d是111，f是1100，e是1101，确实和表中的前缀码一致。
 
@@ -241,7 +241,7 @@ $$
 
 下图就是一个AOV神经网络图：
 
-![](https://pic.downk.cc/item/5fd5ed213ffa7d37b36ebe57.jpg)
+![](https://pic.imgdb.cn/item/5fd5ed213ffa7d37b36ebe57.jpg)
 
 1和2入度为零，说明没有前提任务节点，3的入度为1其前提任务节点就是先驱节点1,4入度为3说明其有三个前提任务节点，即需要1,2,3都完成以后才能开始执行任务4，所以其前提任务节点是1,2,3。以此类推。
 
@@ -273,11 +273,11 @@ void topologicalOrder(int *theOeder){
 
 所使用到的邻接矩阵：
 
-![](https://pic.downk.cc/item/5fd5ef0d3ffa7d37b370c020.jpg)
+![](https://pic.imgdb.cn/item/5fd5ef0d3ffa7d37b370c020.jpg)
 
 有向图带有方向表示的邻接矩阵，由于没有权重路径长度一说，所以相连通就为1，不通就为0即可。至于所说的存在环路的情况：
 
-![](https://pic.downk.cc/item/5fd5ef8b3ffa7d37b3714431.jpg)
+![](https://pic.imgdb.cn/item/5fd5ef8b3ffa7d37b3714431.jpg)
 
 就像这种情况，各个任务互为先决条件，很明显有问题，是一种悖论，不是题错了就是你写的邻接矩阵出错了。
 
@@ -299,35 +299,35 @@ void topologicalOrder(int *theOeder){
 
 首先有向图如下，我们建立一个索引表Q用来存储中途最短路径值，S用来存储节点，我们以求A为源节点为例，首先S初始化为空，即默认A此时到其他的点距离为∞。
 
-![](https://pic.downk.cc/item/5fd6296f3ffa7d37b3b5fd92.jpg)
+![](https://pic.imgdb.cn/item/5fd6296f3ffa7d37b3b5fd92.jpg)
 
 然后寻找A所能直接到达的点并选取最小的距离，这个最小距离肯定是A到最相邻的点的最优值，而其他较大的就有可能会产生更小的最小路径。
 
-![](https://pic.downk.cc/item/5fd629c13ffa7d37b3b682e1.jpg)
+![](https://pic.imgdb.cn/item/5fd629c13ffa7d37b3b682e1.jpg)
 
 此时A与B,C直接相连，且到达C的距离最短仅为3，而到B的距离为10，所以C和A肯定已经是最短距离了，而B则未必，可能存在一条经过C的更短路径可以到达B。至于为什么C一定是与A连接的最短路径了呢？想想也知道，如果不是，那么也就是说可能存在一条经过B的到达C的更短路径，但是A到B就已经10了，所以根本不可能，将B,C两个索引表建立新节点并更新A到这两个节点的当前值10和3，并且将C加入到S中，然后来到C点。
 
-![](https://pic.downk.cc/item/5fd62aa63ffa7d37b3b82bbb.jpg)
+![](https://pic.imgdb.cn/item/5fd62aa63ffa7d37b3b82bbb.jpg)
 
 那么接下来看C与B和D,E相连，且值分别为4,8,2，所以相应的A到B，D,E的值分别更新为7,11,5，发现A到B的路径确实变短了，但是此时A到E的路径最短，所以A到E的路径已经是最优的最短路径了。而A->B,A->D则可能还会存在更短的路径。先更新邻接表：
 
-![](https://pic.downk.cc/item/5fd62b473ffa7d37b3b93a6e.jpg)
+![](https://pic.imgdb.cn/item/5fd62b473ffa7d37b3b93a6e.jpg)
 
 此时A到E的距离最短，所以将E加入集合S，并且来到E节点：
 
-![](https://pic.downk.cc/item/5fd62b823ffa7d37b3b99c5a.jpg)
+![](https://pic.imgdb.cn/item/5fd62b823ffa7d37b3b99c5a.jpg)
 
 此时观察E直接相连的节点有D，所以E到D的距离为9，那么A到D的距离为14（如果要路过E的话）比A->C->D要更长，所以不更新D的值，而B的值也未发生变化：
 
-![](https://pic.downk.cc/item/5fd62c053ffa7d37b3ba314c.jpg)
+![](https://pic.imgdb.cn/item/5fd62c053ffa7d37b3ba314c.jpg)
 
 此时有A->B,A->D两条路，A->B更短，所以此时可以确定A->B的最短路径长度就是7了，即A->C->B，然后将B加入到集合S，然后来到节点B。
 
-![](https://pic.downk.cc/item/5fd62c503ffa7d37b3ba8916.jpg)
+![](https://pic.imgdb.cn/item/5fd62c503ffa7d37b3ba8916.jpg)
 
 此时观察B的直接相连节点有D,C，但是B就是从C来的，且已经将C加入到集合S中了，所以只观察为将入到集合S的D节点，发现B到D的路径长度为2，所以A->D的路径长度为9（如果按照A->C->B->D）的话比11要短，所以更新D的节点，并将D加入到集合S中去。
 
-![](https://pic.downk.cc/item/5fd62cf23ffa7d37b3bb46d2.jpg)
+![](https://pic.imgdb.cn/item/5fd62cf23ffa7d37b3bb46d2.jpg)
 
 此时发现所有节点都已经加入到S中去了，所以算法结束，得到了集合S，和一个更新完后的邻接表，那么这两个数据结构有什么作用呢？
 
@@ -339,49 +339,49 @@ void topologicalOrder(int *theOeder){
 
 ###### 1
 
-![](https://pic.downk.cc/item/5fd62e9b3ffa7d37b3bd1cb1.jpg)
+![](https://pic.imgdb.cn/item/5fd62e9b3ffa7d37b3bd1cb1.jpg)
 
 ###### 2
 
-###### ![](https://pic.downk.cc/item/5fd62ebb3ffa7d37b3bd432b.jpg)
+###### ![](https://pic.imgdb.cn/item/5fd62ebb3ffa7d37b3bd432b.jpg)
 
 ##### 思考：对于没有权重的有向图能否也使用迪杰斯特拉算法？
 
 实际上可以，这里我们以中途经过的节点数目来表示路径长度。如下图：
 
-![](https://pic.downk.cc/item/5fd6e8fb3ffa7d37b34dc47a.jpg)
+![](https://pic.imgdb.cn/item/5fd6e8fb3ffa7d37b34dc47a.jpg)
 
 这里我们寻找以a为起点的单源最短路径。那么a直接相连的是b,d且路径长度均为1，此时这两个实际上都已经是a到这两个点的最短路径了我们随意选取一个点作为下一步的出发点其实都可以，这里我们以b为例。
 
-![](https://pic.downk.cc/item/5fd6e9733ffa7d37b34e0f76.jpg)
+![](https://pic.imgdb.cn/item/5fd6e9733ffa7d37b34e0f76.jpg)
 
 此时在b点看来，直接相连的有c,e且均为2，此时a到c和e都已经是最短路径长度了，即a到c和a到e的路径长度均为2。
 
-![](https://pic.downk.cc/item/5fd6ea203ffa7d37b34e8096.jpg)
+![](https://pic.imgdb.cn/item/5fd6ea203ffa7d37b34e8096.jpg)
 
 这里a->b的路径是最短的，所以接下来我们讨论b点。（即每次都选择已知最短的路径所连接的点）
 
-![](https://pic.downk.cc/item/5fd6ea203ffa7d37b34e8096.jpg)
+![](https://pic.imgdb.cn/item/5fd6ea203ffa7d37b34e8096.jpg)
 
 在d点看来他只与e点相连间距为1，所以a->d->e的路径长度也是2并没有改变a->e的最短路径长度。此时我们还剩两个点c,e可以讨论，因为都是2又已经是已知的最短路径了，这里就接下来讨论c。
 
-![](https://pic.downk.cc/item/5fd6eb243ffa7d37b34f2f4e.jpg)
+![](https://pic.imgdb.cn/item/5fd6eb243ffa7d37b34f2f4e.jpg)
 
 发现c也是只与e点相连，并且经过c点到达e点距离为3比a->b->e或者a->d->e还要更长，所以不改变a->e的最短路径，什么也不更新，直接将c接入到集合S中，然后此时只剩下了e点，所以接下来讨论e点。
 
-![](https://pic.downk.cc/item/5fd6eb903ffa7d37b34f8c83.jpg)
+![](https://pic.imgdb.cn/item/5fd6eb903ffa7d37b34f8c83.jpg)
 
 e点与g,i直接相连，并且a->g和a->i的距离都是3，所以此时选择两个中的任意一个都可以，所以在这里我们选择g。此时
 
-![](https://pic.downk.cc/item/5fd6ebda3ffa7d37b34fb7f5.jpg)
+![](https://pic.imgdb.cn/item/5fd6ebda3ffa7d37b34fb7f5.jpg)
 
 g连接的有f点，并且a->f现在已知的最短距离为4，而a->i仅为3，所以接下来讨论i点。
 
-![](https://pic.downk.cc/item/5fd6ec143ffa7d37b34fdeba.jpg)
+![](https://pic.imgdb.cn/item/5fd6ec143ffa7d37b34fdeba.jpg)
 
 发现a->i->h的距离为4，所以此时f,h任取。我们这里接下里讨论f点，发现f->h为1，所以a->f->h距离为5比a->i->h距离还要长，所以不更新a->h的距离，所以直接加入f点到集合S然后讨论h点，发现所有点都已经走过了，算法结束。
 
-![](https://pic.downk.cc/item/5fd6eccc3ffa7d37b350574c.jpg)
+![](https://pic.imgdb.cn/item/5fd6eccc3ffa7d37b350574c.jpg)
 
 我们发现对于无权值的有向图来说，每次产生的新节点其实距离都是相同的，因为都是加1，所以每次得到的第一个值大概率就已经是最短路径了。
 
@@ -397,29 +397,29 @@ g连接的有f点，并且a->f现在已知的最短距离为4，而a->i仅为3�
 
 贪心策略，每次都选取权值c(e)最小的且不和前面所选择的边构成回路的边e。上述算法要求按权值从小到大对边排序。如下图演示：
 
-![](https://pic.downk.cc/item/5fd6f7603ffa7d37b3592b5e.jpg)
+![](https://pic.imgdb.cn/item/5fd6f7603ffa7d37b3592b5e.jpg)
 
-![](https://pic.downk.cc/item/5fd6f6f63ffa7d37b358d900.jpg)
+![](https://pic.imgdb.cn/item/5fd6f6f63ffa7d37b358d900.jpg)
 
-![](https://pic.downk.cc/item/5fd6f7163ffa7d37b358f019.jpg)
+![](https://pic.imgdb.cn/item/5fd6f7163ffa7d37b358f019.jpg)
 
 如上面所示，我们每次都尽量先选择权值小的边进行连接，并且要满足和前面的边不构成回路。最后检验时可以看是否是n-1条边。总体来看，非常好理解。并且这种算法同样是贪心解即为整体最优解，证明略。对于该算法，动态产生的子树，需要反复进行union和fond操作，因此使用union-find数据结构（并查集）最合适，初始时为单个顶点的集合，对每条边做两次find找到边的端点所在的集合，如果两个端点在同一个集合（形成回路了）就舍弃该条边，否则就将2个集合合并（union操作）。这样算法复杂度可控制在O（n+eloge)内。
 
 ##### 小练习：构造如下图的最小生成树
 
-![](https://pic.downk.cc/item/5fd6fe133ffa7d37b35f0a1a.jpg)
+![](https://pic.imgdb.cn/item/5fd6fe133ffa7d37b35f0a1a.jpg)
 
 ##### 普里姆算法
 
 普利姆算法也很好理解，简单来说就是一条路走到黑，每次都以选取的下一个节点为起点寻找还可以走的最短的路径，如果只剩一条路可走，那无论权值多大都是走这条路经。如下图演示：
 
-![](https://pic.downk.cc/item/5fd6f9723ffa7d37b35acbe8.jpg)
+![](https://pic.imgdb.cn/item/5fd6f9723ffa7d37b35acbe8.jpg)
 
 和克鲁斯卡尔算法演示的图一样。
 
-![](https://pic.downk.cc/item/5fd6f9983ffa7d37b35aec59.jpg)
+![](https://pic.imgdb.cn/item/5fd6f9983ffa7d37b35aec59.jpg)
 
-![](https://pic.downk.cc/item/5fd6f9a93ffa7d37b35af723.jpg)
+![](https://pic.imgdb.cn/item/5fd6f9a93ffa7d37b35af723.jpg)
 
 就如上面偶说的那样，它区别于克鲁斯卡尔算法，当选去了1->6后并没有选择更短的3->4，而是在6的基础上继续走可以选择更短的路径。虽然与克鲁斯卡尔算法略有区别，但是最终的结果是相同的，都是贪心解等于最优解。
 
@@ -429,7 +429,7 @@ g连接的有f点，并且a->f现在已知的最短距离为4，而a->i仅为3�
 
 例如面这道例题：有17个顶点分为两部分，其中上部分为集合A={1,2,3,16,17}，B={4,5,6,7,8,9,10,11,12,13,14,15}
 
-![](https://pic.downk.cc/item/5fd6fb473ffa7d37b35c74be.jpg)
+![](https://pic.imgdb.cn/item/5fd6fb473ffa7d37b35c74be.jpg)
 
 那么很明显覆盖首先需要包括B中的所有顶点，子集A'={1,16,17}就已经覆盖了B中所有的点了，所以这就是B的最小覆盖。而单独来看1覆盖{4,6,7,8,9,13},16覆盖{5,6,8,12,14,15}，17覆盖{4,9,10,11}。那么怎么找到这个最小覆盖呢？
 
@@ -447,15 +447,15 @@ g连接的有f点，并且a->f现在已知的最短距离为4，而a->i仅为3�
 
 1. 用1-优化算法求解以下0/1背包问题，已知：n=8,[16,20,4,15,25,10,5,8],p=[100,200,50,90,175,50,20,60],c=70。
 
-2. <img src="https://pic.downk.cc/item/5fd6fef53ffa7d37b35fc355.jpg" style="zoom:150%;" />
+2. <img src="https://pic.imgdb.cn/item/5fd6fef53ffa7d37b35fc355.jpg" style="zoom:150%;" />
 
-   ![](https://pic.downk.cc/item/5fd6ff183ffa7d37b35fe618.jpg)
+   ![](https://pic.imgdb.cn/item/5fd6ff183ffa7d37b35fe618.jpg)
 
    写出C语言代码。
 
 #### Answers
 
-1. ![](https://pic.downk.cc/item/5fd6ffb63ffa7d37b360940f.jpg)
+1. ![](https://pic.imgdb.cn/item/5fd6ffb63ffa7d37b360940f.jpg)
 
 2. 代码如下
 

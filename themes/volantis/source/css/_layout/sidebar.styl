@@ -105,35 +105,46 @@
     trans()
     .content
       padding: 0
-      padding-bottom:20px
+      // padding-bottom:20px
+      height: 275px
       text-align: center
       display: flex
       flex-direction: column
       align-items: stretch
+      position:relative
+      padding: 5px
+      p
+        height: auto
       >.avatar
         transition: .3s ease-in-out
         align-self: center
         overflow: hidden
-        position: relative
-        border-top-left-radius: $border-card
-        border-top-right-radius: $border-card
+        // border-top-left-radius: $border-card
+        // border-top-right-radius: $border-card
         line-height: 0
-        border: 1px solid rgba(0,0,0,.3);
-        &.avatar:hover 
-          box-shadow:0 0 4px 1.5px #222
-          animation: shake 1s ease-in-out
+        // border: 1px solid rgba(0,0,0,.3);
+        &.avatar:hover > img
+          transform: translate(-50%, -40%) rotate(-10deg)
+          // box-shadow:0 0 4px 1.5px #222
+          // animation: shake 1s ease-in-out
         &.circle
-          border-radius: 100%
+          // border-radius: 100%
           width: 128px
           height: 128px
-          margin-top: $gap * 2
-          margin-bottom: $gap-p
+          // margin-top: $gap * 2
+          // margin-bottom: $gap-p
+          bottom: 0
+          right: 0
+          position: absolute
           img
             display: block
             position: absolute
             top: 50%
             left: 50%
-            transform: translate(-50%, -50%)
+            width: 100%
+            height: 100%
+            transition: cubic-bezier(.48,-.21,0,1.5) .2s
+            transform: translate(-50%, -20%) rotate(-10deg)
         @media screen and (max-width: $device-tablet)
           width: 80px
           height: 80px
@@ -145,9 +156,9 @@
             left: 50%
             transform: translate(-50%, -50%)
             position: absolute
-      .text
-        :first-child
-          margin-top: $gap
+      // .text
+      //   :first-child
+      //     margin-top: $gap
       h2
         font-weight: bold
         margin: $gap * 0.5
@@ -186,10 +197,38 @@
 
     @media screen and (max-width: $device-tablet)
       box-shadow: none
-      background: transparent !important
+      // background: transparent !important
       margin-top: 2 * $gap
       backdrop-filter: none
-      color: var(--color-site-inner)
+      // color: var(--color-site-inner)
+      .content
+        flex-direction: row
+        justify-content: space-around
+        padding-bottom:20px
+        .text
+          margin-top:20px
+          width: 100%
+        >.avatar
+          // border-radius:0
+          border-top-left-radius: $border-card
+          border-top-right-radius: $border-card
+          &.avatar:hover
+            animation: shake 1s ease-in-out
+          &.avatar:hover > img
+            transform: translate(-50%,-50%) rotate(0deg)!important
+          &.circle
+            display: none
+            width:170px
+            height:170px
+            margin-top: $gap * 2
+            margin-bottom: $gap-p
+            position:relative
+            img
+              transform: translate(-50%, -50%) rotate(0deg)
+
+          
+
+
 
 
 
@@ -291,10 +330,11 @@
         trans()
         line-height: 1.2em
         margin: 4px 0
-        border-bottom: 1px solid transparent
+        border-bottom: 0px solid transparent
         &:hover
-          color: $color-hover !important //to cover inline style.
-          border-bottom: 1px solid $color-hover
+          background:transparent!important
+          // color: $color-hover !important //to cover inline style.
+          // border-bottom: 1px solid $color-hover
 
 
 
@@ -347,8 +387,83 @@
         float right
 
 
+.recommend  .content{
+  padding: 8px 16px;  
+}
 
+.recommend  .content .recommend-box a:hover img{
+  transform: scale(1.1)
+  filter: blur(0px)
+}
+.recommend  .content .recommend-box a:hover .background{
+  opacity :0;  
+}
+.recommend  .content .recommend-box a:hover #post-id{
+  color:#f2b94b
+  top:76%;
+  font-size:20px;
+  line-height:24px;
+}
+.recommend  .content .recommend-box a:hover #post-info{
+  bottom:-30px;  
+}
+.recommend  .content .recommend-box a{
+  color: #fff;
+  display:block;
+  position:relative;
+  width:100%;
+  margin-bottom:8px;
+  overflow: hidden
+  // box-shadow: inset 1px 10px 2px rgba(0,0,0,.4)
+}
 
+.recommend  .content .recommend-box a img{
+  transition: .6s all
+  // filter:  brightness(.5);
+  border-radius: 4px;
+  filter: blur(1px)
+}
+.recommend  .content .recommend-box a #post-id {
+  top: 60%;
+  left: 8px;
+  max-width: 80%;
+  transform: translateY(-65%);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
+  position: absolute;
+  margin: 0;
+  transition: .3s all;
+}
+.recommend  .content .recommend-box a #post-info{
+  margin: 0;
+  font-size: 8px;
+  line-height: 2;
+  position: absolute;
+  left: 8px;
+  /* transform: translateX(-50%); */
+  max-height: 48px;
+  /* text-align: center; */
+  bottom: 15px;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #F7F7FA;
+  transition:.3s all;
+}
+.recommend  .content .recommend-box a .background{
+  position:absolute;
+  bottom:8px;
+  left:0px;
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1));
+  transition: .3s all
+}
 @keyframes tabshow{
   0% {
     -webkit-transform: translateY(25px);

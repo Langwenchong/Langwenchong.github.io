@@ -5,8 +5,8 @@ top: false
 date: 2020-11-25 09:10:50
 tags: [算法,分治]
 categories: 
-	- [算法导论]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704165037.png
+	- [知识分享,学习心得]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704165037.png
 ---
 
 记录翀翀👴手撕算法的历程，本文算法专题--分治思想，我变强了，也没变秃，如果学不秃，就往秃里学，奥利给💪，干就完了！
@@ -173,7 +173,7 @@ bool Max-min(T w[],int n,T& Min,T& Max){
 
 直接求解：第一个数的每一位分别和第二个数的每一位进行相乘然后进位得结果后在相加，时间复杂度较高为O(n^2)。
 
-分治法：![](https://pic.downk.cc/item/5fbe6ea9edfc5a5942438461.jpg)
+分治法：![](https://pic.imgdb.cn/item/5fbe6ea9edfc5a5942438461.jpg)
 
 X=A\*2\^(n/2)+B，Y=C\*2\^(n/2)+D，所以X\*Y=A\*C\*2\^n+(A\*D+B\*C)\*2\^(n/2)+B\*D
 
@@ -226,11 +226,11 @@ void MatrixMulti(T** A,T** B,T** C,int n){
 
 如果我们对矩阵进行分块合并，即进行分治法思想，每个矩阵分为均匀的四个小得子矩阵，如下图
 
-![](https://pic.downk.cc/item/5fce32ea3ffa7d37b3fd6c4d.jpg)
+![](https://pic.imgdb.cn/item/5fce32ea3ffa7d37b3fd6c4d.jpg)
 
 a,b,c,d是A的四个子矩阵，e,f,g,h是B的四个子矩阵。按照乘法公式计算：
 
-![](https://pic.downk.cc/item/5fce33303ffa7d37b3fdb76d.jpg)
+![](https://pic.imgdb.cn/item/5fce33303ffa7d37b3fdb76d.jpg)
 
 可以得到
 $$
@@ -238,11 +238,11 @@ T（n)=8T(n/2)+O(n^2)
 $$
 根据master定理得时间复杂度为O(n^3)，我们发现时间复杂度没有减小，难道是分治法出问题了吗😕？实际上并没有，只是我们分的快太多啦，开销太大啦，经过天才的推理，我们得知分成7块时时间复杂度明显降低（证明就不证了）具体操作如下：
 
-![](https://pic.downk.cc/item/5fce34413ffa7d37b3fefba1.jpg)
+![](https://pic.imgdb.cn/item/5fce34413ffa7d37b3fefba1.jpg)
 
 我们将abcdefgh重新按一定规则进行整合，即A，B两个矩阵总共分为7块，此时C的四个子矩阵rstu可以用如下公式计算求解：
 
-![](https://pic.downk.cc/item/5fce34983ffa7d37b3ff5da9.jpg)
+![](https://pic.imgdb.cn/item/5fce34983ffa7d37b3ff5da9.jpg)
 
 例如：r=P5+P4-P2+P6=ae+ah+de+dh+dg-de-ah-bh+bg+bh-dg-dh=ae+bg,经过上面的这种分治拆分，可以得：
 $$
@@ -256,19 +256,19 @@ $$
 
 不同情况的残缺棋盘
 
-![](https://pic.downk.cc/item/5fce35b83ffa7d37b3006b0c.jpg)
+![](https://pic.imgdb.cn/item/5fce35b83ffa7d37b3006b0c.jpg)
 
 你拥有的四种小版块
 
-![](https://pic.downk.cc/item/5fce361c3ffa7d37b300bd20.jpg)
+![](https://pic.imgdb.cn/item/5fce361c3ffa7d37b300bd20.jpg)
 
 毋庸置疑，残缺的棋盘肯定有某种特定的规律，既然残缺的棋盘总是由这四种小版块拼出，所以我们总是要想方设法将剩余的白色部分拆成许多个小版块，即三个成直角的小白块为一组划分残缺的前，我们不难看出规律。
 
-![](https://pic.downk.cc/item/5fce37213ffa7d37b3018685.jpg)
+![](https://pic.imgdb.cn/item/5fce37213ffa7d37b3018685.jpg)
 
 对于下面这三个复杂的棋盘，每次我们都先填充黄色区域，使得将棋盘分成4个部分后，有残缺块的那个小部分永远没有黄色板块的小方格，这样我们就达到了将白块分割成多个成直角的三个小白块组合了，其实多想一想，有残缺块的部分不能少一个小白格，自然而然拼凑的时候，第一个小版块要避免放在含有残缺块的部分，这样四个部分拥有的小白块才能均匀分布。所以扩展至无限大的棋盘时，思路是一样的，如下：
 
-![](https://pic.downk.cc/item/5fce38823ffa7d37b302a6d7.jpg)
+![](https://pic.imgdb.cn/item/5fce38823ffa7d37b302a6d7.jpg)
 
 代码如下：
 
@@ -446,7 +446,7 @@ T(n)=T(0)+T(n-1)+O(n)\\
 $$
 Master定理可以知道就是O(n^2)。当然我们也可以使用迭代展开思考，如下图：
 
-![](https://pic.downk.cc/item/5fceed1e3ffa7d37b37fc99b.jpg)
+![](https://pic.imgdb.cn/item/5fceed1e3ffa7d37b37fc99b.jpg)
 
 迭代深度为n，每次的值为单调递减数列，求和即得。
 
@@ -458,7 +458,7 @@ T（n)=2T(n/2)+O(n)=O(nlogn)
 $$
 但是我们发现如果支点落在(1/10n,9/10n)时，也有时间复杂度为O(nlogn)：
 
-![](https://pic.downk.cc/item/5fceee263ffa7d37b380dfac.jpg)
+![](https://pic.imgdb.cn/item/5fceee263ffa7d37b380dfac.jpg)
 
 即快速排序中支点总是大概率容易落在好情况的位置上，所以平均情形也是好情况为o(nlogn)。
 
@@ -476,7 +476,7 @@ $$
 
 各排序算法平均时间的曲线图
 
-![](https://pic.downk.cc/item/5fceef043ffa7d37b3818e95.jpg)
+![](https://pic.imgdb.cn/item/5fceef043ffa7d37b3818e95.jpg)
 
 #### 选择问题
 
@@ -496,7 +496,7 @@ $$
 
 将S分为S1和S2，那么最接近点对就是在S1中最接近点对{p1,p2}和S2中最接近点对{q1,q2}或者某个{p3,q3}（p3在S1,q3在S2）。其中如果最接近点对好巧不巧是{p3,q3}，那么即|p3-q3|<d(d是min{(p1,q1),(p2,q2)})。则p3和q3两者与m的距离都不超过d,所以(m-d,m]中至多包含S中的一个点，同理(m,m+d]也是，所以p3,q3就找到了。
 
-![](https://pic.downk.cc/item/5fcef5b03ffa7d37b386eda8.jpg)
+![](https://pic.imgdb.cn/item/5fcef5b03ffa7d37b386eda8.jpg)
 
 可是这种面中点映射到实数轴上的实数方法无法推广到二维情形。
 

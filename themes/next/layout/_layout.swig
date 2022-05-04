@@ -20,34 +20,34 @@
 <div id="preloader">
         <h2>Chong's Blog</h2>
         <div class="set">
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
         </div>
         <div class="set set2">
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
         </div>
         <div class="set set3">
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
-            <div><img src="https://gitee.com/Langwenchong/figure-bed/raw/master/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/D7C3AF267B544C78F76B1E9579505756.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/33EC9F01B1ABE93A9375B8B162F3DC15.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/A50FF8533DFC80B0A17BAB00702098C0.png" alt=""></div>
+            <div><img src="https://langwenchong.gitee.io/figure-bed/7F6209D83239CDB2FF0D5F6B04E77FC5.png" alt=""></div>
         </div>
     </div>
 <body itemscope itemtype="http://schema.org/WebPage">

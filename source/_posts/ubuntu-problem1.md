@@ -3,10 +3,10 @@ title: ubuntu报错:Starting User Manager for UID 121解决办法
 comments: false
 top: false
 date: 2021-01-21 17:24:10
-tags: [ubuntu,磁盘分区空间不足]
+tags: [ubuntu]
 categories: 
-	- [教程,ubuntu配置]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704160701.png
+	- [知识分享,踩坑日志]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704160701.png
 ---
 
 ### 📝问题描述
@@ -19,15 +19,15 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704160701.png
 
 一般是出现问题之前会经常出现以下情况的警告：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210121173315.png)
+![](https://langwenchong.gitee.io/figure-bed/20210121173315.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210121173435.png)
+![](https://langwenchong.gitee.io/figure-bed/20210121173435.png)
 
 这些都是在提示空间磁盘分配不足时的提醒，但是由于操作者接收到警报后并未及时处理而是连续选择ignore忽视，最终导致的磁盘爆满由于无法为ui界面进程分配磁盘空间而导致无法显示桌面，所以会一直尝试为进程分配空间导致以下情况的报错。
 
 ### ❗问题截图及分析
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/84a4ca5a1d3c91e3d121647c29ef78a.png)
+![](https://langwenchong.gitee.io/figure-bed/84a4ca5a1d3c91e3d121647c29ef78a.png)
 
 一般等待稳定后就会出现上图的情况，类似的还有UID 73等都是磁盘无额外空间导致无法正常运行图形界面进程导致的无法显示桌面进行操作。但是不用过于慌张，此时系统只是处于无法显示桌面进程的状态，存储在虚拟机中的文件系统并未被破坏。
 
@@ -35,7 +35,7 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704160701.png
 
 首先我们需要启动无桌面显示的操作命令行形式进行操作。所以首先待出现上面这种图稳定后同时按住ctrl+alt+f2或者ctrl+alt+f3（如果你使用的是另一种需要按住fn键触发的快捷键格式，那么需要按ctrl+alt+fn+f2或者ctrl+alt+fn+f3），duck不必害怕，按不坏。然后就进入到了命令行格式的操作界面了，需要输入你的账号和密码来登录，账号就是@之前的名字例如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/QQ图片20210121175121.png)
+![](https://langwenchong.gitee.io/figure-bed/QQ图片20210121175121.png)
 
 那么账号就是lwc，请务必能够登陆，否则请另寻他法。登陆以后我们首先检查磁盘分区的空间情况，请输入以下指令：
 
@@ -45,7 +45,7 @@ df -h
 
 然后会出现磁盘空间的分布情况：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/0ef4ef7c88d191790b3b368a506e871.png)
+![](https://langwenchong.gitee.io/figure-bed/0ef4ef7c88d191790b3b368a506e871.png)
 
 我们可以看出/dev/sda1的使用率已经达到了100%，无可用空间，这就是打不开桌面额原因，至于下方的loop都是100%是正常现象，不用管。如果你担心自己的文件能否丢失了，可以先用cd和ls指令查看自己的文件存储情况，一般没有损坏现象。那么接下来我们的任务就非常简单了，目的只有一个---删除不必要的文件腾出磁盘空间来能够启动桌面进程。当然这里我先声明一下，我想你一定是很着急解决此问题，你也肯定是搜索了许多的教程发现大多效果不佳或者废话连篇不能够立即解决，我推荐最好的方法就是重装虚拟机，没有别的什么神技方法，磁盘扩容在挂载（甚至还需要先下载一个Gparted软件）都是纸上谈兵，归根结底现在就是硬盘空间太少导致出现这种错误，我现在要讲解的方法是以打开桌面为目标并且尽可能帮助你先把需要亟待解决的文件导出到主机。
 
@@ -80,7 +80,7 @@ cd ..
 
 一直重定向到/根目录下然后输入ls
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210121185617.png)
+![](https://langwenchong.gitee.io/figure-bed/20210121185617.png)
 
 我们可以看到有以下几个文件夹，当然啦不用想肯定都是很重要的系统文件夹不能够乱动的，但是现在没办法，只能够尝试删除了。我们先了解一下几个文件夹的作用（不想看跳过也行，只要一会误删了不能启动了自己负责）：
 
@@ -92,7 +92,7 @@ cd ..
 |    dev     |          设备列表文件夹，设备包括鼠标、键盘、硬盘等          |
 |    etc     | 程序的配置文件目录，vi编辑器的配置文件就在这个文件内，同时还存储着各个不同用户的密码，权限极高需要root |
 |    home    |                    存储账户自己的个人文件                    |
-|            | 各种程序所需的共享动态链接库，是系统程序能正常运行的支持文件。 |
+|    lib     | 各种程序所需的共享动态链接库，是系统程序能正常运行的支持文件。 |
 |   lib32    |                        系统32位支持库                        |
 |   lib64    |                        lib64位支持库                         |
 |   media    |                 存放所有关于媒体信息的文件。                 |
@@ -123,7 +123,7 @@ rm -rf tmp/*
 cd var  //进入var文件夹
 ```
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210121185653.png)
+![](https://langwenchong.gitee.io/figure-bed/20210121185653.png)
 
 我们可以看到有tmp和cache文件夹这两个可以尝试删除输入：
 
@@ -139,7 +139,7 @@ rm -rf cache/*
 
 #### 目标三：成功重启虚拟机后进性磁盘扩展
 
-首先恭喜如果你能够成功进入桌面啦😉，但是现在不要太早兴奋，因为现在你也只是进入桌面了，磁盘空间仍然是不够的，很有可能下次开机就又无法正常启动了。现在我们先将大部分文件导出，这里可以使用共享文件夹或者使用邮箱导出。然后你可以选择尝试对磁盘进行扩展或者重新装虚拟机了。如果你想对磁盘进行扩容的话那么就请参考这篇文件即可：[《根目录磁盘扩容》](https://blog.csdn.net/weixin_41018348/article/details/82592057)。如果你想重新装配虚拟机并且进行一条龙配置加美化请参考我的另一篇博客：[《ubuntu配置》](https://wenchong.space/2021/01/22/ubuntu-problem2/)
+首先恭喜如果你能够成功进入桌面啦😉，但是现在不要太早兴奋，因为现在你也只是进入桌面了，磁盘空间仍然是不够的，很有可能下次开机就又无法正常启动了。现在我们先将大部分文件导出，这里可以使用共享文件夹或者使用邮箱导出。然后你可以选择尝试对磁盘进行扩展或者重新装虚拟机了。如果你想对磁盘进行扩容的话那么就请参考这篇文件即可：[《根目录磁盘扩容》](https://blog.csdn.net/weixin_41018348/article/details/82592057)。如果你想重新装配虚拟机并且进行一条龙配置加美化请参考我的另一篇博客：[《ubuntu配置》](https://coolchong.cn/2021/01/22/ubuntu-problem2/)
 
 ### 💭总结
 

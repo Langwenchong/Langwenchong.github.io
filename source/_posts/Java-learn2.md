@@ -3,10 +3,9 @@ title: Java学习笔记-第二讲
 comments: false
 top: false
 date: 2021-03-05 16:11:36
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -15,7 +14,7 @@ categories:
 
 #### Java数据类型
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210305164117.png" style="zoom: 150%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210305164117.png" style="zoom: 150%;" />
 
 Java的数据类型可以分为两大类，一类是基本数据类型，另一类是引用数据类型。后者相当于是对象。这里还要注意Java中byte也是整型的一种，他是比short字长还短的1字节。同时boolean是布尔型，而不是bool。
 
@@ -68,7 +67,7 @@ char c2= '\n'； //转义后为换行符
 
 整数类型根据不同的字长分为了以下几种，他们都有固定的表数范围和字段长度，而且不受具体操作系统的影响，以保证Java的可移植性。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210305165621.png)
+![](https://langwenchong.gitee.io/figure-bed/20210305165621.png)
 
 Java中整型有三种表示分别是：
 
@@ -102,7 +101,7 @@ long i=3L;
 
 #### 浮点型
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210305170302.png)
+![](https://langwenchong.gitee.io/figure-bed/20210305170302.png)
 
 在学过机组原理的浮点型IEEE754标准以后我们已经知道了表数范围的由来，主要是移码导致的。在Java中浮点类型有两种表示范围：
 
@@ -183,7 +182,7 @@ a>>b//如果a是long型，需要b模64,以防a右移64位将a移位清零了
 
 同时还要时刻注意加减法的优先级大于移位的优先级。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210305172435.png)
+![](https://langwenchong.gitee.io/figure-bed/20210305172435.png)
 
 #### 表达式中的类型转换
 

@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第九讲
 comments: false
 top: false
 date: 2021-04-07 16:43:45
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -17,7 +16,7 @@ categories:
 
 复用器（多路选择器）是一种多输入单输出的组合逻辑电路，常用MUX来表示，具有k个数据输入端口的复用器，即为k:1复用器，数据输入端口数目k和选择控制器的数目n应该满足$k<=2^n$。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407192610.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407192610.png)
 
 复用器的功能就是当使能端有效时，根据选择控制端口的值从多个数据输入中选择一个送到输出端（每个数据输入端的宽度可以是1位或者多位）。我们可以使用SystemVerlog HDL进行建模。这里我们以4:1复用器为例，首先我们列出真值表：
 
@@ -31,7 +30,7 @@ categories:
 
 因此我们根据真值表可以使用卡诺图求解逻辑表达式，然后建模：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407193045.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407193045.png)
 
 上面一个基于过程块的建模，实际上对照着真值表逻辑很容易想清楚。
 
@@ -45,23 +44,23 @@ categories:
 
 %} 
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407194129.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407194129.png)
 
 译码器功能：使能端有效时，对应每一组输入，仅有一个输入端为有效电平，其他均是无效电平，否则，所有输出端都是无效电平，如果有效电平是1，那么无效电平就是0。
 
 同样的我们也可以使用SystemVerilog HDL对其建模，我们这里以2:4的译码器为例，首先我们也是列出真值表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407193839.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407193839.png)
 
 然后我们根据真值表进行建模：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407193900.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407193900.png)
 
 虽然查看真值表建模的方法对于大型电路不适用，但是学习阶段我们完全可以参考真值表进行建模，而不用使用非常复杂的方法。
 
 编码器是一种将特定输入（独热码）转化为一个编码输出的组合逻辑电路，是译码器的逆过程，具有m个输入和n个输出，因此需要满足的端口数量条件是$m<=2^n$。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407194154.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407194154.png)
 
 编码器功能是使能端有效时，用n位二进制码对m个输入中的当前有效信号进行编码输出，标志信号VALID有效（VALID信号用于标识所产生的编码是否合法），如果m个输入信号均无效或使能端无效，那么VALID信号无效，编码输出可以为任何值（一般为0）。
 
@@ -73,11 +72,11 @@ categories:
 
 我们也可以使用SystemVerilog HDL对编码器进行建模，同样先列真值表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407194559.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407194559.png)
 
 我们以4:2编码器为例，最终建模的代码是
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407194630.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407194630.png)
 
 ##### 思考：复用器，编码器和译码器的异同？
 
@@ -91,21 +90,21 @@ categories:
 
 半加器有两个输入A和B，两个输出S和`C_{out}​`。S是A和B之和，`C_{out}​`本位产生的进位信号。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407195157.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407195157.png)
 
 其实上面的加法并不全面，他没有考虑从自己的低一位传进来的进位信号，因此为半加器。我们可以看到上图右侧的公式就是S和`C_{out}​`的计算方法。A异或B决定的就是本位的填写数值，A与B就是进位信息，很明显只有A=B=1时才能产生有效进位$C_{out}=1$
 
 ##### 1位全加器
 
-1位全加器在半加器的基础上增加了一个进位输入$C_{in}$,此时得到的才是一个通常意义上的一位加法，实际上这部分内容在[《计算机系统基础》](https://wenchong.space/2021/02/09/comsys-note5/)学习过了，这里就不再细讲计算原理。
+1位全加器在半加器的基础上增加了一个进位输入$C_{in}$,此时得到的才是一个通常意义上的一位加法，实际上这部分内容在[《计算机系统基础》](https://coolchong.cn/2021/02/09/comsys-note5/)学习过了，这里就不再细讲计算原理。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407195550.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407195550.png)
 
 #### 多位加法器（CPAs)
 
 一个N位加法器将两个N位输入（A和B）与一个进位`C_{in}​`相加，产生一个N为结果和一个输出进位`C_{out}​`。因为在N为加法器内部，一位进位将传播到下一位，所以这种加法器通常又称为进位传播加法器。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407195844.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407195844.png)
 
 很明显多位加法器实际上就是由许许多多的一位加法器组合形成的，因此不同的组合形式会形成性能不同的多位加法器。这里分为了三种：
 
@@ -113,17 +112,17 @@ categories:
 - 先行进位加法器（快速）
 - 前缀加法器（更快速）
 
-对于高位宽的加法器，先行进位和前缀更具优势，但需要消耗更过的硬件资源（实际上就是空间换时间的思想），这部分内容实际上也在[《计算机系统基础》](https://wenchong.space/2021/02/09/comsys-note5/)中讲过，只不过那里讲的是组合形式的原理，这里我们会对比学习。
+对于高位宽的加法器，先行进位和前缀更具优势，但需要消耗更过的硬件资源（实际上就是空间换时间的思想），这部分内容实际上也在[《计算机系统基础》](https://coolchong.cn/2021/02/09/comsys-note5/)中讲过，只不过那里讲的是组合形式的原理，这里我们会对比学习。
 
 ##### 行波进位加法器
 
 行波进位加法器实际上应用的就是我们之前学习的一位全加器的串行进位连接方式，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407200316.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407200316.png)
 
 对比计算机组成原理的图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210120052.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210120052.png)
 
 两者是一样的原理表示。我们不难看出这种进位一级一级的从低位传输到高位的形式，当N较大时即很多位时，计算延迟也会非常大，即延迟量$t_{ripple}$随着位数的增加而增加。
 
@@ -137,7 +136,7 @@ $$
 
 因为第i位必须等待第i-1位的进位信号传进来以后才会进行计算。我们以一道例题分析：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407200800.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407200800.png)
 
 上图是一个四个模块组成的算术逻辑电路，很明显总延迟取决于局部模块中延迟量最大的关键路径的延迟量之和，因此上图的延迟量为9T。
 
@@ -145,17 +144,17 @@ $$
 
 先行进位加法器是一种快速的进位传播加法器，他把加法器分解成若干块，当每块一有进位时就会快速确定此块内的所有加法器的进位信号，从而实现块内的位加法器并行计算，因此他不需要等待通过一块内的所有加法器，而是直接先行通过该块。因此原理是单级先行进位方式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407201151.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407201151.png)
 
 
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407201159.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407201159.png)
 
 对比计算机组成原理的图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210112918.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210112918.png)
 
-具体的原理请看[《计算机系统基础》](https://wenchong.space/2021/02/09/comsys-note5/)，这里就不细讲了。
+具体的原理请看[《计算机系统基础》](https://coolchong.cn/2021/02/09/comsys-note5/)，这里就不细讲了。
 
 这里我们计算一下两者的延迟，假设对于32位行波进位加法器和4位块组成的先行进位加法器的延迟。假设每个输入门电路的延迟为100ps，全加器的延迟是300ps。
 
@@ -176,27 +175,27 @@ $$
 
 实际上他还可以更快速，因为此时低二CLA的`C_4​`还是必须等待最低CLA计算出来以后才可以计算，因此此时的`C_{12}`、$C_8$、$C_4$的不是并行产生的，因此我们可以再次提速，也就是计算机组成原理所讲的多级先行进位：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210120423.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210120423.png)
 
 具体的讲解间计算机组成原理。
 
 我们也尝试使用SystemVerilog HDL对多位加法器CPA进行建模，HDL提供了`+`运算符来描述多位加法器的CPA。EDA工具在满足速度要求的前提下会自动的从众多可能实现的方法中选择成本最低(逻辑门最少)的设计，因此我们只需要直接写出逻辑表达式即可，具体的哪一种计算组成形式由HDL来决定。下面是一个有进位输入/输出的CPA：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407202455.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407202455.png)
 
 #### 减法器
 
-实际上减法只是特殊一点的加法而已，参考这篇[《定点数的减法运算》](https://wenchong.space/2021/02/01/comsys-note3/)以后我们知道减法运算实际上最终还是转换成了加法运算。即减法运算可以表示为
+实际上减法只是特殊一点的加法而已，参考这篇[《定点数的减法运算》](https://coolchong.cn/2021/02/01/comsys-note3/)以后我们知道减法运算实际上最终还是转换成了加法运算。即减法运算可以表示为
 $$
 [A-B]_补=[A]_补+[-B]_补=[A]_补+\overline{[B]_补}+1
 $$
 所以减法器就是对补码进行一定的转换以后调用加法器：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407202823.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407202823.png)
 
 在计算机中所有的数据都用补码表示，因此计算机中是没有减法器的，加法和减法都是通过加法器实现，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407202916.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407202916.png)
 
 当sub为0时，那么就是A+B，因此执行a+b,当sub为1时我们观察上图可以看出B走左侧的线路，他先经过了一个取反加一的过程，然后再和A相加，也就是`a+~b+1`实际上实现的就是减法运算，之所以b要取反加一是因为此时要从正数补码转化为负数补码。
 
@@ -209,21 +208,21 @@ $$
 
 如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407203353.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407203353.png)
 
 我们同样可以使用SystemVerilog进行建模：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407203422.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407203422.png)
 
 #### 算术逻辑单元
 
 算术逻辑单元是将各种算术和逻辑运算组合到一个单元模块中，典型的ALU算术逻辑单元可以执行加法、减法、量值比较、逻辑运算等，ALU是大多数计算机的核心。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407203600.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407203600.png)
 
 F是三位，可以表示8中可能的运算方式，但是实际上011是没有用到的。这里我们给出ALU的模型图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407203652.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407203652.png)
 
 #### 移位器和循环移位器
 
@@ -255,7 +254,7 @@ F是三位，可以表示8中可能的运算方式，但是实际上011是没有
 
 这里实际上也可以使用SystemVerilog HDL进行建模，N位移位器可以用N个N:1复用器构成：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407204220.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407204220.png)
 
 左移时乘法一个特例，即A<<N=A*$2^N$
 
@@ -277,10 +276,10 @@ F是三位，可以表示8中可能的运算方式，但是实际上011是没有
 
 %} 
 
-乘法和除法的具体运算实现请参考[《定点数的乘法和除法》](https://wenchong.space/2021/02/01/comsys-note3/)。估计太难，也不会考，这里给出乘法器的模型图：
+乘法和除法的具体运算实现请参考[《定点数的乘法和除法》](https://coolchong.cn/2021/02/01/comsys-note3/)。估计太难，也不会考，这里给出乘法器的模型图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407204821.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407204821.png)
 
 他的SystemVerilog HDL建模的代码为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210407204846.png)
+![](https://langwenchong.gitee.io/figure-bed/20210407204846.png)

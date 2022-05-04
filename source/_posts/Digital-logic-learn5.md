@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第五讲
 comments: false
 top: false
 date: 2021-03-19 16:39:20
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -24,13 +23,13 @@ categories:
 - 抽象层次：可以在多种层次上进行建模设计等，而软件描述语言仅仅限制于软件算法层
 - 并行特性：和软件描述语言有很大不同，在HDL中，指令都是并行的，而不是串行的，因此指令的顺序并不会影响功能的实现
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320190213.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320190213.png)
 
 上图给出了两种不同的语言实现功能的方法，软件描述语言中是通过编译器将程序编译成01二进制代码来执行。而SystemVerilog(我们要掌握的一种硬件描述语言)编写的程序是通过综合器生成电路网表文件（即描述组合逻辑电路的文件）最终交给厂商去制造某一个元件。
 
 我们前面提到过HDL可以在抽象层次上进行建模设计，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320190506.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320190506.png)
 
 一个硬件描述语言可以在开关机，门级和寄存器传输级的任意一个层次上进行建模设计数字逻辑电路。而软件描述语言只能在算法级层次上进行设计。本次我们主要是学习在RTL寄存器传输级进行硬件描述语言应用的知识学习。
 
@@ -38,7 +37,7 @@ categories:
 
 在HDL中并不是所有语句都被综合形成描述逻辑电路的文件，只有一部分语句是被综合为逻辑电路的，称之为可综合HDL，而不能被综合的语句一般用于仿真验证（后面会讲到，实际上就是用来对设计的电路进行模拟测试的）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320190946.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320190946.png)
 
 一个门级网表的实现需要经过许多步骤，其中翻译，逻辑优化和实现与布局布线是非常重要的步骤，我们分别介绍：
 
@@ -60,7 +59,7 @@ categories:
 
 仿真验证实际上就是对我们设计的电路进行测试，以防出现漏洞或错误，但是我们不可能造出来这个门网表再进行测试，这样的话即使检测出来是有错误的也不能修改只能报废掉了，所以我们一般是使用虚拟仿真技术对我们设计的电路先进行测试。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320192529.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320192529.png)
 
 - 在特定的时间将激励信号送入待测模块（DUT）的输入端口
 - EDA工具根据DUT的逻辑功能模拟信号在电路中的运算和传输过程
@@ -71,7 +70,7 @@ categories:
 
 一个硬件描述语言创建的模块结构如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320192917.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320192917.png)
 
 这是一个二选一电路的模块功能的设计，我们发现其实和软件描述语言的函数很类似。他有以下几个特点：
 
@@ -103,13 +102,13 @@ endmodule
 
 input标识输入端口，output表示输出端口，inout表示双向端口。所有相同类型的端口都统一一起声明即可（都排列在一个关键字后面即可）。类型有logic等，位宽就是信号的位数，一般默认是1位，当然也可以声明为多位。端口的声明可以有多种方式，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320194059.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320194059.png)
 
 这三种都是正确的，也就是说在模块声明处可以将端口所有的属性全部声明完，也可以只声明一部分属性（但是无论如何端口名称必须在module声明语句中），然后再在内部对端口的方向，类型，位宽进行声明。
 
 #### 内部变量
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320192917.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320192917.png)
 
 上图中a和b都是内部变量，他们只在模块内部使用，主要是负责存储中间信号量，最终的输出信号需要若干个中间变量信号的逻辑组合来形成。
 
@@ -122,7 +121,7 @@ input标识输入端口，output表示输出端口，inout表示双向端口。�
 
 在一个System HDL程序中，其代码模板如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320194708.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320194708.png)
 
 {% note info, 
 
@@ -132,7 +131,7 @@ input标识输入端口，output表示输出端口，inout表示双向端口。�
 
 我们要注意声明部分必须写在逻辑功能定义部分的前面，而对于逻辑功能定一部分，由于HDL的并行性的特点，语句是并行的而不是串行的，因此语句之间的顺序并不会影响功能的实现，即下面的y定义语句也可以写在最前面：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320194850.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320194850.png)
 
 但是为了便于我们理解，我们最好还是根据一定的逻辑顺序来构建代码。接下来我们再来学习以下HDL的语法要素。
 
@@ -140,7 +139,7 @@ input标识输入端口，output表示输出端口，inout表示双向端口。�
 
 ##### 间隔符和注释
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320195151.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320195151.png)
 
 即可以换行，他不会影响语句的实现，只是要注意语句的最后要加分号来表示一个语句的结束。一定的空格和换行使得代码风格优雅，同时注释规则和C一样，分为单行注释//和多行注释/\*...\*/。
 
@@ -148,7 +147,7 @@ input标识输入端口，output表示输出端口，inout表示双向端口。�
 
 接下来就是标识符和关键字，标识符用来给逻辑电路中的对象（如模块、输入和输出端口、中间变量）取名，规则和C一样，对字母大小写敏感。如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320195508.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320195508.png)
 
 关键字就是预留的表示特殊意义的字符串，用来定义语言的结构，通常是小写的，比如module,input,assign等。关键字不能作为标识符来使用。
 
@@ -181,9 +180,9 @@ $$
 
 %} 
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325155611.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325155611.png)
 
-上图给出了部分常量的表示方法，一定要注意位宽一定是二进制表示的位数，而负数常量是要按照有符号数补码的格式在EDA中表示。求补码的方法见[《机组原理》](https://wenchong.space/2021/02/01/comsys-note3/)
+上图给出了部分常量的表示方法，一定要注意位宽一定是二进制表示的位数，而负数常量是要按照有符号数补码的格式在EDA中表示。求补码的方法见[《机组原理》](https://coolchong.cn/2021/02/01/comsys-note3/)
 
 为了增加数字的可读性，可以在数字之间增加下划线（类似于银行显示余额时使用的逗号），比如8'b1001_0011就是表示的位宽为8位的二进制常量数10010011。
 
@@ -199,7 +198,7 @@ $$
 
 我们需要注意，某一个常量在电路中就是一个由0/1组成的二进制串，所以在电路层面并不会区分该常量是有符号数还是无符号数，或者是原码还是补码，这些信息都是由设计者或软件（EDA工具）负责解释的。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325161106.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325161106.png)
 
 ##### 数据类型
 
@@ -256,7 +255,7 @@ out[3:0]=addrbus[7:4]
 
 ##### 运算符
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325162748.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325162748.png)
 
 先给出所有的运算符的含义和优先级。然后我们讲解几种细节问题：
 
@@ -282,11 +281,11 @@ endmodule
 
 而当使用的是多符号是那么是将两个数的真值进行处理，并且所有非零的真值数都是按照1处理，零真值是0。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325165042.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325165042.png)
 
 在SystemVerilog HDL中还会经常使用到算术运算，算术运算包括加减乘除，其中除和取模是不可综合的。并且当两个位数不同的操作数进行算术运算时，如果操作数是无符号数，那么位数少的进行零扩展即可，如果操作数是有符号数，咋位数少的操作数需要进行位数扩展到相同位数。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325163746.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325163746.png)
 
 移位运算实际上和计算机系统基础中的移位操作相同，规则：
 
@@ -295,7 +294,7 @@ endmodule
 - 算术左移：将操作数有符号数左移若干位，右侧产生的空余位使用0填充
 - 算术右移：将操作数有符号数右移若干位，左侧产生的空余位使用符号位填充
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325164139.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325164139.png)
 
 关系运算就是比较大小然后返还0/1（假/真）。注意如果表达式中有一个操作数为无符号数，那么表达式的其余操作数均会被当做无符号数进行处理：
 
@@ -332,10 +331,10 @@ $$
 $$
 我们来看几个例子：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325165704.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325165704.png)
 
 ##### 小练习
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325165738.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325165738.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325165752.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325165752.png)

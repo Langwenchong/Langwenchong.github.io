@@ -3,10 +3,9 @@ title: 操作系统笔记--Part12
 comments: false
 top: false
 date: 2020-12-27 19:36:50
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -21,7 +20,7 @@ categories:
 
 #### 单一连续分配
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227194019.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227194019.png)
 
 在单一连续分配方式中，内存被分为系统区和用户区。系统区通常位于内存的低地址部分，用于存放操作系统相关数据，而用户区存放用户进程相关数据。内存只有一道用户程序，用户程序独占整个用户区空间。
 
@@ -45,7 +44,7 @@ categories:
 
 20世纪60年代支持多道程序的系统出现后，为了能在内存中装入多道程序并且这些程序之前互不干扰，于是将整个用户控件划分为若干个固定大小的分区，在每个分区中只装入一道作业，这样就形成了最早的。最简单的一种可运行多道程序的内存管理方式，但是显然这种固定大小分区的分配方式很不合理，于是又出现了分区大小不等的分配方式。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227200118.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227200118.png)
 
 分区大小相等：缺乏灵活性，但是很适用于一台计算机控制多个相同对象的场合（比如：钢铁厂有n个相同的炼钢炉，就可以把内存分为n个大小相等的区域存放n个炼钢炉控制程序）
 
@@ -55,7 +54,7 @@ categories:
 
 所以我们需要建立一个数据结构--分区说明表来实现各个分区的分配与回收。每个表项对应一个分区，通常按分区大小排列。每个表项包括对应分区的大小，起始地址，状态（是否已分配）。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227200619.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227200619.png)
 
 当用户程序要装入内存时，由操作系统内核程序根据用户程序的大小检索检索表，从中找到一个满足大小的，未分配的分区，将之分配给该程序，然后修改状态为“已分配”。
 
@@ -65,7 +64,7 @@ categories:
 
 动态分区分配又称为可变分区分配，这种分配方式不会预先划分内存分区，而是在进程装入内存时，根据进程的大小动态地建立分区，并使分区的大小正好适合进程的需要。因此系统分区的大小和数目是可变的，（比如：假设某计算机的内存大小为64MB，系统区8MB，用户区56MB....）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227201158.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227201158.png)
 
 很明显这种方法肯定是没有内部碎片的，解决了固定分区分配的缺陷。
 
@@ -73,9 +72,9 @@ categories:
 
 其实和固定分区分配中分区不等大小的方法一样，也是建立表或者链来记录呗，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227201521.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227201521.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227201349.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227201349.png)
 
 当然名字还是得换一换的，实际上思路是异曲同工的。一定要注意此时只需要记录空闲连续分配区间的大小和起始地址就可以了。。
 
@@ -97,13 +96,13 @@ categories:
 
 首先看分配，这个简单，如果分配后某个分区刚刚好被占据了那么这个表项直接删除就好了。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227202424.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227202424.png)
 
 5号进程放在了3号空闲分区刚好占满，那么删除3号表项即可。
 
 如果空闲分区分配一定空间后没有被占满，那么就要更新分区大小和起始地址了，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227202545.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227202545.png)
 
 5号进程放在了1号分区并且从1号分区的头部开始放，那么1号分区并未占满，此时就要更新1号分区，起始地址+4变为12同时大小-4变为16。
 
@@ -115,7 +114,7 @@ categories:
 
 例如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201227202837.png)
+![](https://langwenchong.gitee.io/figure-bed/20201227202837.png)
 
 此时要回收进程4了，那么很明显回收区后面相邻连着空闲分区1，那么此时只需要将后面的空闲分区更新起始地址-4同时分区大小+4就好。这个是两个相邻的空闲分区的合并。
 
@@ -123,7 +122,7 @@ categories:
 
 例如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228092833.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228092833.png)
 
 进程3完成后回收，此时回收区与前面的2号空闲分区所以合并更新2号分区的分区大小+18=28即可，起始地址此时是不需要变得。
 
@@ -131,7 +130,7 @@ categories:
 
 如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228093040.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228093040.png)
 
 此时比较复杂，需要将回收区和后相邻分配去全部加入到前相邻分配区，此时如上面的进程4被回收，那么回收区+后相邻空闲区的总大小为14都加到前相邻空闲分配区1中，所以此时1号空闲分配区大小为34，同时起始地址还是不变，然后还要将后相邻空闲分区删除表项，即2号分区变为了原先的3号分区。
 
@@ -139,7 +138,7 @@ categories:
 
 如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228093435.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228093435.png)
 
 我们可以看到此时如果进程2回收，那么新的回收区就成为了一个新的最靠近低地址的空闲分区，所以加入一个新表项这里是1号分区大小为进程大小14，同时起始地址是28。
 
@@ -147,7 +146,7 @@ categories:
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228142557.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228142557.png)
 
 ### 动态分区分配算法
 
@@ -157,7 +156,7 @@ categories:
 
 顾名思义，该算法的思想就是每次都从低地址开始查找，找到第一个能满足大小的空闲分区。实现方法就是空闲分区以地址递增的次序排列，每次分配内存时顺序查找空闲分区链（或空闲分区表），找到大小满足要求的第一个空闲分区。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228094655.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228094655.png)
 
 那么很明显5号进程会放在1号空闲分区，6号进程会放到2号分区。这种算法没有什么问题，但是缺陷是可能前面有一个非常大的空闲分区可以放入很多很小的进程数据，但是后面有刚刚好可以放进该进程的大小的空闲分区，这样大的空闲分区会优先被使用，最终造成许多小的空闲分区，再来大的进程就放不下了。同时会导致许多小的空闲分区在低地址处排列，每次分配查找还要再经过这些分区，增加了查找的开销。
 
@@ -165,7 +164,7 @@ categories:
 
 算法思想是由于动态分区分配是一种连续分配方式，为各进程分配的空间必须是连续的一整片区域。因为为了保证当大进程到来时也能有连续的大片空间，可以尽可能多地留下大片的空闲区，所以优先使用更小的空闲区，这样就弥补了首次适应算法的缺点。实现方法是空闲分区按容量递增次序链接，每次分配内存时顺序查找空闲分区链（或空闲分区表）找到大小能满足要求的第一个空闲分区也就是最小的可以容纳该进程的空闲分区（符合人类思维，尽可能不浪费的多放）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228095238.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228095238.png)
 
 加入现在有一个进程6那么显然要放到2号分区这样2号分区就只剩下1MB了就要同时更新到表或链的最前面。我们发现这种方法的缺陷是每次都选更小的分区放最后只会导致很多外部碎片。
 
@@ -173,7 +172,7 @@ categories:
 
 又称最大适应算法，就是为了解决最佳适应算法的问题而产生的，为了避免留下太多的外部碎片，优先使用最大的连续空闲区，这样分配后剩下的空闲区就不会太小，更方便使用。实现也很简单就是按照容量递减次序排列，每次分配也是顺序查找找到大小能满足要求的第一个空闲分区。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228095722.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228095722.png)
 
 其实我们发现对于首次适应算法如果恰巧大的分区在前面，小的分区在后面，那么实际上就和最适应算法你一样了，所以最坏适应算法的缺陷就是大分区快速被消耗，再来大进程放不下了。
 
@@ -181,7 +180,7 @@ categories:
 
 弥补首次适应算法的查找开销大的缺陷，这个算法思想是每次都从上次查找结束的位置开始向两侧检索就能解决上述问题，哪侧先找到大小合适的就放下该进程，所以是双向链表。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228100222.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228100222.png)
 
 首次适应算法每次都要从头查找，每次都必须需要先检索低地址的小分区。但是这种规则决定了当低地址有更小的分区可以满足需求时，会更有可能用到低地址部分的小分区，也会有可能把高地址部分的大分区空闲出来，所以首次适应算法有可能会出现最坏适应算法的缺点即外部碎片多但同时也可能出现最佳适应算法的优点即合理利用空间。
 
@@ -200,7 +199,7 @@ categories:
 
 我们先看一个图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228101848.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228101848.png)
 
 我们可以看出此节我们就开始讲解非连续分配管理方式了，这里只是一种一个小部分而已。非连续分配就是为用户进程分配的可以是一些分散的内存空间。
 
@@ -208,7 +207,7 @@ categories:
 
 我们先回忆一下什么是地址空间，我们知道地址分为两种逻辑地址（相对地址）和物理地址（绝对地址）两者有一定的映射关系。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228102204.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228102204.png)
 
 但是我们发现这种存储只能连续存储，这很不方便，所以引出了分页存储的概念。
 
@@ -218,7 +217,7 @@ categories:
 
 将进程的逻辑地址空间也分为与页框大小相等的一个个部分，每个部分称为一个“页”或“页面”。每个页面也有一个编号，即“页号”，页号也是从0开始。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228142712.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228142712.png)
 
 操作系统以页框为单位为各个进程分配内存空间。进程的每个页面分别放入一个页框中。也就是说，进程的页面与内存的页框有一一对应的关系。各个页面不必连续存放，可以放到不相邻的各个页框中。
 
@@ -236,7 +235,7 @@ categories:
 
 每个进程都会被分为许多页面存放在许多同样数量的页框中，所以每个进程都要有一张的页表，所以页面一般存放在PCB中，所以页表会一直在内存中（毕竟PCB是一直在内存中）直至该进程销毁。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228103758.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228103758.png)
 
 所以一个进程对应一个页表，进程的每个页面对应一个页表项，每个页表项由“页号”和“块号”组成。页表记录着进程页面和实际存放的页框之间的映射关系。每个页表项的长度是相同的。
 
@@ -270,7 +269,7 @@ $$
 
 我们以一道例题来讲解：假设在某个计算机系统中，页面大小时50B，某进程逻辑地址空间大小为200B，则逻辑地址110对应的页号、页内偏移量是多少？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228142824.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228142824.png)
 
 页号=逻辑地址/页面长度（取除法的整数部分）
 
@@ -280,19 +279,19 @@ $$
 
 在计算机内部，地址用二进制表示，如果页面大小刚好是2的整数幂，则计算机硬件可以很快就把逻辑地址拆分成页号和页内偏移量，这样自然转换到物理地址也就更快了。如果是2的整数幂，那么假设每个页面的大小为2^K字节，那么用二进制表示逻辑地址时，逻辑地址01串的末尾K为就是页内偏移量，其余部分就是页号。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228135021.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228135021.png)
 
 我们可以看出页面大小为2^12B，所以末尾12位就是黑色部分就是页内偏移量，同时红色的20位就是页号了。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228135123.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228135123.png)
 
 这样我们可以就轻松的对逻辑地址进行拆分转换成物理地址了。又因为内存块的大小=页面大小，且块的起始地址就是页内偏移量为0的地址，所以各个块的地址可以表示为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228135307.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228135307.png)
 
 同样对于物理地址，假设现在我们通过查询页表得到1号页面存放在了9（1001）号内存块，那么
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228135456.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228135456.png)
 
 我们发现前面红色部分就是9的二进制串即内存块号
 
@@ -309,11 +308,11 @@ $$
 
 所以假设现在页面大小为4KB=2^12B=4096B。那么4097的页号就是1，页内偏移量为1，所以逻辑地址二进制串为
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228142918.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228142918.png)
 
 并且通过查表得知1号页面存放在9号页框，那么物理地址就是
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228140746.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228140746.png)
 
 总结：页面大小刚好是2的整数幂的好处就是
 
@@ -324,7 +323,7 @@ $$
 
 实际上通过上面的例题我们已经掌握了逻辑地址的结构和应用，这里再给出严格定义，分页存储管理的逻辑地址结构如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228141436.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228141436.png)
 
 地址结构包括两个部分：前一部分为页号P，后一部分为页内偏移量W。在上图所示的例子中，地址为32位，其中0\~11号为“页内偏移量”，或称“页内地址”，12\~31位为“页号”。
 
@@ -340,4 +339,4 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201228142245.png)
+![](https://langwenchong.gitee.io/figure-bed/20201228142245.png)

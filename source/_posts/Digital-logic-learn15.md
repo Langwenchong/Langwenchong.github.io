@@ -5,8 +5,7 @@ top: false
 date: 2021-06-10 18:53:48
 tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -28,7 +27,7 @@ categories:
 
 上面是我们将要实现的MIPS指令（后面我们将学到上面的这种指令分类是根据主译码模块的功能进行分类的）。接下来我们看一下每一个类型指令的功能：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610191537.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610191537.png)
 
 对于R-type类型指令op都是0，并且都对应有三个寄存器类型存储的操作数，并且格式都是
 
@@ -38,7 +37,7 @@ categories:
 
 这里实际上只有`slt`指令我们不太熟悉，他是一个比较两个源操作数大小的指令。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610191814.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610191814.png)
 
 L-type类型指令是立即数类型指令，他的特定是有一个源操作数为立即数常数，我们要注意此时op不再是全0并且形式为：
 
@@ -71,13 +70,13 @@ J-type类型指令就是地址跳转指令，实现起来比较简单。
 
 ##### MIPS32位处理器的概念模型
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610192947.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610192947.png)
 
 我们简单的来认识一下上面的概念模型的运行方式，首先我们根据指令，对输入信号进行操作，他可能会需要到其他操作数的帮助，因此我们需要从现态的记忆部件中取出需要的信息，然后进行组合逻辑的运算（实际上就是指令控制着数据的处理），指令在一个时钟周期内完成信息的处理后会产生输出数据，此时我们需要将这个新的输出数据存储起来也就是改变了记忆部件的状态，因此也就是现态，同时我们还需要进行输出信号。因此上图实际上可以看成就是一个`取数据`->`处理数据`->`存放数据`的过程，这其中涉及到了组合逻辑电路和时序逻辑电路的合作使用。
 
 ##### 记忆部件
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610193545.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610193545.png)
 
 分别是存储地址的程序计数器，存储指令的内存块，寄存器以及存储数据内存块他们都是cpu内部的核心部件，需要受到clk时钟周期控制。
 
@@ -89,27 +88,27 @@ J-type类型指令就是地址跳转指令，实现起来比较简单。
 
 ###### **数据通路——LW**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610194549.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610194549.png)
 
 此时我们从程序计数器中读出下一个指令的地址，然后到存储指令的存储块中取出指令。我们知道一个指令在MIPS32中也是32位的，但是也可以使用8位16进制码来表示。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610194745.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610194745.png)
 
 这里我们假设的不是J型指令而是I型指令，因此25:21这六位是对应的rs，我们将指令的这六位地址传进去即可获得源操作数rs的值，接下来我们还需要取立即数操作数：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610195210.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610195210.png)
 
 取得立即数后我们得到只是一个16位的，我们需要对齐进行符号扩展为32位立即数
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610195322.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610195322.png)
 
 然后我们进行数据的处理，因此将两个源操作数传入到ALU中，同时我们需要告诉ALU进行那种类型的计算，因此传入ALUcontrol信号（实际上这个是由数值计算的指令来操控）。然后这里假设传入的是010，代表是加法，因此ALU此时进行加法，然后要注意我们得到的结果是要到存储数据的内存块中的地址，然后我们将计算结果传送到内存块地址接受端口即可得到我们最终要找到的数。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610200327.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610200327.png)
 
 然后我们将从内存中读出的数据放到寄存器中以便使用，因此使用A3（接受要存放的地址位置）跟WD3（要存入的具体32位数值）端口接受要写入寄存器的数据。我们要注意从存储数据内存块处得到的数据是放到指令的rt目的操作数处，因此我们在写入寄存器时，传进去的是I型指令的20:16区域。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610200721.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610200721.png)
 
 然后我们要进行程序计数器的更新，说来也简单，就是将PC加4就可以得到下一个指令的地址了😃。
 
@@ -119,19 +118,19 @@ J-type类型指令就是地址跳转指令，实现起来比较简单。
 
 ###### 数据通路——SW
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610202112.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610202112.png)
 
 因此我们此时是将寄存器读出的数据写入到数据内存中，我们先用20:16目的操作数地址传进去读出这个目的操作数，然后写入到数据内存中（使用WD接受这个数，同时写使能端要为1代表此时内存可写入数据）。前面的过程都不变，还是可能需要LW的操作来将所需要的数据首先保证存储到了寄存器中。
 
 ###### 数据通路——R型指令
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210610203412.png)
+![](https://langwenchong.gitee.io/figure-bed/20210610203412.png)
 
 之前我们所学习的指令是LOAD指令加载一个内存中的数到寄存器或者SAVE指令集将寄存器中的一个数写回到内存中，现在我们要学习一个更加复杂的R型指令，他是将立即数与源操作数或者两个源操作数进行数值计算处理的结果存储到目的操作数寄存器中，因此我们此时需要先获得源操作数，由于我们可能只需要一个或者2个寄存器存储的操作数，然后在进行计算，我们可能会使用一个从寄存器中取出的源操作数与立即数进行ALU计算或者两个从寄存器中取出的源操作数进行数值计算，因此由ALUSrc来决定（首先有一个寄存器操作数由RD1连接的SrcA给出，另一个是使用RD2的寄存器操作数充当SrcB还是使用立即数来作为SrcB由AluSrc决定）。然后我们最终得到的结果并不是内存地址了，而是一个确切的结果数值了，我们决定是否需要将它写回到寄存器中，因此由MemtoReg来决定，如果需要我们再将数值写回到寄存器中，这需要RegDst来决定使用哪个寄存器地址段（RS还是RT？）来存储这个结果数。最后如果我们需要内存存储这个结果数，还需要通过RD2连接的WriteData线进行写内存的操作来存储结果数到内存中。我们思考一下整个的过程，一个R型指令需要两个源操作数首先存在于寄存器中，如果不存在很明显我们需要在前面的步骤中先使用LW将源操作数数据取出放入到寄存器中，因此在R指令中的数据通路也会涉及到LW的过程，而SW也是有可能的，因为很可能最终寄存器存储的结果数值需要写入数据存储块中存储，这就是一个完整的R型指令可能涉及到的所有数据通路。
 
 ###### 数据通路——BEQ指令
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611101657.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611101657.png)
 
 上面的BCQ指令是根据是否满足条件进行跳转，因此首先我们需要判断是否满足条件，通过branch控制的与aluzero标志位（结果为0是zero为1）取与操作得到的结果作为是否满足条件的判断结果（当rs与rt值相等时满足条件），只有在满足条件即PCSrc为1时才会进行跳转，那么具体跳转到哪里，是由下面的通路给出的，他是用一个立即数偏移量来决定的，最终的跳转的指令地址为：
 $$
@@ -147,11 +146,11 @@ $$
 
 根据上面的MIPS概念图，我们还没有加入控制通路，即需要连接控制单元使得他可以控制我们之前连接起来的记忆组件。如下图我们加入控制单元形成控制通路：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611103309.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611103309.png)
 
 ###### 控制单元
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611103529.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611103529.png)
 
 上面的控制单元又可以拆分成主解码模块，另一个是ALU解码模块，主解码模块输入的是指令的opcode，主解码模块来识别具体是哪一种类型以便控制分配任务。对于R型指令有许多不同的数值计算功能，因此此时需要ALU解码模块来根据FUNC5:0来解码具体的数值ALU计算功能并分配ALUcontrol信号，当然alu解码模块还受到主解码模块的信号控制。
 
@@ -199,7 +198,7 @@ addi指令和lw相比只是没有内存取出的数加入到寄存器的功能�
 
 ###### J型指令数据通路
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611105653.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611105653.png)
 
 我们前面已经学些了跳转指令的工作过程了，他的跳转计算公式就是：
 $$
@@ -222,13 +221,13 @@ $$
 
 ###### J指令主译码控制信号
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611110625.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611110625.png)
 
 由于J型指令也是单独的一类指令，因此也需要单独分配一个opcode
 
 #### 单周期处理器的性能分析
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611110931.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611110931.png)
 
 表示的是一个程序的时间，它是由以下公式原理给出的：
 $$
@@ -236,7 +235,7 @@ $$
 $$
 我们知道一个程序运行的有效时间是由其关键路径决定的也就是运行时间开销最长的通路，如下图是我们设计出的MIPS处理器的关键路径：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611111259.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611111259.png)
 
 我们可以给出单周期处理器的关键路径时间：
 $$
@@ -256,4 +255,4 @@ $$
 
 如下图是部分给出的参数，请给出具体的关键路径的计算公式并计算处结果：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210611112106.png)
+![](https://langwenchong.gitee.io/figure-bed/20210611112106.png)

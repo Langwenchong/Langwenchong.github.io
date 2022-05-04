@@ -3,10 +3,9 @@ title: 操作系统笔记--Part21
 comments: false
 top: false
 date: 2021-01-18 12:24:43
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -15,7 +14,7 @@ categories:
 
 ### I/O软件层次结构
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118122810.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118122810.png)
 
 从上图我们可以从总体上看出一个I/O设备相应请求时的全过程，分别经过了以下几个过程。
 
@@ -41,7 +40,7 @@ windows操作系统会向外提供一系列系统调用，但是由于系统调�
 
 6. 建立逻辑设备名到物理设备名的映射关系，根据设备类型选择调用相应的驱动程序。用户和用户层软件发出I/O操作相关系统调用的时，需要指明此次要操作的I/O设备的逻辑设备名。设备独立性软件通过“逻辑设备表（LUT，Logical Unit Table）”来确定逻辑设备对应的物理设备，并且找到该设备对应的设备驱动程序。
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118124019.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210118124019.png)
 
    操作系统可以采用两种方式管理逻辑设备表LUT：
 
@@ -61,11 +60,11 @@ windows操作系统会向外提供一系列系统调用，但是由于系统调�
 
 当I/O任务完成后，I/O控制器会发送一个中断信号，系统会根据中断信号类型找到相对应的中断处理程序并执行。中断处理程序的流程如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118125516.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118125516.png)
 
 所以我们以一个I/O请求任务为例分别经过一下啊几个阶段才能够完成这次任务相应：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118125709.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118125709.png)
 
 1. 用户通过用户层软件提供的库函数发出的I/O请求
 2. 用户层软件通过“系统调用”请求设备独立性软件层的服务
@@ -74,13 +73,13 @@ windows操作系统会向外提供一系列系统调用，但是由于系统调�
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118125923.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118125923.png)
 
 I/O软件各个层次之间的顺序要理解，要能够推理判断出某个处理属于哪个层次，通常直接涉及到硬件具体细节。且和中断无关的操作肯定是在设备驱动程序层完成的，没有涉及到硬件。对各个设备都需要进行的管理工作都是在设备独立性软件层完成的。
 
 ### I/O核心子系统
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118130207.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118130207.png)
 
 I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及到了调度，设备保护还有互斥等问题，下面就详细介绍这几种功能的具体实现
 
@@ -88,7 +87,7 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 
 我们知道这些功能都是由I/O核心子系统实现的，并且I/O核心子系统是由设备独立性软件、设备驱动程序、中断处理程序三个层次组成的，所以理论上这些功能肯定都是属于这三个层次。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118130455.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118130455.png)
 
 但是实际上假脱机技术即SPOOLING技术（前面讲过是一种解决死锁的方法，即让个进程都产生这个临界区是自己的从而实现临界资源共享打破互斥条件来解决死锁）需要请求“磁盘设备”的设备独立性软件的服务，因此一般来说假脱机技术是在用户软件成实现的，但是408大纲又将假脱机技术归为了“I/O核心子系统”的功能，所以这里我们也认为假脱机技术是I/O核心子系统的功能。
 
@@ -102,7 +101,7 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118131531.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118131531.png)
 
 这里只是介绍了部分简单的功能，下面将逐一介绍比较复杂的功能。
 
@@ -112,19 +111,19 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 
 在手工操作阶段主机直接从I/O设备获得数据，由于设备速度慢，主机速度快，人际速度矛盾明显，主机需要浪费很多时间来等待设备。而在批处理阶段，就引入了假脱机技术，缓解了cpu与慢速I/O设备之间的速度矛盾，另一方面，即使cpu在忙碌，也可以提前将数据输入到磁带，技术速度慢的输出设备正在忙碌，也可以提前将数据输出到磁带。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118131944.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118131944.png)
 
 #### 输入井和输出井
 
 假脱机技术又称为"SPOOLING技术"，使用软件方式模拟脱机技术，SPOOLING系统的组成如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118132142.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118132142.png)
 
 这样主机就不在需要长时间等待输入了，而是直接从磁盘即输入井中拿取数据，而慢速的技术输入就是将数据放入到磁盘中，这样就类似于吃自助餐，服务员（用户层软件）将数据直接提前放到餐台（磁盘）上，而餐客（设备）需要数据时就直接从餐台上拿取相应的数据了，输出亦是如此，这样就减少了长时间的数据等待时间了。
 
 #### 输入/输出缓冲区
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118132558.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118132558.png)
 
 实际上就是上面所讲的餐台。
 
@@ -132,13 +131,13 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 
 这个就是我们之前讲的实现数据区共享以防止死锁的技术应用。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118132654.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118132654.png)
 
 独占式设备：只允许各个进程串行使用设备，一段时间内只可以满足一个进程的请求。
 
 共享设备：允许多个进程“同时”使用设备（宏观上是同时使用，实际上微观上是交替使用，即并发使用）可以满足多个进程的使用请求。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118133111.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118133111.png)
 
 当多个用户进程提出要输出打印的请求时，系统会答应他们的请求，但是并不是真正把打印机分配给他们，而是由假脱机管理进程为每个进程做两件事：
 
@@ -150,13 +149,13 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118133727.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118133727.png)
 
 ### 设备的分配与回收
 
 #### 设备分配时应考虑的因素
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118133855.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118133855.png)
 
 设备的固有属性可以分为三种：
 
@@ -179,31 +178,31 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 
 #### 设备分配管理中的数据结构
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118134748.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118134748.png)
 
 一个管道可以控制多个设备控制器，每个设备控制器可以控制多个设备。其中每个层次都会有自己的信息表如下：
 
 ##### 设备控制表（DCT）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118134916.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118134916.png)
 
 在进程管理中我们知道系统会根据阻塞原因的不同，将进程PCB挂到不同的阻塞队列中。因此设备队列的队首指针指向的一定是因为等待这个设备而导致阻塞的PCB队列。
 
 ##### 控制器控制表（COCT）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118135136.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118135136.png)
 
 每个设备控制器都会对应着一张COCT，操作系统会根据COCT的信息对控制器进行操作和管理。
 
 ##### 通道控制表（CHCT）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118135255.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118135255.png)
 
 每一个通道也都会对应着一个CHCT，操作系统会根据CHCT的信息对通道进行操作和管理。
 
 ##### 系统设备表（SDT）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118135402.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118135402.png)
 
 记录了系统中全部设备的情况，每一个设备对应一个表目。
 
@@ -227,11 +226,11 @@ I/O核心子系统是属于操作系统内核的一部分，所以肯定涉及�
 3. 根据DCT找到COCT，若控制器忙碌则将进程PCB挂到控制器等待队列，不忙碌则将控制器分配给进程。
 4. 根据COCT找到CHCT，若通道忙碌则将进程PCB挂到控制器等待队列，不忙碌则将通道分配给进程。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118140310.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118140310.png)
 
 逻辑设备表LUT建立了逻辑设备名和物理设备名之间的映射关系，当某个用户进程第一次使用设备时使用逻辑设备名向操作系统发出请求，操作系统会根据用户进程指定的设备类型（逻辑设备名）查找系统设备表，找到一个空闲设备分配给进程，并在LUT中增加相应表项。如果之后用户进程再次通过相同的逻辑设备名请求使用设备，则操作系统会通过LUT表即可知道用户进程实际要使用的是哪个物理设备了，并且也能知道该设备的驱动程序入口地址了。但是我们前面也讨论过：如果整个系统就一张LUT，那么各个用户所使用的逻辑设备名不允许重复，适用于单用户操作系统，而每个用户都拥有一种LUT，那么不同用户的设备逻辑名可以重复，使用于多用户操作系统。
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210118140838.png)
+![](https://langwenchong.gitee.io/figure-bed/20210118140838.png)
 

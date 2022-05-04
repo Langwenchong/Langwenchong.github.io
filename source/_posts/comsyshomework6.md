@@ -3,10 +3,10 @@ title: 计算机系统基础大作业--nemu(pa2)编写
 comments: false
 top: false
 date: 2020-11-19 20:04:44
-tags: [计算机系统基础,C++,大作业,nemu,pa2,linux]
+tags: [机组原理,c++,nemu,linux]
 categories: 
-	- [项目总结,计算机系统大作业]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163146.png
+	- [知识分享,项目总结]
+headimg: https://langwenchong.gitee.io/figure-bed/20210704163146.png
 ---
 
 本次实验包含如下五个阶段：
@@ -43,25 +43,25 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163146.png
 
 首先参考手册知道，这里是要补充实现指令功能，并且在opcode中对应位置填写相对应的函数名字来实现函数调用。其中程序每次都会在第一次无法识别指令调用相应的函数时返回指令的地址，我们就是要在这里返回的位置填写函数名并补充指令功能，我们以下面这个为例：
 
-![](https://pic.downk.cc/item/5fb66163b18d627113afc095.jpg)
+![](https://pic.imgdb.cn/item/5fb66163b18d627113afc095.jpg)
 
 可以看到停在了mov-c的0x10000a中的e8 06….这行指令处，所以程序无法识别e8处的代码，打开汇编得到的mov-c.txt查看e8处的指令得知
 
-![](https://pic.downk.cc/item/5fb66176b18d627113afc74c.jpg)
+![](https://pic.imgdb.cn/item/5fb66176b18d627113afc74c.jpg)
 
 是call指令无法识别运行相对应的函数功能，所以接下来就是要实现call指令的功能，首先我们先查看手册的必做任务2可以看到手册对指令的功能进行了分类，对应着cpu/exec下的几个子文件夹，但是却没有存储Control Transfer Instructions类型指令的文件夹所以这里我们新建文件夹命名为con-trans用来存储，然后根据手册和参考data-mov已给出的mov指令实现的方法可知我们要新建三个文件cal.h,call.c,和call-template.h三个文件。其中三个文件的形式仿照Mov指令对应的三个文件写就好，其中.c文件中的DATA_BYTE根据指令的类型命名2-3次用来宏定义对应的字节的指令，call-template.h文件中写指令的功能实现，不同的指令有不同的功能，如果不知道实现思路可以查看i386手册和百度，这里以call指令为例，其中call指令是跳转地址功能，在实现功能时也是参考mov-template.h格式来编写，这里Instr就要改为call了，然后这里功能实现函数可以用make_helper和do_excute()两种方法都可以，如果指令形式和功能区别不大，可以用make_helper()来实现，函数第一个参数是指令公共名称部分，后面的suffix是后缀，这样通过concat（）拼接实现功能较为高效，当然如果功能区别较大用do_execute实现更好，这里我贴出两张不同的函数实现方法
 
-![](https://pic.downk.cc/item/5fb661ccb18d627113aff3aa.jpg)
+![](https://pic.imgdb.cn/item/5fb661ccb18d627113aff3aa.jpg)
 
 这张是用make_helper函数实现call指令的方法
 
-![](https://pic.downk.cc/item/5fb661dfb18d627113b00975.jpg)
+![](https://pic.imgdb.cn/item/5fb661dfb18d627113b00975.jpg)
 
 这张是用do_execute函数实现Jmp指令的方法，实现功能后要记得在all-instr.h文件中引入.h文件，然后还要在exec.c中的相应位置填写调用的函数名字，这里e8处要填xx*x*x形式的名字，其中根据不同类型的指令后缀一定要填写正确，否则会出现bad_trap（）结果不正确的报错或者地址偏移等Bug，这里还要提示部分指令并不是填在opcode里，有些地址处是一个数组类似group_sv等需要在前面的数组处填写相对应的函数名，如果上述全部实现正确就可以再次运行.c文件，此时应该会出现下一个无法识别指令的地址，当全部无法识别地址处指令（例如必做任务1里要求的ret,call,pop,push等指令）功能全部实现完时会出现hit good trap提示次c文件运行成功，即完成任务。这里还有几处重要点做提示：
 1、jcc等指令并非值得一条指令，而是一类指令，所以遇到jmp,jne.ja等不要认为是错误的，他们都属于jcc类跳转指令，只是根据不同的判断条件才触发
 2、那么如何判断条件呢，这里是根据cpu标志位的不同而触发不同的跳转指令，查看log.txt不难发现每次jcc指令前都会有cmp,test等指令，这些指令会进行相应的逻辑数学运算结果会修改cpu中eflags的标志位从而提供跳转指令判断条件，所以这里实现jcc时要先实现efalgs，结果看手册，每一个标志位都有不同的功能表现(查看博客，百度等)，这里构建时要注意不需要声明的标志位一定要匿名空出，具体实现如下（在cpu/reg.h中构建，因为这个是cpu功能之一）
 
-![](https://pic.downk.cc/item/5fb6622eb18d627113b01e4b.jpg)
+![](https://pic.imgdb.cn/item/5fb6622eb18d627113b01e4b.jpg)
 
 3.一定要记住在每一个指令功能实现的函数结尾调动print_asm（）函数来输出指令调用过程，这样才会在Log.txt处显示你自己编写的指令调用过程！以便于后期调试，如果需要编写自己的打印函数可以再nemu/include/cpu/helper.h中定义即可
 4.写函数功能之前多看引用文件中的函数，会发现许多复杂功能函数已经提前写好，直接调用即可，比如读取地址时用pa1提供的swaddr_write()函数即可，偏移量声明用DATA_TYPE_S等，这些具体的数据类型如uint32_t,uint8_t等在operand.h文件中已经写好，还有MAB()函数，reg_l，REG等函数，熟悉掌握以后再动手编程可以事半功倍（血与泪的教训）。
@@ -71,29 +71,29 @@ headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210704163146.png
 
 必做任务2是必做任务1的延伸，但是难度却要大太多，主要是指令过于繁多不好调试。必做任务1总结就是完成了对mov-c.c文件边运行中所有无法识别的指令进行了功能构建，而必做任务2就是多次测试大量的.c文件以达到基本实现所有语句指令全覆盖识别和执行，所以在testcase/src下可以看到有将近20个.c文件，其中quick-sort.c,bubble-sort.c,shuixianhua.c都是非常熟悉的C文件，其中包含了大量的逻辑数学，数据一定，地址跳转等指令，我们只需在Makefile中将mov-c依次改为下列.c文件然后分别如必做任务1那样填写opcode表和编写指令文件并链接即可，其中下划线的指令需要我们自己实现，而蓝色标记的已经将模板大致写好了，直接在opcode中引用即可，但是要注意有时会遇到please implete me警告，这句警告是在告诉我们需要到相对应的.h文件中进行更新eflags标志位更新的操作。当遇到bad trap或者物理内存超限时记住一定是代码错误，可以注意相对应的逻辑或数学指令功能函数是否存在错误或者也可能是Opcode相对应位置处的位置函数引用错误，这里还要注意repnz函数（在string.c）中，他是一个重复执行其后面的指令，直至查找到一样的内容，说明匹配到想要查找的内容（具体可以搜索功能）。当填入这个指令后会出现物理地址800000超限的报错，这里并未出现具体的提示如please implete me，但是这里需要在repnz文件中相应注释的位置进行内容完善。且一定要按照手册提示顺序进行检验，这样才不会出现疯狂报错的情况，因为.c文件越往后难度越大，未识别的指令越多，并且当一直无法找到bug时可以借用set_bp()和pa1简单调试期进行排查，只需在.c相应位置插入set_bp()函数，然后再次执行就会听到断点处，通过Info即可查看寄存器，指针等状态信息。当所有要求的测试文件全部顺利通关后基本上保证了指令集有了基本的完整性，为了完善其健壮性，可以自己编写样例进行测试，这里只需要编写一些基础算法题的c文件进行测试即可，基本上都可以实现good trap。这里放出一张成功运行hello-str的图片，当不是上图结果都是运行错误。
 
-![](https://pic.downk.cc/item/5fb662bdb18d627113b0445c.jpg)
+![](https://pic.imgdb.cn/item/5fb662bdb18d627113b0445c.jpg)
 
 #### 必做任务3
 
 必做任务3是模拟浮点数实现，只有实现这个功能以后才可以执行设计浮点数的.c文件的执行。我们只需要对照手册的思路在FLOAT.c文件中进行模拟编写计算即可，这里有一点提示即进行正负数乘除相关计算结果的问题，我们可以用sign变量来表示决定结果的正负，默认为整数，所以初始值为1，当有一个负数时sign置为就取相反数即可轻松实现结果正负的问题。编写完FLOAT.c文件后需要引入函数，这里实验要求编写Makefile文件来实现编译，查看网上Makefile文件的介绍和相关基础语法教程即可编写，通过学习可以得知Makefile是一种可以整体模块化加入编译库选项以达到避免修改和引入大量库文件的自动编译文件，其中手册里提到的-O2 -m32都是一些必加参数，还有为选做2准备编译时需要加入的-fno-builtin和-fno-stack-protector参数否则后面选做任务2会报“xxx”未引用的错误，参考kernel文件夹下的Makefile和工程目录下的文件夹可以仿照其方式编写，先声明一个参量CFLAGS来包含这些选项，最后在调用这个参量即可加入所有的编译选项，并且要注意应该是在obj/lib-common/FLOAT文件夹写生成.o文件，而不是手册里写的lib-common文件夹，因为testcase/src下的已经编写好的Makefile.part文件中读取时是调用的FLOAT文件下的文件，否则会在后面报错。如果编写无误后，在工程目录下的Makefile中将相应位置处的语句加上后即可在obj/lib-common/FLOAT内见到两个.o文件各FLOAT.a文件，最后在执行integral 和 quadratic-eq的指令识别和功能实现函数即完成了必做任务3。这里也贴出完胜后的图：
 
-![](https://pic.downk.cc/item/5fb662ebb18d627113b05118.jpg)
+![](https://pic.imgdb.cn/item/5fb662ebb18d627113b05118.jpg)
 
 #### 必做任务4
 
 简易调试器很熟悉，就是pa1中的那个必做任务2，其中这里是再次实现一个新功能，即输出数组相应元素的地址，也就是打印参量的值，所以需要在expr.c中实现功能，这里需要更改标志识别和计算功能，所以用正则表达式匹配一个新的类型varialbe参量类型，仿照test_case可以知道匹配规则是字母，数字和下划线组成，匹配成功后则需要初始化其初始数组来存放元素，这里因为加入了新的variable类型，所以一定要记得对原先的两种特判判断条件中加入variable以防出现一种表达式出现两种类型标记歧义现象（坑点）：
 
-![](https://pic.downk.cc/item/5fb66312b18d627113b05b83.jpg)
+![](https://pic.imgdb.cn/item/5fb66312b18d627113b05b83.jpg)
 
 然后就是实现输出地址，这里要自定义一个新函数来读取参量值，在elf.c中定义即可，然后在通过头文件中引入了这个函数，但是要注意一定要在expr.c中声明这个函数才可以使用，在elf.c定义的函数中即完成计算相对偏移后的物理地址位置输出即可。成功后输出如手册，但是地址可能略有不同，但差距不大。
 
-![](https://pic.downk.cc/item/5fb66337b18d627113b063a0.jpg)
+![](https://pic.imgdb.cn/item/5fb66337b18d627113b063a0.jpg)
 
 #### 选做任务1
 
 思路大体上与数据结构中打印链表的方法类似，首先我们要在cmd_help中加入一条新的帮助指令然后调用自己编写的cmd_bt函数来实现具体的操作，仍然需要在elf.c中实现获取函数名和参数地址的函数然后在ui.c中声明后使用，并且每次只需打印四个参数即可，函数编写完成后再add.c中的add()函数内打断点set_bp()后，即可查看是否成功输出断点信息，成功后如下，输出形式可能不同：
 
-![](https://pic.downk.cc/item/5fb66680b18d627113b14718.jpg)
+![](https://pic.imgdb.cn/item/5fb66680b18d627113b14718.jpg)
 
 #### 必做任务5
 

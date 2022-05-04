@@ -3,10 +3,9 @@ title: Java学习笔记-第十三讲
 comments: false
 top: false
 date: 2021-04-11 16:20:15
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -17,11 +16,11 @@ categories:
 
 Socket通信是一种广泛应用的通信方式，他可以通过java实现，这里我们详细学习一下。首先我们要知道Socket编程是一种端到端的通信，他是在客户端和服务端两个端程序中通过socket建立连接来进行实时的数据通信的。我们查看sokcet英文翻译有插头的意思，因此我们可以理解为两个端程序个拥有一个socket插头，他们通过插头将通信数据放到管道上然后实现数据交换，因此socket承担了数据通信，类似于“桥梁”的作用，这里我们以一张图来说明：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415170729.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415170729.png)
 
 因此我们不难看出Serever服务端运行着一个连接请求监视器，永远是客户端发起连接请求，然后服务端发现连接请求后相应和Client建立通信管道，然后双方开始进行数据通信，其中socket承担着“入口”和“桥梁”的作用，来传送数据流。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415170934.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415170934.png)
 
 对于客户端，他的输出流就是服务端的输入流，而服务端的输出流就是客户端的输入流。因此客户端通过OutputStream将要写入服务端的数据传送，然后服务端通过InputStream接受并进行数据的更新。同时客户端通过OutputStream将要返还给客户端的信息进行发送，然后客户端通过InputStream接受到数据进行更新。最终当通信完成以后，两个端程序都要关闭Socket插口从而终止连接。这就是一次Socket通信的全过程。因此Socket通信步骤是：
 
@@ -106,7 +105,7 @@ public class SocketScan {
 
 最终的控制台结果为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415173848.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415173848.png)
 
 我们可以看到最终coonet被拒绝了，即服务端可以拒绝与客户端接入，那么此时服务端由于调用了获取服务端的信息方法并且返还错误因此抛出异常，也自然就不会输出地址了上面的代码是客户端监视检查服务端各个端口状态的代码。
 
@@ -157,11 +156,11 @@ public ServerSocket(int port,int backlog)
 
 **客户端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415192117.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415192117.png)
 
 **服务端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415192202.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415192202.png)
 
 同时我们看到在客户端代码中定义端口号是config.port，这里我们查看一下config文件中的信息：
 
@@ -175,7 +174,7 @@ public class Config {
 
 因此当建立连接成功后，会在端口5555进行数据通讯，接下来我们分别开启两个命令创启动两个端程序。我们观察上面的代码，不难看出客户端会向服务端发送10个数0~9，因此当我们先启动服务端以后服务端并不会有任何数据接收，直至客户端启动以后，两个端程序的socket实例都创建成功以后，客户端会先将数据通过OutputStream输出到socket中，然后socket将数据传送到服务端，服务端的serversocket(这里实例名称为server)接收到数据，显示数字。因此两个命令窗的显示情况如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415192650.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415192650.png)
 
 我们注意到服务端会说出和客户端相同的数字，并且我们要注意命令窗的语句打印顺序为：
 
@@ -191,11 +190,11 @@ public class Config {
 
 **客户端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415193022.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415193022.png)
 
 **服务端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415193049.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415193049.png)
 
 {% note info, 
 
@@ -205,17 +204,17 @@ public class Config {
 
 最终两个端程序的命令窗打印的结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415193313.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415193313.png)
 
 ###### 思考：客户端和服务端启动的先后？
 
 为了验证服务端只有监视接收到客户端的连接请求后才会打印客户端的数字，我们只启动服务端，发现此时服务端没有任何语句输出，只是等待链接：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415193450.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415193450.png)
 
 并且还要注意我们必须先启动服务端保证服务端随时等待客户端的连接，如果我们先启动客户端而未启动服务端，那么客户端会发现连接失败，即未发现连接地址有服务端口，如下我们启动客户端：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415193622.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415193622.png)
 
 因此我们知道客户端必须先启动暴露给客户端，这样客户端才能向服务端发送请求，同时服务端随时监视等待客户端的链接请求，一旦发现会立刻相应连接。
 
@@ -229,19 +228,19 @@ public class Config {
 
 **客户端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415195151.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415195151.png)
 
 **服务端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415195216.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415195216.png)
 
 我们可以看出客户端为每一个客户分配了一个server线程，所以ServerThread如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415195310.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415195310.png)
 
 假设此时我们传入了两个客户Client1和Client2并且Client1先与服务端建立连接。这样最终的运行结果如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415194742.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415194742.png)
 
 我们发现在为客户端1进行服务的同时服务端有与客户端2建立了连接，因此此时服务端和多个客户端进行了连接，这更加符合现实生活中的CS通讯模型。
 
@@ -251,7 +250,7 @@ public class Config {
 
 **客户端**
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415200215.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415200215.png)
 
 **服务端**
 
@@ -336,7 +335,7 @@ public class HTTPServer {
 
 然后我们看一下结果，最终客户端等待了2s以后得到了服务端相应的前端代码（很神奇），我这里编码有点问题出现了乱码：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210415200507.png)
+![](https://langwenchong.gitee.io/figure-bed/20210415200507.png)
 
 #### 总结
 

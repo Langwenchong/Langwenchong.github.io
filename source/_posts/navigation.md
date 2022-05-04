@@ -3,10 +3,10 @@ title: hexo百宝箱搭建攻略
 comments: false
 top: false
 date: 2021-07-16 11:00:43
-tags: [前端,百宝箱,hexo]
+tags: [百宝箱,hexo]
 categories: 
-	- [教程,hexo美化]
-headimg: https://gitee.com/Langwenchong/figure-bed/raw/master/20210716145137.png
+	- [知识分享,魔改攻略]
+headimg: https://langwenchong.gitee.io/figure-bed/20210716145137.png
 
 ---
 
@@ -18,9 +18,9 @@ hello~今天带来一期百宝箱的制作教程，在日常生活中我们经�
 
 下图是我建立的百宝箱小站，你可以点击这里快速跳转查看demo:
 
-{% link 雨中的百宝箱,https://wenchong.space/navigation/#, %}
+{% link 雨中的百宝箱,https://coolchong.cn/navigation/#, %}
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/QQ图片20210716111527.png)
+![](https://langwenchong.gitee.io/figure-bed/QQ图片20210716111527.png)
 
 ### 百宝箱介绍
 
@@ -69,11 +69,11 @@ git clone https://github.com/HCLonely/hexo-theme-webstack.git
 
 下载完成后navigation下的文件应该与下图一致：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/P4O96[}00UI[UFKDVGTTCW2.png)
+![](https://langwenchong.gitee.io/figure-bed/P4O96[}00UI[UFKDVGTTCW2.png)
 
 如果有多余的文件删除即可。我们打开当前中的_config.yml文件滑动至最下方修改一下使用的主题:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/`B]C43H]L{@E7B`[G`A}B@T.png)
+![](https://langwenchong.gitee.io/figure-bed/`B]C43H]L{@E7B`[G`A}B@T.png)
 
 然后我们再在这里右键点击`git bash here`打开命令窗输入`hexo cl && hexo g&& heso s`后在端口`localhost://4000`上即可看到本地预览的效果，但是此时我们发现里面的内容还是空的，链接都没有，因为这需要我们自己添加，同时此时的个人信息还不是自己的，关于页面也还没有建立。我们需要参考配置文档进行配置，这里给出配置文档，我们只需要像往常魔改自己的hexo博客那样按照文档在_config.yml中进行配置即可：
 
@@ -87,13 +87,13 @@ git clone https://github.com/HCLonely/hexo-theme-webstack.git
 
 这个东西...没啥用，而且总是跳转到空白界面，很烦所以将它去除，我们打开navigation/themes/layout/index.ejs文件将16-27行注释掉即可：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210716114155.png)
+![](https://langwenchong.gitee.io/figure-bed/20210716114155.png)
 
 #### 左侧栏去除无用的x轴和y轴滑动条
 
-实际上这个滑动条是有用的，开发者考虑到我们在创建一个网址专栏时可能会有多个自专栏，因此当自专栏过多时是会用到滑动条的，但是他实在是不美观了，因此我将左侧的x与y轴滑动条强制删除了，这样修改的**前提是我们必须保证每一个专栏最多只能有5个子专栏**如下图：
+实际上这个滑动条是有用的，开发者考虑到我们在创建一个网址专栏时可能会有多个子专栏，因此当子专栏过多时是会用到滑动条的，但是他实在是不美观，因此我将左侧的x与y轴滑动条强制删除了，这样修改的**前提是我们必须保证每一个专栏最多只能有5个子专栏**如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/$3K@$]XM95UH3H9[GUZ[@HX.png)
+![](https://langwenchong.gitee.io/figure-bed/$3K@$]XM95UH3H9[GUZ[@HX.png)
 
 那么修改的方法也很简单，我们打开navigation/themes/webstack/source/css/hclonely.css在最下面加入如下代码即可：
 
@@ -126,7 +126,7 @@ body.night .box2:hover {
 
 修改后效果如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210716115320.png)
+![](https://langwenchong.gitee.io/figure-bed/20210716115320.png)
 
 #### 明亮模式下新增circleMagic从上到下掉落彩色气泡的特效
 
@@ -217,7 +217,7 @@ body.night::-webkit-scrollbar-thumb {
 
 默认返回顶部实在是丑陋无比，所以我花钱引入了哆啦A梦先生来管理返回顶部的功能，同时他也可以吸引顾客的眼球😏。我们需要先打开layout/common/footer.ejs文件，修改以下代码如图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/67NXYD[P3X38DFVH[62_C4L.png)
+![](https://langwenchong.gitee.io/figure-bed/67NXYD[P3X38DFVH[62_C4L.png)
 
 然后我们再在hclonely.css中加入如下代码：
 
@@ -249,7 +249,7 @@ body.night,
 body.night #body {
   position: relative;
   /* background-color: #2c2e2f !important; */
-  background-image: url('https://gitee.com/Langwenchong/figure-bed/raw/master/044.jpg');
+  background-image: url('https://langwenchong.gitee.io/figure-bed/044.jpg');
   background-size: cover;
   background-attachment: fixed;
   color: #a9a9a9 !important;
@@ -269,7 +269,7 @@ body.night .main-content {
 
 我就在以更简单直接的方法介绍一下我们怎样将navigation部署为博客的一个子页，我们首先需要修改navigation文件夹下的_config.yml文件中的如下内容：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/1RU6`[G_3[GS%]N`EV2E{MA.png)
+![](https://langwenchong.gitee.io/figure-bed/1RU6`[G_3[GS%]N`EV2E{MA.png)
 
 我们需要将url和root改为
 
@@ -288,15 +288,15 @@ hexo s//本地预览一下生成的页面是否正常
 
 当本地预览没有任何问题后，我们打开navigation下的public文件夹，这个文件夹存储的是生成的html文件，我们将public文件夹下的所有文件复制：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210716140845.png)
+![](https://langwenchong.gitee.io/figure-bed/20210716140845.png)
 
 然后我们打开自己的博客站点文件夹，我这里是`myblog`（名字可能不同），然后在博客站点文件夹下进入source文件夹并创建一个新的文件夹navigation:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210716142711.png)
+![](https://langwenchong.gitee.io/figure-bed/20210716142711.png)
 
 然后进入这个navigation文件夹将刚刚复制的文件拷贝过来即可。然后我们再打开博客站点文件夹下的_config.yml文件，在如下地方加入`- "navigation/**"`。意思是hexo博客渲染生成页面时这个文件夹下的内容跳过渲染显示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210716142110.png)
+![](https://langwenchong.gitee.io/figure-bed/20210716142110.png)
 
 此时我们运行博客本地预览，重新生成博客页面
 
@@ -306,7 +306,7 @@ hexo cl && hexo g
 
 输入`hexo s`打开本地博客预览后输入地址`http://localhost:4000/navigation/` 即可看到百宝箱已经加入成功：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210716141648.png)
+![](https://langwenchong.gitee.io/figure-bed/20210716141648.png)
 
 接下来我们只需要为自己的博客顶栏添加一个新的图标链接指向这个子页即可了。最后在博客站点下重新部署即可将导航栏百宝箱部署线上！
 

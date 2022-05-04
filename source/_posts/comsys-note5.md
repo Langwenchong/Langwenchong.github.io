@@ -3,10 +3,9 @@ title: 计算机系统基础笔记--Part5
 comments: false
 top: false
 date: 2021-02-09 13:35:24
-tags: [note,408,计组原理]
+tags: [408,机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,计算机组成原理]
 ---
 
 本系列记录翀翀😛学习计算机组成原理的部分核心笔记，这部分是408最重要的部分，需要极大的毅力坚持学完，学习之前分享一句话与君共勉：你所有的迷茫，可能只是因为想得太多却做得太少。与其整日纠结，不如立即行动。也许不是每次出发都能找到正确的方向，不是每次尝试都能收获鲜花和掌声，但进一步自有进一步的欢喜。人生那么宝贵，既然渴望改变，就别畏首畏尾。
@@ -17,7 +16,7 @@ categories:
 
 在前面我们讲过计算机五大组件之一的运算器，其中，他的组成如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209134000.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209134000.png)
 
 其中这个ALU就是运算器的核心元件，算术逻辑单元，它主要的功能是：
 
@@ -27,23 +26,23 @@ categories:
 
 他的工作流程如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209134521.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209134521.png)
 
 就是传入两个或者多个操作数，然后通过运算指令译码产生的信号进行算数逻辑运算，然后输出运算结果，这里的具体工作原理和结构组成，我们以经典的4位ALU芯片（74181）为例进行学习。74181的结构如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209134703.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209134703.png)
 
 74181能执行16种逻辑运算和16中算术运算，可工作于正/负逻辑操作方式下，所以刚好可以用电流的两种状态代表两种运算状态，所以这里的M位是用来区分进行的是逻辑运算还是算术运算的，M=0表示算术运算，M=1表示逻辑运算。其中剩余的S0\~S3是表示具体的算术运算或者逻辑运算的位，比如在M=1,S3~S0-1001时，是在做逻辑运算A⊕B。
 
 74181是4位并行加法器（并行就是同时进行，OS中有细讲），其4位进行位也是同时产生的，所以如果我们使用4片74181芯片可以组成一个16位的ALU。但是如果是串接，那么虽然片内进位是快速的，但是片间进位却仍然是逐片传递的，即组内并行，但是组间串行，因此总的形成时间还是很慢，其具体放的演示如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209135500.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209135500.png)
 
 那么我们肯定是要优化合作组成的结构来加快运算速度。
 
 我们可以把16位ALU的每4位作为一组，即将74181和74182芯片（先行进位芯片）配合，用类似位间快速进位的方法来实现16位ALU（4片ALU组成），则能得到16位的两级先行进位ALU，即组内并行，组件并行。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209135949.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209135949.png)
 
 其实说白了就是每一个4位ALU看成是一位，这样4个组间进位就可以看成是74182的4个位间进位了。也就是形成了一个两级进位，这样就实现了组内并行，组间并行的进位ALU了。和74181类似的片位式芯片的还有Am2901,这个芯片也是4位并行加法器，可以和先行进位芯片Am2902配合，而此芯片还有16个16位寄存器，因此也称为是片位式运算器。
 
@@ -55,7 +54,7 @@ categories:
 
 在电路逻辑表示中，我们通常将断电称为0，通电称为1，即：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209140732.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209140732.png" style="zoom:200%;" />
 
 首先我们来学习以下基本的逻辑运算符号：
 
@@ -67,7 +66,7 @@ Y是A与B的结果：Y=A·B
 $$
 他的电路表示为：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209141105.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209141105.png" style="zoom:200%;" />
 
 我们在物理电路中学过，此时是串联电路，如果想要Y通电（即真值为1），那么A,B必须都通电（即A，B真值都为1）才可以，所以真值表为：
 
@@ -80,7 +79,7 @@ $$
 
 他的电路符号是：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209141547.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209141547.png" style="zoom:200%;" />
 
 ##### 或运算
 
@@ -90,7 +89,7 @@ Y是A或B的结果：Y=A+B
 $$
 他的电路表示为：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209141659.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209141659.png" style="zoom:200%;" />
 
 此时要想Y通电，只要满足至少A,B有一个通电（至少A,B有一个真值为1）即可。所以真值表如下：
 
@@ -103,7 +102,7 @@ $$
 
 他的电路符号是：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209141826.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209141826.png" style="zoom:200%;" />
 
 ##### 非运算
 
@@ -113,7 +112,7 @@ Y是非A的结果：Y=\overline{A}
 $$
 他的电路表示为：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209142034.png" style="zoom: 200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209142034.png" style="zoom: 200%;" />
 
 所以当A为断点（即A真值为0）时，Y通电，所以真值表如下：
 
@@ -124,7 +123,7 @@ $$
 
 他的电路符号是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209142137.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209142137.png)
 
 #### 复合逻辑
 
@@ -147,7 +146,7 @@ $$
 
 电路符号是：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209142736.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209142736.png" style="zoom:200%;" />
 
 {% note info, 
 
@@ -172,7 +171,7 @@ $$
 
 电路符号是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209143009.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209143009.png)
 
 ##### 异或运算
 
@@ -191,11 +190,11 @@ $$
 
 他的电路符号是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209143158.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209143158.png)
 
 对于异或运算，我们不太好记忆规律，可以通过下图记忆：
 
-<img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210209143257.png" style="zoom:200%;" />
+<img src="https://langwenchong.gitee.io/figure-bed/20210209143257.png" style="zoom:200%;" />
 
 所以只有0和1时异或才能使得低位为1，也就是相同为0，不同为1。
 
@@ -218,7 +217,7 @@ $$
 
 电路符号：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209143945.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209143945.png)
 
 ### 加法器
 
@@ -253,7 +252,7 @@ $$
 
 你可能会有点小疑惑上面是如何模拟的，所以就有了这个解答，一定要透彻理解。我们以一个例子来讲解：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209150828.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209150828.png)
 
 我们发现对于上面的公式就是模拟的上图的这三种情况的运算，其中三个输入一目了然，他们很显然一同决定了本位和与进位数值，那么确实当三个输入有奇数个1时就是本位和为1，否则为0。并且使用异或运算就刚好符合加法的规律。
 
@@ -270,13 +269,13 @@ $$
 $$
 我们思考一下这两种情况只要有一种情况出现那么Ci就会为1，而他刚好也是符合加法运算的规律的，我们看一下下图就是两个情况演示：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209152314.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209152314.png)
 
 我们发现情况1Ci-1实际上已经不决定是否产生进位1了，因为Ai和Bi之和就已经决定了必须产生进位了，此时Ci-1只是决定本位和是1还是0了。而对于情况2Ci-1为1才使得决定了最终第i位要想第i+1高位产生进位1。
 
 所以上面两个公式完美模拟实现了一位的加法，所以这就是一位全加器的功能原理，那么我们就可以给出他的电路逻辑结构了：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210209152719.png)
+![](https://langwenchong.gitee.io/figure-bed/20210209152719.png)
 
 #### 串行加法器
 
@@ -300,7 +299,7 @@ $$
 
 很好理解，就是将n各一位全加器串接起来，就可以进行两个n位数的相加，这种加法器称为串行进位的并行加法器。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210120052.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210120052.png)
 
 那么每级进位直接依赖于前一级的进位，即进位信号时逐级形成的。那么就有以下推导：
 $$
@@ -344,7 +343,7 @@ $$
 
 即我们退求其次，不要求全部并行进位了，以16位为例。我们不再尝试16位同时进位的纯并行进位方式，而是先将16位划分成4个组，每一个组是一个4位加法器，这一组内是并行进位同时产生进位，而这4个组之间使用的是串行进位，这样，就不会导致高位的计算逻辑过于复杂，同时也保证了计算性能的优化，其结构图如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210112918.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210112918.png)
 
 注意这个图和上面的纯串行进位的并行加法器是有区别的，这里的每一个加法器不再是一位全加器FA，而是4位CLA加法器。此时是组内并行，组间串行。我们从低位到高位将4个组编号成1~4，那么对于1号CLA，根据C0同时产生C3,C2,C1然后计算输出C4,2号CLA会根据C4同时并行产生C7,C6,C5，然后计算输出C8，以此类推。
 
@@ -352,7 +351,7 @@ $$
 
 我们还是将其16位分成4个组，每个组是4位CLA加法器，但是此时我们将这四个4位加法器不串接，而是再次使用并行进位的方式连接，这样就形成了两级并行进位的计算方式。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210120423.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210120423.png)
 
 此时是组内并行，组间也并行。我们从低位到高位将4个组编号成1~4，那么1号CLA的进位输出C4可以改写成
 $$
@@ -395,9 +394,9 @@ $$
 
 ### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210125142.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210125142.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210210125207.png)
+![](https://langwenchong.gitee.io/figure-bed/20210210125207.png)
 
 
 

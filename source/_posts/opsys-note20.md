@@ -3,10 +3,9 @@ title: 操作系统笔记--Part20
 comments: false
 top: false
 date: 2021-01-01 14:59:05
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -15,7 +14,7 @@ categories:
 
 ### I/O设备的基本概念与分类
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101150133.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101150133.png)
 
 接下来我们介绍以下I/O设备管理的知识，首先我们学习认识一下I/O设备
 
@@ -23,7 +22,7 @@ categories:
 
 顾名思义，就是输入/输出设备（Input/Output)。I/O设备可以将数据传入到计算机，或者可以接受计算机输出数据的外部设备，属于计算机的硬件部分。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101150321.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101150321.png)
 
 这里的输入和输出都是以计算机的视角来看的。所以显示器是计算机线束输出数据所以为输出设备。在UNIX系统中将外部设备抽象为了一种特殊的文件，用户可以使用与文件操作系统相同的方式对外部设备进行操作。例如write操作就是向外部设备输出数据，read操作就是从外部设备读入数据。
 
@@ -35,7 +34,7 @@ categories:
 2. 存储设备（数据传输速度快）
 3. 网络通信设备（数据传输速度介于两者之间）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101150701.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101150701.png)
 
 #### I/O设备根据传输速度分类
 
@@ -43,20 +42,20 @@ categories:
 2. 中速设备
 3. 高速设备
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101150758.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101150758.png)
 
 #### I/O设备根据信息交换的单位分类
 
 1. 块设备（传输速率较高，可以寻址，即对他可以随机的读/写任意一块）
 2. 字符设备（传输速率慢，不可寻址，在输入输出时常采用中断驱动方式）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101150927.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101150927.png)
 
 
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101150950.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101150950.png)
 
 ### I/O控制器
 
@@ -81,19 +80,19 @@ I/O控制器主要有以下功能：
 
 #### I/O控制器的组成
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101152004.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101152004.png)
 
 所以①一个I/O可能会对应多个设备②数据寄存器，控制寄存器，状态寄存器等可能会有多个（例如每一个控制/状态寄存器对应一个具体的设备），且这些寄存器都要有相应的地址，才能方便CPU的操作。有的计算器会让这些寄存器占用内存地址的一部分，称为内存映像I/O，另外一些计算机则采用I/O专用地址即寄存器独立编址。
 
 ##### 思考：两种寄存器地址组成形式有什么区别？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101152355.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101152355.png)
 
 所以我们可以看出内存映像I/O貌似性能更好。
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101152430.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101152430.png)
 
 ### I/O控制方式
 
@@ -115,9 +114,9 @@ I/O控制器主要有以下功能：
 
 ⑥如果还要继续读入数据，那么CPU继续发出读的指令
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101153446.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101153446.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101153500.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101153500.png)
 
 - CPU干预频率：这样的方式CPU的干预频率很频繁，I/O操作开始之前，完成之后需要CPU介入，并且等待I/O完成的过程中需要不断地轮询检查。
 
@@ -139,7 +138,7 @@ I/O控制器主要有以下功能：
 
 引入中断机制，由于I/O设备很慢，因此CPU发出读/写命令以后可以将等待I/O的进程阻塞，先切换到其他进程。当I/O设备完成后，控制器会向CPU发送一个中断信号，CPU检测到中断信号后保存当前进程的运行环境信息，然后转去执行中断处理程序来处理中断。处理中断的过程中，CPU从I/O控制器中读一个字的数据传送到CPU寄存器，再写入主存。接着，CPU恢复等待I/O的进程（或其他进程）的运行环境，然后继续执行。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101154409.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101154409.png)
 
 这样就不是cpu主动一直询问控制器设备是否就绪了，而是当控制器就绪后主动告诉CPU。这里我们要注意：
 
@@ -173,20 +172,20 @@ I/O控制器主要有以下功能：
 2. 数据流向是设备直接放到内存，或者内存到设备，不再需要CPU的帮助
 3. 仅在传送一个或多个数据块的开始和结束时，才需要CPU干预
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101162037.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101162037.png)
 
 ##### DMA控制器
 
 所以这个方法需要DMA控制器来服务。DMA控制器结构如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101162129.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101162129.png)
 
 - DR(Data Register,数据寄存器)：暂存从设备到内存，或者从设备到内存的数据
 - MAR(Memory Address Register,内存地址寄存器)：在输入时，MAR表示数据应该放到内存中的什么位置，输出时MAR表示要输出的数据放在内存中的什么位置
 - DC(Date Counter,数据计数器)：表示剩余要读/写的字节数
 - CR（Command Register,命令/状态寄存器)：用于存放CPU发来的I/O命令，或设备的状态信息。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101162505.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101162505.png)
 
 - CPU干预频率：仅在传送一个或多个数据块的开始和结束时，才需要CPU干预
 
@@ -206,9 +205,9 @@ I/O控制器主要有以下功能：
 
 通道：一种硬件，可以理解为“弱鸡版CPU”，也是可以识别并执行一系列通道指令
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101163132.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101163132.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101163202.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101163202.png)
 
 和CPU相比，通道可以执行的指令很单一，并且通道程序是放在主机内存中的，也就是说通道与CPU共享内存。
 

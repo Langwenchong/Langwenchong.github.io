@@ -3,10 +3,9 @@ title: 操作系统笔记--Part6
 comments: false
 top: false
 date: 2020-12-18 12:08:31
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -21,11 +20,11 @@ categories:
 
 例如各进程到达就绪队列的时间、需要的运行时间如下表所示，如果使用FCFS算法来调度进程，那么下列的各进程的等待时间，平均等待时间，周转时间，平均周转时间和带权周转时间与平均带权周转时间各是多少？
 
-<img src="https://pic.downk.cc/item/5fdc2d2d3ffa7d37b33338e8.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc2d2d3ffa7d37b33338e8.jpg" style="zoom:150%;" />
 
 首先周转时间=完成时间-到达时间，带权周转时间=周转时间/运行时间，等待时间=周转时间-运行时间。按照先来先服务的算法调度，那么就是根据到达的先后顺序调度，当然也就是等待时间越久（说明来的越早）的进程优先得到服务。所以调度的顺序就是P1->P2->P3->P4。如下图：
 
-![](https://pic.downk.cc/item/5fdc2dd03ffa7d37b333d56e.jpg)
+![](https://pic.imgdb.cn/item/5fdc2dd03ffa7d37b333d56e.jpg)
 
 P1先执行，即到达就先运行，运行7个时间单位，在P1运行途中P2，P3和P4实际上已经都到达了就绪队列了，但是P1执行完，P2等待时间肯定是最久的，所以他执行，然后P3,P4。所以周转时间=完成时间-到达时间可以算出各个进程的周转时间如下表：
 
@@ -74,13 +73,13 @@ SJF是对于作业调度（即高级调度）的短作业优先算法，所以�
 
 接下来，我们也计算一个SJF的题，为了更好的理解抢占式，我们做的是具有抢占式的短作业优先算法题：各进程到达就绪队列的时间、需要的运行时间如下表所示。使用抢占式的短作业优先调度算法， 计算各进程的等待时间、平均等待时间、周转时间、平均周转时间、带权周转时间、平均带权周转时间。 所以实际上做的是SRTN的算法题。
 
-<img src="https://pic.downk.cc/item/5fdc2d2d3ffa7d37b33338e8.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc2d2d3ffa7d37b33338e8.jpg" style="zoom:150%;" />
 
 最短剩余时间算法：每当有进程加入到进程就绪队列时就需要进行调度即使现在还有任务在cpu上运行，如果新到达的进程剩余时间比当前运行的进程剩余时间更短，则新进程抢占cpu，当前运行进程在PCB记录相关信息后让出cpu重新回到就绪队列等待直至其又是最短剩余时间的作业时在上cpu。同时，当然运行任务结束后还要执行调度。
 
 如下图：
 
-![](https://pic.downk.cc/item/5fdc4c213ffa7d37b3516d14.jpg)
+![](https://pic.imgdb.cn/item/5fdc4c213ffa7d37b3516d14.jpg)
 
 需要注意的是，每次当有新进程到达时就绪队列都会改变，按照上述的规则进行检查。所以每次到达新进程时都要格外注意计算剩余时间。如上，在0-2时只有进程1，所以其先执行，但是当来到时刻2，插入一个新的作业2，他的剩余时间为4(因为还没有执行过，所以剩余运行时间=运行时间)，而此时作业1还有5的运行时间比作业2长，所以虽然作业1没有运行完也要下cpu,作业2抢占cpu。
 
@@ -158,9 +157,9 @@ $$
 
 下面我们还是对于上面的那4个任务按照HRRN算法调度计算：
 
-<img src="https://pic.downk.cc/item/5fdc2d2d3ffa7d37b33338e8.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc2d2d3ffa7d37b33338e8.jpg" style="zoom:150%;" />
 
-![](https://pic.downk.cc/item/5fdc356d3ffa7d37b33aeedf.jpg)
+![](https://pic.imgdb.cn/item/5fdc356d3ffa7d37b33aeedf.jpg)
 
 每次调度时我们都计算响应比，并选择响应比高的上cpu
 
@@ -216,7 +215,7 @@ $$
 
 我们发现FCFS确实平均性能有点拉胯，而SJF和SRNT虽然平均性能优秀但是饥饿现象导致也不太好，而RHHN不但没有饥饿现象，而且平均性能也较好甚至这题的情况下平均性能和SJF一样优秀，所以RHHN整体应该较为出色，但是每次都要计算响应比又加大了计算开销。
 
-![](https://pic.downk.cc/item/5fdc557d3ffa7d37b35b5548.jpg)
+![](https://pic.imgdb.cn/item/5fdc557d3ffa7d37b35b5548.jpg)
 
 这几种算法主要关心的是对用户的公平性，平均周转时间和平均等待时间等平均性能的指标，但是并不关心响应时间，前面我们也提高到过平均性能一般是操作系统关心的，但是用户关心的是自己的任务能否更快完成，所以上面这几种方法对于用户来说交互性很糟糕，因此这三种算法一般适用于早期的批处理系统，当然FCFS现在也扮演着某些情况的重要角色。但是接下来我们在介绍几种更适合于交互式系统的调度算法。并且要注意上面的这几种算法对于高级调用和低级调用均可以采用。
 
@@ -226,11 +225,11 @@ $$
 
 例题：各进程到达就绪队列的时间、需要的运行时间如下表所示。使用时间片轮转调度算法，分析时间片大小分别为2,5时的进程情况。
 
-<img src="https://pic.downk.cc/item/5fdc58323ffa7d37b35e22d8.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc58323ffa7d37b35e22d8.jpg" style="zoom:150%;" />
 
 时间片轮转算法轮流让就绪队列中的进程依次执行一个时间片（每次选择的都是排在就绪队列队头的进程）按照上表，就绪队列如下：
 
-<img src="https://pic.downk.cc/item/5fdc588c3ffa7d37b35e9a96.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc588c3ffa7d37b35e9a96.jpg" style="zoom:150%;" />
 
 假设现在时间片为2那么
 
@@ -272,11 +271,11 @@ $$
 
 我们先来看一下非抢占式的PSA：各进程到达就绪队列的时间，需要运行的时间，进程优先数如下表所示（优先数越大，优先级越高）
 
-<img src="https://pic.downk.cc/item/5fdc61803ffa7d37b36812dd.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc61803ffa7d37b36812dd.jpg" style="zoom:150%;" />
 
 非抢占式PSA每次调度选择当前已经到达且优先级最高的进程，当前进程主动放弃处理机时发生调度。
 
-![](https://pic.downk.cc/item/5fdc61be3ffa7d37b3685d1d.jpg)
+![](https://pic.imgdb.cn/item/5fdc61be3ffa7d37b3685d1d.jpg)
 
 0时刻（P1）：只有P1到达，P1上处理机。
 
@@ -290,7 +289,7 @@ $$
 
 同样的我们在采取抢占式的PSA对上面的进程表进行调度：
 
-![](https://pic.downk.cc/item/5fdc62a33ffa7d37b3692535.jpg)
+![](https://pic.imgdb.cn/item/5fdc62a33ffa7d37b3692535.jpg)
 
 抢占式的PSA永远要保证运行着的是优先级最高的任务，如果新到的任务优先级比正在运行的优先级高，则抢占，如果相同，则仍然等待（毕竟人家先到的）。
 
@@ -330,9 +329,9 @@ $$
 
 例题：各进程到达就绪队列的时间、需要的运行时间如下表所示。使用MFQSA算法，分析运行情况。
 
-<img src="https://pic.downk.cc/item/5fdc6a903ffa7d37b371f774.jpg" style="zoom:150%;" />
+<img src="https://pic.imgdb.cn/item/5fdc6a903ffa7d37b371f774.jpg" style="zoom:150%;" />
 
-![](https://pic.downk.cc/item/5fdc6ab53ffa7d37b3722d89.jpg)
+![](https://pic.imgdb.cn/item/5fdc6ab53ffa7d37b3722d89.jpg)
 
 0时刻：只有P1，P1上处理机运行一个时间片，下处理机。
 
@@ -356,7 +355,7 @@ MFQSA对各类的进程都相对公平（FCFS的优点），每个进程到达�
 
 #### 后三种算法的总结
 
-![](https://pic.downk.cc/item/5fdc6ed63ffa7d37b3768d92.jpg)
+![](https://pic.imgdb.cn/item/5fdc6ed63ffa7d37b3768d92.jpg)
 
 比起早期的批处理操作系统来说，由于计算机的造价大幅下降，因此之后的交互式的操作系统（包括分时操作系统和实时操作系统等）更注重系统的响应时间、公平性和平衡性等指标。而这后面的这几种算法能较好的满足交互式系统的需求，因此这三种算法适用于交互式系统。（比如UNIX使用的就是多级反馈队列调度算法）。
 

@@ -30,20 +30,78 @@ function setAPlayerObject() {
 // 事件监听
 function setAPlayerObserver() {
   try {
-    APlayerController.player.on('play', function(e) {
+    APlayerController.player.on('play', function (e) {
       updateAPlayerControllerStatus();
+      // var index = document.querySelector('meting-js').aplayer.list.index;
+      // var title = document.querySelector('meting-js').aplayer.list.audios[index].title;
+      // var artist = document.querySelector('meting-js').aplayer.list.audios[index].artist;
+      updateTitle();
+      const index = APlayerController.player.list.index;
+      const obj = APlayerController.player.list.audios[index];
+      iziToast.info({
+        timeout: 4000,
+        icon: 'Fontawesome',
+        closeOnEscape: 'true',
+        transitionOut: 'fadeOutRight',
+        displayMode: 'replace',
+        layout: '2',
+        transitionIn: 'bounceInLeft',
+        position: 'topRight',
+        icon: 'fad fa-play-circle',
+        backgroundColor: '#fff',
+        title: '音乐通知',
+        message: '正在播放：' + obj.title + ' - ' + obj.artist
+      });
     });
-    APlayerController.player.on('pause', function(e) {
+    APlayerController.player.on('pause', function (e) {
       updateAPlayerControllerStatus();
+      updateTitle();
+      const index = APlayerController.player.list.index;
+      const obj = APlayerController.player.list.audios[index];
+      iziToast.info({
+        timeout: 4000, //调试
+        icon: 'Fontawesome',
+        closeOnEscape: 'true',
+        transitionOut: 'fadeOutRight',
+        displayMode: 'replace',
+        layout: '2',
+        transitionIn: 'bounceInLeft',
+        position: 'topRight',
+        icon: 'fad fa-pause-circle',
+        backgroundColor: '#fff',
+        title: '音乐通知',
+        message: '停止播放：' + obj.title + ' - ' + obj.artist
+      });
     });
-    APlayerController.player.on('volumechange', function(e) {
+    APlayerController.player.on('volumechange', function (e) {
       onUpdateAPlayerVolume();
     });
-    APlayerController.player.on('loadstart', function(e) {
+    APlayerController.player.on('loadstart', function (e) {
       // 跳到下一曲时更新标题
       updateTitle();
     });
 
+    // 新增音乐加载失败
+    APlayerController.player.on('error', function (e) { // 音乐加载失败
+      updateTitle();
+      const index = APlayerController.player.list.index;
+      const obj = APlayerController.player.list.audios[index];
+			iziToast.info({
+        timeout: 4000, //调试
+        icon: 'Fontawesome',
+        closeOnEscape: 'true',
+        transitionOut: 'fadeOutRight',
+        displayMode: 'replace',
+        layout: '2',
+        transitionIn: 'bounceInLeft',
+        position: 'topRight',
+        icon: 'fad fa-times-circle',
+        backgroundColor: '#fff',
+        title: '音乐通知',
+        message: obj.title + ' - ' + obj.artist + '加载失败'
+      });
+    });
+    
     // 监听音量手势
     APlayerController.volumeBarWrap = document.getElementsByClassName('nav volume')[0].children[0];
     APlayerController.volumeBar = APlayerController.volumeBarWrap.children[0];
@@ -74,7 +132,7 @@ function setAPlayerObserver() {
     updateAPlayerControllerStatus();
     onUpdateAPlayerVolume();
     APlayerController.observer = true;
-    console.log('APlayerController ready!');
+    // console.log('APlayerController ready!');
 
   } catch (error) {
     delete APlayerController.observer;
@@ -156,7 +214,7 @@ function updateTitle() {
     console.log(error);
   }
 }
-var checkrightmenu = setInterval(function() {
+var checkrightmenu = setInterval(function () {
   if (!volantis.APlayerLoaded) return; // APlayer加载完成？
   if ($('#safearea').css('display') != 'block') return; // 文章内容加载完成？ see: source/css/first.styl
   if (!document.querySelectorAll('meting-js')[0].meta) return; // meting-js 加载完成？
@@ -164,4 +222,3 @@ var checkrightmenu = setInterval(function() {
   clearInterval(checkrightmenu);
   checkAPlayer();
 }, 1000);
-

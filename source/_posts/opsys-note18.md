@@ -3,10 +3,9 @@ title: 操作系统笔记--Part18
 comments: false
 top: false
 date: 2021-01-01 10:38:41
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -21,29 +20,29 @@ categories:
 
 我们知道，索引节点是一种文件目录瘦身策略，由于检索文件只需要文件名，所以其他的信息都存放到了索引节点中，这样目录项就只包括文件名和索引节点指针了，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101104433.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101104433.png)
 
 索引节点中设置了一个链接技术变量count，用于表示链接到本索引节点的用户目录项。如果count=2,说明此时有两个用户目录项都链接到了该索引节点上也就意味着这两个用户共享这个文件。如果某个用户决定删除该文件，那么只需要把用户目录中与该文件对应的目录项删除即可，且索引节点的count值减1。只要count>0，就说明此时还有别的用户要使用这个文件，那么就不能把文件数据删除，否则就会导致目录项中索引节点指针悬空（NULL）。当count==0时就说明没有用户使用这个文件那么就可以删除了，操作系统会负责删除这个文件。
 
 #### 基于符号链的共享方式（软链接）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101104921.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101104921.png)
 
 当User3访问ccc时，操作系统会判断文件ccc属于Link类型文件，那么就会根据其中记录的路径层层查找目录最终找到User1的目录表中的aaa表项，于是就找到了文件1的索引节点。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101114740.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101114740.png)
 
 ##### 思考：这种链接方式的一种特点？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101105149.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101105149.png)
 
 我们发现这种方式的链接会有如下情况发生：当User1的aaa目录项被删除了而此时User3的目录项ccc还没有删除时，那么即使ccc可以指向Link文件2，但是由于User1的aaa不存在了所以不能找到文件1了，所以此时ccc会出现无法找到文件的情况，即User3ccc访问文件是基于User1在存在文件aaa存在的前提下才能实现的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101114759.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101114759.png)
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101114823.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101114823.png)
 
 ### 文件保护
 
@@ -57,9 +56,9 @@ categories:
 
 使用某个密码对文件进行加密，在访问时需要提供正确的密码才可以进行正确的解密。那么密码肯定是有多种的，我们以一个最简单的加密算法--异或加密为例。假设用于加密/解密的密码为01001，那么：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101110004.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101110004.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101110132.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101110132.png)
 
 上面这种方法确实做到了加密的作用，并且优点是保密性强，不需要在系统中存放正确的密码，缺点是编码/译码（加密/解密）需要花费一定的时间。
 
@@ -67,19 +66,19 @@ categories:
 
 为每个文件的FCB（或者索引节点）中增加一个访问控制表（Access-Control List,ACL),该表记录各个用户可以对文件执行那些操作。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101110452.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101110452.png)
 
 精简的访问列表就是：以组为单位，标记各组用户可以对文件执行那些操作。如下表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101110611.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101110611.png)
 
 当某用户想要访问文件时，系统会检查该用户所属的分组是否有相应的访问权限。所以一般重要的OS内核文件肯定是不允许用户访问的即使是操作者。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101114900.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101114900.png)
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101114923.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101114923.png)
 
 ### 磁盘的结构
 
@@ -87,19 +86,19 @@ categories:
 
 磁盘的表面由一些磁性物质组成，可以用来存储二进制数据，所以磁盘不能被刮坏。这里我们讲解一下一个磁盘的具体结构术语。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101111103.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101111103.png)
 
 上图就是一个磁盘，他会被等大分为许多扇形，每一个扇形就是一个磁盘块（前面讲过磁盘块存储的数据大小相同），这里的一圈就是磁道，越靠近内侧数据的密度就越大。
 
 #### 磁盘读/写数据方法
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101111324.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101111324.png)
 
 我们知道磁盘在被访问时会一直转动，所以就会一直切换不同的扇区即磁盘块，而右边的磁头就是从磁盘上滑过，但是他只会从里到外滑动，不会旋转转动，这样他想在某个扇区（磁盘块）进行数据的读写只需要等到磁盘转到指定扇区即可，即磁头主要是负责切换磁道。
 
 #### 盘面、柱面
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101111752.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101111752.png)
 
 为了高效，一般一个盘片的两面均可以存放数据，所以会有许多盘面。所以每一个盘面均对应着一个滑过的磁头，但是磁头是连在一起的所以共进退。这也就意味着一次只能有一个磁头到达他想要到达的位置对应着的就是（柱面号，盘面号，扇区号），柱面号就是规定了磁头将要访问的磁道，而盘面号规定的是此时是哪一个磁头访问这个柱面磁道的数据，扇区号就是访问盘面的哪一个扇面，其他的磁头如果没有到达所要访问的位置也只能等待。
 
@@ -119,13 +118,13 @@ categories:
 
 #### 磁盘的分类
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101112626.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101112626.png)
 
 此时图二的下方也是有许多磁头的只是没画出来，实际上这两种各有利弊，第一个磁臂需要频繁移动来切换磁道，而第二个磁头太多。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101112737.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101112737.png)
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101114955.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101114955.png)
 

@@ -3,10 +3,9 @@ title: 计算机系统基础笔记--Part1
 comments: false
 top: false
 date: 2021-01-30 10:45:49
-tags: [note,408,计组原理]
+tags: [408,机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,计算机组成原理]
 ---
 
 本系列记录翀翀😛学习计算机组成原理的部分核心笔记，这部分是408最重要的部分，需要极大的毅力坚持学完，学习之前分享一句话与君共勉：你所有的迷茫，可能只是因为想得太多却做得太少。与其整日纠结，不如立即行动。也许不是每次出发都能找到正确的方向，不是每次尝试都能收获鲜花和掌声，但进一步自有进一步的欢喜。人生那么宝贵，既然渴望改变，就别畏首畏尾。
@@ -19,7 +18,7 @@ categories:
 
 顾名思义，计算机组成原理知识点可以用三部分概括，首先是介绍什么是计算机，然后是计算机的组成，最终再是计算机各个部分的构成原理，知识点由浅入深，由易到难。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130105829.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130105829.png)
 
 各个部分各占1/3板块，我们需要全部熟练掌握，只有理解了最底层的构成原理以及各个板块之间的组成配合方法，才能够深刻理解计算机组成原理的知识点。
 
@@ -33,7 +32,7 @@ categories:
 
 我们很容易就可以将计算机系统划分成两部分：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130111145.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130111145.png)
 
 上面是所有计算机都有的共性特征，即软件和硬件相互配合形成才能组成计算机系统，这是区别于操作系统的一大特点，操作系统只是软件。
 
@@ -68,13 +67,13 @@ categories:
 
 这里我们一定要注意之前所讲的各种计算器的组成原件都是逻辑元件，即用来实现逻辑运算的元件。
 
-{%endnote %}
+ %}
 
 ###### 计算机编程语言的发展？
 
 我们前面介绍了各个时代计算器所使用的编程语言的不同，大体上编程语言可以分类为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130112512.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130112512.png)
 
 这个在OS中也有所介绍，但是这里要注意在高级语言翻译成机器语言之前，还有一个步骤是先编译译成汇编语言，汇编语言是一种助记符，我们并不陌生，在做计算机系统实验时会经常看到。前面是不同汇编指令的名称，后面两项一般是操作数或者寄存器等。这里要注意是通过编译程序将高级语言先编译成汇编语言，然后再通过汇编程序将汇编语言汇编成机器语言，计算机才能够识别指令并进行执行，并且一条高级语言通常会编译成多行汇编语言，一条汇编指令又会翻译成多条机器语言指令。
 
@@ -82,17 +81,17 @@ categories:
 
 我们前面讲到在大规模集成电路的第四代计算器时代出现了微处理器硬件，其发展历程如下，主要是机器字长的增加：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130113005.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130113005.png)
 
-其中机器字长的意思是计算机执行一次整数运算所能处理的二进制位数，我们可以看到随着计算机的发展，机器字长再逐渐增长，这个无疑会表示更大的数，更长的地址，也就同时增大了计算机的空间和计算能力，所以计算机的发展不仅仅是由软件推进，硬件部分的发展也可以大幅提升计算机的性能。我们这里对于80386微处理器的计算机不能再熟悉了，他是最经典的32位微处理器计算机，在我们的[nemu](https://wenchong.space/tags/nemu/)实验中，就是再借鉴80386的计算机来进行的。
+其中机器字长的意思是计算机执行一次整数运算所能处理的二进制位数，我们可以看到随着计算机的发展，机器字长再逐渐增长，这个无疑会表示更大的数，更长的地址，也就同时增大了计算机的空间和计算能力，所以计算机的发展不仅仅是由软件推进，硬件部分的发展也可以大幅提升计算机的性能。我们这里对于80386微处理器的计算机不能再熟悉了，他是最经典的32位微处理器计算机，在我们的[nemu](https://coolchong.cn/tags/nemu/)实验中，就是再借鉴80386的计算机来进行的。
 
 ##### 摩尔定律
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130113706.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130113706.png)
 
 伴随着计算机硬件的发展，摩尔提出了一个非常有趣的理论：集成电路上可容纳的晶体管数目，约每隔18个月便会增加一倍，整体性能也会提升一倍。这个定律揭示了信息技术进步的速度之快。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130113726.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130113726.png)
 
 我们可以看到半导体存储器的单芯片容量在迅速增大，从1KB->4KB->16KB->64KB->256KB->1MB->4MB->16MB->64MB->256MB->1GB，每次提升都在2^10量级以上。
 
@@ -114,19 +113,19 @@ categories:
 
 1. 单指令流&单数据流（SISD）：冯诺依曼体系结构
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130114609.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210130114609.png)
 
    经典的五大基础硬件：输入设备，输出设备，存储器，运算器和控制器。
 
 2. 单指令流&多数据流（SIMD）：阵列处理器、向量处理器
 
-   <img src="https://gitee.com/Langwenchong/figure-bed/raw/master/20210130114723.png" style="zoom:50%;" />
+   <img src="https://langwenchong.gitee.io/figure-bed/20210130114723.png" style="zoom:50%;" />
 
 3. 多指令流&单数据流（MISD）：实际上不存在，因为在单数据流的条件下，多数据流没有实际应用意义。
 
 4. 多指令流&多数据流（MIMD）：多处理器，多计算机
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130114856.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210130114856.png)
 
    很明显这种多核的计算机可以并行执行多个进程，性能更高，但是也较为昂贵，耗能大。
 
@@ -136,7 +135,7 @@ categories:
 
 #### 冯诺依曼计算机
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130114609.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130114609.png)
 
 上图就是冯诺依曼体系的简化图，其中有以下几大特点：
 
@@ -150,17 +149,17 @@ categories:
 
 当然根据计算机的功能不同，会将冯诺依曼的体系进行略微的调整，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130120047.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130120047.png)
 
 不同的设备侧重的硬件也不相同，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130120131.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130120131.png)
 
 但是总体来看，基本上沿用的都是冯诺依曼的经典组成结构。
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130120223.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130120223.png)
 
 ### 计算机的功能部件
 
@@ -168,11 +167,11 @@ categories:
 
 ####  存储器
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130120511.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130120511.png)
 
 在一个计算机中，有两处存储数据的地方，和运算器控制器直接进行数据交换的是主存储器为主的主存又称为内存，而还有一部分数据是先存放在外存又称为辅存的地方，一般是暂时不会用到的数据，当使用时是先将数据从外存中调入到内存中再进行运算。外存可以是外设的辅助存储器，磁盘等。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130120908.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130120908.png)
 
 从上图我们不难看出一个数据的访问过程，大部分数据都是存放到了存储体内，当访问这个数据时，实现调用访问指令找到他的存储地址，这个地址就存放在了地址寄存器（MAR)中，通过地址进行访存获得这个数据值然后存储到数据寄存器(MDR)中方便使用。并且一个数据并不是一个十进制的数存放，而是许许多多个0/1位组成表示，通常0/1串的长度是根据机器字长决定的，那么通过译码器可以将二进制串表示的数据翻译成10进制等其他进制的数据。
 
@@ -180,11 +179,11 @@ categories:
 
 首先最主要的就是由计算机的硬件特性决定的，我们知道一个电位通常可以用两个状态来表示，通电和断点，那么刚好可以用1和0来表示，再无第三个状态，所以使用二进制表示契合硬件的特点，同时二进制数据存储虽然可能长度较长，但是同时也意味着计算效率的高效，无论是多么复杂的计算方法，都可以最终拆解为交并异或等基本的二进制操作，这些基础操作运算效率更高，实现简单，所以使用二进制的方式来存储数据。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130121712.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130121712.png)
 
 通常一个数是由固定的位表示的，MAR用于寻址访存，其位数就对应着存储单元的个数。每一位都可以有两种情况0或者1，所以8位存储字就是可以表示0~2\^8-1范围的数，存储性能非常可观。MDR数据寄存器的位数一般和存储字长相等，一般是字节的二次幂的整数倍。并且虽然这里介绍是MAR和MDR都是在存储器中，但是在现在的CPU中，MAR和MDR通常都是存在于CPU中的，不难理解，这样的方法数据交流更加利于寄存器和cpu,性能更高。这里一定要注意一个存储单元就是一字节，存储单元中的一个通电元件就是一位，所以假设存储单元是8位，n个存储单元表示的空间就是2\^n*8bit=2^nB。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130122502.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130122502.png)
 
 并且MDR是应用于数据交流的总线，是双向的，而MAR是地址总线，一般是访存时的地址，很明显是单向的。cpu通过两个寄存器和指令，译码驱动等部件，实现了和主存之间的读写操作。
 
@@ -192,7 +191,7 @@ categories:
 
 运算器，控制器一起组成了cpu核心处理器的功能，其中运算器顾名思义肯定是进行运算的，数学运算方式加、减、乘、除还有逻辑运算或、与、非、异或等。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130123118.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130123118.png)
 
 |      |     加     |     减     |       乘       |      除      |
 | :--: | :--------: | :--------: | :------------: | :----------: |
@@ -204,7 +203,7 @@ categories:
 
 控制器是协调各个部件、功能单元配合工作的。他的构成如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130123717.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130123717.png)
 
 其中CU是控制单元，IR是指令寄存器存储当前执行的指令，而RC是程序计数器，就是存储下一个指令的地址，实际上就是在IR基础上加一表示下一条指令（这是因为指令通常是顺序存储的）。
 
@@ -218,15 +217,15 @@ categories:
 
 我们知道硬件是提供底层服务环境的，软件是在硬件支持下进行运行的。并且操作系统等系统软件是最接近硬件层次的第一层软件，他们会涉及到许多有关硬件的功能。同时根据硬件的状态向上层的应用软件提供接口等服务环境:
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130124627.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130124627.png)
 
 所以上层软件会使用高级开发语言，相应的程序先翻译成汇编语言，然后再翻译成传统机器，硬件所能执行的二进制代码，最终再由硬件直接进行微指令的执行：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130124850.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130124850.png)
 
 我们同样将这个语言翻译的过程进行层次划分如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130125010.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130125010.png)
 
 一般将二进制代码的部分分为硬件层次，其他为软件层次。这里如何理解汇编语言是一种助记符呢？我们在做过nemu实验后知道实际上log.txt打印的就是我们规定输出的汇编语言，他已经被翻译成了一种对应着机器语言执行序列的方式了，但是不是给硬件机械设备用的，而是方便于我们设计人员了解程序走向，设计程序的助记符，我们可以通过汇编语言向上了解软件程序的运行原理，同时也可以向下掌握硬件系统的工作原理。
 
@@ -238,7 +237,7 @@ categories:
 
 毫无以为，计算机的容量至关重要，我们知道在8位数据时代，存储的数据范围很有限，伴随着信息的增大，我们需要扩大数据空间了，所以增大了机器字长，16位，32位再到如今的64位，可以看出，容量毫无疑问会影响到我们计算机的工作性能。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130125914.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130125914.png)
 
 当然伴随着技术的发展，我们也不仅仅局限于扩大机器字长来增大计算机的存储性能了，虚拟存储技术，动态分配都可以让我们充分利用优先的存储空间来存储更多的数据。这里我们只需要记住系统最大的容量计算公式
 $$
@@ -253,7 +252,7 @@ $$
 $$
 所以我们可以重新定义一下机器字长，机器字长是计算机进行一次整数运算所能处理的二进制数据的位数
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130130443.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130130443.png)
 
 假设每次只能处理一个二进制位，那么可以通过编程8条指令完成对8位数据的运算：指令1，指令2……指令8。那么
 
@@ -263,7 +262,7 @@ CPU的执行时间（这个数据运算耗时）=指令1耗时+指令2耗时+…
 
 - 数据通路宽度：数据总线一次所能并行传送信息的位数
 
-  ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130131128.png)
+  ![](https://langwenchong.gitee.io/figure-bed/20210130131128.png)
 
 - 吞吐量：指系统在单位时间内处理请求的数量，他取决于信息能够多快的输入内存，cpu能够多快的取指令，数据能多快的从内存取出或存入，以及所得结果能够多快的从内存送给一台外部设备。这些步骤中的每一步都关系到主存，因此，系统吞吐量主要取决于主存的存取周期。
 
@@ -289,8 +288,8 @@ CPU的执行时间（这个数据运算耗时）=指令1耗时+指令2耗时+…
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130132310.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130132310.png)
 
 ### 计算机系统概述总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210130132400.png)
+![](https://langwenchong.gitee.io/figure-bed/20210130132400.png)

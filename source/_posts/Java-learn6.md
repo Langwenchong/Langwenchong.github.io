@@ -3,10 +3,9 @@ title: Java学习笔记-第六讲
 comments: false
 top: false
 date: 2021-03-18 16:19:46
-tags: [note,Java]
+tags: [java]
 categories: 
-	- [学习笔记]
-	- [编程语言,Java]
+	- [个人笔记,Java基础]
 ---
 
 记录翀翀🧐学习Java面向对象程序设计的核心笔记与思考，努力学习的过程，就像在黑屋子里洗衣服，你不知道洗干净没有，只能一遍一遍尽力去洗，等到了考场上那一刻，灯光亮了，你会发现，只要认真洗过，那件衣服就会光亮如新，愿你我都能够坚持学习。
@@ -164,7 +163,7 @@ Object hahaha=getNewObject();
 
 假设此时我们有如下继承链：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210322163647.png)
+![](https://langwenchong.gitee.io/figure-bed/20210322163647.png)
 
 即以上animal变量被定义为Animal类，但实际上有可能引用Dog或Cat的实例。在Feeder类的feed()方法中调用animal.eat()方法，java虚拟机会执行animal变量所引起的实例的eat()方法。可见animal变量有多种状态，一会变成狗，一会变成猫，这就是多态的体现。即一个父类的对象可以在子类中切换。
 
@@ -264,7 +263,7 @@ son.getHeight();//170
 
 对象可以通过getClass()方法来获得运行时的信息，getClass是java.lang.Object的方法，而Object是所有类的父类，所以任何对象都可以用getClass()方法。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210321190606.png)
+![](https://langwenchong.gitee.io/figure-bed/20210321190606.png)
 
 并且getClass()方法获得对象运行时的类信息后，即一个Class类的对象，还可以通过getFields()和getMethosd()方法进一步获得更加详细的信息。
 
@@ -323,7 +322,7 @@ class Student extends Person
 
 最终输出的结果是：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210321191522.png)
+![](https://langwenchong.gitee.io/figure-bed/20210321191522.png)
 
 我们来分析一下造成school为null的原因。首先子类构造函数通过super调用父类的构造函数，然而父类中的构造函数又执行了对象的hello函数，此时由于这个对象使用的是从子类覆盖得到的子类的sayhello函数，所以会报自己的学校，但是此时还在父类构造函数中，所以还没有对school进行赋值，所以此时会出现school为null的现象。所以只有当父类的构造函数全部语句执行完返回以后才会再执行子类构造函数中this.school=school。这种父类构造函数调用对象的覆盖方法的情况要多加小心。
 
@@ -405,7 +404,7 @@ class Parcel {
 
 并且要注意内部类可以直接访问封装他的类的任何成员，即使是私有变量也可以（毕竟都是一家人），但是如果他想调用封装他的类的外部类的成员，需要在this前加上对象名称（必须由this),如果不加前缀，那么访问的就是自己的同名成员变量：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210321193947.png)
+![](https://langwenchong.gitee.io/figure-bed/20210321193947.png)
 
 并且要注意外部类一般只能是public修饰或者不加修饰符（但是外部类的变量可以使用这些修饰符），内部类却可以使用这些修饰符比如protected,private，因为可以把内部类看成是封装他的外部类的一个成员。
 

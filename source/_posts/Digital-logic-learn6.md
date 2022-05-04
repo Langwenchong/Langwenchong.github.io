@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第六讲
 comments: false
 top: false
 date: 2021-03-23 16:40:22
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -66,7 +65,7 @@ endmodule
 
 下面我们以一道例题来讲解如何进行基于赋值语句的建模，我们这里以译码器为例，我们前面学习过译码器是根据接收的信号所组成的编号，从而让特定的输出信号输出高电平真值。比如2线-4线译码器：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325185745.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325185745.png)
 
 我们可以根据真值表列出不同信号取真值的表达式（简单的当然也可以使用卡诺图进行简化），然后定义译码器模块来进行建模：
 
@@ -84,7 +83,7 @@ endmodule
 
 当然我们还可以通过这个方法来实现机组原理中讲到的一位全加器：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325190238.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325190238.png)
 
 他的建模语言代码如下：
 
@@ -100,15 +99,15 @@ endmodule
 
 如果我们在基于持续赋值建模中的代码中使用了延迟量，那么虽然最后得到的电路完全相同，但是在仿真综合时是会出现不同的结果的，我们前面学习了最终仿真综合平台的结果会以脉冲的形式显示在图上，那么当增加了延迟后，脉冲出现的时间就会发生改变，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325190726.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325190726.png)
 
 未加延迟量的结果：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325190756.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325190756.png)
 
 增加了延迟量的结果：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325190818.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325190818.png)
 
 ##### 基于过程块的建模
 
@@ -133,7 +132,7 @@ endmodule
 
 基于过程块的建模最重要的就是一定记住块标识符类型的声明以及begin...end包裹。这里我们给出二路选择器的建模板子：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210325191918.png)
+![](https://langwenchong.gitee.io/figure-bed/20210325191918.png)
 
 我们发现上面的代码中是使用条件语句结构推动描述某几个信号之间的因果关系来进行行为建模的，但是仅仅使用条件语句明显是无法完成建模行为描述的，他也可以像基于持续赋值语句建模一样使用过程赋值语句即对某些变量信号进行赋值，但是他不需要使用assign声明，并且“=”左边的信号必须是变量类型（如logic类型），并且不能是线网类型，“=”右边的信号的类型无限制。如下：
 

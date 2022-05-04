@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第四讲
 comments: false
 top: false
 date: 2021-03-16 16:38:18
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -29,11 +28,11 @@ categories:
 
 有时候可能会存在某个奇异“1”单元，他只能自己单独成一个圈：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320133940.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320133940.png)
 
 或者也有可能一个卡诺图用两个不同的思路化简会得到两个最简式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134101.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320134101.png)
 
 但是无论怎样化简我们都要遵循以下规则：
 
@@ -43,15 +42,15 @@ categories:
 
 3. 为了得到尽可能大的圈，圈和圈之间可以重叠
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134257.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210320134257.png)
 
 4. 若某个圈中的所有1方格，已经完全被其他圈所覆盖，则改圈就是多余的，即每一个圈中至少应该有一个标1方格是他特有的。
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134549.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210320134549.png)
 
 ##### 练习
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134907.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320134907.png)
 
 上面的式子进行化简后可以表示成下方的最简与或式。我们来分析一下：首先四个角被红色框圈起来得到¬B¬D，然后两侧的蓝圈圈出四个方块得到¬A¬D，然后中间竖着的绿色圈圈出四个方格得到¬CD，最后橘色圈圈中两个方法得到ABD。将四个项相加记得到最简式子，我们可以看出每一个标1方格都至少被圈中了一次，并且每一个圈都是尽可能大的，并且每一个圈都有自己圈中的独有的标1方格。
 
@@ -59,7 +58,7 @@ categories:
 
 我们前面所讲的卡诺图化简时要求，一个方格要么是1，要么是0。但是我们之前学到过无关项，他对结果不产生决定作用，因此无论取何值都可以，即你可以把他看成是0也可以把他看成是1。在卡诺图中当输出的值不重要或者相应的输入组合从不处显示，就可以由设计者决定这些输出时0还是1。充分利用无关项，我们可以进一步化简逻辑表达式。比如下图中：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320135734.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320135734.png)
 
 我们发现对于某些组合，其结果是无关项，那么我们就在相应的方格表标记X，由于无关项既可以是0也可以是1，所以我们在化简时就可以用圈尽可能的圈最多的1，同时圈也可以圈X，也可以不圈。如上图，这样在化简时明显就更加简单了。
 
@@ -69,41 +68,41 @@ categories:
 
 7段数码管常用来表示一个十进制数，由于一共是十个数0-9，所以我们使用四个位就可以表示了。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144701.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144701.png)
 
 一般7段数码管有两种连接方法，共阴极和共阳极：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144748.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144748.png)
 
 无论是哪一种实际上设计思路都是一样的。首先我们列出不同数字对应的应该亮的数码管编号：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144852.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144852.png)
 
 然后用D0D1D2D3表示十进制数的0-9，对应的就要使得输出端Sa-Sg输出不同的值：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145104.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145104.png)
 
 那么我们列出真值表以后使用卡诺图画出不同数对应的电路，这里以Sa为例：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145154.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145154.png)
 
 那么用卡诺图得到Sa的最简表达式以后我们就可以画出电路图了：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145229.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145229.png)
 
 #### 编码器
 
 我们前面学习了优先级线路，他的输出信号总是和最高级输入信号的值相同，那么我们之前用了一个很复杂的图来实现这个功能的，那么有没有更好的方法呢？当然有，此时我们就可以使用编码器，那么编码器是如何实现的呢，看下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320140630.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320140630.png)
 
 上面是一个4线-2线编码器（因为输入信号是4个线编号0~3，所以只需要2个位就可以表示4个输入线，所以只需要两个输出线，因此叫做4线-2线编码器）。其中X0,X1,X2,X3是输入信号线，输出A0，A1是用来输出有效信号的编号的，EO是用来判断是否存在有效输入的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320140948.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320140948.png)
 
 我们用编码器模拟了优先级线路，他的工作原理如上图，当没有有效输入时，那么EO=1，此时无论A0,A1是何值都是没有用的。但是当EO=0，那么就说明此时有有效输入了，具体是哪个输入为有效输入，就需要A0,A1来输出表示有效输入的编号了，例如当X3位有效输入时，那么A0=A1=1，即此时二进制编号11即10进制的3号输入信号是有效输入。当然上面的表格我们也可以使用无关项来描述：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320141420.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320141420.png)
 
 表示的意思是一样的。
 
@@ -119,25 +118,25 @@ EO=\overline{X_0+X_1+X_2+X_3}
 $$
 A0和A1我们根据真值表先对卡诺图进行标1填写：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142228.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142228.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142242.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142242.png)
 
 然后化简我们就得到了A0和A1的最简表达式，这样我们就可以画出编码器的实现电路图了：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142322.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142322.png)
 
 当然上面仅是一个4线-2线编码器的电路图，更加复杂的电路图我们需要按照上面的步骤重新推导。
 
 #### 译码器
 
-译码器我们并不陌生，在[《机组原理》](https://wenchong.space/2021/02/21/comsys-note8/)中我们学习了译码器是用来解析生成片选信号用的，那么译码器到底是如何通过电路实现的呢？实际上译码就是编码的逆过程，所以对于4线-2线的编码器生成的指令，我们需要使用2线-4线译码器来进行译码。并且由于是逆过程，编码器是接收的有效输入信号然后输出有效输入信号的编号，那么译码器就是接受有效输入信号的编号，然后相应的将对应编号的输出端输出信号1。如下：
+译码器我们并不陌生，在[《机组原理》](https://coolchong.cn/2021/02/21/comsys-note8/)中我们学习了译码器是用来解析生成片选信号用的，那么译码器到底是如何通过电路实现的呢？实际上译码就是编码的逆过程，所以对于4线-2线的编码器生成的指令，我们需要使用2线-4线译码器来进行译码。并且由于是逆过程，编码器是接收的有效输入信号然后输出有效输入信号的编号，那么译码器就是接受有效输入信号的编号，然后相应的将对应编号的输出端输出信号1。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142921.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142921.png)
 
 当接收到10编号，那么就是Y2应该输出有效信号1。那么我们同样可以使用卡诺图进行化简写出表达式然后画出译码器的电路：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143023.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143023.png)
 
 ##### 思考：编码器和译码器的合作使用有什么优点？
 
@@ -145,7 +144,7 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 当然我们也可以使用译码器实现更加复杂的逻辑，例如实现同或门：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143317.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143317.png)
 
 只需要将输出端的输出信号进行更改即可。
 
@@ -153,19 +152,19 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 多路选择器的功能是可以从选择信号的值从N个可能的输入中选择一个作为输出，他一般需要使用log2N位选择信号作为输入来表示编号X输入信号，控制输入信号的选择，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143658.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143658.png)
 
 最简单的就是二选一电路，那么当S=0时说明输出信号Y和输入信号D0相同，当S=1时说明输出信号Y和输入信号D1相同。这种选择器的实现我们也可以使用卡诺图化简得到他的电路表达式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143848.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143848.png)
 
 或者使用三态缓冲器实现：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144006.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144006.png)
 
 当然对于更加复杂的多路选择器，我们也需要按照先列真值表，画卡诺图再化简的步骤得到电路表达式甚至可以借用其他组件：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144103.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144103.png)
 
 {% note info, 
 
@@ -183,14 +182,14 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 我们发现在设计电路时并不仅仅需要考虑式子的简单与否，还要考虑延迟等外界因素，这就涉及到了组合逻辑电路的时序问题。在实际电路中，输出相应输入的改变是需要一定的时间，而不是理想情况下的立刻改变：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145643.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145643.png)
 
 所以我们在设计电路时还要考虑时序问题，即怎样设计电路使得整体的延迟最小。这里我们先学习几个概念：
 
 - 传播延迟：t_pd即为输入改变直到一个或多个输出改变为最终值所经历的最长时间延迟
 - 最小延迟：t_cd即为输入发生变化直到任何一个输出开始改变的最短时间
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145849.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145849.png)
 
 如刚才的A->Y电路，传播延迟就是A开始改变到Y改变稳定所需要的时间，而最小延迟就是A开始改变到Y开始改变的时间，很明显传播延迟总是要大于等于最小延迟。
 
@@ -211,7 +210,7 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 根据不同路径的延迟不同，我们定义：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320150712.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320150712.png)
 
 很明显，一般门越多的电路延迟越大，并且由于我们的目的是为了提升整体的运行性能，即降低整体的延迟，我们一般关注的是关键路径的延迟，降低关键路径的延迟才能大幅提升整体的性能。
 
@@ -219,19 +218,19 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 在电路中还会涉及到“毛刺”的问题，这种问题在电路图中不易察觉，但是在实际电路中却很明显很有可能造成整体电路的错误。那么什么是毛刺呢？实际上就是指一个输入的一个变化可能会引起后面多个输出的多次变化。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151042.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151042.png)
 
 当A=0,C=1时，B突然由1变成0，从电路图和卡诺图中我们通常会认为Y不会发生变化还是维持信号1，但是实际上我们分析一下电路信号的传输速度，由于B信号需要经过非门再和非A相或才能得到¬A¬B,而得到BC则不需要经过非门，所以BC会先发生变化变成0，而此时¬A¬B还没有从0变成1，所以有一段时间Y会变成0，待¬A¬B变化完成后变成1了，此时Y才会变回1。所以实际上Y的变化时1->0->1，而不是保持1不变。此时如果Y后面还有其他逻辑操作，那么这种微小的变化可能会被无限放大从而造成整体电路的异常。因此毛刺是一种风险，究其原因产生毛刺是因为输入端的变化不能同时到达逻辑门从而可能造成输出端的多次变化：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151642.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151642.png)
 
 为了防止毛刺的产生，我们不能一味追求电路的表达式最简，而要同时保证没有毛刺产生。当信号的变化在卡诺图中穿越两个主蕴含项的边缘时就会产生“毛刺”：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151833.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151833.png)
 
 如上图两个圈的边缘没有过渡。为了避免，我们只需要增加多余的蕴含项来盖住这些边缘以避免毛刺：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151938.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151938.png)
 
 我们发现此时得到的表达式就不是最简式了，但是这样做的意义很重要，他可以有效避免毛刺对整体电路的影响。
 
@@ -255,11 +254,11 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 有时候可能会存在某个奇异“1”单元，他只能自己单独成一个圈：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320133940.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320133940.png)
 
 或者也有可能一个卡诺图用两个不同的思路化简会得到两个最简式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134101.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320134101.png)
 
 但是无论怎样化简我们都要遵循以下规则：
 
@@ -269,15 +268,15 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 3. 为了得到尽可能大的圈，圈和圈之间可以重叠
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134257.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210320134257.png)
 
 4. 若某个圈中的所有1方格，已经完全被其他圈所覆盖，则改圈就是多余的，即每一个圈中至少应该有一个标1方格是他特有的。
 
-   ![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134549.png)
+   ![](https://langwenchong.gitee.io/figure-bed/20210320134549.png)
 
 ##### 练习
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320134907.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320134907.png)
 
 上面的式子进行化简后可以表示成下方的最简与或式。我们来分析一下：首先四个角被红色框圈起来得到¬B¬D，然后两侧的蓝圈圈出四个方块得到¬A¬D，然后中间竖着的绿色圈圈出四个方格得到¬CD，最后橘色圈圈中两个方法得到ABD。将四个项相加记得到最简式子，我们可以看出每一个标1方格都至少被圈中了一次，并且每一个圈都是尽可能大的，并且每一个圈都有自己圈中的独有的标1方格。
 
@@ -285,7 +284,7 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 我们前面所讲的卡诺图化简时要求，一个方格要么是1，要么是0。但是我们之前学到过无关项，他对结果不产生决定作用，因此无论取何值都可以，即你可以把他看成是0也可以把他看成是1。在卡诺图中当输出的值不重要或者相应的输入组合从不处显示，就可以由设计者决定这些输出时0还是1。充分利用无关项，我们可以进一步化简逻辑表达式。比如下图中：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320135734.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320135734.png)
 
 我们发现对于某些组合，其结果是无关项，那么我们就在相应的方格表标记X，由于无关项既可以是0也可以是1，所以我们在化简时就可以用圈尽可能的圈最多的1，同时圈也可以圈X，也可以不圈。如上图，这样在化简时明显就更加简单了。
 
@@ -295,41 +294,41 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 7段数码管常用来表示一个十进制数，由于一共是十个数0-9，所以我们使用四个位就可以表示了。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144701.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144701.png)
 
 一般7段数码管有两种连接方法，共阴极和共阳极：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144748.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144748.png)
 
 无论是哪一种实际上设计思路都是一样的。首先我们列出不同数字对应的应该亮的数码管编号：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144852.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144852.png)
 
 然后用D0D1D2D3表示十进制数的0-9，对应的就要使得输出端Sa-Sg输出不同的值：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145104.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145104.png)
 
 那么我们列出真值表以后使用卡诺图画出不同数对应的电路，这里以Sa为例：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145154.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145154.png)
 
 那么用卡诺图得到Sa的最简表达式以后我们就可以画出电路图了：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145229.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145229.png)
 
 #### 编码器
 
 我们前面学习了优先级线路，他的输出信号总是和最高级输入信号的值相同，那么我们之前用了一个很复杂的图来实现这个功能的，那么有没有更好的方法呢？当然有，此时我们就可以使用编码器，那么编码器是如何实现的呢，看下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320140630.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320140630.png)
 
 上面是一个4线-2线编码器（因为输入信号是4个线编号0~3，所以只需要2个位就可以表示4个输入线，所以只需要两个输出线，因此叫做4线-2线编码器）。其中X0,X1,X2,X3是输入信号线，输出A0，A1是用来输出有效信号的编号的，EO是用来判断是否存在有效输入的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320140948.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320140948.png)
 
 我们用编码器模拟了优先级线路，他的工作原理如上图，当没有有效输入时，那么EO=1，此时无论A0,A1是何值都是没有用的。但是当EO=0，那么就说明此时有有效输入了，具体是哪个输入为有效输入，就需要A0,A1来输出表示有效输入的编号了，例如当X3位有效输入时，那么A0=A1=1，即此时二进制编号11即10进制的3号输入信号是有效输入。当然上面的表格我们也可以使用无关项来描述：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320141420.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320141420.png)
 
 表示的意思是一样的。
 
@@ -345,25 +344,25 @@ EO=\overline{X_0+X_1+X_2+X_3}
 $$
 A0和A1我们根据真值表先对卡诺图进行标1填写：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142228.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142228.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142242.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142242.png)
 
 然后化简我们就得到了A0和A1的最简表达式，这样我们就可以画出编码器的实现电路图了：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142322.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142322.png)
 
 当然上面仅是一个4线-2线编码器的电路图，更加复杂的电路图我们需要按照上面的步骤重新推导。
 
 #### 译码器
 
-译码器我们并不陌生，在[《机组原理》](https://wenchong.space/2021/02/21/comsys-note8/)中我们学习了译码器是用来解析生成片选信号用的，那么译码器到底是如何通过电路实现的呢？实际上译码就是编码的逆过程，所以对于4线-2线的编码器生成的指令，我们需要使用2线-4线译码器来进行译码。并且由于是逆过程，编码器是接收的有效输入信号然后输出有效输入信号的编号，那么译码器就是接受有效输入信号的编号，然后相应的将对应编号的输出端输出信号1。如下：
+译码器我们并不陌生，在[《机组原理》](https://coolchong.cn/2021/02/21/comsys-note8/)中我们学习了译码器是用来解析生成片选信号用的，那么译码器到底是如何通过电路实现的呢？实际上译码就是编码的逆过程，所以对于4线-2线的编码器生成的指令，我们需要使用2线-4线译码器来进行译码。并且由于是逆过程，编码器是接收的有效输入信号然后输出有效输入信号的编号，那么译码器就是接受有效输入信号的编号，然后相应的将对应编号的输出端输出信号1。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320142921.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320142921.png)
 
 当接收到10编号，那么就是Y2应该输出有效信号1。那么我们同样可以使用卡诺图进行化简写出表达式然后画出译码器的电路：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143023.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143023.png)
 
 ##### 思考：编码器和译码器的合作使用有什么优点？
 
@@ -371,7 +370,7 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 当然我们也可以使用译码器实现更加复杂的逻辑，例如实现同或门：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143317.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143317.png)
 
 只需要将输出端的输出信号进行更改即可。
 
@@ -379,19 +378,19 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 多路选择器的功能是可以从选择信号的值从N个可能的输入中选择一个作为输出，他一般需要使用log2N位选择信号作为输入来表示编号X输入信号，控制输入信号的选择，比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143658.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143658.png)
 
 最简单的就是二选一电路，那么当S=0时说明输出信号Y和输入信号D0相同，当S=1时说明输出信号Y和输入信号D1相同。这种选择器的实现我们也可以使用卡诺图化简得到他的电路表达式：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320143848.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320143848.png)
 
 或者使用三态缓冲器实现：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144006.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144006.png)
 
 当然对于更加复杂的多路选择器，我们也需要按照先列真值表，画卡诺图再化简的步骤得到电路表达式甚至可以借用其他组件：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320144103.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320144103.png)
 
 {% note info, 
 
@@ -409,14 +408,14 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 我们发现在设计电路时并不仅仅需要考虑式子的简单与否，还要考虑延迟等外界因素，这就涉及到了组合逻辑电路的时序问题。在实际电路中，输出相应输入的改变是需要一定的时间，而不是理想情况下的立刻改变：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145643.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145643.png)
 
 所以我们在设计电路时还要考虑时序问题，即怎样设计电路使得整体的延迟最小。这里我们先学习几个概念：
 
 - 传播延迟：t_pd即为输入改变直到一个或多个输出改变为最终值所经历的最长时间延迟
 - 最小延迟：t_cd即为输入发生变化直到任何一个输出开始改变的最短时间
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320145849.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320145849.png)
 
 如刚才的A->Y电路，传播延迟就是A开始改变到Y改变稳定所需要的时间，而最小延迟就是A开始改变到Y开始改变的时间，很明显传播延迟总是要大于等于最小延迟。
 
@@ -437,7 +436,7 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 根据不同路径的延迟不同，我们定义：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320150712.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320150712.png)
 
 很明显，一般门越多的电路延迟越大，并且由于我们的目的是为了提升整体的运行性能，即降低整体的延迟，我们一般关注的是关键路径的延迟，降低关键路径的延迟才能大幅提升整体的性能。
 
@@ -445,19 +444,19 @@ A0和A1我们根据真值表先对卡诺图进行标1填写：
 
 在电路中还会涉及到“毛刺”的问题，这种问题在电路图中不易察觉，但是在实际电路中却很明显很有可能造成整体电路的错误。那么什么是毛刺呢？实际上就是指一个输入的一个变化可能会引起后面多个输出的多次变化。比如：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151042.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151042.png)
 
 当A=0,C=1时，B突然由1变成0，从电路图和卡诺图中我们通常会认为Y不会发生变化还是维持信号1，但是实际上我们分析一下电路信号的传输速度，由于B信号需要经过非门再和非A相或才能得到¬A¬B,而得到BC则不需要经过非门，所以BC会先发生变化变成0，而此时¬A¬B还没有从0变成1，所以有一段时间Y会变成0，待¬A¬B变化完成后变成1了，此时Y才会变回1。所以实际上Y的变化时1->0->1，而不是保持1不变。此时如果Y后面还有其他逻辑操作，那么这种微小的变化可能会被无限放大从而造成整体电路的异常。因此毛刺是一种风险，究其原因产生毛刺是因为输入端的变化不能同时到达逻辑门从而可能造成输出端的多次变化：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151642.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151642.png)
 
 为了防止毛刺的产生，我们不能一味追求电路的表达式最简，而要同时保证没有毛刺产生。当信号的变化在卡诺图中穿越两个主蕴含项的边缘时就会产生“毛刺”：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151833.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151833.png)
 
 如上图两个圈的边缘没有过渡。为了避免，我们只需要增加多余的蕴含项来盖住这些边缘以避免毛刺：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210320151938.png)
+![](https://langwenchong.gitee.io/figure-bed/20210320151938.png)
 
 我们发现此时得到的表达式就不是最简式了，但是这样做的意义很重要，他可以有效避免毛刺对整体电路的影响。
 

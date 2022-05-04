@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第一讲
 comments: false
 top: false
 date: 2021-03-05 16:33:40
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -15,9 +14,9 @@ categories:
 
 #### 逻辑门
 
-大部分逻辑门我们在[《机组原理笔记》](https://wenchong.space/2021/02/09/comsys-note5/)中已经学习了大部分逻辑门，这里不再细讲，但是这里补充一个门。
+大部分逻辑门我们在[《机组原理笔记》](https://coolchong.cn/2021/02/09/comsys-note5/)中已经学习了大部分逻辑门，这里不再细讲，但是这里补充一个门。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307095527.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307095527.png)
 
 这个门并未改变数值，也就是说逻辑功能上来讲和导线并未区别，但是一个电流在经过多个逻辑门以后电压难免会降低，但是电压又是用来表述0和1值的。为了位置数值不变即电压稳定，这个门可以为电流提供稳定的能量驱动，从而保障电流电压的稳定即数值的正确性。
 
@@ -29,7 +28,7 @@ categories:
 
 任何使得信号衰减的事物都是噪声，例如给电源供电时耦合到传输线中的阻抗等就是噪声，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307100329.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307100329.png)
 
 那么如果不巧刚好高电平的信号受噪声干扰降为了低电平，那么就相当于应该表示1的信号衰减为了0信号，这就是错误了。因此为了尽量避免这种情况，我们应该经过一段时间加入一个驱动Buf门来保证电平的稳定性。
 
@@ -39,7 +38,7 @@ categories:
 
 即为了保障有效的逻辑输入，所有的电路单元产生有效的逻辑输出，我们使用有线的电压范围来表示离散的数值1和0。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307101020.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307101020.png)
 
 作为输出端高电平表示1的范围是VOH，低电平是VOL，然而其中间范围的空白区域既不用来表示1也不表示0，而是作为错误信号区域，这样，当输出的信号总是在空白区域及说明输出信号段器件已损坏，需要及时修复。而作为接收端，原理也类似，但是要注意接受端的高电平范围会更大即临界值更小，低电平范围也会更大即临界值更大。
 $$
@@ -59,11 +58,11 @@ $$
 
 #### 直流传输特性
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307102029.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307102029.png)
 
 通过下图我们可以看出，左图是理想的电平信号，即0和1信号之间的电平是骤增的，这样就没有中间过渡变量信号值了，但是实际生活中，直流传输特性都是如右图的，所以我们需要用区间来划分高低电平信号。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307102519.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307102519.png)
 
 并且误差区间NMH和NML一般不会大于VDD/2(VDD就是逻辑器件可表示的最大信号电平值，即表示范围的最大值）,即陡峭的部分一般不会过大。当然判断一个器件性能是否足够好，可以通过观察其从低电平到高电平的增长曲线斜率是否大（是否陡峭）。越陡峭表示误差范围越小，从低电平到高电平的增长越快，性能也就越好。
 
@@ -80,13 +79,13 @@ $$
 
 他是其中一种逻辑电平系器件，它是通过半导体来实现的。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307103728.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307103728.png)
 
 类似的C,SI等都是半导体，他们是通过共用电子对连接的，稳定性强。共价键的强结合力，是原子排列规则，形成晶体。这样自由电子就很少，共价键中的两个电子都被紧紧束缚在共价键之中，称为束缚电子，常温下束缚电子很难脱离称为自由电子，因此本征半导体中（就是不含杂质的半导体）的自由电子很少，所以导电能力弱。
 
 现在我们将一些C换成高价磷如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307104212.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307104212.png)
 
 那么就会多出一个自由电子，这样磷原子就成了不能移动的带正电离子了，我们将次时的结构称为N型半导体。
 
@@ -96,7 +95,7 @@ $$
 
 同样的我们也将一些C换成三价元素如硼或者铟等，那么就会少一个电子即为空穴如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307104405.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307104405.png)
 
 那么此时的结构我们称为P型半导体。
 
@@ -108,13 +107,13 @@ $$
 
 那么我们在同一个半导体基片上，分别制造P型半导体和N型半导体，经过载流子的扩散，在他们的交界处就会形成PN结如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307104632.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307104632.png)
 
 #### PN结正向偏置
 
 那么我们知道随着越来越多的自由电子和空穴结合，在P,N中间区域就会形成许多PN结也就导致了导电性变差了，同时由于自由电子和空穴的减少，PN型半导体的导电性会减弱。因此PN型半导体导电性如果不在外界的影响下，导电性会逐渐自动变差。我们为了避免这种情况，维持其导电性，接入如下的电源：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307112413.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307112413.png)
 
 那么PN半导体内自由电子会自动向右移动去和空穴结合形成PN结堆积在中间部分使得虚线包括部分逐渐变厚（因为有许多的自由电子和空穴形成的呈电中性的PN结）。但是现在我们加入了如上图的电源，其电流方向和半导体内的电流方向刚好相反，也就阻碍了PN半导体内的自由电子向右移动去和空穴集合，因此PN结会变少，中间部分也就会变薄，同时由于会PN结形成的少，说明空穴和自由电子也就更多，维持了PN半导体的导电性强。上图是PN结正向偏置。
 
@@ -122,7 +121,7 @@ $$
 
 那么如果电源反接，那么就会促进PN结的形成，也就造成了中间部分变厚，同时PN半导体的导电性会加速削弱，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307112935.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307112935.png)
 
 这是PN结反向偏置。我们发现上面两种情况都是PN解单向导电特性的体现。正反向偏置利用PN结单向导电性的特点可以实现半导体的功能，时而断点，时而通电。
 
@@ -130,43 +129,43 @@ $$
 
 半导体二极管如硅二极管就是半导体正向偏置和反向偏置的应用。首先我们给出硅二极管伏安特性曲线：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307113630.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307113630.png)
 
 也就是说明只有电压大于0.5V才能产生电流。那么导通时
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307113714.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307113714.png)
 
 就类似于电源闭合，允许电流通过，实际上就是半导体正向偏置维持其导电性所以可以通过电流。而截至时
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307113804.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307113804.png)
 
 就类似于电源断开，不允许电流通过。实际上就是半导体反向偏置加速了半导体导电性削弱直至到0，所以不允许通过电流。
 
 类似的还有如下形式：MOS晶体管是多个PN结形成
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307114053.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307114053.png)
 
 #### nMOS
 
 通电和断点就是使用Gate是否接入来决定导电性的，也就模拟出了半导体的特性。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307114109.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307114109.png)
 
 #### pMOS
 
 当然上面的是npn形式的我们称为nMOS，同样也有pnp形式的我们称为pMOS，只是Gate信号相反了如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307114418.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307114418.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307114620.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307114620.png)
 
 一定要注意两个符号不一样，pMOS多了一个圈表示取反的意思，因此Gate信号功能刚好相反。那么两个晶体管的功能如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307114935.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307114935.png)
 
 也就是nMOS可以更好的导电0信号,pMMOS导电1信号。他们两个组合就可以形成一个非门如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307115030.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307115030.png)
 
 此时当输入信号为A时，那么nMOS关闭Gate，导致不导电0信号GND，而此时正相反pMOS打开Gate，可以导电高电平VDD，因此Y输出信号1，也就实现了非门的功能了。当然如果反一下，nMOS接VDD，pMOS接GND那么就是一个驱动BUF门了。
 
@@ -178,6 +177,6 @@ $$
 
 同样更复杂的连接还可以形成与非门：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210307115318.png)
+![](https://langwenchong.gitee.io/figure-bed/20210307115318.png)
 
 此时两个pMOS并联为P1,P2分别受A,B控制，同时两个nMOS串联为N1,N2分别受A,B控制。那么只要N1,N2有一个Gate，那么就不能输出低电平，因此只有A=1&B=1的时候才能输出低电平信号0，其他情况只要A=1||B=1，那么并联的P1,P2就可以输出高电平信号1。刚好满足与非门的功能，因此再复杂的门我们都可以通过不同的pMOS和nMOS来进行拼接组合表示出来。并且都是体现了半导体PN结单向导电的性质和正向偏置与反向偏置的应用。

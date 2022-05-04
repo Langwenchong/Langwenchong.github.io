@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第十三讲
 comments: false
 top: false
 date: 2021-05-09 10:25:41
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -17,15 +16,15 @@ categories:
 
 上一讲我们学习了存储器阵列，而存储器阵列是由位单元阵列组成的，每一个位单元只存储1位数据，每一个位单元与一个字线（wordline）和一个位线（bitline)相连，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509102922.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509102922.png)
 
 读写数据主要是通过位线来完成的：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509103110.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509103110.png)
 
 那么现在我们再来从整体上观察一下存储器阵列的结构：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509103155.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509103155.png)
 
 可以得到以下几点规律：
 
@@ -42,7 +41,7 @@ categories:
 
 #### 存储器的类型
 
-这里实际上我们在[《计算机组成原理》](https://wenchong.space/2021/02/19/comsys-note7/)中介绍过，但是当时并没有从存储器阵列的角度去分析。这里我们会以存储器阵列的角度去介绍，首先我们回忆一下存储器的类型。
+这里实际上我们在[《计算机组成原理》](https://coolchong.cn/2021/02/19/comsys-note7/)中介绍过，但是当时并没有从存储器阵列的角度去分析。这里我们会以存储器阵列的角度去介绍，首先我们回忆一下存储器的类型。
 
 - 随机访问存储器（RAM）：易失的
   - 动态随机访问存储器（DRAM）：计算机的主存
@@ -57,17 +56,17 @@ ROM也是可以随机访问的，大多数现代ROM也已经支持的可读写�
 
 DRAM是将数据存储在一个电容上，读操作后，存储的数据会被破坏，电容上的存储的电荷量会慢慢泄漏，因此为了维持数据的存在，需要频繁的进行刷新充电（读，然后写），所以被称为动态存储器。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509104226.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509104226.png)
 
 ##### SRAM
 
 而SRAM是将数据存储在一个交叉耦合的反相器中，交叉耦合反相器具有很强的抗干扰能力，因此并不需要频繁的进行刷新，因此被称为静态存储器。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509104333.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509104333.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509104357.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509104357.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509104415.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509104415.png)
 
 #### 几种存储器的比较
 
@@ -83,7 +82,7 @@ ROM虽然也是存储器，他的读速度非常快，但是写速度很慢。
 
 单端口是存储器中常见的端口，即一次性只能读/写。使用同一个端口来接受/输出数据，因此我们需要保证任何时刻，存储的端口只能处于读/写状态。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509104815.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509104815.png)
 
 实现原理实际上就是使用了两个三态缓冲器，保证两个三态缓冲器的使能端任一时刻相反即可，这样即保证了每一次只有一个线路处于通路状态，也就保证了每次只能读入/输出数据。
 
@@ -97,7 +96,7 @@ ROM虽然也是存储器，他的读速度非常快，但是写速度很慢。
 
 %}
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509105118.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509105118.png)
 
 他有两个读端口A1/RD1和A2/RD2，还有一个写端口A3/WD3，地址线均是5位，可寻址2^5=32个寄存器。他可以同时读两个寄存器和写一个寄存器。
 
@@ -105,7 +104,7 @@ ROM虽然也是存储器，他的读速度非常快，但是写速度很慢。
 
 RAM是一个随机访问存储器，他需要接收地址，数据，clk时钟信号等，然后还要有输出端等，结构如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509105633.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509105633.png)
 
 那么我们接下来对他进行建模：
 
@@ -156,7 +155,7 @@ endmodule
 
 ##### 输入时序约束
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509111753.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509111753.png)
 
 - 建立时间（Setup time)：t_setup=在时钟有效边沿到来前信号所需要稳定的时间
 - 保持时间（Hold time)：t_hold=在时钟有效边沿到来后在采样时输入信号需要保持稳定的时间
@@ -171,14 +170,14 @@ $$
 
 前面我们讲到的仅仅是在clk有效时对采样信号D的时序约束要求，但是采样完成以后赋值给Q还有一定的时间。这里的输出时序同样需要加上约束：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509112508.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509112508.png)
 
 - 传播延迟（Propagation delay)：t_pcq=时钟有效边沿到达后到Q最终稳定所需要的最长时间
 - 最小延迟（Contamination delay)：t_ccq=时钟有效边沿到达后到Q开始改变所需要的最短时间
 
 ##### 动态约束
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509112709.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509112709.png)
 
 我们在学习了几个有关约束的概念以后，需要添加动态约束，首先同步时序电路中，输入必须在时钟有效边沿附近的孔径时间内保持稳定。即输入信号必须
 
@@ -187,7 +186,7 @@ $$
 
 ##### 系统时序
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509112914.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509112914.png)
 
 时钟周期Tc是指两个时钟上升沿（下降沿）之间的间隔
 $$
@@ -195,13 +194,13 @@ f_c=1/T_c,表示时钟频率
 $$
 那么提高时钟频率（也就是缩短时钟周期）就可以增加数字系统在单位时间完成的工作量，但是频率不能无限制的增加。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509113108.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509113108.png)
 
 如上图所示，两个寄存器间的延迟具有最小和最大延迟，这些延迟由其中的电路元件的延迟所决定。很明显D2想要变化，首先需要Q1改变完成并稳定，因此T_c有一个最小值，同样的也会有一个最大值。
 
 ##### 建立时间约束
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509112914.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509112914.png)
 
 建立时间约束由路径R1至R2间的最大延迟所决定：
 
@@ -210,7 +209,7 @@ $$
 
 我们通过上图可以容易得到结论，寄存器R2的输入信号D2必须在下一个时钟上升沿的t_setup时间前稳定。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509113441.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509113441.png)
 
 同时D2稳定至少需要t_pd+t_pcq。因此有以下约束公式：
 $$
@@ -226,7 +225,7 @@ $$
 
 上式就被成为建立时间约束或者最大延迟约束，即上式限制了我们在设计组合逻辑电路的最大延迟。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509113758.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509113758.png)
 
 在商业设计中：
 
@@ -237,14 +236,14 @@ $$
 
 ##### 保持时间约束
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509132039.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509132039.png)
 
 保持时间约束由路径R1至R2间的最短延迟所决定：
 
 - 寄存器的最小延迟t_ccq
 - 组合逻辑电路的最小延迟t_cd
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509132428.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509132428.png)
 
 
 
@@ -262,7 +261,7 @@ $$
 
 上式被称为保持时间约束或者最小延迟约束，其限制了我们设计的组合逻辑电路的最小延迟，因此组合逻辑电路延迟不能太大也不能太小。下面我们介绍一种特殊的情况，触发器背靠背相连：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509133540.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509133540.png)
 
 此时触发器之间没有组合逻辑电路，因此t_cd=0，那么如果要不违反保持时间约束，需要保证
 $$
@@ -283,7 +282,7 @@ $$
 
 可能我们会有点懵，不知道建立时间约束和保持时间约束的由来，下面我们来总结一下两个D触发器的工作原理。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509132039.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509132039.png)
 
 如上图，两个D触发器有一个CLK控制，并且R2的输入信号是R1输出信号经过组合逻辑电路进行计算加工得到的。因此在第一个CLK上升沿抵达后Q1会更新，然后会用组合逻辑电路进行计算得到D2，我们需要保证在第二个CLK上升沿抵达前D2已经稳定得到了Q1根据组合逻辑电路计算出来的新信号值，因此有一个建立时间延迟。同时在第一个CLK抵达后第二个CLK抵达前，Q1很快就会变化完成并且经过组合逻辑电路计算得到了新的修改值可以传递给D2了，但是D2并不是得到修改值后马上就能变化，他需要保证维持一个t_hold来保证R2的输出Q2可以正确得到D2的值，当Q2稳定得到D2的值以后D2才能变化更改为新的值，因此新的值不能计算抵达的太快，他需要晚于t_hold，因此也就是保持时间约束。两者共同限制了组合逻辑电路延迟不能过长也不能过短。
 
@@ -291,11 +290,11 @@ $$
 
 我们前面学习了时序问题的约束条件，那么接下来我们来以一道例题学习一下时序分析。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509134916.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509134916.png)
 
 根据题干我们可以知道
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509135323.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509135323.png)
 $$
 \begin{cases}
 t_{pd}=35ps*3=105ps\\
@@ -315,6 +314,6 @@ $$
 
 我们只需要将t_cd提升即可，我们发现之前的最短路径是只经过一个门，因此出现t_cd=25ps。我们可以修改电路为使其至少要经过两个门，因此在只经过一个门的电路上增加一个缓冲器门，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210509135509.png)
+![](https://langwenchong.gitee.io/figure-bed/20210509135509.png)
 
 缓冲器就是仅仅减缓了信号传递的速度，这样t_cd就至少为50ps>40ps了，因此也就不违反保持时间约束了。

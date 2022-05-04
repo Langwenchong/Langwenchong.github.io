@@ -3,10 +3,9 @@ title: 数字逻辑与数字系统笔记-第十一讲
 comments: false
 top: false
 date: 2021-04-23 18:48:20
-tags: [note,机组原理]
+tags: [机组原理]
 categories: 
-	- [学习笔记]
-	- [408,计算机系统]
+	- [个人笔记,数字电路]
 ---
 
 记录翀翀🥺学习数字逻辑与数字系统的核心笔记与思考，由于这门课程和计算机系统基础的知识点联系性较强，可以作为408机组原理的补充学习。这里分享一段话：要么出众，要么出局，乾坤未定，你我皆是黑马，同是寒窗苦读，怎愿甘拜下风。
@@ -17,7 +16,7 @@ categories:
 
 有限状态机就是同步时序逻辑电路的最典型应用，因此有限状态机的结构实际上和同步时序逻辑电路的特点很类似：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423185035.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423185035.png)
 
 即有限状态机有状态寄存器和组合逻辑电路两大组成部分，其中状态寄存器存储当前时刻的状态，并且状态在下一个有效时钟沿会发生改变，更新为次态的状态。而组合逻辑电路通常就是根据输入来计算次态，和根据现态计算出输出值。
 
@@ -25,7 +24,7 @@ categories:
 
 有限状态机有两大类，分别是Moore机和Mealy型有限状态机。两者的区别在于：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423185317.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423185317.png)
 
 Moore型有限状态机中，输出仅由当前状态所决定，而对于Mealy型状态机，输出由当前状态和输入共同决定。但是无论是哪种状态机，都属于同步时序逻辑电路。
 
@@ -39,7 +38,7 @@ Moore型有限状态机中，输出仅由当前状态所决定，而对于Mealy�
 
 接下来我们用一到例题来详细学习Moore型有限状态机的应用和具体的工作原理。假设现在有一个十字路口，那么X轴方向的两个对立的红绿灯我们设置为La,Y轴方向的两个对立的红绿灯我们设置为Lb如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423185724.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423185724.png)
 
 那么很明显会存在两个输入即两个交通传感器Ta和Tb,当X轴上有小轿车等待时，那么Ta传感器返还true，即输入端Ta的值是1，否则为0。同理对于Y轴当有轿车等待时Tb为1否则为0。
 
@@ -47,11 +46,11 @@ Moore型有限状态机中，输出仅由当前状态所决定，而对于Mealy�
 
 我们设置CLK周期为5s，因此每一个时钟沿到达时，灯会根据交通传感器来改变。同时还存在一个复位按键，可以使交通灯控制器回到初始状态。那么很明显有限状态器的寄存器黑盒视图如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423190203.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423190203.png)
 
 这就是有限状态机的输入，输出的设置。接下来我们来分析一下有限状态机黑盒内部的具体状态转换结构是什么样子的。我们画出状态转换图如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423190319.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423190319.png)
 
 上面就是有限状态机根据不同的输入转换成不同的状态的循环图了。我们其实可以类比成计算机网络Rdt中的发送接收端的状态转换图，原理是类似的。此时：
 
@@ -63,17 +62,17 @@ Moore型有限状态机中，输出仅由当前状态所决定，而对于Mealy�
 
 那么下面我们分析一下状态转换图是如何正确表示Moore型有限状态机的转换的：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423190319.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423190319.png)
 
 S0表示的是La绿灯，Lb红灯的情况，即X轴车可以通过十字路口，Y轴的车需要等待的情况。但是当输入端Ta不是1即`非Ta`是1的情况时，表示此时X轴没有车了，那么此时就从S0切换到S1即X轴的红绿灯La闪烁一段黄灯后继续转换到S2状态，即Y轴的车可以通过狮子路口，同时X轴的车需要排队。同理的，当Tb=0即Y轴没有车时，那么Lb闪烁一段黄灯以后，切换回到S0状态，即X轴绿灯。同时我们考虑到如下情况，可能Ta一直为1，表示X轴一直有车，那么此时X轴就要一直亮绿灯即S0圆圈右上角闭环的情况出现，同理，也会存在Y轴正在通车且Y轴一直有车的情况，那么此时就需要一直Lb亮绿灯也就是S2左下角闭环的情况。同时我们还要有一个复位Reset端来使得我们可以在任何时段强制恢复成S0的状态。自此我们发现上图的状态转换过程是正确的，可以表示出不同情况下十字路口的红绿灯状态。
 
 因此我们根据上图的状态转换图可以总结出下图的状态真值表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423191427.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423191427.png)
 
 即根据不同的输入Ta和Tb以及现态来决定次态的情况。（这里的现态决定次态就是带有回路的同步时序逻辑特有的特点）我们可以总结出上图的表格，然后对状态进行编码，即使用若干个逻辑表达式来整理表示出次态和现态与输入的关系：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423191622.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423191622.png)
 
 要注意，此时的中间的真值表的现态是有两位二进制码S1S0来表示的，这是因为状态转换一共有4个不同的状态，需要至少使用2位二进制码才能表示出来，因此此时00表示状态S0，01表示状态S1,10表示状态S2，11表示状态S3。同时次态很明显也会有4中状态，因此也是使用2位二进制编码表示。然后我们即可得到逻辑表达式：
 $$
@@ -84,21 +83,21 @@ S_0'=S_1S_0T_A+S_1S_0T_B
 $$
 这就是有限状态机根据输入端的输入值和现态来计算次态的公式。因此此时我们只得到了有限状态机前半部分用来计算次态的组合逻辑电路的表示式，接下来我们还要得到根据现态计算出输出的组合逻辑表达式。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423192401.png)我们知道此时由状态寄存器输出的现态有S1‘S0’表示,但是最终我们要得到的输出时La个Lb。因此可以根据S1‘S0'和状态转换图列出以下真值表：
+![](https://langwenchong.gitee.io/figure-bed/20210423192401.png)我们知道此时由状态寄存器输出的现态有S1‘S0’表示,但是最终我们要得到的输出时La个Lb。因此可以根据S1‘S0'和状态转换图列出以下真值表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423192233.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423192233.png)
 
 即现态和输出的关系。由于La和Lb都有三种状态，因此需要使用2位二进制码才能表示出来，因此最终的输出并不是La和Lb两个输出端，而是4个输出端。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423192423.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423192423.png)
 
 这就是一个完整的表示十字路口红绿灯的有限状态机的同步时序逻辑电路。我们发现有限状态机黑盒（也是状态寄存器）只是其中的核心部位，他还需要左右两侧的组合逻辑电路来根据输入计算次态，以及根据现态计算输出。因此有限状态机总是可以抽象为：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423185035.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423185035.png)
 
 下面我们根据得到的状态机，可以实时的画出有限状态机的端时序图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423192735.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423192735.png)
 
 #### Moore型有限状态机设计方法
 
@@ -139,19 +138,19 @@ $$
 
 现在我们还是以一道案例来学习：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423194232.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423194232.png)
 
 举一个形象的例子，假设现在有一串二进制码100101100,假设蜗牛每次走过位需要1s,那么这个蜗牛会在4s和6s时对我们微笑。现在我们需要设计有限状态机来表示。
 
 我们先使用Moore型状态转换图来分析：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423194445.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423194445.png)
 
 很明显状态转换图如上图形式，S0是未记住任何一位时的状态即`不笑的状态`，而S1是已经经过了一个0位时的状态即`马上要笑的状态`，而S2就是刚好经过的最后两位是01的状态即`笑的状态`。那么未出发时或者刚刚走过01时处于S0状态，当向后走了一位后得到一个0时，那么就到达S1状态，只要再在下一步经过1就能够微笑即转换为S2状态。但是假设S1时又经过一个0，那么就还处于S1状态，即S1状态左下角闭环的情况。同样的当S0状态经过了一个1，那么仍然处于S0状态，即右上角闭环情况。当处于S2状态并且下一位是1时那么就换成S0状态，否则是0就转换成S1状态。我们分析一下蜗牛走100101100时每一位的状态应该是S0->S0(1)->S1(0)->S1(0)->S2(1)->S1(0)->S2(1)->S0(1)->S1(0)->S1(0)。因此上面的状态转换时逻辑正确的，接下来按照之前所讲的步骤即可得到Moore型有限状态机的电路图，这里就不给出具体过程了。
 
 我们接下来尝试使用Mealy型状态转换图表示，由于Mealy型状态转换机的现态同时受次态和输入决定，因此只会存在`马上要笑`和`不笑`的两个状态，而不会存在`马上要笑`的状态，即状态会更少，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423195200.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423195200.png)
 
 此时S0表示未记住任何一位时的状态即`不笑的状态`，因此当处于S0并且接收到输入时0时就已经可以判断出输出是不笑即0了，然后转换到S1`马上要笑的状态`，当S1状态时得到输入为0，那么仍保持在S1状态，否则就笑输出1然后转换到S0状态。我们发现此时和Moore型状态转换图的逻辑是一样的，只是此时的表示更加简洁，少了一个状态图相应的也就降低了电路的复杂度。
 
@@ -161,15 +160,15 @@ $$
 
 接下来我们同样得到状态转换真值表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423200231.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423200231.png)
 
 我们发先Mealy型的状态转化表更加简单，因为只有两个状态，所以编码只需要使用一位。最终我们可以得到Mealy型状态转换机的电路图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423200339.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423200339.png)
 
 我们发现Mealy型状态转换机电路图更加简洁，但是实际上实现的逻辑功能和Moore型没有差别。最终我们同样给出Mealy型状态机时序图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423200429.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423200429.png)
 
 我们发现对于同样的输出Y的变化，由于Mealy型状态更少，因此中间的状态转换过程也更少，因此Mealy型Y的变化整体比Moore型要快。
 
@@ -185,5 +184,5 @@ $$
 
 #### Moore型状态机和Mealy型状态机的总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210423200827.png)
+![](https://langwenchong.gitee.io/figure-bed/20210423200827.png)
 

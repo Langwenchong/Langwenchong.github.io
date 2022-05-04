@@ -3,10 +3,9 @@ title: 操作系统笔记--Part17
 comments: false
 top: false
 date: 2020-12-31 12:16:18
-tags: [note,操作系统,OS,408]
+tags: [408,操作系统]
 categories: 
-	- [学习笔记]
-	- [408,操作系统]
+	- [个人笔记,操作系统]
 ---
 
 本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。
@@ -17,11 +16,11 @@ categories:
 
 #### 文件块，磁盘块
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231121838.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231121838.png)
 
 外存中的文件存储方式我们前面提到过实际上和内存中的分页存储类似，磁盘中的存储单元也会被分为一个个“块/磁盘块/物理块”，甚至在许多操作系统中，磁盘块的大小和内存块，页面的大小是相同的。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231122029.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231122029.png)
 
 所以I/O操作的时间开销较大，一般要避免I/O操作（例如内存中页面调度优先淘汰干净页面以避免写回）或者降低I/O的操作次数例如上面讲到的PCB索引节点机制。因为在外存中也是分成一个个外存块，所以文件的逻辑地址也是逻辑块号+块内地址拼接的形式。用户给出的是逻辑地址而操作系统转换为物理地址进行映射。
 
@@ -29,11 +28,11 @@ categories:
 
 连续分配要求每个文件在磁盘上占有一组连续的块。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231141943.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231141943.png)
 
 并且对应的文件目录中也需要记录起始块号，占据的块的长度：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231142015.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231142015.png)
 
 并且由于逻辑地址->物理地址的方法相似，所以当用户给出逻辑块号后，只需要操作系统根据目录项FCB找到对应的物理块号=起始块号+逻辑块号即可，然后在检验合法后在拼接上块内地址即可完成，因此连续分配支持顺序访问和直接访问（随机访问）。
 
@@ -45,11 +44,11 @@ categories:
 
 我们考虑一种情况，比如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231142453.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231142453.png)
 
 A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓展，需要在增加一个磁盘块并且由于要连续存储，因此此时A放不下了，又因为后面的连续块都已经被橙色所占用，所以A只能全部迁移到绿色区域。这无疑会造成很大的开销。所以物理上采用连续分配的文件不方便拓展。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231142707.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231142707.png)
 
 并且还会造成如上图的情况，这是连续分配存储的共性问题，大量的外部碎片会降低空间的利用率，当然那我们同样可以使用紧凑技术来处理碎片，但是很明显会有大量的开销。
 
@@ -59,7 +58,7 @@ A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓�
 
 为了解决上面的外部碎片问题，我们采用链接分配磁盘块，这里先给出隐式链接的方法，还是如上图，我们此时把文件离散存储并记录起始块号和结束块号（中间块号不记录），每一个中间块都有一个尾指针指向下一个存储文件信息的磁盘块并且对用户开放，这样就不要紧凑技术仍然可以充分利用外部碎片了。如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231143134.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231143134.png)
 
 并且貌似文件拓展也就不是什么难事了所以不会有外部碎片，但是此时却产生了另一个缺点。
 
@@ -71,7 +70,7 @@ A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓�
 
 为了解决上面所遇到的问题，可以把用于链接文件各物理块的指针显式的存放在一个表中，即文件分配表（FAT,File Allocation Table)。同样目录中只需要记录起始块号即可，会另有FAT用来存储这些指针如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231143823.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231143823.png)
 
 此时我们为每一个磁盘设置一张FAT，开机时，将FAT放入内存并常驻内存。因为此时按物理块号递增排列，所以物理块号可以隐含不需要占用额外的空间。
 
@@ -83,7 +82,7 @@ A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓�
 
 这就是分页存储思想在外存中的应用，索引分配允许文件离散的分配在各个磁盘块中，系统会为每个文件建立一张索引表，索引表记录了文件的各个逻辑块对应的物理块（索引表的功能类似于内存管理中的页表--建立逻辑页面到物理页之间的映射关系）。索引表存放的磁盘块称为索引块。文件数据存放的磁盘块称为数据块。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231144846.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231144846.png)
 
 假设某个新创建的文件aaa的数据依次存放在磁盘块2->5->13->9,7号磁盘块作为aaa的索引块，即7号块存放aaa的索引表存放aaa文件的逻辑块号与物理块号的映射关系。所以我们注意到与FAT不同，索引分配中，索引表是一个文件对应一张。
 
@@ -99,7 +98,7 @@ A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓�
 
 如果索引表太大，一个索引块放不下，那么可以将多个索引块链接起来存放。如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231150355.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231150355.png)
 
 看似问题有效解决了，但是考虑一种情况：假设磁盘块大小为1KB，一个索引表项占4B，则一个磁盘块只能存放256个索引项。如果一个文件大小为256\*256KB=64MB，那么这个文件一共需要256\*256块,也就是256个索引块来存储，那么如果真的是按照链接形式存放，如果想要访问最后一个索引块就需要先将前面的255个全部访问一遍，这样顺序查找时间开销太大。
 
@@ -107,7 +106,7 @@ A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓�
 
 建立多层索引（类似于多级页表），是第一层索引块指向第二层索引块，还可根据需要再建立第三层，第四层索引块。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231150755.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231150755.png)
 
 如果采用这种二层索引，那么该文件的最大程度可以到达64MB，并且还可以根据逻辑块号算出应该查找索引表中的哪个表项。例如现在要查找1026号逻辑块：
 
@@ -117,7 +116,7 @@ A此时是占用了连续的3个黄色的磁盘块，但是现在A要进行拓�
 
 多种索引分配方式的结合。例如：一个文件的顶级索引表中，既包含了直接地址索引（直接指向数据块），又包含一级间接索引（指向单层索引表）、还包含两级间接索引（指向两层索引表）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231151846.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231151846.png)
 
 这样需要经常被访问的就放在直接地址索引，对于不经常使用的放在多级地址索引，高效同时长度拓展的也很大。非常合理，同时我们也可以进行文件的大小估计。例如上图中的最大文件长度就是65800KB，其实计算和多级索引类似。
 
@@ -146,13 +145,13 @@ $$
 
 ##### 混淆点：什么是支持随机访问？
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231153717.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231153717.png)
 
 假设现在这个文件的逻辑结构是“顺序文件”，并且是定长记录，每个记录的长度是16B，那么i号记录的逻辑地址是多少？（从0开始编号）
 
 每块大小为1KB，定长记录时16B，所以一各磁盘块可以存放64个记录，则：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231153928.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231153928.png)
 
 “文件的某种逻辑结构支持随机存取/随机访问”是指：采用这种逻辑结构的文件，可以根据记录号直接算出该记录对应的逻辑地址（逻辑块号，块内地址）。
 
@@ -162,15 +161,15 @@ $$
 
 安装windows操作系统的时候必须经历的步骤--为磁盘分区（C盘，D盘等）。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231160125.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231160125.png)
 
 #### 存储空间管理--空闲表法
 
 空闲表法主要适用于连续分配方式，这里是用一张空闲盘块表进行对空闲物理块的记录，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231160310.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231160310.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231160319.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231160319.png)
 
 如何分配磁盘块：其实和内存管理的动态分区分配很相似，为一个文件分配连续的存储空间，同样可以采用首次适应，最佳适应，最坏适应等算法来决定为文件配到那个区。
 
@@ -185,7 +184,7 @@ $$
 
 #### 存储空间管理--空闲表链法
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231160636.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231160636.png)
 
 ##### 空闲盘块链
 
@@ -205,11 +204,11 @@ $$
 
 其实就类似于矩阵存储，但是又不是完全一样，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231161637.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231161637.png)
 
 这是磁盘的情况，那么我们可以列出一种特殊的矩阵形式，如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231161708.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231161708.png)
 
 他是由字号和位号来表示的，因为这个矩阵时16列，所以一个字号就是代表几个16，而位号就是几个1，优点类似于满16进1的表示意味。
 
@@ -219,7 +218,7 @@ $$
 $$
 所以如下图我们可以推出：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231162215.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231162215.png)
 
 同理我们也可以一直盘块号反推出字号和位号
 $$
@@ -232,7 +231,7 @@ $$
 
 所以我们可以反推出：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231162352.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231162352.png)
 
 所以分配时：若分配需要K个块，
 
@@ -254,9 +253,9 @@ $$
 
 文件卷的目录区中专门有一个磁盘块为“超级块”，当系统启动时需要将超级块读入内存。并且要保证内存与外存中的“超级块”数据一致。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231162800.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231162800.png)
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231163005.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231163005.png)
 
 超级块记录的是下一组的空闲块数，然后底下表示的就是空闲块号，并且这些空闲块不是连续的，而是离散存储使用指针相连的，这里只是为了方便表示。所以现在上图中的情况是表示超级块表示下一组有100个空闲块分别是201\~300号同时发现300号，即此时300号是空的，但是同时300号有表示下一组有100个空闲块分别是301\~400号，同时400号表示下一组7801\~7900是空闲块，但是当遇到-1表示这个是空闲块的末尾了即使空闲块此时显示一个正整数但是此时也表示没有空闲块了。
 
@@ -264,13 +263,13 @@ $$
 
 我们现在假设需要给一个空闲块分配，那么首先检查第一个分组的块数是否满足。发现1<100所以第一组就可以满足，然后分配第一组中的一个空闲块并修改数据即可。所以加入一个后变成：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231164958.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231164958.png)
 
 此时第一个超级块变成了99，同时201~300号中有一个变成了非空闲块。一定要注意即使此时300上面显示下一组的空闲块数说明他是一个空闲块但是他仍然自身还是一个空闲块。
 
 现在我们假设要分配100个空闲块，那么显然此时第一组刚好放下，所以201\~300全部填满都变成了非空闲块，但是此时300底下也有一组空闲块为301\~400所以此时不能放在300底下了赋值到超级块底下如下：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231165340.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231165340.png)
 
 所以超级块第一个位置是400，直接指向400开头的组，所以此时超级块底下为400，7801~7900。
 
@@ -278,11 +277,11 @@ $$
 
 因为每组就只能100（一般是规定好的最大值），那么此时下图中：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231165528.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231165528.png)
 
 超级块此时是99表示下一组有99个空闲块，还可以回收一个，所以回收的如果刚好1个那么就放到第一组的末尾。但是如果此时要回收100个，那么就会超了，所以要新建一组来存放空闲块，并且组头用来标记下一组的空闲块数，如下图：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20201231165730.png)
+![](https://langwenchong.gitee.io/figure-bed/20201231165730.png)
 
 那么此时组成的100个空闲块的一组就组成一个新组并且300中的400指向之前的400开头的组，那么此时超级块就表示第一个组只有1个空闲块了。
 
@@ -290,7 +289,7 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101115058.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101115058.png)
 
 ### 文件的基本操作
 
@@ -304,7 +303,7 @@ $$
 2. 文件存放的路径("D:/Demo")
 3. 文件名（这个地方默认为"新建文本文档.txt")
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101100850.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101100850.png)
 
 操作系统在进行Create系统调用时，主要进行了两件事：
 
@@ -313,7 +312,7 @@ $$
 
 #### 删除文件
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101101222.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101101222.png)
 
 进行Delete系统调用，需要以下几个参数：
 
@@ -334,7 +333,7 @@ $$
 2. 文件名（test.txt)
 3. 要对文件的操作类型（如：r只读，rw读写等）
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101101826.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101101826.png)
 
 操作系统需要处理Open系统调用时，主要做一下几件事：
 
@@ -345,13 +344,13 @@ $$
 
 每个进程会对应着自己的一个打开文件表，同时系统也还拥有一张系统的打开文件表：
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101102221.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101102221.png)
 
 #### 关闭文件
 
 与打开文件相反，操作也类似。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101102346.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101102346.png)
 
 一定不要忘记最后一步的系统打开文件表项的操作。
 
@@ -359,7 +358,7 @@ $$
 
 进程使用read系统调用完成读操作，需要指明是哪个文件（在支持“打开文件”的操作系统中，只需要指明文件在打开文件表中的索引值就行了），还需要指明要读入的数据大小、读入的数据的存放位置。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101102635.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101102635.png)
 
 操作系统在处理read系统调用时，会从读指针指向的外存中，将用户指定大小的数据读入到内存的指定存放位置。
 
@@ -367,7 +366,7 @@ $$
 
 进程使用write系统调用完成写操作，需要指明是哪个文件（在支持“打开文件”操作系统中，只需要提供文件在打开文件表中的索引号即可），还需要指明要写出多少数据，写回外存的数据的存放位置。
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101102758.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101102758.png)
 
 操作系统在处理write系统调用时，会从用户指定的内存区域，将指定大小的数据写回写指针指向的外存。
 
@@ -377,6 +376,6 @@ $$
 
 #### 总结
 
-![](https://gitee.com/Langwenchong/figure-bed/raw/master/20210101115131.png)
+![](https://langwenchong.gitee.io/figure-bed/20210101115131.png)
 
 实际上当遇到文件重名时，系统会请求用户端能否使用(1)(2)后缀表示或者用户端更改文件名。
