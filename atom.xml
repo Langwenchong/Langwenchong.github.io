@@ -3,11 +3,11 @@
   <title>雨中•学圃堂</title>
   
   <subtitle>纵有疾风起，人生不言弃👊 | 别再学习啦，人家都困了🥱</subtitle>
-  <link href="https://coolchong.cn/atom.xml" rel="self"/>
+  <link href="https://scholar.coolchong.cn/atom.xml" rel="self"/>
   
-  <link href="https://coolchong.cn/"/>
+  <link href="https://scholar.coolchong.cn/"/>
   <updated>2023-01-08T07:12:04.009Z</updated>
-  <id>https://coolchong.cn/</id>
+  <id>https://scholar.coolchong.cn/</id>
   
   <author>
     <name>Wenchong Lang</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://coolchong.cn/2023/01/06/hello-world/"/>
-    <id>https://coolchong.cn/2023/01/06/hello-world/</id>
+    <link href="https://scholar.coolchong.cn/2023/01/06/hello-world/"/>
+    <id>https://scholar.coolchong.cn/2023/01/06/hello-world/</id>
     <published>2023-01-06T04:46:33.061Z</published>
     <updated>2023-01-08T07:12:04.009Z</updated>
     
@@ -33,14 +33,14 @@
     
     
     
-    <category term="新文章" scheme="https://coolchong.cn/categories/%E6%96%B0%E6%96%87%E7%AB%A0/"/>
+    <category term="新文章" scheme="https://scholar.coolchong.cn/categories/%E6%96%B0%E6%96%87%E7%AB%A0/"/>
     
     
-    <category term="年后" scheme="https://coolchong.cn/tags/%E5%B9%B4%E5%90%8E/"/>
+    <category term="年后" scheme="https://scholar.coolchong.cn/tags/%E5%B9%B4%E5%90%8E/"/>
     
-    <category term="法法" scheme="https://coolchong.cn/tags/%E6%B3%95%E6%B3%95/"/>
+    <category term="法法" scheme="https://scholar.coolchong.cn/tags/%E6%B3%95%E6%B3%95/"/>
     
-    <category term="发顺丰三" scheme="https://coolchong.cn/tags/%E5%8F%91%E9%A1%BA%E4%B8%B0%E4%B8%89/"/>
+    <category term="发顺丰三" scheme="https://scholar.coolchong.cn/tags/%E5%8F%91%E9%A1%BA%E4%B8%B0%E4%B8%89/"/>
     
   </entry>
   
