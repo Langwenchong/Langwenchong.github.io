@@ -53,6 +53,9 @@
   border-radius: 7px;
   background: rgba(0,0,0,0);
 }
+.wl-comment {
+  margin-bottom: 4.75em !important;
+}
 :root {
   --site-bg: #f9fafb;
   --card: #fff;
