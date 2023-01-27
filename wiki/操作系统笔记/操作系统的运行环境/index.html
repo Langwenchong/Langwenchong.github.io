@@ -23,12 +23,12 @@
   <title>OS：操作系统的运行环境 - 雨中•学圃堂</title>
 
   
-    <meta name="description" content="title: 操作系统笔记–Part2 comments: false top: false date: 2020-12-15 12:53:04 tags: [408,操作系统] categories: - [个人笔记,操作系统]  本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，">
+    <meta name="description" content="操作系统的运行机制  预备知识 在学习之前，我们先来回忆一下程序是如何运行的。首先指令是指处理器cpu可以识别、执行的最基本命令。在生活中，很多人习惯将Linux,Windows,MacOS的小黑窗中的命令也称为“指令”，实际上这些是“交互式命令接口”，与本节的“指令”不同，本节中的“指令”是指硬件层机器所能识别的二进制指令（即01串）。  一条高级指令如C,JAVA等都会首先通过编译器翻译为机">
 <meta property="og:type" content="website">
 <meta property="og:title" content="操作系统的运行环境">
 <meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
-<meta property="og:description" content="title: 操作系统笔记–Part2 comments: false top: false date: 2020-12-15 12:53:04 tags: [408,操作系统] categories: - [个人笔记,操作系统]  本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，">
+<meta property="og:description" content="操作系统的运行机制  预备知识 在学习之前，我们先来回忆一下程序是如何运行的。首先指令是指处理器cpu可以识别、执行的最基本命令。在生活中，很多人习惯将Linux,Windows,MacOS的小黑窗中的命令也称为“指令”，实际上这些是“交互式命令接口”，与本节的“指令”不同，本节中的“指令”是指硬件层机器所能识别的二进制指令（即01串）。  一条高级指令如C,JAVA等都会首先通过编译器翻译为机">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic.imgdb.cn/item/5fd8428e3ffa7d37b3a2607f.jpg">
 <meta property="og:image" content="https://pic.imgdb.cn/item/5fd84b7c3ffa7d37b3ab9f23.jpg">
@@ -50,8 +50,8 @@
 <meta property="og:image" content="https://pic.imgdb.cn/item/5fd879083ffa7d37b3df0321.jpg">
 <meta property="og:image" content="https://pic.imgdb.cn/item/5fd879473ffa7d37b3df551f.jpg">
 <meta property="og:image" content="https://pic.imgdb.cn/item/5fd87a693ffa7d37b3e0ead0.jpg">
-<meta property="article:published_time" content="2023-01-27T07:23:30.506Z">
-<meta property="article:modified_time" content="2023-01-27T07:23:30.506Z">
+<meta property="article:published_time" content="2023-01-27T08:02:08.557Z">
+<meta property="article:modified_time" content="2023-01-27T08:02:08.557Z">
 <meta property="article:author" content="Wenchong Lang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic.imgdb.cn/item/5fd8428e3ffa7d37b3a2607f.jpg">
@@ -126,22 +126,11 @@
 
   
   
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">OS</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T07:23:30.506Z">2023-01-27</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">OS</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T08:02:08.557Z">2023-01-27</time></div></div>
 
   <article class='md-text content wiki reveal'>
   <h1 class="article-title"><span>操作系统的运行环境</span></h1>
-  <hr />
-<p>title: 操作系统笔记–Part2<br />
-comments: false<br />
-top: false<br />
-date: 2020-12-15 12:53:04<br />
-tags: [408,操作系统]<br />
-categories:<br />
-- [个人笔记,操作系统]</p>
-<hr />
-<p>本系列记录翀翀👦学习操作系统的部分核心笔记，作为408重难点其难度可想而知，学习之前愿君听我一席语：不要半途而废，不要作业太多就抛下你手中的笔，拿起你旁边的手机，你觉得这样很有意义吗？一个小时一道题都没做，盯着手机屏幕它能给你一个未来吗？少分心就能多做一道题，多学样本事就能少说一句求人的话，三分钟热度败于常人努力吧。</p>
-<span id="more"></span>
-<h3 id="操作系统的运行机制"><a class="markdownIt-Anchor" href="#操作系统的运行机制"></a> 操作系统的运行机制</h3>
+  <h3 id="操作系统的运行机制"><a class="markdownIt-Anchor" href="#操作系统的运行机制"></a> 操作系统的运行机制</h3>
 <h4 id="预备知识"><a class="markdownIt-Anchor" href="#预备知识"></a> 预备知识</h4>
 <p>在学习之前，我们先来回忆一下程序是如何运行的。首先指令是指处理器cpu可以识别、执行的最基本命令。在生活中，很多人习惯将Linux,Windows,MacOS的小黑窗中的命令也称为“指令”，实际上这些是“交互式命令接口”，与本节的“指令”不同，本节中的“指令”是指硬件层机器所能识别的二进制指令（即01串）。</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fd8428e3ffa7d37b3a2607f.jpg" alt="" /></p>
