@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Digit&Logic：指令集体系 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="指令集体系结构 不同的处理器会有不同的指令集，但是无论是哪一种，最终要解决的问题就是兼容性问题，即可以使得一个软件在不同的系统上运行，我们在学习了OS后知道操作系统实际上就是一个服务软件，用来协调硬件系统和上层软件之间的合作运行。而指令集来充当一个服务的翻译官，使得不同的软件可以在可兼容的硬件系统中将运行的指令翻译为硬件系统可以识别的命令供处理器运行。因此一个软件可以运行在装配有不同intel处">
+<meta property="og:type" content="website">
+<meta property="og:title" content="指令集体系">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="指令集体系结构 不同的处理器会有不同的指令集，但是无论是哪一种，最终要解决的问题就是兼容性问题，即可以使得一个软件在不同的系统上运行，我们在学习了OS后知道操作系统实际上就是一个服务软件，用来协调硬件系统和上层软件之间的合作运行。而指令集来充当一个服务的翻译官，使得不同的软件可以在可兼容的硬件系统中将运行的指令翻译为硬件系统可以识别的命令供处理器运行。因此一个软件可以运行在装配有不同intel处">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607103907.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607105111.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607105404.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607111527.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607155649.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607161837.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210607162319.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609204643.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609205838.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609212012.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609212026.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609213741.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609214502.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609215349.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609215413.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609215754.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609215957.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609220630.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609220743.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609222121.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210609222845.png">
+<meta property="article:published_time" content="2023-01-27T14:31:10.584Z">
+<meta property="article:modified_time" content="2023-01-27T14:31:10.584Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20210607103907.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html"><div class="main" ff="title">Digit&Logic</div><div class="sub cap">这都不会怎么好意思称之为"科班生"？</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/数字逻辑与数字系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html#start"><span class="toc-text">逻辑电路基本元件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html"><span class="toc-text">逻辑电路的表达式</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%96%E7%AE%80%E4%B8%8E%E4%B8%89%E6%80%81%E7%BC%93%E5%86%B2%E5%99%A8/index.html"><span class="toc-text">表达式化简与三态缓冲器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E4%B8%8E%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8/index.html"><span class="toc-text">卡诺图与编译码器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/index.html"><span class="toc-text">硬件描述语言</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">行为建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E6%8B%93%E5%B1%95%E4%B8%8E%E6%B5%8B%E8%AF%95/index.html"><span class="toc-text">建模方法拓展与测试</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E9%80%BB%E8%BE%91%E5%99%A8%E4%BB%B6/index.html"><span class="toc-text">常用逻辑器件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/index.html"><span class="toc-text">时序逻辑电路</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA/index.html"><span class="toc-text">有限状态机</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E6%9C%BA%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">状态机建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">存储器建模</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB/index.html"><span class="toc-text">指令集体系</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text"> 指令集体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%B0%81%E6%9B%B4%E9%9D%A0%E8%BF%91%E5%BA%95%E5%B1%82"><span class="toc-text"> 思考：操作系统和指令集体系结构谁更靠近底层？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text"> 定义：什么是指令集体系结构？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%93%E5%B1%95isa%E4%B8%AD%E7%9A%84%E4%BA%94%E6%9C%B5%E9%87%91%E8%8A%B1"><span class="toc-text"> 拓展：ISA中的“五朵金花”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%8C%87%E4%BB%A4%E9%9B%86%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-text"> 思考：指令集系统结构为什么很重要？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text"> 微体系结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80"><span class="toc-text"> 汇编语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mips32%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text"> MIPS32位寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8general-purpose-register"><span class="toc-text"> 通用寄存器（General Purpose Register)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text"> 特殊寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%8E%A7%E5%88%B6%E7%8A%B6%E6%80%81%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text"> 系统控制状态寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%9C%A8%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%AD%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%E8%AF%86%E5%88%AB%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E5%93%AA%E4%B8%80%E4%B8%AA%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text"> 思考：在汇编语言中我们如何区分识别当前使用的是哪一个寄存器？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mips%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text"> MIPS存储器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E5%AD%97%E7%BC%96%E5%9D%80%E5%92%8C%E5%AF%BB%E5%9D%80"><span class="toc-text"> 按字编址和寻址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E5%AD%97%E8%8A%82%E7%BC%96%E5%9D%80"><span class="toc-text"> 按字节编址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%AB%AF%E5%92%8C%E5%B0%8F%E7%AB%AF"><span class="toc-text"> 大端和小端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E6%9E%9C%E4%B8%8A%E9%9D%A2%E7%9A%84%E4%BB%A3%E7%A0%81%E6%94%B9%E5%86%99%E4%B8%BAlw-s010%E5%8F%AF%E4%BB%A5%E5%90%97"><span class="toc-text"> 思考：如果上面的代码改写为lw $s0,1($0)可以吗？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E4%BD%95%E7%94%A8%E4%B8%80%E6%AE%B5c%E7%A8%8B%E5%BA%8F%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%99%A8%E9%87%87%E7%94%A8%E7%9A%84%E6%98%AF%E5%A4%A7%E7%AB%AF%E5%AD%98%E5%82%A8%E8%BF%98%E6%98%AF%E5%B0%8F%E7%AB%AF%E5%AD%98%E5%82%A8"><span class="toc-text"> 思考：如何用一段C程序，来判断运行机器采用的是大端存储还是小端存储？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E7%AB%8B%E5%8D%B3%E6%95%B0"><span class="toc-text"> 操作数–立即数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80"><span class="toc-text"> 机器语言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4r%E5%9E%8B%E6%8C%87%E4%BB%A4"><span class="toc-text"> 寄存器类型指令（R型指令）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4i%E5%9E%8B%E6%8C%87%E4%BB%A4"><span class="toc-text"> 立即数类型指令（I型指令）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E5%9E%8B%E6%8C%87%E4%BB%A4j%E5%9E%8B%E6%8C%87%E4%BB%A4"><span class="toc-text"> 跳转型指令（J型指令)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%95%E5%91%A8%E6%9C%9FMIPS32/index.html"><span class="toc-text">单周期MIPS32</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多计算机基础</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><span class="title">操作系统笔记</span><span class="excerpt">操作系统是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html">Digit&Logic</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T14:31:10.584Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>指令集体系</span></h1>
+  <h3 id="指令集体系结构"><a class="markdownIt-Anchor" href="#指令集体系结构"></a> 指令集体系结构</h3>
+<p>不同的处理器会有不同的指令集，但是无论是哪一种，最终要解决的问题就是兼容性问题，即可以使得一个软件在不同的系统上运行，我们在学习了OS后知道操作系统实际上就是一个服务软件，用来协调硬件系统和上层软件之间的合作运行。而指令集来充当一个服务的翻译官，使得不同的软件可以在可兼容的硬件系统中将运行的指令翻译为硬件系统可以识别的命令供处理器运行。因此一个软件可以运行在装配有不同intel处理器的个人电脑上，也可以同时运行在装配有不同ARM处理器的安卓手机上，实际上就是指令即完成的可兼容功能。因此通过指令集的可兼容功能，不同类型，不同品牌的硬件产品只要使用相同的指令集，就可以进行组合使用。</p>
+<h4 id="思考操作系统和指令集体系结构谁更靠近底层"><a class="markdownIt-Anchor" href="#思考操作系统和指令集体系结构谁更靠近底层"></a> 思考：操作系统和指令集体系结构谁更靠近底层？</h4>
+<p>我们前面讲到了操作系统是本质上一个服务软件，因此他如果想在不同的硬件系统中进行运行，也需要可兼容性，因此需要指令集体系结构来实现翻译功能，因此指令集体系结构更靠近底层。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607103907.png" alt="" /></p>
+<p>如上图是一个计算机不同层次的模块，可以看到指令集体系结构更靠近底层，因此他会向os提供服务。并且指令集体系结构属于硬件模块层次。</p>
+<h4 id="定义什么是指令集体系结构"><a class="markdownIt-Anchor" href="#定义什么是指令集体系结构"></a> 定义：什么是指令集体系结构？</h4>
+<p>指令集体系结构（ISA，也称为指令系统），是对处理器硬件细节的抽象描述，即设计规范，他定义了处理器能够做什么，也是对系统级程序员所能看到的处理器的属性。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>指令集体系结构之所以能够定义处理器能够做什么，是因为他为处理器提供最基础的命令，处理器只能组合使用指令集体系结构提供的指令来实现软件需要的功能。比如指令集体系结构提供了<code>add</code>功能，那么处理器才能识别并完成<code>add</code>功能。并且要注意指令体系结构不仅仅局限于指令功能的编码，他还包括一些其他的硬件机制。</p></div></div> 
+<p>下面这些功能也都属于指令集体系结构中：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607105111.png" alt="" /></p>
+<p>软件就是使用指令集体系结构给出的规则恰当的使用硬件来完成功能。</p>
+<h4 id="拓展isa中的五朵金花"><a class="markdownIt-Anchor" href="#拓展isa中的五朵金花"></a> 拓展：ISA中的“五朵金花”</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607105404.png" alt="" /></p>
+<p>五大主流生产指令集体系结构的厂商，x86常用于桌面，arm，power常用于移动端设备,mips常出现于通信系统中。</p>
+<p>其中MIPS指令集（无内部互锁流水级处理器）是最经典的RISC处理器，由斯坦福大学校长Hennessy领导的小组在1981年开始设计，MIPS的理念就是使用相对简单的指令，结合优秀的编译器以及应用流水线技术执行指令，从而使用更少的晶体管生产处更快的处理器。我们后面的实验就是要设计实现一个简单的MIPS指令集体系结构。</p>
+<h4 id="思考指令集系统结构为什么很重要"><a class="markdownIt-Anchor" href="#思考指令集系统结构为什么很重要"></a> 思考：指令集系统结构为什么很重要？</h4>
+<p>通过层次图我们可以看到指令集体系结构起到了协调硬件与软件之间协调兼容的作用，只有硬件与软件使用同一套指令集体系结构，两者才能合作工作形成一个计算机。因此指令集体系结构是计算机产业的枢纽，连接着软件与硬件行业。</p>
+<p>一个指令集体系结构并无好坏之分，但是明显被更多地区，行业广泛接受支持的指令集体系结构是更具有影响力的，当前最主流的计算机体系结构就是x86指令集体系结构，但是这并不能说明x86在功能上就一定是最好的isa，只是被更多的行业产商所接受。所以在设计软、硬件时生产商需要参考x86指令集体系结构来实现其在其他使用x86指令集体系结构应用的兼容性，所以指令集体系结构还是计算机软硬件的重要标准，当isa被更多人普遍接受，那么会被更多人所参考，也就逐渐形成了重要的行业标准。</p>
+<p>并且指令系统决定了系统的性能和实现复杂性，例如RISC,CISC提供的指令复杂度不同，那么系统工作时的性能也会受到影响，再比如32/63位，媒体向量，向量指令等不同的ISA会采用不同的应用方式，也就决定了系统工作性能的高低。</p>
+<h3 id="微体系结构"><a class="markdownIt-Anchor" href="#微体系结构"></a> 微体系结构</h3>
+<p>微体系结构是指令集体系结构的一种具体硬件实现，如指令的数据通路结构，计算单元的电路结构（加法器等），存储器体系（寄存器文件、主存的结构）等等。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607111527.png" alt="" /></p>
+<p>我们可以看到x86进一步拆分出了许多微体系结构，不同的微体系结构模块有不同的功能。</p>
+<h3 id="汇编语言"><a class="markdownIt-Anchor" href="#汇编语言"></a> 汇编语言</h3>
+<p>汇编语言就是从机器易于识别的机器语言到人能易于理解的高级语言的一个过渡语言，他能够使用标注符号（助记符）将高级语言简化成贴近机器语言的形式，更便于我们人来阅读理解机器语言的功能。</p>
+<p>其中汇编语言包括汇编指令，伪指令（标签）、宏指令等。而机器语言仅仅是01编码。汇编语言可以将高级语言的复杂功能拆分简化，使得汇编指令和机器指令一一对应，然后汇编指令的不同搭配即可实现高级语言的功能。这里我们主要学习MIPS汇编指令，也就是学习MIPS指令集体系结构中的指令。</p>
+<p>我们以加减法指令为例，学习一下汇编语言得基本格式：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607155649.png" alt="" /></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">助记符 目的操作数 源操作数</span><br></pre></td></tr></table></figure>
+<p><code>助记符</code>是用来区分不同的汇编指令的符号，<code>目的操作数</code>是计算输出数据最终的去向，<code>源操作数</code>是输入数据的来源。在MIPS指令集系统结构中设计的准则是</p>
+<ol>
+<li>指令格式前后一致</li>
+<li>操作数格式一致</li>
+<li>易于在硬件编码和处理</li>
+</ol>
+<p>因此MIPS仅仅包含了非常简单常用的指令，使得硬件编码和指令指令变得简单，短小和快速。但是同样对于复杂的指令操作就只能使用许多简单的指令搭配组合去实现，而intel的x86则引入了更加复杂功能强大的指令，这也导致了x86指令集体系结构的硬件阶码和指令执行速度慢于MIPS。因此MIPS为RISC(精简指令)，而intel的x86为CISC（复杂指令）。</p>
+<p>在汇编操作中，以下三个形式可能是操作数：</p>
+<ol>
+<li>寄存器（存储操作数）</li>
+<li>存储器（存储操作数)</li>
+<li>常数（立即数,自身就是操作数）</li>
+</ol>
+<h3 id="mips32位寄存器"><a class="markdownIt-Anchor" href="#mips32位寄存器"></a> MIPS32位寄存器</h3>
+<p>MIPS定义了32个32位的寄存器组成的寄存器文件，我们学习过OS和机组原理后知道寄存器的访问速度是要快于内存的，但是存储容量确是有限的，因此我们要尽可能的使得寄存器能够存储更多的数据。MIPS中的寄存器操作的数据宽度为32位数据，因此MIPS又被称为32位体系，这体现了“越小的设计越快&quot;的设计准则。</p>
+<h4 id="通用寄存器general-purpose-register"><a class="markdownIt-Anchor" href="#通用寄存器general-purpose-register"></a> 通用寄存器（General Purpose Register)</h4>
+<p>32个寄存器，并且每一个寄存器的操作数据长度为32位，寄存器文件/寄存器堆是一个32×32位的通用寄存器组成的，这32个通用寄存器都是被程序员可见的寄存器。</p>
+<h4 id="特殊寄存器"><a class="markdownIt-Anchor" href="#特殊寄存器"></a> 特殊寄存器</h4>
+<p>特殊寄存器一般被定义来实现一些特殊的存储功能，如用于存储乘/除法结果的寄存器HI和LO，这些特殊寄存器程序员是可见的，但是用于存储指令地址的PC（程序计数器，功能是存储下一条要被cpu进行处理的指令的地址的寄存器），这种寄存器程序员是不可见的。</p>
+<h4 id="系统控制状态寄存器"><a class="markdownIt-Anchor" href="#系统控制状态寄存器"></a> 系统控制状态寄存器</h4>
+<p>例如CP0协处理中的寄存器，一般也是程序员不可见的，他是用来存储记录当前系统状态操作数的寄存器，他能决定系统是否处于目态，很明显为了安全，是不允许程序员看见并修改的。</p>
+<h4 id="思考在汇编语言中我们如何区分识别当前使用的是哪一个寄存器"><a class="markdownIt-Anchor" href="#思考在汇编语言中我们如何区分识别当前使用的是哪一个寄存器"></a> 思考：在汇编语言中我们如何区分识别当前使用的是哪一个寄存器？</h4>
+<p>为了对我们使用的寄存器加以区分，我们对每一个不同的寄存器都设置了唯一的寄存器编号，如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607161837.png" alt="" /></p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>一定要注意寄存器的助记符是要在数字编号前加上一个<code>$</code>符号的！例如$0代表的就是0号寄存器</p></div></div>
+<p>我们观察上表可以看出并不是所有的寄存器都可以随意存储操作数的，有一些寄存器有专有用途，如：</p>
+<ul>
+<li><code>$0</code>总是表示立即数0</li>
+<li><code>$0-$7</code>为保存寄存器，用于保存变量</li>
+<li><code>$0-$9</code>为临时寄存器，用于存储大型计算中的中间值</li>
+<li>当然了大部分还是通用寄存器，在我们学习过程中，可以默认为处了<code>$0</code>寄存器，其他寄存器都是可以任意使用来充当通用寄存器的</li>
+</ul>
+<p>下面我们最后看几个包含寄存器的汇编指令：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210607162319.png" alt="" /></p>
+<h3 id="mips存储器"><a class="markdownIt-Anchor" href="#mips存储器"></a> MIPS存储器</h3>
+<p>存储器可以存储更多的数据，并且访问时间更长，但是访问的时间开销也更大，因此常用的数据常放在寄存器中，而不常用的大量数据会存储到存储器中，当某个存储器的数据被使用后会放到寄存器中以便接下来一段时间可能会经常使用（局部性原理的体现）。MIPS中存储器和寄存器的综合搭配使用的机制实际上和页面调度算法中tlb和内存的工作机制是类似的。</p>
+<p>对于MIPS而言，存储器的地址为32位，一个存储字的长度也是32位。注意在MIPS中只采用按字节编址存储器，每一个字节有一个单独的地址，但是我们可以按字节、半字和字的方式进行寻址。</p>
+<h3 id="按字编址和寻址"><a class="markdownIt-Anchor" href="#按字编址和寻址"></a> 按字编址和寻址</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609204643.png" alt="" /></p>
+<p>按字编址时，一个字对应一个地址，如上图此时是一个词（字）对应着一个地址，而不是，他相较于按字节编址，一个地址对应着更多的数据（四个字节）。</p>
+<p>读存储器的指令称为加载指令（load)指令，他一次性加载一个字的指令助记符为<code>lw</code>（load a word)。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lw $s0,5($t1)</span><br></pre></td></tr></table></figure>
+<p>上面是一个读存储器的指令，作用是把某个地址对应的字数据加载到<code>s0</code>寄存器，后面的<code>5($t1)</code>实际上返还的是访存的地址。计算方式为：</p>
+<p class='katex-block katex-error' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 10: 访存地址=基地址($̲t1寄存器中的值)+偏移(5)…'>访存地址=基地址($t1寄存器中的值)+偏移(5)
+</p>
+<div class="tag-plugin note" color="yellow"><div class="title">1.</div><div class="body"><p>注意<code>$t1</code>是一个通用寄存器,只是这里刚好基地址存储在<code>t1</code>寄存器，实际上基地址可以存储在任意一个寄存器中 2. 一个字对应四个字节 ,</p></div></div>
+<p>写存储器的指令称为存储指令（store指令），他一次性存储一个字的指令助记符为<code>sw</code>（store a word)。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sw $s0,5($t1)</span><br></pre></td></tr></table></figure>
+<p>同样的访存地址还是($t1+5)，但是此时的作用是将<code>t0</code>寄存器中的字写入到这个主存地址中。因此lw和sw时一个对立的指令，两者搭配使用，完成读/写存储器的功能。</p>
+<h3 id="按字节编址"><a class="markdownIt-Anchor" href="#按字节编址"></a> 按字节编址</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609205838.png" alt="" /></p>
+<p>此时一个字节对应着一个地址，因此一个字会分成4个字节存储到4个存储器的地址单元中。此时根据一次性读/写1,2,4个字节可以分类成一下几种指令，他们都是读/写存储器的指令，但是一次性读/写对应的数据字节大小不同：</p>
+<ul>
+<li>读/写1个字节：<code>lb</code>(load a byte),<code>sb</code>(store a byte)</li>
+<li>读/写半字（2个字节）：<code>lh</code>(load half byte),<code>sh</code>(store half byte)</li>
+<li>读/写字（4个字节）：<code>lw</code>(load a word),<code>sw</code>(store a word)</li>
+</ul>
+<div class="tag-plugin note" ><div class="title">info</div><div class="body"><p>, 一个字(32bit=4byte)为4字节，字地址按4递增，字节地址按1递增</p></div></div>
+<p>因此，如果我们想在按字编址的存储器中读一个字节只能先取出一个字，在拆分处相应的需要的字节数据，而在一个按字节编址的存储器中如果我们想要读一个字的数据，那么应该一次性读4个字节的信息，因此访存地址应为4的倍数，即地址最后两位均为0，否则会出错。</p>
+<p>假设我们现在想从存储器地址4处，加载一个字到寄存器$3中，那么MIPS汇编代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#基地址为0，因此$0永远存储的是常数0，请区分$s0和$0寄存器</span><br><span class="line">#因此偏移4个单位对应的访存地址就是000000004</span><br><span class="line">#又因为使用的是lw按字读，因此一次性读4个字节</span><br><span class="line">lw $s3,4($0)</span><br></pre></td></tr></table></figure>
+<p>因此最终<code>$3</code>寄存器存储的数据时0xF2F1AC07。</p>
+<p>写按字节编址存储器也是类似的，假设我们现在想要将<code>$t7</code>寄存器中的值写入到存储器地址44处，那么MIPS汇编代码是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sw $t7,44($0)</span><br></pre></td></tr></table></figure>
+<p>总之，我们要会区分按字和按字节编/寻址的操作，同时我们要注意具体的指令如何操作，取决于存储器的编址方式，我们学习的是使用按字节编址的MIPS存储器，因此大部分操作使用都是按字节读/写操作。</p>
+<h3 id="大端和小端"><a class="markdownIt-Anchor" href="#大端和小端"></a> 大端和小端</h3>
+<p>在按字节编址的存储器中，根据一个字中的字节的存储顺序将存储器的组织方式为两种：大端和小端。</p>
+<ul>
+<li>大端：一个字中，最高有效字节存储在低地址</li>
+<li>小端：一个字中，最高有效字节存储在高地址</li>
+</ul>
+<p>两种组织方式，字地址都是相同的，只是字中的字节存储的地址是不同的。大端/小端由ISA确定，对于MIPS而言，两者都可以。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>一定要注意，大端存储并不是指大的数存储到低地址，而是高有效字节的数据存储在低地址。小端存储并不是指小的数存储到低地址，而是低有效字节的数据存储在低地址。</p></div></div>
+<p>我们以下面的例子来具体区分一下大端和小端存储的区别：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609212012.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609212026.png" alt="" /></p>
+<p>因此我们发现对于一个数00112233H，大端存储就是正常的高位数从左到右存储，因此高位有效数存储到了低字节地址处。而小端存储反而相反，高位有效数存储到了高字节地址处，也就造成了实际上一个字的数拆分成4个字节后是从右到左存储的，因此读出来的数要逆序一下才是真正的数值。</p>
+<p><strong>例题</strong></p>
+<p>假设<code>$s0</code>中的初始值为0x23456789,对于大端和小端组织形式，下面程序执行后，<code>$s0</code>的值是多少？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sw $s0,0($0)</span><br><span class="line">lb $s0,1($0)</span><br></pre></td></tr></table></figure>
+<p>对于大端存储：首先将0x23456789存储到了地址0处，并且存储的顺序从低字节地址到高字节地址为23 45 67 89，因此再<code>lb</code>取1处的一个字节的数据时得到的是45</p>
+<p>而对于小端存储：首先将0x23456789存储到了地址0处，并且存储的顺序从低字节地址到高字节地址为89 67 45 23，因此再<code>lb</code>取1处的一个字节的数据时得到是67</p>
+<h4 id="思考如果上面的代码改写为lw-s010可以吗"><a class="markdownIt-Anchor" href="#思考如果上面的代码改写为lw-s010可以吗"></a> 思考：如果上面的代码改写为<code>lw $s0,1($0)</code>可以吗？</h4>
+<p>不可以，因此lw一次取一个字也就是四个字节，又因为从0开始存储第一个字，因此地址一定是4的倍数才行，但是1这里对应的并不是一个字的地址起点，因此是不可行的。</p>
+<h4 id="思考如何用一段c程序来判断运行机器采用的是大端存储还是小端存储"><a class="markdownIt-Anchor" href="#思考如何用一段c程序来判断运行机器采用的是大端存储还是小端存储"></a> 思考：如何用一段C程序，来判断运行机器采用的是大端存储还是小端存储？</h4>
+<p>实际上我们只需要先将一个四字节的信息存储到四字节的参量中，然后取出一个字的信息即可判断，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">big_little_endian</span><span class="params">()</span>&#123;</span><br><span class="line">	<span class="type">int</span> i=<span class="number">0x23456789</span>;</span><br><span class="line">    <span class="type">char</span> *c=(<span class="type">char</span>*)&amp;i;</span><br><span class="line">    <span class="comment">//返还true就是大端存储，返还false就是小端存储</span></span><br><span class="line">    <span class="keyword">return</span> (*c==<span class="number">0x23</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上上面我们所学习的按字/字节编寻址与大小端存储方式在之前的计算机系统基础中都有学习过，可以参考下面的文章：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="https://coolchong.cn/2021/02/03/comsys-note4/," href="数据的存储方式," cardlink autofill="icon"><div class="left"><span class="title">https://coolchong.cn/2021/02/03/comsys-note4/,</span><span class="cap link fs12">https://scholar.coolchong.cn/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F,</span></div><div class="right"><div class="lazy img" data-bg="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<h3 id="操作数立即数"><a class="markdownIt-Anchor" href="#操作数立即数"></a> 操作数–立即数</h3>
+<p>立即数既不来自寄存器，也不来自存储器，而是直接来自指令，他通常使用16位二进制补码来表示，直接嵌入在汇编指令中使用。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609213741.png" alt="" /></p>
+<p>如上图所示，4和-12就是立即数，他们可以直接在指令中嵌入使用，而不是通过寄存器，存储器等方式进行取操作后再使用。</p>
+<h3 id="机器语言"><a class="markdownIt-Anchor" href="#机器语言"></a> 机器语言</h3>
+<p>在MIPS指令集中我们可以将指令根据32位指令代码区域划分规则的不同而分类：</p>
+<ol>
+<li>寄存器类型指令（R型指令）</li>
+<li>立即数类型指令（I型指令）</li>
+<li>跳转类型指令（J型指令）</li>
+</ol>
+<h4 id="寄存器类型指令r型指令"><a class="markdownIt-Anchor" href="#寄存器类型指令r型指令"></a> 寄存器类型指令（R型指令）</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609214502.png" alt="" /></p>
+<p>MIPS指令集是32位的，因此每一个指令都使用32位代码，其中按照上面的规则进行划分，每一个区域都有特定的功能：</p>
+<ul>
+<li>op字段：操作码，通常为全0（在nemu实验中opcode_table中的各种指令名的名称大多相似）</li>
+<li>func字段与op字段一起决定指令的功能（在nemu实验中opcode_table中相同地址地址的指令虽然前缀相似，但是后面有些许不同的后缀，实际上就是func，两者共同决定一个指令类型）</li>
+<li>rs字段和rt字段是寄存器编号，表示两个源操作来自于哪两个寄存器</li>
+<li>rd字段用来表示目的寄存器的编号</li>
+<li>sa(shamt)字段只在移位指令中使用，表示移位位数，对于其他R-型指令sa字段全为0</li>
+</ul>
+<p>上面的指令由两个源操作加上一个目的操作数，并且所有的操作数都来源与寄存器，因此称为寄存器类型指令（Register command),也就是R-型指令。下面是一个寄存器类型指令的例子：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609215349.png" alt="" /></p>
+<p>他们的指令划分（下表中的数据都使用十进制真值来表示)如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609215413.png" alt="" /></p>
+<p>我们一定要注意rs,rt,rd各对应的是谁，在mips指令add和sub等寄存器指令，书写时的规则是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#助记符 目的操作数 源操作数1 源操作数2 </span><br><span class="line">add		$s0		$s1		$s2</span><br><span class="line">sub		$t0		$t3		$t5</span><br></pre></td></tr></table></figure>
+<p>和划分的区域略有顺序的不同。因此在机器中的代码存储如下;</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609215754.png" alt="" /></p>
+<p>然后在使用16进制代码表示整个的32位指令，因此一个指令是由8为十六进制数表示。</p>
+<h4 id="立即数类型指令i型指令"><a class="markdownIt-Anchor" href="#立即数类型指令i型指令"></a> 立即数类型指令（I型指令）</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609215957.png" alt="" /></p>
+<p>划分规则：</p>
+<ul>
+<li>op字段表示操作码</li>
+<li>rs字段为寄存器编号，表示一个源操作数来自于寄存器</li>
+<li>imm字段是一个16位立即数，表示另一个操作数，需要扩展为32位再使用</li>
+<li>rt字段表示目的寄存器的编号，用于存放指令运行结果</li>
+</ul>
+<p>我们发现此时的指令所有的操作数中有一个是立即数，因此称为立即数类指令，要注意此时的目的操作数夹在两个源操作数之间，但是在书写指令时，仍然为操作数在最前面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#助记符	目的操作数	源操作数1	源操作数2（立即数）</span><br><span class="line">addi		rt,			rs		imm</span><br><span class="line">lw			rt,					imm</span><br><span class="line">sw			rt,					imm</span><br><span class="line">lw			rt,			rs		</span><br><span class="line">sw			rt,			rs</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609220630.png" alt="" /></p>
+<p>最终再机器码中还要将十进制真值数改用二进制数表示，然后最终的汇编代码再将32位的二进制码转换为8位16进制码来表示：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609220743.png" alt="" /></p>
+<h4 id="跳转型指令j型指令"><a class="markdownIt-Anchor" href="#跳转型指令j型指令"></a> 跳转型指令（J型指令)</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609222121.png" alt="" /></p>
+<ul>
+<li>
+<p>op字段表示操作码，用于确定指定的类型</p>
+</li>
+<li>
+<p>instr_index用于产生跳转的目的地址，但是我们知道一个应该是32位，因此我们需要对instr_index进行一定的处理;</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><mi>P</mi><mi>C</mi><mo>+</mo><mn>4</mn><msub><mo stretchy="false">)</mo><mrow><mn>31</mn><mo>:</mo><mn>28</mn></mrow></msub><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi mathvariant="normal">_</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>x</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">∣</mi><mn>0</mn></mrow><annotation encoding="application/x-tex">(PC+4)_{31:28}||instr\_index||0
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord">4</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span><span class="mrel mtight">:</span><span class="mord mtight">2</span><span class="mord mtight">8</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord">∣</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord">∣</span><span class="mord">∣</span><span class="mord">0</span></span></span></span></span></p>
+<p>实际上就是使用instr_index处理PC+4这个数想办法使其表示不同的32位地址数。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>注意上面的<code>||</code>不是取或的意思，而是地址拼接的意思，我们是将下一条地址的31:28这4位和instr_index26位拼接再在低两位拼接两个0形成跳转地址。并且后面拼接两个0实际上就是<code>&lt;&lt;2</code>的操作，因此后面我们学习到跳转指令的数据通路时会用移位操作实现。</p></div></div>
+</li>
+</ul>
+<h4 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210609222845.png" alt="" /></p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>一定要注意无论是哪种指令都是对一个32为二进制码进行划分，然后指令使用8位16进制码来简单表示，同时要注意上面的这种划分规则只是MIPS指令集的规则，对于intel的x86等并不适用。指令可以根据opcode和后面的低16位的划分规则来进行判别类型。</p></div></div>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E5%BB%BA%E6%A8%A1/index.html">存储器建模</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%95%E5%91%A8%E6%9C%9FMIPS32/index.html">单周期MIPS32</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="DigitLogic"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

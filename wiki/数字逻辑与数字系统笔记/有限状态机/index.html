@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Digit&Logic：有限状态机 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="有限状态机的结构 有限状态机就是同步时序逻辑电路的最典型应用，因此有限状态机的结构实际上和同步时序逻辑电路的特点很类似：  即有限状态机有状态寄存器和组合逻辑电路两大组成部分，其中状态寄存器存储当前时刻的状态，并且状态在下一个有效时钟沿会发生改变，更新为次态的状态。而组合逻辑电路通常就是根据输入来计算次态，和根据现态计算出输出值。  有限状态机的分类 有限状态机有两大类，分别是Moore机和Me">
+<meta property="og:type" content="website">
+<meta property="og:title" content="有限状态机">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="有限状态机的结构 有限状态机就是同步时序逻辑电路的最典型应用，因此有限状态机的结构实际上和同步时序逻辑电路的特点很类似：  即有限状态机有状态寄存器和组合逻辑电路两大组成部分，其中状态寄存器存储当前时刻的状态，并且状态在下一个有效时钟沿会发生改变，更新为次态的状态。而组合逻辑电路通常就是根据输入来计算次态，和根据现态计算出输出值。  有限状态机的分类 有限状态机有两大类，分别是Moore机和Me">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423185035.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423185317.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423185724.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423190203.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423190319.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423190319.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423191427.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423191622.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423192401.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423192233.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423192423.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423185035.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423192735.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423194232.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423194445.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423195200.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423200231.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423200339.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423200429.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210423200827.png">
+<meta property="article:published_time" content="2023-01-27T14:26:28.061Z">
+<meta property="article:modified_time" content="2023-01-27T14:26:28.061Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20210423185035.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html"><div class="main" ff="title">Digit&Logic</div><div class="sub cap">这都不会怎么好意思称之为"科班生"？</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/数字逻辑与数字系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html#start"><span class="toc-text">逻辑电路基本元件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html"><span class="toc-text">逻辑电路的表达式</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%96%E7%AE%80%E4%B8%8E%E4%B8%89%E6%80%81%E7%BC%93%E5%86%B2%E5%99%A8/index.html"><span class="toc-text">表达式化简与三态缓冲器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E4%B8%8E%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8/index.html"><span class="toc-text">卡诺图与编译码器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/index.html"><span class="toc-text">硬件描述语言</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">行为建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E6%8B%93%E5%B1%95%E4%B8%8E%E6%B5%8B%E8%AF%95/index.html"><span class="toc-text">建模方法拓展与测试</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E9%80%BB%E8%BE%91%E5%99%A8%E4%BB%B6/index.html"><span class="toc-text">常用逻辑器件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/index.html"><span class="toc-text">时序逻辑电路</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA/index.html"><span class="toc-text">有限状态机</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text"> 有限状态机的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text"> 有限状态机的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#moore%E5%9E%8B%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text"> Moore型有限状态机的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#moore%E5%9E%8B%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-text"> Moore型有限状态机设计方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%8A%E9%9D%A2%E7%9A%84%E7%BA%A2%E7%BB%BF%E7%81%AF%E8%AE%BE%E8%AE%A1%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%BC%BA%E9%99%B7"><span class="toc-text"> 思考：上面的红绿灯设计是否存在缺陷？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%AD%A4%E6%97%B6%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E6%9D%A5%E5%BC%A5%E8%A1%A5%E7%BC%BA%E9%99%B7"><span class="toc-text"> 思考：此时如何修改来弥补缺陷？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%BC%96%E7%A0%81"><span class="toc-text"> 状态编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mealy%E5%9E%8B%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-text"> Mealy型状态机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83mealy%E5%9E%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E7%9B%B8%E8%BE%83%E4%BA%8Emoore%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%9C%A8%E5%93%AA%E9%87%8C%E6%9B%B4%E5%8A%A0%E7%AE%80%E5%8D%95%E4%BA%86"><span class="toc-text"> 思考：Mealy型状态转换相较于Moore型转换在哪里更加简单了？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mealy%E5%9E%8B%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-text"> Mealy型有限状态机设计方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#moore%E5%9E%8B%E7%8A%B6%E6%80%81%E6%9C%BA%E5%92%8Cmealy%E5%9E%8B%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-text"> Moore型状态机和Mealy型状态机的总结</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E6%9C%BA%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">状态机建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">存储器建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB/index.html"><span class="toc-text">指令集体系</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%95%E5%91%A8%E6%9C%9FMIPS32/index.html"><span class="toc-text">单周期MIPS32</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多计算机基础</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><span class="title">操作系统笔记</span><span class="excerpt">操作系统是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html">Digit&Logic</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T14:26:28.061Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>有限状态机</span></h1>
+  <h3 id="有限状态机的结构"><a class="markdownIt-Anchor" href="#有限状态机的结构"></a> 有限状态机的结构</h3>
+<p>有限状态机就是同步时序逻辑电路的最典型应用，因此有限状态机的结构实际上和同步时序逻辑电路的特点很类似：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423185035.png" alt="" /></p>
+<p>即有限状态机有状态寄存器和组合逻辑电路两大组成部分，其中状态寄存器存储当前时刻的状态，并且状态在下一个有效时钟沿会发生改变，更新为次态的状态。而组合逻辑电路通常就是根据输入来计算次态，和根据现态计算出输出值。</p>
+<h3 id="有限状态机的分类"><a class="markdownIt-Anchor" href="#有限状态机的分类"></a> 有限状态机的分类</h3>
+<p>有限状态机有两大类，分别是Moore机和Mealy型有限状态机。两者的区别在于：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423185317.png" alt="" /></p>
+<p>Moore型有限状态机中，输出仅由当前状态所决定，而对于Mealy型状态机，输出由当前状态和输入共同决定。但是无论是哪种状态机，都属于同步时序逻辑电路。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>状态机是一种很特殊的同步时序逻辑电路，他的特殊性就在于一定拥有一个回路连接着输入端与触发器的输出端，从而保证状态机的次态一定是由当前的输入以及之前的输出即之前的电路状态共同决定的。</p></div></div>
+<h3 id="moore型有限状态机的应用"><a class="markdownIt-Anchor" href="#moore型有限状态机的应用"></a> Moore型有限状态机的应用</h3>
+<p>接下来我们用一到例题来详细学习Moore型有限状态机的应用和具体的工作原理。假设现在有一个十字路口，那么X轴方向的两个对立的红绿灯我们设置为La,Y轴方向的两个对立的红绿灯我们设置为Lb如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423185724.png" alt="" /></p>
+<p>那么很明显会存在两个输入即两个交通传感器Ta和Tb,当X轴上有小轿车等待时，那么Ta传感器返还true，即输入端Ta的值是1，否则为0。同理对于Y轴当有轿车等待时Tb为1否则为0。</p>
+<p>同时有两个输出，即La和Lb红绿灯的颜色。</p>
+<p>我们设置CLK周期为5s，因此每一个时钟沿到达时，灯会根据交通传感器来改变。同时还存在一个复位按键，可以使交通灯控制器回到初始状态。那么很明显有限状态器的寄存器黑盒视图如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423190203.png" alt="" /></p>
+<p>这就是有限状态机的输入，输出的设置。接下来我们来分析一下有限状态机黑盒内部的具体状态转换结构是什么样子的。我们画出状态转换图如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423190319.png" alt="" /></p>
+<p>上面就是有限状态机根据不同的输入转换成不同的状态的循环图了。我们其实可以类比成计算机网络Rdt中的发送接收端的状态转换图，原理是类似的。此时：</p>
+<ul>
+<li>图中的每一个圆圈代表一个状态</li>
+<li>图中的每一个圆弧代表两个状态之间的转换</li>
+<li>圆弧上的项表示实现状态所需要的输入</li>
+<li>状态转换发生在时钟有效沿产生的时刻</li>
+<li>Moore型状态机的状态转换图中，输出信息都是标在圆圈内部的，因此上图中的圆圈内部的La和Lb的颜色就是输出。</li>
+</ul>
+<p>那么下面我们分析一下状态转换图是如何正确表示Moore型有限状态机的转换的：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423190319.png" alt="" /></p>
+<p>S0表示的是La绿灯，Lb红灯的情况，即X轴车可以通过十字路口，Y轴的车需要等待的情况。但是当输入端Ta不是1即<code>非Ta</code>是1的情况时，表示此时X轴没有车了，那么此时就从S0切换到S1即X轴的红绿灯La闪烁一段黄灯后继续转换到S2状态，即Y轴的车可以通过狮子路口，同时X轴的车需要排队。同理的，当Tb=0即Y轴没有车时，那么Lb闪烁一段黄灯以后，切换回到S0状态，即X轴绿灯。同时我们考虑到如下情况，可能Ta一直为1，表示X轴一直有车，那么此时X轴就要一直亮绿灯即S0圆圈右上角闭环的情况出现，同理，也会存在Y轴正在通车且Y轴一直有车的情况，那么此时就需要一直Lb亮绿灯也就是S2左下角闭环的情况。同时我们还要有一个复位Reset端来使得我们可以在任何时段强制恢复成S0的状态。自此我们发现上图的状态转换过程是正确的，可以表示出不同情况下十字路口的红绿灯状态。</p>
+<p>因此我们根据上图的状态转换图可以总结出下图的状态真值表：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423191427.png" alt="" /></p>
+<p>即根据不同的输入Ta和Tb以及现态来决定次态的情况。（这里的现态决定次态就是带有回路的同步时序逻辑特有的特点）我们可以总结出上图的表格，然后对状态进行编码，即使用若干个逻辑表达式来整理表示出次态和现态与输入的关系：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423191622.png" alt="" /></p>
+<p>要注意，此时的中间的真值表的现态是有两位二进制码S1S0来表示的，这是因为状态转换一共有4个不同的状态，需要至少使用2位二进制码才能表示出来，因此此时00表示状态S0，01表示状态S1,10表示状态S2，11表示状态S3。同时次态很明显也会有4中状态，因此也是使用2位二进制编码表示。然后我们即可得到逻辑表达式：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msubsup><mi>S</mi><mn>1</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><msub><mi>S</mi><mn>1</mn></msub><mo>⊕</mo><msub><mi>S</mi><mn>0</mn></msub></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><msubsup><mi>S</mi><mn>0</mn><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msubsup><mo>=</mo><msub><mi>S</mi><mn>1</mn></msub><msub><mi>S</mi><mn>0</mn></msub><msub><mi>T</mi><mi>A</mi></msub><mo>+</mo><msub><mi>S</mi><mn>1</mn></msub><msub><mi>S</mi><mn>0</mn></msub><msub><mi>T</mi><mi>B</mi></msub></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\begin{cases}
+S_1&#x27;=S_1⊕S_0\\
+S_0&#x27;=S_1S_0T_A+S_1S_0T_B
+\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0000299999999998em;vertical-align:-1.25003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⊕</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.4518920000000004em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">A</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05017em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>这就是有限状态机根据输入端的输入值和现态来计算次态的公式。因此此时我们只得到了有限状态机前半部分用来计算次态的组合逻辑电路的表示式，接下来我们还要得到根据现态计算出输出的组合逻辑表达式。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423192401.png" alt="" />我们知道此时由状态寄存器输出的现态有S1‘S0’表示,但是最终我们要得到的输出时La个Lb。因此可以根据S1‘S0’和状态转换图列出以下真值表：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423192233.png" alt="" /></p>
+<p>即现态和输出的关系。由于La和Lb都有三种状态，因此需要使用2位二进制码才能表示出来，因此最终的输出并不是La和Lb两个输出端，而是4个输出端。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423192423.png" alt="" /></p>
+<p>这就是一个完整的表示十字路口红绿灯的有限状态机的同步时序逻辑电路。我们发现有限状态机黑盒（也是状态寄存器）只是其中的核心部位，他还需要左右两侧的组合逻辑电路来根据输入计算次态，以及根据现态计算输出。因此有限状态机总是可以抽象为：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423185035.png" alt="" /></p>
+<p>下面我们根据得到的状态机，可以实时的画出有限状态机的端时序图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423192735.png" alt="" /></p>
+<h3 id="moore型有限状态机设计方法"><a class="markdownIt-Anchor" href="#moore型有限状态机设计方法"></a> Moore型有限状态机设计方法</h3>
+<p>我们根据上面的案例可以总结出Moore型有限状态机的设计方法一定是遵循以下步骤得到的：</p>
+<ol>
+<li>根据问题进行抽象，确定输入和输出对应的逻辑含义</li>
+<li>画出状态转换图</li>
+<li>列出状态转换表</li>
+<li>对状态进行编码，并列出次态计算方程</li>
+<li>列出输出表</li>
+<li>对输出进行编码，并列出输出的计算方程</li>
+<li>绘制原理图</li>
+</ol>
+<h4 id="思考上面的红绿灯设计是否存在缺陷"><a class="markdownIt-Anchor" href="#思考上面的红绿灯设计是否存在缺陷"></a> 思考：上面的红绿灯设计是否存在缺陷？</h4>
+<p>有一个明显的设计漏洞。我们思考易得，当此时处于S0状态，并且Ta一直为1即X轴正在通车且X轴一直有车的情况，那么根据我们列出的状态转换图，此时会一直处于S0状态，这明显不符合实际。因为Y轴方向的车不可能一直排队等待，而是现需要在经过一段时间后强制转换成Y轴通车即S2状态，即使此时X轴还有车。因此我们设计的红绿灯状态转换图是有缺陷的。</p>
+<h4 id="思考此时如何修改来弥补缺陷"><a class="markdownIt-Anchor" href="#思考此时如何修改来弥补缺陷"></a> 思考：此时如何修改来弥补缺陷？</h4>
+<p>没办法在已经列出的状态装换图上进行修改，只能重构状态转换图来重新制作有限状态机的电路图。</p>
+<h3 id="状态编码"><a class="markdownIt-Anchor" href="#状态编码"></a> 状态编码</h3>
+<p>我们在上面的案例设计与实现中发现经常需要用到编码来抽象表示状态转换图，因此学习状态编码是很有必要的。首先我们要知道不同的状态编码和输出编码会产生不同的电路，因此需要在设计中一直使用一套标准的状态编码，例如个案例中00就表示S0状态，自此不能改变这个编码的意义。同时进行合理的编码，可以产生一个逻辑门更少且传播延迟更短的电路，因此我们在对状态进行编码时要选取合适的编码规则。最常用的两种编码规则就是二进制编码与独热码。</p>
+<ul>
+<li>二进制码：4中状态：00,01,10,11</li>
+<li>独热编码：实际上我们对此并不陌生，对于编码器实际上就是独热编码的应用。即状态的每一位（1bit)表示一种状态，任何时候都只有一位是’热’的(true或者1)，例如：0001,0010,0100,1000等。使用独热编码相较于二进制编码，更容易表示次态逻辑和输出逻辑表达式。</li>
+</ul>
+<h3 id="mealy型状态机"><a class="markdownIt-Anchor" href="#mealy型状态机"></a> Mealy型状态机</h3>
+<p>我们前面讲到了Mealy型状态机，他和Moore型状态机最大的不同就是输出不仅仅由现态计算得出，还会受到输入端的影响（注意不是现态的影响）。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>一定要区分输入输出和次态现态。输入和输出是时序电路最外层的接口，而次态和现态只是状态寄存器的输入和输出。次态需要用输入经过组合逻辑计算后才能得到，而输出需要用次态（或者次态+输入端）经过组合逻辑计算后才能得到。</p></div></div> 
+<p>现在我们还是以一道案例来学习：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423194232.png" alt="" /></p>
+<p>举一个形象的例子，假设现在有一串二进制码100101100,假设蜗牛每次走过位需要1s,那么这个蜗牛会在4s和6s时对我们微笑。现在我们需要设计有限状态机来表示。</p>
+<p>我们先使用Moore型状态转换图来分析：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423194445.png" alt="" /></p>
+<p>很明显状态转换图如上图形式，S0是未记住任何一位时的状态即<code>不笑的状态</code>，而S1是已经经过了一个0位时的状态即<code>马上要笑的状态</code>，而S2就是刚好经过的最后两位是01的状态即<code>笑的状态</code>。那么未出发时或者刚刚走过01时处于S0状态，当向后走了一位后得到一个0时，那么就到达S1状态，只要再在下一步经过1就能够微笑即转换为S2状态。但是假设S1时又经过一个0，那么就还处于S1状态，即S1状态左下角闭环的情况。同样的当S0状态经过了一个1，那么仍然处于S0状态，即右上角闭环情况。当处于S2状态并且下一位是1时那么就换成S0状态，否则是0就转换成S1状态。我们分析一下蜗牛走100101100时每一位的状态应该是S0-&gt;S0(1)-&gt;S1(0)-&gt;S1(0)-&gt;S2(1)-&gt;S1(0)-&gt;S2(1)-&gt;S0(1)-&gt;S1(0)-&gt;S1(0)。因此上面的状态转换时逻辑正确的，接下来按照之前所讲的步骤即可得到Moore型有限状态机的电路图，这里就不给出具体过程了。</p>
+<p>我们接下来尝试使用Mealy型状态转换图表示，由于Mealy型状态转换机的现态同时受次态和输入决定，因此只会存在<code>马上要笑</code>和<code>不笑</code>的两个状态，而不会存在<code>马上要笑</code>的状态，即状态会更少，如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423195200.png" alt="" /></p>
+<p>此时S0表示未记住任何一位时的状态即<code>不笑的状态</code>，因此当处于S0并且接收到输入时0时就已经可以判断出输出是不笑即0了，然后转换到S1<code>马上要笑的状态</code>，当S1状态时得到输入为0，那么仍保持在S1状态，否则就笑输出1然后转换到S0状态。我们发现此时和Moore型状态转换图的逻辑是一样的，只是此时的表示更加简洁，少了一个状态图相应的也就降低了电路的复杂度。</p>
+<h4 id="思考mealy型状态转换相较于moore型转换在哪里更加简单了"><a class="markdownIt-Anchor" href="#思考mealy型状态转换相较于moore型转换在哪里更加简单了"></a> 思考：Mealy型状态转换相较于Moore型转换在哪里更加简单了？</h4>
+<p>究其原因，两者的状态切换和输出存在差异，对于Moore型状态转换，是先进性状态切换再输出，这是因为Moore型状态机中，输出总是需要等待现态切换成次态以后才能计算得到。而对于Mealy型状态机状态切换和输出是同时执行的，因为输出可以提前得到输入来进行计算。因此Mealy型状态转换图中输出是在圆弧上，而Moore型输出是在状态圈中。</p>
+<p>接下来我们同样得到状态转换真值表：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423200231.png" alt="" /></p>
+<p>我们发先Mealy型的状态转化表更加简单，因为只有两个状态，所以编码只需要使用一位。最终我们可以得到Mealy型状态转换机的电路图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423200339.png" alt="" /></p>
+<p>我们发现Mealy型状态转换机电路图更加简洁，但是实际上实现的逻辑功能和Moore型没有差别。最终我们同样给出Mealy型状态机时序图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423200429.png" alt="" /></p>
+<p>我们发现对于同样的输出Y的变化，由于Mealy型状态更少，因此中间的状态转换过程也更少，因此Mealy型Y的变化整体比Moore型要快。</p>
+<h3 id="mealy型有限状态机设计方法"><a class="markdownIt-Anchor" href="#mealy型有限状态机设计方法"></a> Mealy型有限状态机设计方法</h3>
+<p>我们同样给出Mealy型有限状态机的设计步骤：</p>
+<ol>
+<li>根据问题抽进行象，确定输入输出以及对应的逻辑含义</li>
+<li>画出状态转换图</li>
+<li>列出状态转换表和输出表（可以同时列出，原因是输出可提前得到输入因此状态转换的计算和输出的计算可以同时进行）</li>
+<li>对状态和输出进行编码，并列出次态方程和输出方程</li>
+<li>绘制原理图</li>
+</ol>
+<h3 id="moore型状态机和mealy型状态机的总结"><a class="markdownIt-Anchor" href="#moore型状态机和mealy型状态机的总结"></a> Moore型状态机和Mealy型状态机的总结</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210423200827.png" alt="" /></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/index.html">时序逻辑电路</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E6%9C%BA%E5%BB%BA%E6%A8%A1/index.html">状态机建模</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="DigitLogic"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

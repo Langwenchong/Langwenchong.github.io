@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Digit&Logic：建模方法拓展与测试 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="结构化建模 结构化建模也称为层次化建模，特点是将一个比较复杂的数字逻辑电路划分为多个子模块，再分别为每一个子模块建模，然后将这些子模块组合在一起，完成所需要的电路。因此，结构化建模描述了一个模块是怎样由简单的模块组成的。  其中根据建模的过程分为自顶向下的设计和自底向上的设计，两者只是在模块构建逻辑上有所差异，但是最终达到的效果是一样的。 我们以一道例题体会一下结构建模，比如我们要将3个2-1多">
+<meta property="og:type" content="website">
+<meta property="og:title" content="建模方法拓展与测试">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E6%8B%93%E5%B1%95%E4%B8%8E%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="结构化建模 结构化建模也称为层次化建模，特点是将一个比较复杂的数字逻辑电路划分为多个子模块，再分别为每一个子模块建模，然后将这些子模块组合在一起，完成所需要的电路。因此，结构化建模描述了一个模块是怎样由简单的模块组成的。  其中根据建模的过程分为自顶向下的设计和自底向上的设计，两者只是在模块构建逻辑上有所差异，但是最终达到的效果是一样的。 我们以一道例题体会一下结构建模，比如我们要将3个2-1多">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405202339.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405202628.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405202817.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405204644.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405205024.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405205109.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405205859.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405210606.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405211333.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405211928.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405212405.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405212448.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405212521.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405213629.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405213758.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405215139.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405215918.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405215941.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405220009.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405221019.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210405221032.png">
+<meta property="article:published_time" content="2023-01-27T14:24:28.205Z">
+<meta property="article:modified_time" content="2023-01-27T14:24:28.205Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20210405202339.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html"><div class="main" ff="title">Digit&Logic</div><div class="sub cap">这都不会怎么好意思称之为"科班生"？</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/数字逻辑与数字系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html#start"><span class="toc-text">逻辑电路基本元件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html"><span class="toc-text">逻辑电路的表达式</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%96%E7%AE%80%E4%B8%8E%E4%B8%89%E6%80%81%E7%BC%93%E5%86%B2%E5%99%A8/index.html"><span class="toc-text">表达式化简与三态缓冲器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E4%B8%8E%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8/index.html"><span class="toc-text">卡诺图与编译码器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/index.html"><span class="toc-text">硬件描述语言</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">行为建模</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E6%8B%93%E5%B1%95%E4%B8%8E%E6%B5%8B%E8%AF%95/index.html"><span class="toc-text">建模方法拓展与测试</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%BB%BA%E6%A8%A1"><span class="toc-text"> 结构化建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%AE%9E%E4%BE%8B%E5%8C%96"><span class="toc-text"> 模块实例化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%A8%E7%BA%A7%E5%BB%BA%E6%A8%A1"><span class="toc-text"> 门级建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%8C%96%E5%BB%BA%E6%A8%A1%E6%80%BB%E7%BB%93"><span class="toc-text"> 结构化建模总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%8C%96%E5%BB%BA%E6%A8%A1"><span class="toc-text"> 参数化建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generate%E8%AF%AD%E5%8F%A5"><span class="toc-text"> generate语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8generate%E8%AF%AD%E5%8F%A5%E6%9D%A5%E5%8C%85%E8%A3%B9%E8%80%8C%E4%B8%8D%E6%98%AF%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8for%E8%AF%AD%E5%8F%A5"><span class="toc-text"> 思考：为什么要用generate语句来包裹而不是直接调用for语句？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#systemverilog%E7%9A%84%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-text"> SystemVerilog的测试程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%BC%E5%90%88"><span class="toc-text"> 思考：什么是综合？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%AF%AD%E5%8F%A5"><span class="toc-text"> 测试程序的语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%BD%E5%8A%A0%E6%BF%80%E5%8A%B1%E4%BF%A1%E5%8F%B7"><span class="toc-text"> 施加激励信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%93%8D%E5%BA%94"><span class="toc-text"> 输出响应</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="toc-text"> 自动化测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F%E6%80%BB%E7%BB%93"><span class="toc-text"> 测试程序总结</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E9%80%BB%E8%BE%91%E5%99%A8%E4%BB%B6/index.html"><span class="toc-text">常用逻辑器件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/index.html"><span class="toc-text">时序逻辑电路</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA/index.html"><span class="toc-text">有限状态机</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%8A%B6%E6%80%81%E6%9C%BA%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">状态机建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E5%BB%BA%E6%A8%A1/index.html"><span class="toc-text">存储器建模</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BD%93%E7%B3%BB/index.html"><span class="toc-text">指令集体系</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%95%E5%91%A8%E6%9C%9FMIPS32/index.html"><span class="toc-text">单周期MIPS32</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多计算机基础</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><span class="title">操作系统笔记</span><span class="excerpt">操作系统是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html">Digit&Logic</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T14:24:28.205Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>建模方法拓展与测试</span></h1>
+  <h3 id="结构化建模"><a class="markdownIt-Anchor" href="#结构化建模"></a> 结构化建模</h3>
+<p>结构化建模也称为层次化建模，特点是将一个比较复杂的数字逻辑电路划分为多个子模块，再分别为每一个子模块建模，然后将这些子模块组合在一起，完成所需要的电路。因此，结构化建模描述了一个模块是怎样由简单的模块组成的。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405202339.png" alt="" /></p>
+<p>其中根据建模的过程分为自顶向下的设计和自底向上的设计，两者只是在模块构建逻辑上有所差异，但是最终达到的效果是一样的。</p>
+<p>我们以一道例题体会一下结构建模，比如我们要将3个2-1多路选择器组合成一个4-1多路选择器。我们可以轻易写出2-1多路选择器的建模形式：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405202628.png" alt="" /></p>
+<p>因此接下来我们只是需要用适当的方式自底向上组成4-1多路选择器。因此在4-1多路选择器的建模过程中需要引入二路选择器的实例组件。假设我们现在已经得到了4-1多路选择器的结构图如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405202817.png" alt="" /></p>
+<p>思路很简单，sel[0]用来决定lowmux和highmux的两个二路选择器的选择信号，sel[1]充当finalmux的选择信号。因此lowmux和highmux分别都有2种可能输出的信号，而finalmux又决定了选择lowmux或者highmux的其中一个输出信号，因此又有2中选择，因此一共有2*2=4可能选择的情况，刚好和4路选择器的功能一致。接下来我们只需要根据上图进行建模了：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> mux4(<span class="keyword">input</span> <span class="keyword">logic</span> D0,D1,D2,D3,<span class="keyword">input</span> <span class="keyword">logic</span> [<span class="number">1</span>:<span class="number">0</span>]s,<span class="keyword">output</span> <span class="keyword">logic</span> y);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">logic</span> low,high;</span><br><span class="line">    <span class="comment">//使用2路选择器模块进行实例化</span></span><br><span class="line">	mux2 lowmux(D0,D1,s[<span class="number">0</span>],low);</span><br><span class="line">	mux2 highmux(D2,D3,s[<span class="number">0</span>],high);</span><br><span class="line">	mux2 finalmux(low,high,s[<span class="number">1</span>],y);</span><br><span class="line">	</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>我们发现实际上结构化建模和java的类的使用很相似，就是使用已经建模完成的模块来组装更加高层次复杂的结构化模块。</p>
+<h3 id="模块实例化"><a class="markdownIt-Anchor" href="#模块实例化"></a> 模块实例化</h3>
+<p>在结构化建模中，父模块对子模块的调用通过模块实例化实现，其格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">模块名 实例化名 （信号列表）</span><br></pre></td></tr></table></figure>
+<ul>
+<li>模块名：定义子模块时，紧跟在module关键字后面的名字，例如上例中的mux2</li>
+<li>实例化名：父模块为所调用的子模块命名的名称，是该子模块的唯一标识，例如上例中的lowmux,highmux和finalmux</li>
+<li>信号列表：父模块与子模块之间端口信号的关联方是，用于实现子模块与父模块的通信。通常有位置关联法和名称关联法。</li>
+</ul>
+<p>位置关联法就是我们通常上理解的使用函数是传参的格式，即实例化模块时，按照子模块定义时端口出现的顺序建立端口的连接关系。例如：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//mux2定义的形式</span></span><br><span class="line"><span class="keyword">module</span> mux2(<span class="keyword">input</span> <span class="keyword">logic</span> D0,D1,intput <span class="keyword">logic</span> [<span class="number">1</span>:<span class="number">0</span>]s,<span class="keyword">output</span> <span class="keyword">logic</span> y);</span><br><span class="line">mux2 lowmux(D0,D1,sel[<span class="number">0</span>],low)</span><br></pre></td></tr></table></figure>
+<p>那么D0就是mux2模块的第一个形参关联的端口参数，D1就是第二个。</p>
+<p>但是由于在建模时可能一个模块有多达数十个端口信号，那么此时在使用位置关联法就很容易出现错误，因此还有一种名称关联法，就是实例化子模块时，直接通过名称显式建立子模块端口的连接关系，不考虑排列顺序（注意，此时所有的参数又要显式的声明和一个形参绑定）。如：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//mux2定义的形式</span></span><br><span class="line"><span class="keyword">module</span> mux2(<span class="keyword">input</span> <span class="keyword">logic</span> D0,D1,intput <span class="keyword">logic</span> [<span class="number">1</span>:<span class="number">0</span>]s,<span class="keyword">output</span> <span class="keyword">logic</span> y);</span><br><span class="line"><span class="comment">//实例化一个mux2</span></span><br><span class="line"><span class="comment">//注意实参写在形参后面的小括号后面</span></span><br><span class="line">    mux2 lowmux(<span class="variable">.D0</span>(D0),<span class="variable">.D1</span>(D1),sel(<span class="variable">.sel</span>[<span class="number">0</span>]),y(<span class="variable">.low</span>));</span><br></pre></td></tr></table></figure>
+<p>此时就与位置无关了，因为每一个实参端口信号都显式的和一个形参端口信号建立了连接。这种方法适用于端口信号很多的模块实例化中。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>一定要注意对于名称关联法，形参在外，括号内是传进来的实参信号，同时形参前面有一个<code>.</code>。</p></div></div> 
+<p>接下来我们以mux4的两种实例化方法直接对比：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405204644.png" alt="" /></p>
+<h3 id="门级建模"><a class="markdownIt-Anchor" href="#门级建模"></a> 门级建模</h3>
+<p>门级建模是一种低层次的结构化建模方法，他通过调用SystemVerilog HDL提供的基本逻辑元件描述他们之间的连接，建立数字逻辑电路的模型。</p>
+<p>门级建模可以理解为将逻辑电路图转化为SystemVerilog HDL描述的建模过程。门级建模只能用于描述组合逻辑电路，不能用来描述复杂的时序逻辑电路，这是因为门级建模使用的都是逻辑门元件。因此门级建模实例化的语句：‘</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">门级元件名&lt;实例名&gt;(端口列表)</span><br></pre></td></tr></table></figure>
+<p>其中实例名可以忽略不写，即为一个匿名门元件实例。一般常用到的门级元件有：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405205024.png" alt="" /></p>
+<p>假设我们现在要使用门级建模构造一个mux2二路选择器，那么根据下面的图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405205109.png" alt="" /></p>
+<p>我们可以建模:</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> mux2(<span class="keyword">input</span> <span class="keyword">logic</span> D0,D1,sel,<span class="keyword">output</span> <span class="keyword">logic</span> y)</span><br><span class="line">	<span class="keyword">logic</span> a,b,sel_inv;</span><br><span class="line">	<span class="keyword">not</span> N1(sel_inv,sel);</span><br><span class="line">	<span class="keyword">and</span> N2(a,D0,sel_inv);</span><br><span class="line">	<span class="keyword">and</span> N3(b,D1,sel);</span><br><span class="line">	<span class="keyword">or</span>(y,a,b);<span class="comment">//注意实例名可以忽略</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="结构化建模总结"><a class="markdownIt-Anchor" href="#结构化建模总结"></a> 结构化建模总结</h3>
+<ul>
+<li>模块只能以实例化的方式嵌套在其他模块中（和java的外部类的实例化引用思路一样），嵌套层次是没有限制的，但是不能在一个模块内部使用关键词module和endmodule取定义另一个模块，也不能再always语句内部引用子模块。</li>
+<li>实例化的子模块可以是一个在SystemVerilog文件中定义好的模块，或者是用别的HDL语言（例如Verilog,VHDL)设计的模块，还可以是IP（Intellectual Property,知识产权)核模块。</li>
+<li>在一条实例化子模块的语句中，不能一部分端口用位置关联，另一部分用名称关联，即不能混用这两种方式建立端口之间的链接。</li>
+<li>原则上在一个模块中可以使用行为建模和结构化建模，但是为了便于设计层次化、模块化，建议在一个模块中不要混用两种建模方式。</li>
+</ul>
+<h3 id="参数化建模"><a class="markdownIt-Anchor" href="#参数化建模"></a> 参数化建模</h3>
+<p>在SystemVerilog HDL中，参数化建模是指使用关键字“parameter&quot;声明一个标识符来代表一个常量，程序中凡是出现这个常量的位置，都可以用这个标识符来代替，从而大大增加了设计的灵活度和程序的可读性。参数化建模最常见的用法就是参数化建模，如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405205859.png" alt="" /></p>
+<p>左边的模块中定义了字符&quot;#&quot;同时声明为WITH代表位宽8，那么所有的[WIDTH-1:0]代表的都是一个位宽为8的线信号量，当我们需要修改时只需要修改定义语句即可完成对全部模块的相对应的位宽信号的修改。我们再看中间的模块和右侧模块定义的都是一个4路选择器，只是中间定义的是位宽为8的信号，那么当我们需要修改为32位宽时，只能手动逐一的对每一个[7:0]进行修改为[31:0]，这很麻烦耗时，而右侧的使用了参数化建模，所有的#只要定义为32位宽即可完成所有的信号的位宽更新，这就是参数化建模的优点。</p>
+<p>我们可以将parameter语句置于模块内部，与参数化建模的区别是对模块化实例化时无法修改该参数的值。并且通过预编译指令`define(即宏定义指令)可以声明一个标识符来代表一个常量，通常位于模块外部，该常量是一个全局常量，其作用范围是从定义起点到整个程序的结束，既可以对多个文件起作用。这样parameter只能决定一个模块自身内部的信号的更新，而`define指令定义的是对多个模块起修改作用的全部常量语句，两者搭配，可以高效的完成所有文件的信号的更新操作。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405210606.png" alt="" /></p>
+<p>parameter语句只对mux2内部的信号量起作用，而通过`define指令声明的WIDTH可以修改所有文件的信号位宽。同时要注意宏定义指令结尾处不需要分号。</p>
+<h3 id="generate语句"><a class="markdownIt-Anchor" href="#generate语句"></a> generate语句</h3>
+<p>generate语句（即生成语句）可以动态的生成SystemVerilog HDL代码，可以大大简化程序的编写过程。generate语句结合参数化建模方法可以生成可变数量的硬件，此外，generate语句还可用于对向量信号中的多个位进行重复操作，或者对一个模块进行多次实例化，或者根据参数的定义来确定程序中是否应该包含某段SystemVerilog代码。</p>
+<p>generate语句通过“generate…endgenerate&quot;来确定生成的代码范围，可以动态生成模块（实例化）、持续赋值语句（assign)、always过程块等内容。通常generate语句还可以和for,if和case语句组合使用。</p>
+<p>如下图是generate生成一个由多个2路选择器组成的N路选择器的模块：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405211333.png" alt="" /></p>
+<p>这里的几个注意事项见上图。</p>
+<h4 id="思考为什么要用generate语句来包裹而不是直接调用for语句"><a class="markdownIt-Anchor" href="#思考为什么要用generate语句来包裹而不是直接调用for语句"></a> 思考：为什么要用generate语句来包裹而不是直接调用for语句？</h4>
+<p>在建模过程中，我们通常定义一个变量时都是定义为信号量，并且这个信号量是一个具体的确定值，但是我们分析上面的代码实际上x并不是一个信号量，他是一个由i决定的若干个信号量的一个抽象表示。具体生成多少个x信号量以及对于第i个信号量x的定义都需要由i来决定。同时a信号量也会再generate语句中多次使用表示不同的值。因此generate语句的引入是有必要的，当我们不使用generate语句包裹时，那么如果想创建10000个类似于x的相同作用的信号量，那么首先需要构建10000个不同名的信号变量值，这显然不现实。</p>
+<h3 id="systemverilog的测试程序"><a class="markdownIt-Anchor" href="#systemverilog的测试程序"></a> SystemVerilog的测试程序</h3>
+<p>前面我们简单学习过仿真验证的概念，他是在线平台上通过模拟来对一个为构建的组合逻辑电路模块进行建模检测，查看是否完美符合预期功能。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405211928.png" alt="" /></p>
+<p>电路验证是确认所设计的电路功能正确性的过程，而仿真是进行电路验证的主要手段，它可以及早发现所存在的设计问题，从而降低了设计风险，节约了设计成本。通常，仿真是通过编写测试程序完成的，测试程序也称为测试台，他是用于测试待测模块功能是否正确的一端SystemVerilog HDL代码，是不可综合的，由激励信号、DUT和输出响应三部分组成。</p>
+<h4 id="思考什么是综合"><a class="markdownIt-Anchor" href="#思考什么是综合"></a> 思考：什么是综合？</h4>
+<p>综合是真正在组件一个模块元件时所必要的完成功能构建的语句。不可综合的语句一般是不用于完成元件功能的语句，在最终制造阶段舍弃，例如验证语句虽然在构建模块时进行编写，但是在测试完成后构建元件时，这部分代码不会被综合，不参与最终元件的功能实现中。</p>
+<p>我们看一个测试程序的例子：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405212405.png" alt="" /></p>
+<p>上面的代码就是用于验证的测试代码，它是用来测试一个数学计算模块是否正确的语句：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405212448.png" alt="" /></p>
+<p>我们从上面的例子中不难看出我们分别测试的激励信号组合分别是：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405212521.png" alt="" /></p>
+<p>也就是说每一次在验证时输入的信号是持续的，当改变信号时，只需要输入需要被修改的信号值即可，未被修改的信号是维持不变的。如上面的第一组激励信号测试组合为a=0,b=0,c=0并且持续时间为10个单位时间，然后我们修改了c的信号值为1，因此第二个激励信号组合为a=0,b=0,c=1并且测试时间也是10个单位长度。因为每一个激励信号的测试时间都是10个单位长度，因此最终屏幕上的输出脉冲为等宽。</p>
+<h3 id="测试程序的语句"><a class="markdownIt-Anchor" href="#测试程序的语句"></a> 测试程序的语句</h3>
+<p>首先我们可以总结出测试程序的模板如下：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> testbench_name <span class="comment">//testbench为顶层模块，不会被其他模块实例化，因此不需要任何端口</span></span><br><span class="line">    <span class="comment">//信号定义</span></span><br><span class="line">    <span class="comment">//模块实例化，很重要，我们需要实例化一个待测模块</span></span><br><span class="line">    <span class="comment">//添加激励信号</span></span><br><span class="line">    <span class="comment">//显示输出结果（可以不添加任何显示打印语句，那么只生成波形图）</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h4 id="施加激励信号"><a class="markdownIt-Anchor" href="#施加激励信号"></a> 施加激励信号</h4>
+<p>在SystemVerilog中，施加激励就是想DUT添加输入信号（即测试向量），主要由三种方法：</p>
+<ol>
+<li>通过initial过程过施加（线性）激励</li>
+<li>通过always过程块施加（循环）激励，主要用于产生时钟信号（后面有一章专门介绍，这里不细讲）。</li>
+<li>通过文件施加激励（比较人性化）</li>
+</ol>
+<p>首先，通过initial块施加激励就和上图的那个例子一样，每一个仿真时刻只用列出需要改变的信号值，initial只执行一次改变语句。在一个测试程序中可以包含多个initial块，并且他们都是同时并行执行。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405213629.png" alt="" /></p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>需要注意同一个initial块中的激励信号语句是串行执行的，initial块中的激励信号语句是并行执行的，并且在同一个仿真时刻避免为同一个信号赋予不同的信号值，否则将会冲突。</p></div></div> 
+<p>当通过文件施加激励时，只需要将激励（测试向量）存放在一个文本文件中，测试程序从文件中读取激励，对DUT进行测试。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405213758.png" alt="" /></p>
+<p>这种方式更加高效，可以预先存储上万个不同的测试样例，测试验证时只需导入测试文件即可。</p>
+<h4 id="输出响应"><a class="markdownIt-Anchor" href="#输出响应"></a> 输出响应</h4>
+<p>在SystemVerilog中，输出响应是指在向DUT施加激励以后，通过观察DUT输出结果，并与预期结果进行比较，以验证电路是否正确。这个过程可以通过直接观测波形图或者借助SystemVerilog HDL提供的一系列系统任务显示输出结构来实现。毕竟有时候看图不好发现错误，那么可以打印输出信息。</p>
+<p>在SystemVerilog中常用的系统任务包括：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">系统任务</th>
+<th style="text-align:center">方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">获取仿真时间</td>
+<td style="text-align:center"><code>$time</code>，<code>$stime</code>,<code>$realtime</code></td>
+</tr>
+<tr>
+<td style="text-align:center">显示信号值</td>
+<td style="text-align:center"><code>$display</code>,<code>$monitor</code>(常用)</td>
+</tr>
+<tr>
+<td style="text-align:center">结束/中断仿真</td>
+<td style="text-align:center"><code>$finish</code>,<code>$stop</code></td>
+</tr>
+<tr>
+<td style="text-align:center">文件输入</td>
+<td style="text-align:center"><code>$readmemb</code>,<code>$readmemh</code>,<code>$fopen</code>,<code>$fclose</code>,<code>$fdisplay</code>,<code>$fmonitor</code></td>
+</tr>
+<tr>
+<td style="text-align:center">文件输出</td>
+<td style="text-align:center"><code>$fopen</code>,<code>$fclose</code>,<code>$fdisplay</code>,<code>$fmonitor</code></td>
+</tr>
+</tbody>
+</table>
+<p>获取仿真时间的系统任务的返回值使用由`timescale宏定义指令声明的时间为单位时间，只是<code>$time</code>返回的是一个64位整数时间值，<code>$stime</code>返回的是32位整数时间值，<code>$realtime</code>返回的是一个实数时间值。例如：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$monitor</span>(<span class="built_in">$time</span>,<span class="string">&quot;a=%b b=%b c=%b y=%b&quot;</span>,a,b,c,y);</span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>一定要注意<code>$time</code>和<code>$stime</code>是会取整的，因此不是精确值，而<code>$realtime</code>返回的才是实数准确时间值。</p></div></div> 
+<p>对于显示信号值的系统任务<code>$display</code>和<code>$monitor</code>，相当有C中的printf函数，输出变量的值显示在控制台上，语法格式为</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$display</span>(<span class="built_in">$time</span>,<span class="string">&quot;显示格式控制符&quot;</span>,&lt;输出变量(信号)列表&gt;);</span><br><span class="line"><span class="built_in">$monitor</span>(<span class="built_in">$time</span>,<span class="string">&quot;显示格式控制符&quot;</span>,&lt;输出变量(信号)列表&gt;);</span><br></pre></td></tr></table></figure>
+<p>显示格式控制符有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">%h</th>
+<th style="text-align:center">%o</th>
+<th style="text-align:center">%d</th>
+<th style="text-align:center">%b</th>
+<th style="text-align:center">%c</th>
+<th>%s</th>
+<th style="text-align:center">%t</th>
+<th style="text-align:center">%m</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">16进制</td>
+<td style="text-align:center">8进制</td>
+<td style="text-align:center">10进制</td>
+<td style="text-align:center">2进制</td>
+<td style="text-align:center">ASCII</td>
+<td>字符串</td>
+<td style="text-align:center">时间</td>
+<td style="text-align:center">模块名</td>
+</tr>
+</tbody>
+</table>
+<p>例如：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405215139.png" alt="" /></p>
+<p><code>$display</code>和<code>$monitor</code>的区别在于前者只有执行到该语句时才进行显示操作，而后者就像一个监视器，只要输出变量列表中的某个变量发生变化，就执行一次显示操作，后者更加方便实用。</p>
+<p>结束/中断仿真的系统任务包括：<code>$finish</code>和<code>$stop</code>两种，其格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$finish();</span><br><span class="line">$finish(n);</span><br><span class="line">$stop();</span><br><span class="line">$stop(n);</span><br></pre></td></tr></table></figure>
+<p>其中参数n可以取0,1等值，0表示不输出任何信息，1表示给出仿真时间。</p>
+<p>在SystemVerilog HDL中文件输入不需要打开文件操作，直接读取文件即可，也有<code>$readmemb</code>和<code>$readmemh</code>两种，其中前者读取2进制数据，后者读取16进制数据，语法格式如下：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$readmemb</span>(<span class="string">&quot;数据文件名&quot;</span>,数组(存储器)名,&lt;起始地址&gt;,&lt;结束地址&gt;);</span><br><span class="line"><span class="built_in">$readmemh</span>(<span class="string">&quot;数据文件名&quot;</span>,数据(存储器)名，&lt;起始地址&gt;,&lt;结束地址&gt;);</span><br></pre></td></tr></table></figure>
+<p>其中起始地址和结束地址也可以缺省。并且输入文件格式有以下细节：</p>
+<ul>
+<li>
+<p>可以使用&quot;_&quot;提高数据的可读性</p>
+</li>
+<li>
+<p>可以包含单行或者多行注释</p>
+</li>
+<li>
+<p>可以使用空格或者换行来区分单个数据</p>
+</li>
+<li>
+<p>可以设定一个特定地质，规定其后的数据从该地址开始存储。地址必须是16进制，且不区分大小写，并且@和地址之间不允许有空格，即</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">地址写法：@hex_addr</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>假设现在有一个输入文件如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405215918.png" alt="" /></p>
+<p>现在我们打开这个文件：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405215941.png" alt="" /></p>
+<p>那么最终我们读取文件到stim数组的地址数据如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405220009.png" alt="" /></p>
+<p>也就是前三个地址是连续的，然后从3-255是空缺的没有地址，然后从256（十六进制的@100）有一个单独的地址数据为1111_1100，然后257-1022又是空缺的，到达1023时再继续存储定义的地址。</p>
+<p>文件输出操作需要首先用系统任务<code>$fopen</code>打开文件，然后通过系统任务<code>$fdisplay</code>和<code>$fmonitor</code>将需要的保存的信息输入到指定文件中。</p>
+<p>例如现在要打开一个MCD文件：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> MCD;</span><br><span class="line">MCD=<span class="built_in">$fopen</span>(<span class="string">&quot;文件名&quot;</span>,<span class="string">&quot;操作模式&quot;</span>);</span><br><span class="line"><span class="built_in">$fdisplay</span>(MCD,<span class="string">&quot;显示格式控制符&quot;</span>,&lt;输出变量(信号)列表&gt;);</span><br><span class="line"><span class="built_in">$fmonitor</span>(MCD,<span class="string">&quot;显示格式控制符&quot;</span>,&lt;输出变量(信号)列表&gt;);</span><br><span class="line"><span class="built_in">$fclose</span>(MCD);<span class="comment">//一定要记住关闭文件呀</span></span><br></pre></td></tr></table></figure>
+<p><code>$fopen</code>是打开指定文件并且返回一个32位整数，如果打开失败了则返回0，操作模式为w,w+,a,a+。$fclose是关闭打开的文件，而<code>$display</code>和<code>$fmonitor</code>的用法与<code>$display</code>和<code>$monitor</code>的用法类似，区别在于不是将输出响应输出到控制台，而是将信息输出到文件中。</p>
+<h3 id="自动化测试"><a class="markdownIt-Anchor" href="#自动化测试"></a> 自动化测试</h3>
+<p>我们思考一下无论上面的那种测试方法，最终我们还是需要自己去对比输出结果是否正确，这对于上万个输出响应的测试程序来说，人工复查太难了，因此我们需要机器来自动帮助我们比对判断输出响应是否正确，因此就产生了自动化测试。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405221019.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210405221032.png" alt="" /></p>
+<p>实际上自动化测试的过程和仿真验证类似，只是多了一步自动将输出响应和预期结果比对的过程。具体的写法见上图。</p>
+<h3 id="测试程序总结"><a class="markdownIt-Anchor" href="#测试程序总结"></a> 测试程序总结</h3>
+<ul>
+<li>测试程序由激励信号、待测模块DUT和输出响应三部分组成，其本身也是一个SystemVerilog代码(这很重要，需牢记)。并且是最顶层的模块，当没有端口，不可综合。</li>
+<li>由于测试程序不会变为电路，因此在测试程序中可以使用所有的SystemVerilog语句。</li>
+<li>为了便于复用和管理，测试程序可以通过文件施加激励。</li>
+<li>进行验证时，尽量采用自动化对比方式，毕竟人工复查还是容易出错。</li>
+<li>虽然观察波形图寻找错误开始时比较困难，但是习惯以后发现波形图能够帮助我们发现那些控制台输出不易察觉的问题。</li>
+<li>以上的测试程序本质上都是对使用SystemVerilog HDL所编写的程序进行仿真测试，并没有考虑门延迟，线延迟等问题，因此也称为行为仿真或者前仿真，虽然行为仿真可以发现很多设计问题，但是并不意味着通过了行为仿真电路就一定没有问题了，后面还是需要进行大量的测试的。</li>
+</ul>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%A1%8C%E4%B8%BA%E5%BB%BA%E6%A8%A1/index.html">行为建模</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E9%80%BB%E8%BE%91%E5%99%A8%E4%BB%B6/index.html">常用逻辑器件</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="DigitLogic"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

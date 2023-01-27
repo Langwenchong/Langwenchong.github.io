@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Python：字符串 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="Python字符串拼接 在Python中拼接字符串很简单，可以直接将两个字符串紧挨着写在一起即可： 1strname &#x3D; &quot;str1&quot; &quot;str2&quot; strname 表示拼接以后的字符串变量名，str1 和 str2 是要拼接的字符串内容。使用这种写法，Python 会自动将两个字符串拼接在一起。要注意拼接并不会改变原先的字符串，仅仅是生成一个新的字符串而">
+<meta property="og:type" content="website">
+<meta property="og:title" content="字符串">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="Python字符串拼接 在Python中拼接字符串很简单，可以直接将两个字符串紧挨着写在一起即可： 1strname &#x3D; &quot;str1&quot; &quot;str2&quot; strname 表示拼接以后的字符串变量名，str1 和 str2 是要拼接的字符串内容。使用这种写法，Python 会自动将两个字符串拼接在一起。要注意拼接并不会改变原先的字符串，仅仅是生成一个新的字符串而">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220123162120.png">
+<meta property="article:published_time" content="2023-01-27T14:31:18.656Z">
+<meta property="article:modified_time" content="2023-01-27T14:31:18.656Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20220123162120.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/index.html"><div class="main" ff="title">Python</div><div class="sub cap">python是世界上最好的语言</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/Python学习笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">语法基础</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/index.html#start"><span class="toc-text">变量类型和运算符</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%88%97%E8%A1%A8/index.html"><span class="toc-text">列表</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E4%B8%8E%E9%9B%86%E5%90%88/index.html"><span class="toc-text">元组、字典与集合</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html"><span class="toc-text">字符串</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5"><span class="toc-text"> Python字符串拼接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%95%B0%E5%AD%97%E7%9A%84%E6%8B%BC%E6%8E%A5"><span class="toc-text"> Python字符串和数字的拼接</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83str%E5%92%8Crepr%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：str()和repr()的区别？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E6%88%AA%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E7%89%87"><span class="toc-text"> Python截取字符串（字符串切片）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6"><span class="toc-text"> 获取单个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%A4%9A%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E7%89%87"><span class="toc-text"> 获取多个字符（字符串切片）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-len%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="toc-text"> Python len()函数详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-split%E6%96%B9%E6%B3%95%E5%88%87%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text"> Python split()方法切割字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-join%E6%96%B9%E6%B3%95%E5%90%88%E5%B9%B6%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text"> Python join()方法合并字符串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-count%E6%96%B9%E6%B3%95%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-text"> Python count()方法统计字符串出现的次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-find%E6%96%B9%E6%B3%95%E6%A3%80%E6%B5%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%AD%90%E4%B8%B2"><span class="toc-text"> Python find()方法检测字符串中是否包含某子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-index%E6%96%B9%E6%B3%95%E6%A3%80%E6%B5%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%9F%90%E5%AD%90%E4%B8%B2"><span class="toc-text"> Python index()方法检测字符串中是否包含某子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E9%BD%90%E6%96%B9%E6%B3%95"><span class="toc-text"> Python字符串对齐方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-ljust%E6%96%B9%E6%B3%95"><span class="toc-text"> Python ljust()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-rjust%E6%96%B9%E6%B3%95"><span class="toc-text"> Python rjust()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-center%E6%96%B9%E6%B3%95"><span class="toc-text"> Python center()方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-startswith%E5%92%8Cendswith%E6%96%B9%E6%B3%95"><span class="toc-text"> Python startswith()和endswith()方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#startswith%E6%96%B9%E6%B3%95"><span class="toc-text"> startswith()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#endswith%E6%96%B9%E6%B3%95"><span class="toc-text"> endswith()方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2"><span class="toc-text"> Python字符串大小写转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-title%E6%96%B9%E6%B3%95"><span class="toc-text"> Python title()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-lower%E6%96%B9%E6%B3%95"><span class="toc-text"> Python lower()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-upper%E6%96%B9%E6%B3%95"><span class="toc-text"> Python upper()方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%8E%BB%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%A9%BA%E6%A0%BC"><span class="toc-text"> Python去除字符串中空格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-strip%E6%96%B9%E6%B3%95"><span class="toc-text"> Python strip()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-lstrip%E6%96%B9%E6%B3%95"><span class="toc-text"> Python lstrip()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-rstrip%E6%96%B9%E6%B3%95"><span class="toc-text"> Python rstrip()方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-format%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA%E6%96%B9%E6%B3%95"><span class="toc-text"> Python format()格式化输出方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BC%96%E7%A0%81%E8%BD%AC%E6%8D%A2"><span class="toc-text"> Python字符串编码转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python-encode%E6%96%B9%E6%B3%95"><span class="toc-text"> Python encode()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python-decode%E6%96%B9%E6%B3%95"><span class="toc-text"> Python decode()方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-dir%E5%92%8Chelp%E5%B8%AE%E5%8A%A9%E5%87%BD%E6%95%B0"><span class="toc-text"> Python dir()和help()帮助函数</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/index.html"><span class="toc-text">流程控制</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%80/index.html"><span class="toc-text">函数基础</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/index.html"><span class="toc-text">函数进阶</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6/index.html">Python</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T14:31:18.656Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>字符串</span></h1>
+  <h3 id="python字符串拼接"><a class="markdownIt-Anchor" href="#python字符串拼接"></a> Python字符串拼接</h3>
+<p>在Python中拼接字符串很简单，可以直接将两个字符串紧挨着写在一起即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strname = <span class="string">&quot;str1&quot;</span> <span class="string">&quot;str2&quot;</span></span><br></pre></td></tr></table></figure>
+<p>strname 表示拼接以后的字符串变量名，str1 和 str2 是要拼接的字符串内容。使用这种写法，Python 会自动将两个字符串拼接在一起。<strong>要注意拼接并不会改变原先的字符串，仅仅是生成一个新的字符串而已。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str1 = <span class="string">&quot;Python教程&quot;</span> <span class="string">&quot;http://c.biancheng.net/python/&quot;</span></span><br><span class="line"><span class="built_in">print</span>(str1)</span><br><span class="line">str2 = <span class="string">&quot;Java&quot;</span> <span class="string">&quot;Python&quot;</span> <span class="string">&quot;C++&quot;</span> <span class="string">&quot;PHP&quot;</span></span><br><span class="line"><span class="built_in">print</span>(str2)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Python教程http://c.biancheng.net/python/</span><br><span class="line">JavaPythonC++PHP</span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>这种直接罗列紧挨着的字符串拼接仅限于拼接字符串常量，如果需要使用到变量，那么需要使用<code>+</code>进行拼接</p></div></div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;C++教程&quot;</span></span><br><span class="line">url = <span class="string">&quot;http://c.biancheng.net/cplus/&quot;</span></span><br><span class="line">info = name + <span class="string">&quot;的网址是：&quot;</span> + url</span><br><span class="line"><span class="built_in">print</span>(info)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C++教程的网址是：http://c.biancheng.net/cplus/</span><br></pre></td></tr></table></figure>
+<h4 id="python字符串和数字的拼接"><a class="markdownIt-Anchor" href="#python字符串和数字的拼接"></a> Python字符串和数字的拼接</h4>
+<p>在很多应用场景中，我们都需要将字符串和数字进行拼接，而Python是不允许直接拼接数字和字符串的，所以我们必须先将数字转换成字符串。可以借助str()和repr()函数将数字转换为字符串，他们的使用格式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>(obj)</span><br><span class="line"><span class="built_in">repr</span>(obj)</span><br></pre></td></tr></table></figure>
+<p>obj表示要转换的对象，他可以是数字、列表、元组、字典等多种类型的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">&quot;C语言中文网&quot;</span></span><br><span class="line">age = <span class="number">8</span></span><br><span class="line">course = <span class="number">30</span></span><br><span class="line">info = name + <span class="string">&quot;已经&quot;</span> + <span class="built_in">str</span>(age) + <span class="string">&quot;岁了，共发布了&quot;</span> + <span class="built_in">repr</span>(course) + <span class="string">&quot;套教程。&quot;</span></span><br><span class="line"><span class="built_in">print</span>(info)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C语言中文网已经<span class="number">8</span>岁了，共发布了<span class="number">30</span>套教程。</span><br></pre></td></tr></table></figure>
+<h5 id="思考str和repr的区别"><a class="markdownIt-Anchor" href="#思考str和repr的区别"></a> 思考：str()和repr()的区别？</h5>
+<ul>
+<li>str() 用于将数据转换成适合人类阅读的字符串形式。</li>
+<li>repr() 用于将数据转换成适合解释器阅读的字符串形式（Python 表达式的形式），适合在开发和调试阶段使用；如果没有等价的语法，则会发生 SyntaxError 异常。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s = &quot;http://c.biancheng.net/shell/&quot;</span><br><span class="line">s_str = str(s)</span><br><span class="line">s_repr = repr(s)</span><br><span class="line">print( type(s_str) )</span><br><span class="line">print (s_str)</span><br><span class="line">print( type(s_repr) )</span><br><span class="line">print (s_repr)</span><br></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;str&#x27;</span>&gt;</span><br><span class="line">http://c.biancheng.net/shell/</span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;str&#x27;</span>&gt;</span><br><span class="line"><span class="string">&#x27;http://c.biancheng.net/shell/&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>从上面的演示中，我们可以看到，s本身就是一个字符串，但是我们依然使用了str()和repr()来对他进行转换。从运行结果中我们可以看出，str()保留了字符串最原始的样子，而repr()使用引号将字符串包围起来，这就是Python字符串的表达形式。</p>
+<p>另外，在Python交互变成环境中，输入一个字符串（变量、加减乘除、逻辑运算等）时，Python会自动使用repr()函数处理该表达式。</p>
+<h3 id="python截取字符串字符串切片"><a class="markdownIt-Anchor" href="#python截取字符串字符串切片"></a> Python截取字符串（字符串切片）</h3>
+<p>本质上来看，字符串是由多个字符构成的，字符之间是有顺序的，这个顺序就是索引（index)。Python允许通过索引来操作字符串中的单个字符或者多个字符，比如获取指定索引处的字符，返回指定字符的索引值等。</p>
+<h4 id="获取单个字符"><a class="markdownIt-Anchor" href="#获取单个字符"></a> 获取单个字符</h4>
+<p>知道字符名以后，我们可以通过方括号<code>[]</code>中使用索引即可访问对应的字符，具体语法格式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strname[index]</span><br></pre></td></tr></table></figure>
+<p>strname表示字符串名字，index表示索引值。</p>
+<p>Python允许从字符串的两端使用索引：</p>
+<ul>
+<li>当以字符串的左端（字符串的开头）为起点时，索引是从 0 开始计数的；字符串的第一个字符的索引为 0，第二个字符的索引为 1，第三个字符串的索引为 2 ……</li>
+<li>当以字符串的右端（字符串的末尾）为起点时，索引是从 -1 开始计数的；字符串的倒数第一个字符的索引为 -1，倒数第二个字符的索引为 -2，倒数第三个字符的索引为 -3 ……</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;http://c.biancheng.net/python/&#x27;</span></span><br><span class="line"><span class="comment">#获取索引为10的字符</span></span><br><span class="line"><span class="built_in">print</span>(url[<span class="number">10</span>])</span><br><span class="line"><span class="comment">#获取索引为 6 的字符</span></span><br><span class="line"><span class="built_in">print</span>(url[-<span class="number">6</span>])</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i</span><br><span class="line">y</span><br></pre></td></tr></table></figure>
+<h4 id="获取多个字符字符串切片"><a class="markdownIt-Anchor" href="#获取多个字符字符串切片"></a> 获取多个字符（字符串切片）</h4>
+<p>使用<code>[]</code>除了可以获取单个字符之外，我们还可以指定一个范围获取多个字符，也就是一个子串或者片段，具体格式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strname[start : end : step]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>strname：要截取的字符串；</li>
+<li>start：表示要截取的第一个字符所在的索引（截取时包含该字符）。如果不指定，默认为 0，也就是从字符串的开头截取；</li>
+<li>end：表示要截取的最后一个字符所在的索引（截取时不包含该字符）。如果不指定，默认为字符串的长度；</li>
+<li>step：指的是从 start 索引处的字符开始，每 step 个距离获取一个字符，直至 end 索引出的字符。step 默认值为 1，当省略该值时，最后一个冒号也可以省略。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">&#x27;http://c.biancheng.net/java/&#x27;</span></span><br><span class="line"><span class="comment">#获取从索引5开始，直到末尾的子串</span></span><br><span class="line"><span class="built_in">print</span>(url[<span class="number">7</span>: ])</span><br><span class="line"><span class="comment">#获取从索引-21开始，直到末尾的子串</span></span><br><span class="line"><span class="built_in">print</span>(url[-<span class="number">21</span>: ])</span><br><span class="line"><span class="comment">#从开头截取字符串，直到索引22为止</span></span><br><span class="line"><span class="built_in">print</span>(url[: <span class="number">22</span>])</span><br><span class="line"><span class="comment">#每隔3个字符取出一个字符</span></span><br><span class="line"><span class="built_in">print</span>(url[:: <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c.biancheng.net/java/</span><br><span class="line">c.biancheng.net/java/</span><br><span class="line">http://c.biancheng.net</span><br><span class="line">hp/bne.ta/</span><br></pre></td></tr></table></figure>
+<h3 id="python-len函数详解"><a class="markdownIt-Anchor" href="#python-len函数详解"></a> Python len()函数详解</h3>
+<p>Python中，要想知道一个字符串有多少个字符（获取字符串长度），或者一字符串占用多少个字节，我们可以使用len()方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">len</span>（string）</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a=<span class="string">&#x27;http://c.biancheng.net&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(a)</span><br><span class="line"><span class="number">22</span></span><br></pre></td></tr></table></figure>
+<p>在实际开发中，除了常常获取字符串的长度外，有时候我们还需要获取字符串的字节数。在Python中，不同的字符所占的字节数不同，数字、英文字母、小数点、下划线以及空格各占一个字节，而一个汉字可能占2~4个字节，具体占多少个，取决于采用的编码方式。例如，汉字在GBK/GB2312编码中占用2个字节，而在UTF-8编码中一般占用3个字节。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220123162120.png" alt="" /></p>
+<p>我们可以通过使用encode()方法，将字符串进行编码后再获取它的字节数。例如，采用UTF-8编码方式，计算”人生苦短，我用Python“的字节数，可以执行如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>str1 = <span class="string">&quot;人生苦短，我用Python&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(str1.encode())</span><br><span class="line"><span class="number">27</span></span><br></pre></td></tr></table></figure>
+<p>因为汉字加中文标点符号共7个，占21个字节，而英文字母和英文的标点符号占6个字节，一共占用27个字节。同理，如果要获取采用GBK编码的字符串的长度，可以执行如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>str1 = <span class="string">&quot;人生苦短，我用Python&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(str1.encode(<span class="string">&#x27;gbk&#x27;</span>))</span><br><span class="line"><span class="number">20</span></span><br></pre></td></tr></table></figure>
+<h3 id="python-split方法切割字符串"><a class="markdownIt-Anchor" href="#python-split方法切割字符串"></a> Python split()方法切割字符串</h3>
+<p>Python中，除了提供了一些内置函数获取字符串的相关信息外（例如len()),字符串类型本身也提供了一些方法供我们使用，这些方法都是字符串类型特有的。</p>
+<p>split()方法可以实现将一个字符串按照指定的分隔符切分成多个子串，这些子串会被保存到列表中（不包括分隔符），作为方法的返回值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.split(sep,maxsplit)</span><br></pre></td></tr></table></figure>
+<p>此方法中各部分参数的含义分别是：</p>
+<ol>
+<li>str：表示要进行分割的字符串；</li>
+<li>sep：用于指定分隔符，可以包含多个字符。此参数默认为 None，表示所有空字符，包括空格、换行符“\n”、制表符“\t”等。</li>
+<li>maxsplit：可选参数，用于指定分割的次数，最后列表中子串的个数最多为 maxsplit+1。如果不指定或者指定为 -1，则表示分割次数没有限制。</li>
+</ol>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>在split()方法中，如果不指定sep参数，那么也不能指定maxsplit参数。</p></div></div>
+<p><strong>要注意，当未指定sep参数时，split(）方法默认采用空字符进行分割，但是当字符串中有连续的空格或其他空字符时，都会被视为一个分割符归字符串进行分割</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;C语言中文网   &gt;&gt;&gt;   c.biancheng.net&quot;</span>  <span class="comment">#包含 3 个连续的空格</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list6 = <span class="built_in">str</span>.split()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list6</span><br><span class="line">[<span class="string">&#x27;C语言中文网&#x27;</span>, <span class="string">&#x27;&gt;&gt;&gt;&#x27;</span>, <span class="string">&#x27;c.biancheng.net&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="python-join方法合并字符串"><a class="markdownIt-Anchor" href="#python-join方法合并字符串"></a> Python join()方法合并字符串</h3>
+<p>join()方法就是split()方法的逆方法，用来将列表（或者元组）中包含的多个字符串连接成一个字符串。</p>
+<p>使用join()方法合并字符串时，他会将列表（或者元组）中多个字符串采用固定的分隔符连接在一起。例如，字符串&quot;<a target="_blank" rel="noopener" href="http://c.biancheng.net">c.biancheng.net</a>&quot;就可以看做是通过分隔符“.”将[‘c’,‘biancheng’,‘net’] 列表合并为一个字符串的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newstr = <span class="built_in">str</span>.join(iterable)</span><br></pre></td></tr></table></figure>
+<p>此方法中各参数的含义如下：</p>
+<ol>
+<li>newstr：表示合并后生成的新字符串；</li>
+<li>str：用于指定合并时的分隔符；</li>
+<li>iterable：做合并操作的源字符串数据，允许以列表、元组等形式提供。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">dir</span> = <span class="string">&#x27;&#x27;</span>,<span class="string">&#x27;usr&#x27;</span>,<span class="string">&#x27;bin&#x27;</span>,<span class="string">&#x27;env&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">type</span>(<span class="built_in">dir</span>)</span><br><span class="line">&lt;<span class="keyword">class</span> <span class="string">&#x27;tuple&#x27;</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;/&#x27;</span>.join(<span class="built_in">dir</span>)</span><br><span class="line"><span class="string">&#x27;/usr/bin/env&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="python-count方法统计字符串出现的次数"><a class="markdownIt-Anchor" href="#python-count方法统计字符串出现的次数"></a> Python count()方法统计字符串出现的次数</h3>
+<p>count()方法用于检索指定字符串在另一字符串中出现的次数，如果检索的字符串不存在，则返回0，否则返回出现的次数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.count(sub[,start[,end]])</span><br></pre></td></tr></table></figure>
+<p>此方法中，各参数的具体含义如下：</p>
+<ol>
+<li>str：表示原字符串；</li>
+<li>sub：表示要检索的字符串；</li>
+<li>start：指定检索的起始位置，也就是从什么位置开始检测。如果不指定，默认从头开始检索；</li>
+<li>end：指定检索的终止位置，如果不指定，则表示一直检索到结尾。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.count(<span class="string">&#x27;.&#x27;</span>,<span class="number">2</span>,-<span class="number">3</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.count(<span class="string">&#x27;.&#x27;</span>,<span class="number">2</span>,-<span class="number">4</span>)</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p><strong>要注意搜索范围是[start,end)即末尾是开区间。</strong></p>
+<h3 id="python-find方法检测字符串中是否包含某子串"><a class="markdownIt-Anchor" href="#python-find方法检测字符串中是否包含某子串"></a> Python find()方法检测字符串中是否包含某子串</h3>
+<p>find()方法用于检索字符串中是否包含目标字符串，如果包含，则返回第一次出现该字符串的索引，反之则返回-1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.find(sub[,start[,end]])</span><br></pre></td></tr></table></figure>
+<p>此格式中各参数的含义如下：</p>
+<ol>
+<li>str：表示原字符串；</li>
+<li>sub：表示要检索的目标字符串；</li>
+<li>start：表示开始检索的起始位置。如果不指定，则默认从头开始检索；</li>
+<li>end：表示结束检索的结束位置。如果不指定，则默认一直检索到结尾。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.find(<span class="string">&#x27;.&#x27;</span>,<span class="number">2</span>,-<span class="number">4</span>)</span><br><span class="line">-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>同时Python还提供了rfind()方法，他可以从字符串右边开始检索，因此返回的是最靠近右侧的首次出现的字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.rfind(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line"><span class="number">11</span></span><br></pre></td></tr></table></figure>
+<h3 id="python-index方法检测字符串中是否包含某子串"><a class="markdownIt-Anchor" href="#python-index方法检测字符串中是否包含某子串"></a> Python index()方法检测字符串中是否包含某子串</h3>
+<p>和find()方法类似，index()方法也可以用来检索是否包含指定的字符串，不同之处在于，当指定的字符串不存在时，idnex()方法会抛出异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.index(sub[,start[,end]])</span><br></pre></td></tr></table></figure>
+<p>此格式中各参数的含义分别是：</p>
+<ol>
+<li>str：表示原字符串；</li>
+<li>sub：表示要检索的子字符串；</li>
+<li>start：表示检索开始的起始位置，如果不指定，默认从头开始检索；</li>
+<li>end：表示检索的结束位置，如果不指定，默认一直检索到结尾。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.index(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.index(<span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;pyshell#49&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="built_in">str</span>.index(<span class="string">&#x27;z&#x27;</span>)</span><br><span class="line">ValueError: substring <span class="keyword">not</span> found</span><br></pre></td></tr></table></figure>
+<p>类似的，Python也提供了rindex()方法，从右边开始检索：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.rindex(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line"><span class="number">11</span></span><br></pre></td></tr></table></figure>
+<h3 id="python字符串对齐方法"><a class="markdownIt-Anchor" href="#python字符串对齐方法"></a> Python字符串对齐方法</h3>
+<p>Python str还提供了3种可以用来进行文本对齐的方法，分别是ljust()、rjust()和center()方法。</p>
+<h4 id="python-ljust方法"><a class="markdownIt-Anchor" href="#python-ljust方法"></a> Python ljust()方法</h4>
+<p>ljust()方法的功能是向指定字符串的右侧填充指定字符，从而达到左对齐文本的目的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S.ljust(width[, fillchar])</span><br></pre></td></tr></table></figure>
+<p>其中各个参数的含义如下：</p>
+<ul>
+<li>S：表示要进行填充的字符串；</li>
+<li>width：表示包括 S 本身长度在内，字符串要占的总长度；</li>
+<li>fillchar：作为可选参数，用来指定填充字符串时所用的字符，默认情况使用空格。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S = <span class="string">&#x27;http://c.biancheng.net/python/&#x27;</span></span><br><span class="line">addr = <span class="string">&#x27;http://c.biancheng.net&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(S.ljust(<span class="number">35</span>,<span class="string">&#x27;-&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(addr.ljust(<span class="number">35</span>,<span class="string">&#x27;-&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://c.biancheng.net/python/-----</span><br><span class="line">http://c.biancheng.net-------------</span><br></pre></td></tr></table></figure>
+<h4 id="python-rjust方法"><a class="markdownIt-Anchor" href="#python-rjust方法"></a> Python rjust()方法</h4>
+<p>rjust()和ljust()方法类似，唯一的不同之处在于，rjust()方法是向字符串的左侧填充指定字符串，从而达到右对齐文本的目的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S.rjust(width[, fillchar])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S = <span class="string">&#x27;http://c.biancheng.net/python/&#x27;</span></span><br><span class="line">addr = <span class="string">&#x27;http://c.biancheng.net&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(S.rjust(<span class="number">35</span>,<span class="string">&#x27;-&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(addr.rjust(<span class="number">35</span>,<span class="string">&#x27;-&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-----http://c.biancheng.net/python/</span><br><span class="line">-------------http://c.biancheng.net</span><br></pre></td></tr></table></figure>
+<h4 id="python-center方法"><a class="markdownIt-Anchor" href="#python-center方法"></a> Python center()方法</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S.center(width[, fillchar])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S = <span class="string">&#x27;http://c.biancheng.net/python/&#x27;</span></span><br><span class="line">addr = <span class="string">&#x27;http://c.biancheng.net&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(S.center(<span class="number">35</span>,<span class="string">&#x27;-&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(addr.center(<span class="number">35</span>,<span class="string">&#x27;-&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">---http://c.biancheng.net/python/--</span><br><span class="line">-------http://c.biancheng.net------</span><br></pre></td></tr></table></figure>
+<h3 id="python-startswith和endswith方法"><a class="markdownIt-Anchor" href="#python-startswith和endswith方法"></a> Python startswith()和endswith()方法</h3>
+<h4 id="startswith方法"><a class="markdownIt-Anchor" href="#startswith方法"></a> startswith()方法</h4>
+<p>startswith()方法用来检索字符串是否以指定字符串开头，如果是返回True,反之返回False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.startswith(sub[,start[,end]])</span><br></pre></td></tr></table></figure>
+<p>此格式中各个参数的具体含义如下：</p>
+<ol>
+<li>str：表示原字符串；</li>
+<li>sub：要检索的子串；</li>
+<li>start：指定检索开始的起始位置索引，如果不指定，则默认从头开始检索；</li>
+<li>end：指定检索的结束位置索引，如果不指定，则默认一直检索在结束。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.startswith(<span class="string">&quot;b&quot;</span>,<span class="number">2</span>)</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h4 id="endswith方法"><a class="markdownIt-Anchor" href="#endswith方法"></a> endswith()方法</h4>
+<p>endswith() 方法用于检索字符串是否以指定字符串结尾，如果是则返回 True；反之则返回 False。该方法的语法格式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.endswith(sub[,start[,end]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.endswith(<span class="string">&quot;net&quot;</span>)</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h3 id="python字符串大小写转换"><a class="markdownIt-Anchor" href="#python字符串大小写转换"></a> Python字符串大小写转换</h3>
+<h4 id="python-title方法"><a class="markdownIt-Anchor" href="#python-title方法"></a> Python title()方法</h4>
+<p>titile()方法用于将字符串中的每一个单词的首字母转为大写，其他字母全部转为小写，转换完成后，此方法会返回转换得到的字符串。如果字符串中没有需要被转换的字符，那么字符串将会被原封不动的返回</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.title()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;c.biancheng.net&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.title()</span><br><span class="line"><span class="string">&#x27;C.Biancheng.Net&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;I LIKE C&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.title()</span><br><span class="line"><span class="string">&#x27;I Like C&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="python-lower方法"><a class="markdownIt-Anchor" href="#python-lower方法"></a> Python lower()方法</h4>
+<p>用于将字符串中的所有大写字母转换为小写字母，转换完成以后，该方法会返回新得到的字符串。如果字符串中原本就都是小写字母，那么这个方法返回原字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.lower()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;I LIKE C&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.lower()</span><br><span class="line"><span class="string">&#x27;i like c&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="python-upper方法"><a class="markdownIt-Anchor" href="#python-upper方法"></a> Python upper()方法</h4>
+<p>upper()方法和lower()方法功能相反，他用来将字符串中的所有小写字母转换为大写字母。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.upper()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;i like C&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.upper()</span><br><span class="line"><span class="string">&#x27;I LIKE C&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>{ % note color:yellow</p>
+<p>要注意，以上三个方法都仅限于将转换后的新字符串返回，而不会修改原字符串。</p>
+<p>%}</p>
+<h3 id="python去除字符串中空格"><a class="markdownIt-Anchor" href="#python去除字符串中空格"></a> Python去除字符串中空格</h3>
+<p>用户输入数据时，很有可能无疑中输入了多余的空格，或者在一些场景中，字符串前后不允许出现空格或者特殊字符，此时就需要去除字符串中的空格或者特殊字符了。</p>
+<p>这里的特殊字符，指的是制表符<code>\t</code>，回车符<code>\r</code>,换行符<code>\n</code>等。</p>
+<p>在Python中，字符串变量提供了3种方法来删除字符串中多于的空格或者特殊字符，他们分别是：</p>
+<ol>
+<li>strip()：删除字符串前后（左右两侧）的空格或特殊字符。</li>
+<li>lstrip()：删除字符串前面（左边）的空格或特殊字符。</li>
+<li>rstrip()：删除字符串后面（右边）的空格或特殊字符。</li>
+</ol>
+<p>我们要注意Python中字符串类型是不可变的，因此这三个方法仅仅是返回字符串前面或后面空白被删除以后的副本，并不会改变原字符串本身。</p>
+<h4 id="python-strip方法"><a class="markdownIt-Anchor" href="#python-strip方法"></a> Python strip()方法</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.strip([chars])</span><br></pre></td></tr></table></figure>
+<p>其中，str 表示原字符串，[chars] 用来指定要删除的字符，可以同时指定多个，如果不手动指定，则默认会删除空格以及制表符、回车符、换行符等特殊字符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;  c.biancheng.net \t\n\r&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.strip()</span><br><span class="line"><span class="string">&#x27;c.biancheng.net&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.strip(<span class="string">&quot; ,\r&quot;</span>)</span><br><span class="line"><span class="string">&#x27;c.biancheng.net \t\n&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span></span><br><span class="line"><span class="string">&#x27;  c.biancheng.net \t\n\r&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="python-lstrip方法"><a class="markdownIt-Anchor" href="#python-lstrip方法"></a> Python lstrip()方法</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;  c.biancheng.net \t\n\r&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.lstrip()</span><br><span class="line"><span class="string">&#x27;c.biancheng.net \t\n\r&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="python-rstrip方法"><a class="markdownIt-Anchor" href="#python-rstrip方法"></a> Python rstrip()方法</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;  c.biancheng.net \t\n\r&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.rstrip()</span><br><span class="line"><span class="string">&#x27;  c.biancheng.net&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="python-format格式化输出方法"><a class="markdownIt-Anchor" href="#python-format格式化输出方法"></a> Python format()格式化输出方法</h3>
+<p>之前我们学习了使用%操作符来对各种类型的数据进行格式化输出，这是早期Python提供的方法。自从Python2.6版本之后，字符串类型提供了format()方法对字符串进行格式化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.<span class="built_in">format</span>(args)</span><br></pre></td></tr></table></figure>
+<p>此方法中，str 用于指定字符串的显示样式；args 用于指定要进行格式转换的项，如果有多项，之间有逗号进行分割。</p>
+<p>学习 format() 方法的难点，在于搞清楚 str 显示样式的书写格式。在创建显示样式模板时，需要使用<code>&#123;&#125;</code>和<code>：</code>来指定占位符，其完整的语法格式为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; [index][ : [ [fill] align] [sign] [<span class="comment">#] [width] [.precision] [type] ] &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意，格式中用 [] 括起来的参数都是可选参数，即可以使用，也可以不使用。各个参数的含义如下：</p>
+<ul>
+<li>index：指定：后边设置的格式要作用到 args 中第几个数据，数据的索引值从 0 开始。如果省略此选项，则会根据 args 中数据的先后顺序自动分配。</li>
+<li>fill：指定空白处填充的字符。注意，当填充字符为逗号(,)且作用于整数或浮点数时，该整数（或浮点数）会以逗号分隔的形式输出，例如（1000000会输出 1,000,000）。</li>
+<li>align：指定数据的对齐方式，具体的对齐方式如下表所示</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">align参数</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">数据左对齐。</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">数据右对齐。</td>
+</tr>
+<tr>
+<td style="text-align:center">=</td>
+<td style="text-align:center">数据右对齐，同时将符号放置在填充内容的最左侧，该选项只对数字类型有效。</td>
+</tr>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">数据居中，此选项需和 width 参数一起使用。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>sign：指定有五符号数，此参数的值以及对应的含义如下表所示</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">sign参数</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">正数前加正号，负数前加负号。</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td style="text-align:center">正数前不加正号，负数前加负号。</td>
+</tr>
+<tr>
+<td style="text-align:center">空格</td>
+<td style="text-align:center">正数前加空格，负数前加负号。</td>
+</tr>
+<tr>
+<td style="text-align:center">#</td>
+<td style="text-align:center">对于二进制数、八进制数和十六进制数，使用此参数，各进制数前会分别显示 0b、0o、0x前缀；反之则不显示前缀。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>width：指定输出数据时所占的宽度。</li>
+<li>.precision：指定保留的小数位数。</li>
+<li>type：指定输出数据的具体类型，如下表所示</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">type类型值</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">s</td>
+<td style="text-align:center">对字符串类型格式化。</td>
+</tr>
+<tr>
+<td style="text-align:center">d</td>
+<td style="text-align:center">十进制整数。</td>
+</tr>
+<tr>
+<td style="text-align:center">c</td>
+<td style="text-align:center">将十进制整数自动转换成对应的 Unicode 字符。</td>
+</tr>
+<tr>
+<td style="text-align:center">e 或者 E</td>
+<td style="text-align:center">转换成科学计数法后，再格式化输出。</td>
+</tr>
+<tr>
+<td style="text-align:center">g 或 G</td>
+<td style="text-align:center">自动在 e 和 f（或 E 和 F）中切换。</td>
+</tr>
+<tr>
+<td style="text-align:center">b</td>
+<td style="text-align:center">将十进制数自动转换成二进制表示，再格式化输出。</td>
+</tr>
+<tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">将十进制数自动转换成八进制表示，再格式化输出。</td>
+</tr>
+<tr>
+<td style="text-align:center">x 或者 X</td>
+<td style="text-align:center">将十进制数自动转换成十六进制表示，再格式化输出。</td>
+</tr>
+<tr>
+<td style="text-align:center">f 或者 F</td>
+<td style="text-align:center">转换为浮点数（默认小数点后保留 6 位），再格式化输出。</td>
+</tr>
+<tr>
+<td style="text-align:center">%</td>
+<td style="text-align:center">显示百分比（默认显示小数点后 6 位）。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#以货币形式显示</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;货币形式：&#123;:,d&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1000000</span>))</span><br><span class="line"><span class="comment">#科学计数法表示</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;科学计数法：&#123;:E&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">1200.12</span>))</span><br><span class="line"><span class="comment">#以十六进制表示</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;100的十六进制：&#123;:#x&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">100</span>))</span><br><span class="line"><span class="comment">#输出百分比形式</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;0.01的百分比表示：&#123;:.0%&#125;&quot;</span>.<span class="built_in">format</span>(<span class="number">0.01</span>))</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">货币形式：<span class="number">1</span>,<span class="number">000</span>,<span class="number">000</span></span><br><span class="line">科学计数法：<span class="number">1.200120E+03</span></span><br><span class="line"><span class="number">100</span>的十六进制：<span class="number">0x64</span></span><br><span class="line"><span class="number">0.01</span>的百分比表示：<span class="number">1</span>%</span><br></pre></td></tr></table></figure>
+<h3 id="python字符串编码转换"><a class="markdownIt-Anchor" href="#python字符串编码转换"></a> Python字符串编码转换</h3>
+<p>我们知道，最早的字符串编码是ASCII编码，它仅仅对10个数字、26个大小写英文字母以及一些特殊字符进行了编码。ASCII码最多只能表示256个字符，每一个字符只需要占用一个字节。但是伴随着信息技术的发展，各国的文字都需要进行编码，于是相继出现了GBK,GB2312,UTF-8编码等。其中GBK和GB2312是我国制定的中文编码标准，规定英文字符占用1个字节，中文字符占2个字节。而UTF-8是国际通过的编码格式，它包含了全世界所有国家需要用到的字符，其规定是英文字符占1个字节，中文字符占3个字节。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>Python3.x默认采用UTF-8编码格式，有效的解决了中文乱码的问题。</p></div></div>
+<p>我们之前学习过在Python中有两种字符串类型，分别是str和bytes类型，其中str用来表示Unicode字符，bytes用来表示二进制数据。str类型和bytes类型之间就需要使用encode()和decode()方法进行转换。</p>
+<h4 id="python-encode方法"><a class="markdownIt-Anchor" href="#python-encode方法"></a> Python encode()方法</h4>
+<p>encode()方法为字符串类型str提供的方法，用于将str转换为bytes类型，这个过程也称为编码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>.encode([encoding=<span class="string">&quot;utf-8&quot;</span>][,errors=<span class="string">&quot;strict&quot;</span>])</span><br></pre></td></tr></table></figure>
+<p>注意，格式中用 [] 括起来的参数为可选参数，也就是说，在使用此方法时，可以使用 [] 中的参数，也可以不使用。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">str</td>
+<td style="text-align:left">表示要进行转换的字符串。</td>
+</tr>
+<tr>
+<td style="text-align:center">encoding = “utf-8”</td>
+<td style="text-align:left">指定进行编码时采用的字符编码，该选项默认采用 utf-8 编码。例如，如果想使用简体中文，可以设置 gb2312。  当方法中只使用这一个参数时，可以省略前边的“encoding=”，直接写编码格式，例如 str.encode(“UTF-8”)。</td>
+</tr>
+<tr>
+<td style="text-align:center">errors = “strict”</td>
+<td style="text-align:left">指定错误处理方式，其可选择值可以是：<br />strict：遇到非法字符就抛出异常。<br />ignore：忽略非法字符。<br />replace：用“？”替换非法字符。<br />xmlcharrefreplace：使用 xml 的字符引用。<br />该参数的默认值为 strict。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意，使用 encode() 方法对原字符串进行编码，不会直接修改原字符串，如果想修改原字符串，需要重新赋值。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;C语言中文网&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.encode()</span><br><span class="line"><span class="string">b&#x27;C\xe8\xaf\xad\xe8\xa8\x80\xe4\xb8\xad\xe6\x96\x87\xe7\xbd\x91&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;C语言中文网&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.encode(<span class="string">&#x27;GBK&#x27;</span>)</span><br><span class="line"><span class="string">b&#x27;C\xd3\xef\xd1\xd4\xd6\xd0\xce\xc4\xcd\xf8&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="python-decode方法"><a class="markdownIt-Anchor" href="#python-decode方法"></a> Python decode()方法</h4>
+<p>和encode()方法相反，decode()方法用于将bytes类型的二进制数据转换为str类型，这个过程又称为阶解码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bytes</span>.decode([encoding=<span class="string">&quot;utf-8&quot;</span>][,errors=<span class="string">&quot;strict&quot;</span>])</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bytes</td>
+<td>表示要进行转换的二进制数据。</td>
+</tr>
+<tr>
+<td style="text-align:center">encoding=“utf-8”</td>
+<td>指定解码时采用的字符编码，默认采用 utf-8 格式。当方法中只使用这一个参数时，可以省略“encoding=”，直接写编码方式即可。  注意，对 bytes 类型数据解码，要选择和当初编码时一样的格式。</td>
+</tr>
+<tr>
+<td style="text-align:center">errors = “strict”</td>
+<td>指定错误处理方式，其可选择值可以是：strict：遇到非法字符就抛出异常。ignore：忽略非法字符。replace：用“？”替换非法字符。xmlcharrefreplace：使用 xml 的字符引用。该参数的默认值为 strict。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;C语言中文网&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">bytes</span>=<span class="built_in">str</span>.encode()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">bytes</span>.decode()</span><br><span class="line"><span class="string">&#x27;C语言中文网&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>注意，如果编码时采用的不是默认的 UTF-8 编码，则解码时要选择和编码时一样的格式，否则会抛出异常，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span> = <span class="string">&quot;C语言中文网&quot;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">bytes</span> = <span class="built_in">str</span>.encode(<span class="string">&quot;GBK&quot;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">bytes</span>.decode()  <span class="comment">#默认使用 UTF-8 编码，会抛出以下异常</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;pyshell#10&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="built_in">bytes</span>.decode()</span><br><span class="line">UnicodeDecodeError: <span class="string">&#x27;utf-8&#x27;</span> codec can<span class="string">&#x27;t decode byte 0xd3 in position 1: invalid continuation byte</span></span><br><span class="line"><span class="string">&gt;&gt;&gt; bytes.decode(&quot;GBK&quot;)</span></span><br><span class="line"><span class="string">&#x27;</span>C语言中文网<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="python-dir和help帮助函数"><a class="markdownIt-Anchor" href="#python-dir和help帮助函数"></a> Python dir()和help()帮助函数</h3>
+<p>前面我们仅仅是学习了Python字符串中提供的常用的方法，但是这远远不是他的全部方法。我们还可以通过dir()或者help()方法查看更多方法。</p>
+<p>Python dir()函数用来列出某个类或者某个模块中的全部内容，包括变量、方法、函数和类等。他的用法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dir</span>(obj)</span><br></pre></td></tr></table></figure>
+<p>obj 表示要查看的对象。obj 可以不写，此时 dir() 会列出当前范围内的变量、方法和定义的类型。</p>
+<p>Python help() 函数用来查看某个函数或者模块的帮助文档，它的用法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">help</span>(obj)</span><br></pre></td></tr></table></figure>
+<p>obj表示要查看的对象，obj可以不写，此时help()会进入帮助子程序。</p>
+<p>假设现在我们要使用dir()查看str类型支持的所有方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">dir</span>(<span class="built_in">str</span>)</span><br><span class="line">[<span class="string">&#x27;__add__&#x27;</span>, <span class="string">&#x27;__class__&#x27;</span>, <span class="string">&#x27;__contains__&#x27;</span>, <span class="string">&#x27;__delattr__&#x27;</span>, <span class="string">&#x27;__dir__&#x27;</span>, <span class="string">&#x27;__doc__&#x27;</span>, <span class="string">&#x27;__eq__&#x27;</span>, <span class="string">&#x27;__format__&#x27;</span>, <span class="string">&#x27;__ge__&#x27;</span>, <span class="string">&#x27;__getattribute__&#x27;</span>, <span class="string">&#x27;__getitem__&#x27;</span>, <span class="string">&#x27;__getnewargs__&#x27;</span>, <span class="string">&#x27;__gt__&#x27;</span>, <span class="string">&#x27;__hash__&#x27;</span>, <span class="string">&#x27;__init__&#x27;</span>, <span class="string">&#x27;__init_subclass__&#x27;</span>, <span class="string">&#x27;__iter__&#x27;</span>, <span class="string">&#x27;__le__&#x27;</span>, <span class="string">&#x27;__len__&#x27;</span>, <span class="string">&#x27;__lt__&#x27;</span>, <span class="string">&#x27;__mod__&#x27;</span>, <span class="string">&#x27;__mul__&#x27;</span>, <span class="string">&#x27;__ne__&#x27;</span>, <span class="string">&#x27;__new__&#x27;</span>, <span class="string">&#x27;__reduce__&#x27;</span>, <span class="string">&#x27;__reduce_ex__&#x27;</span>, <span class="string">&#x27;__repr__&#x27;</span>, <span class="string">&#x27;__rmod__&#x27;</span>, <span class="string">&#x27;__rmul__&#x27;</span>, <span class="string">&#x27;__setattr__&#x27;</span>, <span class="string">&#x27;__sizeof__&#x27;</span>, <span class="string">&#x27;__str__&#x27;</span>, <span class="string">&#x27;__subclasshook__&#x27;</span>, <span class="string">&#x27;capitalize&#x27;</span>, <span class="string">&#x27;casefold&#x27;</span>, <span class="string">&#x27;center&#x27;</span>, <span class="string">&#x27;count&#x27;</span>, <span class="string">&#x27;encode&#x27;</span>, <span class="string">&#x27;endswith&#x27;</span>, <span class="string">&#x27;expandtabs&#x27;</span>, <span class="string">&#x27;find&#x27;</span>, <span class="string">&#x27;format&#x27;</span>, <span class="string">&#x27;format_map&#x27;</span>, <span class="string">&#x27;index&#x27;</span>, <span class="string">&#x27;isalnum&#x27;</span>, <span class="string">&#x27;isalpha&#x27;</span>, <span class="string">&#x27;isascii&#x27;</span>, <span class="string">&#x27;isdecimal&#x27;</span>, <span class="string">&#x27;isdigit&#x27;</span>, <span class="string">&#x27;isidentifier&#x27;</span>, <span class="string">&#x27;islower&#x27;</span>, <span class="string">&#x27;isnumeric&#x27;</span>, <span class="string">&#x27;isprintable&#x27;</span>, <span class="string">&#x27;isspace&#x27;</span>, <span class="string">&#x27;istitle&#x27;</span>, <span class="string">&#x27;isupper&#x27;</span>, <span class="string">&#x27;join&#x27;</span>, <span class="string">&#x27;ljust&#x27;</span>, <span class="string">&#x27;lower&#x27;</span>, <span class="string">&#x27;lstrip&#x27;</span>, <span class="string">&#x27;maketrans&#x27;</span>, <span class="string">&#x27;partition&#x27;</span>, <span class="string">&#x27;replace&#x27;</span>, <span class="string">&#x27;rfind&#x27;</span>, <span class="string">&#x27;rindex&#x27;</span>, <span class="string">&#x27;rjust&#x27;</span>, <span class="string">&#x27;rpartition&#x27;</span>, <span class="string">&#x27;rsplit&#x27;</span>, <span class="string">&#x27;rstrip&#x27;</span>, <span class="string">&#x27;split&#x27;</span>, <span class="string">&#x27;splitlines&#x27;</span>, <span class="string">&#x27;startswith&#x27;</span>, <span class="string">&#x27;strip&#x27;</span>, <span class="string">&#x27;swapcase&#x27;</span>, <span class="string">&#x27;title&#x27;</span>, <span class="string">&#x27;translate&#x27;</span>, <span class="string">&#x27;upper&#x27;</span>, <span class="string">&#x27;zfill&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<p>我们已经找到了它支持的所有方法，接下来我们可以通过help()方法去详细了解每一个方法的具体功能。如下所示我们使用help()方法查看str中lower()方法的用法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">help</span>(<span class="built_in">str</span>.lower)</span><br><span class="line">Help on method_descriptor:</span><br><span class="line"></span><br><span class="line">lower(self, /)</span><br><span class="line">    Return a copy of the string converted to lowercase.</span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="yellow"><div class="title">注意，使用</div><div class="body"><p>help() 查看某个函数的用法时，函数名后边不能带括号，例如将上面的命令写作<code>help(str.lower())</code>就是错误的。</p></div></div>
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%83%E7%BB%84%E3%80%81%E5%AD%97%E5%85%B8%E4%B8%8E%E9%9B%86%E5%90%88/index.html">元组、字典与集合</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/index.html">流程控制</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="Python"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
