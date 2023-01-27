@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>OS：内存管理概念 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="内存基础  内存的定义和作用 其实我们在前面学习进程时已经经常提到了内存的部分知识，我们知道一个进程在上cpu之前需要现在内存中处于就绪态，上cpu后进程实体的PCB,数据段，代码段大部分都处于内存中方便随时和cpu进行信息交换。所以内存可存放数据，程序执行前需要先放到内存中才能被cpu处理----所以cpu的功能是缓和cpu与硬盘之间的速度矛盾。  思考：内存如何区分多个程序的数据存储地？ 我">
+<meta property="og:type" content="website">
+<meta property="og:title" content="内存管理概念">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="内存基础  内存的定义和作用 其实我们在前面学习进程时已经经常提到了内存的部分知识，我们知道一个进程在上cpu之前需要现在内存中处于就绪态，上cpu后进程实体的PCB,数据段，代码段大部分都处于内存中方便随时和cpu进行信息交换。所以内存可存放数据，程序执行前需要先放到内存中才能被cpu处理----所以cpu的功能是缓和cpu与硬盘之间的速度矛盾。  思考：内存如何区分多个程序的数据存储地？ 我">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227164909.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227144508.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227144631.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227145319.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227145703.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227150602.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227150745.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227151703.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227152945.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227153018.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227154023.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227154437.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227154636.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227154919.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227155151.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227155520.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227165015.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227160126.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227160344.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227160352.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227160605.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227160616.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227160723.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227162408.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227162603.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227163039.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227165106.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227163607.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201227164239.png">
+<meta property="article:published_time" content="2023-01-27T07:31:27.295Z">
+<meta property="article:modified_time" content="2023-01-27T07:31:27.295Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20201227164909.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><div class="main" ff="title">OS</div><div class="sub cap">不会操作系统的工程师不是优秀的工程师</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/操作系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">操作系统简介</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html#start"><span class="toc-text">什么是操作系统</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html"><span class="toc-text">操作系统的运行环境</span></a></div></div><div class="widget-header cap dis-select"><span class="name">进程管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B/index.html"><span class="toc-text">什么是进程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B/index.html"><span class="toc-text">什么是线程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/index.html"><span class="toc-text">处理机调度</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/index.html"><span class="toc-text">进程调度算法</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/index.html"><span class="toc-text">同步与互斥</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(1)/index.html"><span class="toc-text">信号量与经典同步问题(1)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(2)/index.html"><span class="toc-text">经典同步问题(2)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%AE%A1%E7%A8%8B%E4%B8%8E%E6%AD%BB%E9%94%81/index.html"><span class="toc-text">管程与死锁</span></a></div></div><div class="widget-header cap dis-select"><span class="name">内存管理</span></div><div class="widget-body fs14"><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">内存管理概念</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%9F%BA%E7%A1%80"><span class="toc-text"> 内存基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E4%BD%9C%E7%94%A8"><span class="toc-text"> 内存的定义和作用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%86%85%E5%AD%98%E5%A6%82%E4%BD%95%E5%8C%BA%E5%88%86%E5%A4%9A%E4%B8%AA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%9C%B0"><span class="toc-text"> 思考：内存如何区分多个程序的数据存储地？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E9%87%8F%E5%8D%95%E4%BD%8D%E4%B8%8E%E6%8D%A2%E7%AE%97"><span class="toc-text"> 补充：常用的数量单位与换算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%834gb%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="toc-text"> 思考：4GB内存是什么意思？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text"> 指令的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E6%9E%9C%E8%BF%9B%E7%A8%8B%E4%B8%8D%E6%98%AF%E4%BB%8E%E5%9C%B0%E5%9D%800%E5%BC%80%E5%A7%8B%E5%AD%98%E6%94%BE%E7%9A%84%E4%BC%9A%E5%BD%B1%E5%93%8D%E6%AD%A3%E5%B8%B8%E6%89%A7%E8%A1%8C%E5%90%97"><span class="toc-text"> 思考：如果进程不是从地址#0开始存放的会影响正常执行吗？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E4%BD%95%E5%B0%86%E6%8C%87%E4%BB%A4%E4%B8%AD%E7%9A%84%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%B8%BA%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text"> 思考：如何将指令中的逻辑地址转换为物理地址？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E8%A3%85%E5%85%A5%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text"> 模块装入的三种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%9D%E5%AF%B9%E8%A3%85%E5%85%A5"><span class="toc-text"> 绝对装入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%A3%85%E5%85%A5%E9%9D%99%E6%80%81%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="toc-text"> 可重定位装入（静态重定位）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%E8%A3%85%E5%85%A5%E5%8A%A8%E6%80%81%E9%87%8D%E5%AE%9A%E4%BD%8D"><span class="toc-text"> 动态运行时装入（动态重定位）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text"> 链接的三种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text"> 静态链接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A3%85%E5%85%A5%E6%97%B6%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text"> 装入时动态链接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="toc-text"> 运行时动态链接</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-text"> 内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E5%9B%9E%E6%94%B6"><span class="toc-text"> 内存空间的分配与回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%B1%95"><span class="toc-text"> 内存空间的扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text"> 地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4"><span class="toc-text"> 内存保护</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AD%96%E7%95%A51"><span class="toc-text"> 策略1:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AD%96%E7%95%A52"><span class="toc-text"> 策略2</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A6%86%E7%9B%96%E4%B8%8E%E4%BA%A4%E6%8D%A2"><span class="toc-text"> 覆盖与交换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A6%86%E7%9B%96%E6%8A%80%E6%9C%AF"><span class="toc-text"> 覆盖技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF"><span class="toc-text"> 交换技术</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF%E5%BA%94%E8%AF%A5%E5%B0%86%E6%8C%82%E8%B5%B7%E7%9A%84%E8%BF%9B%E7%A8%8B%E6%94%BE%E5%9C%A8%E5%A4%96%E5%AD%98%E7%A3%81%E7%9B%98%E7%9A%84%E4%BB%80%E4%B9%88%E4%BD%8D%E7%BD%AE"><span class="toc-text"> 思考：交换技术应该将挂起的进程放在外存（磁盘）的什么位置？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%BA%94%E8%AF%A5%E4%BA%A4%E6%8D%A2"><span class="toc-text"> 思考：什么时候应该交换？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%8D%A2%E5%87%BA%E6%97%B6%E5%BA%94%E8%AF%A5%E6%8D%A2%E5%87%BA%E9%82%A3%E4%BA%9B%E8%BF%9B%E7%A8%8B"><span class="toc-text"> 思考：换出时应该换出那些进程？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-3"><span class="toc-text"> 总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%A9%E6%9C%9F%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/index.html"><span class="toc-text">早期分配管理方式</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">基本页式存储管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%AE%B5%E9%A1%B5%E5%BC%8F%E7%AE%A1%E7%90%86%E4%B8%8E%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">段页式管理与虚拟内存概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">虚拟内存管理</span></a></div></div><div class="widget-header cap dis-select"><span class="name">文件管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9B%AE%E5%BD%95/index.html"><span class="toc-text">文件系统基础与目录</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html"><span class="toc-text">文件存储与基本操作</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/index.html"><span class="toc-text">文件共享与保护</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A3%81%E7%9B%98/index.html"><span class="toc-text">磁盘</span></a></div></div><div class="widget-header cap dis-select"><span class="name">I/O管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/I/O%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">I/O管理概述</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%AE%BE%E5%A4%87%E7%8B%AC%E7%AB%8B%E6%80%A7%E8%BD%AF%E4%BB%B6/index.html"><span class="toc-text">设备独立性软件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BC%93%E5%86%B2%E5%8C%BA&%E7%BB%93%E6%9D%9F%E8%AF%AD/index.html"><span class="toc-text">缓冲区&结束语</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">OS</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T07:31:27.295Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>内存管理概念</span></h1>
+  <h3 id="内存基础"><a class="markdownIt-Anchor" href="#内存基础"></a> 内存基础</h3>
+<h4 id="内存的定义和作用"><a class="markdownIt-Anchor" href="#内存的定义和作用"></a> 内存的定义和作用</h4>
+<p>其实我们在前面学习进程时已经经常提到了内存的部分知识，我们知道一个进程在上cpu之前需要现在内存中处于就绪态，上cpu后进程实体的PCB,数据段，代码段大部分都处于内存中方便随时和cpu进行信息交换。所以内存可存放数据，程序执行前需要先放到内存中才能被cpu处理----所以cpu的功能是缓和cpu与硬盘之间的速度矛盾。</p>
+<h5 id="思考内存如何区分多个程序的数据存储地"><a class="markdownIt-Anchor" href="#思考内存如何区分多个程序的数据存储地"></a> 思考：内存如何区分多个程序的数据存储地？</h5>
+<p>我们知道在多道程序环境下，系统中会有多个程序并发执行，也就是说会有多个程序的数据需要同时放在内存中，那么如何区分每一个数据段是属于哪个程序的呢？实际上内存会分为许多部分，有一个一个小房间，每一个小房间就是一个“存储单元”，内存地址从0开始，每个地址对应一个存储单元。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227164909.png" alt="" /></p>
+<ol>
+<li>如果计算机“按字节编址”，则每个存储单元为1字节（1Byte)，即1B，即8个二进制位。</li>
+<li>如果字长为16位的计算机“按字编址”，则每个存储单元为1个字，每个字的大小为16个二进制位，所以一个字=两个字节。</li>
+</ol>
+<h5 id="补充常用的数量单位与换算"><a class="markdownIt-Anchor" href="#补充常用的数量单位与换算"></a> 补充：常用的数量单位与换算</h5>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mi>K</mi><mi>B</mi><mo stretchy="false">(</mo><mn>1</mn><mi>K</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mn>2</mn><mn>10</mn></msup><mi>B</mi><mi>y</mi><mi>t</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">1KB(1K)=2^{10}Byte
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0585479999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mi>M</mi><mi>B</mi><mo stretchy="false">(</mo><mn>1</mn><mi>M</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mn>2</mn><mn>20</mn></msup><mi>B</mi><mi>y</mi><mi>t</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">1MB(1M)=2^{20}Byte
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0585479999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span></span></span></span></span></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mn>1</mn><mi>G</mi><mi>B</mi><mo stretchy="false">(</mo><mn>1</mn><mi>G</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mn>2</mn><mn>30</mn></msup><mi>B</mi><mi>y</mi><mi>t</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">1GB(1G)=2^{30}Byte
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord mathnormal">G</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord">1</span><span class="mord mathnormal">G</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0585479999999998em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">0</span></span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span></span></span></span></span></p>
+<p>所以我们知道换算进制为2^10也就是1024Btye,所以1K实际上已经非常大了。</p>
+<h5 id="思考4gb内存是什么意思"><a class="markdownIt-Anchor" href="#思考4gb内存是什么意思"></a> 思考：4GB内存是什么意思？</h5>
+<p>一台手机/电脑的内存为4GB，是什么意思。我们按照上面的公式计算，4GB=4*2^30Byte,如果内存是按照字节编址的，那么也就是会有2^2*2^30=2^32个房间，又因为是从0开始编号，所以房间编号为0~2^32-1。所以需要2^32个地址一一标识这些房间，所以需要32个二进制位来表示。</p>
+<h4 id="指令的工作原理"><a class="markdownIt-Anchor" href="#指令的工作原理"></a> 指令的工作原理</h4>
+<p>我们思考现在要对x=x+1指令语句进行执行，具体过程如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227144508.png" alt="" /></p>
+<p>首先高级指令x=x+1翻译成处理机可以看懂的二进制指令串（可能一个高级指令会对应多条二进制指令），然后cpu执行这个二进制指令串。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227144631.png" alt="" /></p>
+<p>我们从上面可以看到cpu根据二进制指令找到010011111处的数据进行取出到寄存器中，然后+1操作，在返还该值到地址处，这样就完成了一个读写操作将x+1。可见，我们写的代码要翻译成CPU能识别的指令，这些指令会告诉CPU应该去内存中的那个地址读/写数据，这个数据应该做什么样的处理。在这个例子中，我们默认这个进程的相关内容从地址#0开始连续存放，指令中的地址参数直接给出了变量x的实际存放地址（物理地址）。</p>
+<h5 id="思考如果进程不是从地址0开始存放的会影响正常执行吗"><a class="markdownIt-Anchor" href="#思考如果进程不是从地址0开始存放的会影响正常执行吗"></a> 思考：如果进程不是从地址#0开始存放的会影响正常执行吗？</h5>
+<p>比如如下面这个案例，我们现在将79处的存储单元写入10然后再将79处的数据读入到寄存器3中，如果进程是从#0开始存放数据的，那么确实可以正常执行：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227145319.png" alt="" /></p>
+<p>从上面的图中我们也可以看出程序经过编译，链接后生成的指令中指明的是逻辑地址即相对地址，即相对于进程其实地址而言的地址，如上图中实际上指令中的地址为79处并不是指的物理地址79处，而是相对于进程起始处79处的地址，只不过是刚好此时进程是从地址为#0开始存储的，所以逻辑地址处的79就是映射的物理地址的79处。所以可以正常运行。（为了简化理解，本次我们都默认操作系统为进程分配的是一片连续的内存空间）。</p>
+<p>但是实际上情况不可能总是如此的理想。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227145703.png" alt="" /></p>
+<p>我们如果默认逻辑地址就是物理地址的话，此时上面的过程就会出现重大错误。因为此时指令0和1值的还是逻辑地址处的79，但是此时这个进程并不是放到内存中的#0地址开始毕竟内存中会存入许多进程（并发性导致许多进城会在内存中存储随时准备就绪上cpu)，所以此时指令0和1处的所说的的逻辑地址79处实际上是相对于此时起始地址#100开始后面的79个存储单元即绝对地址179处的数据，但是如果我们仅仅是按照逻辑地址==绝对地址执行的话，那么此时就会映射到其他进程的数据段（物理地址79处）这明显是不对的，所以我们在装入模块（可执行文件）进入内存时（这是高级调度/作业调度）需要对地址进行转换以达到在执行指令时读/写数据的地址正确，此时我们需要某些策略来使得指令中的逻辑地址转换为正确的物理地址。</p>
+<h5 id="思考如何将指令中的逻辑地址转换为物理地址"><a class="markdownIt-Anchor" href="#思考如何将指令中的逻辑地址转换为物理地址"></a> 思考：如何将指令中的逻辑地址转换为物理地址？</h5>
+<ol>
+<li>策略1：绝对装入</li>
+<li>策略2：可重定位装入（静态重定位）</li>
+<li>策略3：动态运行时装入（动态重定位）</li>
+</ol>
+<h4 id="模块装入的三种方式"><a class="markdownIt-Anchor" href="#模块装入的三种方式"></a> 模块装入的三种方式</h4>
+<h5 id="绝对装入"><a class="markdownIt-Anchor" href="#绝对装入"></a> 绝对装入</h5>
+<p>在编译时，如果知道程序将放到内存中的那个位置，编译程序将产生绝对地址的目标代码。装入程序按照装入模块中的地址，将程序和数据装入内存。比如上面那道题我们在装入模块到内存之前知道将要在内存地址为100的地方开始存放。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227150602.png" alt="" /></p>
+<p>那么此时在对文件进行编译，链接后指令中不在使用逻辑地址，而是直接转换为物理地址如上图，此时在将装入模块（可执行文件）放入内存中，当处理机执行到指令0和指令1时就会到正确的存储单元（物理地址为179）读/写数据。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227150745.png" alt="" /></p>
+<p>虽然没有什么大问题，但是绝对装入只适用于单道程序环境。程序中使用的绝对地址，可在编译或汇编时给出，也可由程序员直接赋予。通常情况下都是编译或汇编时在转换为绝对地址。</p>
+<h6 id="思考为什么只使用于单道程序环境"><a class="markdownIt-Anchor" href="#思考为什么只使用于单道程序环境"></a> 思考：为什么只使用于单道程序环境？</h6>
+<p>很简单，因为在装入模块进入内存后指令一直是不变的物理地址，但是我们知道在多道程序环境中进程是并发异步执行的，不可能一直存储于内存的一个固定地方，但是一旦装入模块变换了存储地址那么初始地址就也改变了，那么此时很显然此时装入模块中的地址就又出现指向错误了，而且如果绝对装入只能适用于单道环境程序，显然也不满足进程并发执行和内存建立的初衷，所以这种方法缺陷较大，有待改进。</p>
+<h5 id="可重定位装入静态重定位"><a class="markdownIt-Anchor" href="#可重定位装入静态重定位"></a> 可重定位装入（静态重定位）</h5>
+<p>静态重定位（可重定位装入），顾名思义肯定是能够弥补上面绝对装入的缺陷，具体做法是编译，链接后的装入模块的地址还是从0开始的，但是指令中使用的地址，数据存放的地址都是相对于起始地址而言的逻辑地址。可根据内存的当前情况，将装入模块放入内存的适当位置。装入时进行重定位，将逻辑地址变换为物理地址（地址变换是在装入时一次完成）。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227151703.png" alt="" /></p>
+<p>我们从上图可以看到，他是在装入时对于逻辑地址进行了+100的处理，这样当再次进入内存分配到内存的其他地方时也可以随时更新为正确的地址，不像绝对装入那样直接改变为绝对地址当再次进入内存就有可能出现错误。</p>
+<h6 id="思考还有没有什么可以改进的地方"><a class="markdownIt-Anchor" href="#思考还有没有什么可以改进的地方"></a> 思考：还有没有什么可以改进的地方？</h6>
+<p>我们对比一下绝对装入和静态可重定位装入两者的区别。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">装入策略</th>
+<th style="text-align:center">地址变化</th>
+<th style="text-align:center">异同点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">绝对装入</td>
+<td style="text-align:center">编译后逻辑地址-&gt;绝对地址装入内存</td>
+<td style="text-align:center">有效解决了逻辑地址-&gt;绝对地址的问题，使得可以映射到正确的物理地址上，但是编译后直到运行完销毁前起始存放地址不许更改</td>
+</tr>
+<tr>
+<td style="text-align:center">静态重定位装入</td>
+<td style="text-align:center">编译后仍是逻辑地址，装入内存时逻辑地址-&gt;绝对地址</td>
+<td style="text-align:center">在编译后还是逻辑地址，只有在放入内存前进行+起始地址操作转换为正确的绝对地址，当出内存再次进内存时如果更改了起始存放地址可动态转换为正确的物理地址</td>
+</tr>
+</tbody>
+</table>
+<p>但是我们发现静态重定位的特点是一个作业装入内存时，必须分配其要求的全部内存空间，如果没有足够的内存，作业就不能装入该内存并且最大缺陷是作业一旦进入内存后，在运行期间就不能在移动，也不能再申请内存空间。所以我们好需要解决在内存运行期间移动的问题。</p>
+<h5 id="动态运行时装入动态重定位"><a class="markdownIt-Anchor" href="#动态运行时装入动态重定位"></a> 动态运行时装入（动态重定位）</h5>
+<p>动态重定位：编译，链接的装入模块的地址还是从0开始的，装入程序把装入模块装入内存后，并不会立即把逻辑地址转换为物理地址，而是把地址推迟到程序真正要执行时才进行。因此装入内存后所有的地址依然是逻辑地址。这种方法需要一个重定位寄存器的支持。</p>
+<p>装入时：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227152945.png" alt="" /></p>
+<p>执行时：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227153018.png" alt="" /></p>
+<p>我们看出动态重定位满足所有要求是最好的策略。动态重定位在满足程序在内存中移动的同时，还可以将程序分配到不连续的存储区，所以他区别于静态重定位不需要一次性申请所有连续的地址空间并且每次都只需要取出部分代码执行，如果需要映射地址则通过重定位寄存器可以随时指向正确的存储单元（都不需要连续存储了），简直是太棒了。并且由于是重定位寄存器更改映射地址所以可以向用户提供一个比存储空间大得多的地址空间（虚拟性）。</p>
+<h6 id="思考总结三种策略的异同点"><a class="markdownIt-Anchor" href="#思考总结三种策略的异同点"></a> 思考：总结三种策略的异同点？</h6>
+<p>我们从以下几个角度区分这三个策略：</p>
+<ol>
+<li>装入模块起始地址：绝对装入策略装入模块中的起始地址未必是0，但是静态重定位和动态重定位一定是0</li>
+<li>逻辑地址-&gt;物理地址转换时期：绝对装入策略中是在编译，链接后即将逻辑地址转换为物理地址，静态重定位是在装入内存时，而动态重定位是在执行时借助重定位寄存器转换。总的来说，只有动态重定位是在内存中还保存逻辑地址。</li>
+<li>借助外界手段：只有动态重定位需要一个辅助的重定位寄存器，静态重定位不需要。</li>
+<li>装入的地址要求：绝对装入和静态重定位都需要一次性申请一片连续的容量够大的地址空间，而动态重定位可以离散装入。</li>
+</ol>
+<h6 id="思考链接编译到底是什么"><a class="markdownIt-Anchor" href="#思考链接编译到底是什么"></a> 思考：链接编译到底是什么？</h6>
+<p>我们知道在一个程序从写到运行一次需要经过以下几个过程：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227154023.png" alt="" /></p>
+<p>编译就是将用户源代码编译成若干个目标模块（编译就是把高级语言翻译为机器语言），而链接程序将编译后形成的一组目标模块，以及所需要的的库函数链接在一起，形成一个完整的装入模块，装入是由装入程序将装入模块装入内存运行。所以链接很重要，他是形成一个模块的关键步骤，这里面有3中链接方式。</p>
+<h4 id="链接的三种方式"><a class="markdownIt-Anchor" href="#链接的三种方式"></a> 链接的三种方式</h4>
+<h5 id="静态链接"><a class="markdownIt-Anchor" href="#静态链接"></a> 静态链接</h5>
+<p>静态链接就是在程序运行之前先将各目标模块及它们所需要的库函数连接成一个完整的可执行文件（装入模块），之后不再拆开。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227154437.png" alt="" /></p>
+<p>没啥大问题，但是这样就必须一次性申请一片连续的存储地址貌似难以实现因为内存中会造成许多内存碎片。而且准备工作时间很长，没有链接成一个完整的模块之前不能进入内存执行。</p>
+<h5 id="装入时动态链接"><a class="markdownIt-Anchor" href="#装入时动态链接"></a> 装入时动态链接</h5>
+<p>将各目标模块装入内存时，边装入边链接的一种链接方式，如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227154636.png" alt="" /></p>
+<p>这样即使还没有完成全部链接，但是前面的部分模块已经可以进入内存，准备工作时间明显缩短。</p>
+<h5 id="运行时动态链接"><a class="markdownIt-Anchor" href="#运行时动态链接"></a> 运行时动态链接</h5>
+<p>在程序执行中需要该目标模块时，才对他进行链接。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227154919.png" alt="" /></p>
+<p>不但占用内存空间小，准备时间短，而且便于修改和更新，便于实现对目标模块的共享。</p>
+<h6 id="思考怎么就便于实现目标模块的共享了"><a class="markdownIt-Anchor" href="#思考怎么就便于实现目标模块的共享了"></a> 思考：怎么就便于实现目标模块的共享了？</h6>
+<p>我们思考有两个程序现在都有一个调用打印机I/O设备的代码段，那么对于运行时动态链接的好处是不需要写两份了，谁需要谁就链接这部分模块，加大了模块的可重复利用率，这也是组件化思想的体现。</p>
+<h4 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h4>
+<p>基本上全是重点和易错点</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227155151.png" alt="" /></p>
+<h3 id="内存管理"><a class="markdownIt-Anchor" href="#内存管理"></a> 内存管理</h3>
+<p>回顾前面所讲的知识，我们主要着重于对装入模块装入内存前和装入内存时的问题如正确的地址转换，链接方式等，那么接下里来我们在讨论一下对于内存中运行时对于各进程的管理。</p>
+<h4 id="内存空间的分配与回收"><a class="markdownIt-Anchor" href="#内存空间的分配与回收"></a> 内存空间的分配与回收</h4>
+<p>操作系统作为系统资源的管理者，当然也需要对内存进行管理，要管些什么？首先对于内存空间的分配和回收的任务必不可少。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227155520.png" alt="" /></p>
+<p>这些问题都会涉及到许多后续问题所以有不同的算法策略，后面我们将详细讲到。</p>
+<h4 id="内存空间的扩展"><a class="markdownIt-Anchor" href="#内存空间的扩展"></a> 内存空间的扩展</h4>
+<p>我们前面也讲过操作系统的虚拟性，实际上就是用过逻辑地址和物理地址的映射以及内外存切换装入等方式实现的，从而能够在有限大小的内存空间中虚拟出远大于物理空间大小的内存空间。所以操作系统需要提供某种技术从逻辑上对内存空间进行扩展。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227165015.png" alt="" /></p>
+<h4 id="地址转换"><a class="markdownIt-Anchor" href="#地址转换"></a> 地址转换</h4>
+<p>为了使变成更方便，程序猿写程序时应该只需要关注指令、数据的逻辑地址，而逻辑地址到物理地址的转换（这个过程称为地址重定位就是之前讲的三种装入策略）应该由操作系统负责，这样就保证了程序猿写程序时不需要关注物理内存的实际情况。类似的还有刚学写管程概念，也是为了更加方便于程序猿只集中于程序的编写而提出的。所以对于三种装入方式，我们可以看出只有动态重定位是现代操作系统才拥有的，毕竟其他两种方式还需要程序猿关注地址转换为体以防止出错。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227160126.png" alt="" /></p>
+<h4 id="内存保护"><a class="markdownIt-Anchor" href="#内存保护"></a> 内存保护</h4>
+<p>同时操作系统还需要提供内存保护功能，保证各进程在各自存储空间内运行，互不干扰。这里有两种策略：</p>
+<h5 id="策略1"><a class="markdownIt-Anchor" href="#策略1"></a> 策略1:</h5>
+<p>在cpu上设置一对上、下限寄存器，存放进程的上，下限地址。进程的指令要访问某个地址时，cpu检查是否越界。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227160344.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227160352.png" alt="" /></p>
+<p>所以可以看出上、下限寄存器存储的是物理地址。</p>
+<h5 id="策略2"><a class="markdownIt-Anchor" href="#策略2"></a> 策略2</h5>
+<p>采用重定位寄存器（又称基址寄存器）和界地址寄存器（又称限长寄存器）进行越界的检查，重定位寄存器中存放的是进程的起始物理地址，界地址存放的是进程的最大逻辑地址。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227160605.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227160616.png" alt="" /></p>
+<p>所以管理判断是否越界的是界地址寄存器，并且策略2是根据逻辑地址进行越界检查的，而策略1是根据物理地址进行越界检查的。</p>
+<h4 id="总结-2"><a class="markdownIt-Anchor" href="#总结-2"></a> 总结</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227160723.png" alt="" /></p>
+<h3 id="覆盖与交换"><a class="markdownIt-Anchor" href="#覆盖与交换"></a> 覆盖与交换</h3>
+<p>这里我们讲的覆盖与交换技术不用想肯定是内存空间扩充的技术来实现操作系统的虚拟性，扩大内存空间大小。</p>
+<h4 id="覆盖技术"><a class="markdownIt-Anchor" href="#覆盖技术"></a> 覆盖技术</h4>
+<p>在早期的计算机内存很小，也没有操作系统所以无虚拟性的概念，即就是逻辑地址==物理地址的情况，那么比如IBM推出的第一台PC机最大只支持1MB大小的内存，那么就真的只是1MB了，所以会经常出现内存大小不够的情况出现（比如一个文件为20MB，那么放都放不进去更谈何运行）。所以后来提出了覆盖技术来解决程序大小超过物理内存总和的问题。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227162408.png" alt="" /></p>
+<p>覆盖技术的思想是将程序分为多个段（多个模块）。常用的段常驻内存，不常用的段在需要时再调入内存（很容易想到）。所以内存中相应的有一个“固定区”和多个“覆盖区”。需要常驻内存的段放在“固定区”，调入后就不再调出（除非运行结束），不常用的段放在“覆盖区”，需要用到时调入内存，用不到时调出内存。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227162603.png" alt="" /></p>
+<p>main函数部分在固定区，而BCDEF在覆盖区，这种覆盖技术确实解决了问题，但是必须由程序猿声明覆盖结构，操作系统完成自动覆盖。所以缺点是对用户不透明，增加了用户编程负担。覆盖技术只用于早期的操作系统，现在已经成为历史。并且我们发现还有一个小细节操作系统还可以做到让不能同时被访问的程序段共享同一个覆盖区，这样也做到了一定的减少占用内存空间的作用。</p>
+<h4 id="交换技术"><a class="markdownIt-Anchor" href="#交换技术"></a> 交换技术</h4>
+<p>交换技术（对换技术）的设计思路是当内存空间紧张时，系统将内存中某些进程暂时换出内存，把外存中某些亿具备运行条件的进程换入内存（进程在内存与磁盘间动态调度，这也是绝对装入方式易出错的地方）。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227163039.png" alt="" /></p>
+<p>这里面的进程挂起和就绪运行的状态切换涉及的是中级调度（内存调度），就是决定将那个处于挂起状态的进程重新调入内存。</p>
+<p>所以暂时被换出到外存等待的进程为挂起状态（suspend),挂起态又可细分为就绪挂起和阻塞挂起两种状态，这就不得不再提一下状态经典三角切换模型。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227165106.png" alt="" /></p>
+<h5 id="思考交换技术应该将挂起的进程放在外存磁盘的什么位置"><a class="markdownIt-Anchor" href="#思考交换技术应该将挂起的进程放在外存磁盘的什么位置"></a> 思考：交换技术应该将挂起的进程放在外存（磁盘）的什么位置？</h5>
+<p>具有对换功能的操作系统中，通常把磁盘空间分为文件区和对换区两部分。文件区主要用于存放文件，主要追求存储空间的利用率，因此对文件区空间的管理采用离散分配方式（空间碎片少）。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227163607.png" alt="" /></p>
+<p>对换区空间只占磁盘空间的小部分，被换出的进程数据就存放在对换区。由于对换的速度直接影响到系统的整体速度，因此对换区空间的管理主要追求换出速度，因此通常对换区采用连续分配方式（学过文件管理章节后即可理解）。总之，对换区的I/O速度比文件去更快。</p>
+<h5 id="思考什么时候应该交换"><a class="markdownIt-Anchor" href="#思考什么时候应该交换"></a> 思考：什么时候应该交换？</h5>
+<p>交换通常在许多进程运行且内存吃紧时进行，而系统负荷降低就暂停。例如：在发现许多进程运行时经常发生缺页（后面会讲）就说明内存紧张，此时就可以换出一些进程，如果缺页率明显下降了，那么就可以暂停换出了。</p>
+<h5 id="思考换出时应该换出那些进程"><a class="markdownIt-Anchor" href="#思考换出时应该换出那些进程"></a> 思考：换出时应该换出那些进程？</h5>
+<p>可优先换出阻塞进程（毕竟在哪都是等😉），可优先换出优先级低的进程，为了防止优先级低的进程在被调入内存后很快又被换出，有的系统会考虑进程在内存的驻留时间来决定换出哪个进程。但是一定要注意PCB是一定不会被换出的，他是常驻内存的。</p>
+<h4 id="总结-3"><a class="markdownIt-Anchor" href="#总结-3"></a> 总结</h4>
+<p>一定要注意覆盖技术和交换技术的区别在于角度不同，覆盖技术着眼于一个程序或进程，而交换技术是着眼于全局多个进程之间的关系，所以覆盖技术与交换技术互相配合最大限度的对内存空间进行扩展。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201227164239.png" alt="" /></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%AE%A1%E7%A8%8B%E4%B8%8E%E6%AD%BB%E9%94%81/index.html">管程与死锁</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%A9%E6%9C%9F%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/index.html">早期分配管理方式</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="OS"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

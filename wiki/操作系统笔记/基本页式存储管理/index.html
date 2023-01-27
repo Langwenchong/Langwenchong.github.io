@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>OS：基本页式存储管理 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="基本地址变换机构 本节还是讲解基本页式存储管理，在上一节中我们学习了页式存储的地址变换方法，这里我们来理解基本地址变换机构（用于实现逻辑地址到物理地址转换的一组硬件机构）的原理和流程。  页表寄存器 基本地址变换机构可以借助进程的页表将逻辑地址转换为物理地址。通常我们要设置一个页表寄存器（PTR）存放页表在内存中的起始地址F和页表长度M。这样我们才可以找到页表，进程未执行时，页表的起始地址和页表">
+<meta property="og:type" content="website">
+<meta property="og:title" content="基本页式存储管理">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="基本地址变换机构 本节还是讲解基本页式存储管理，在上一节中我们学习了页式存储的地址变换方法，这里我们来理解基本地址变换机构（用于实现逻辑地址到物理地址转换的一组硬件机构）的原理和流程。  页表寄存器 基本地址变换机构可以借助进程的页表将逻辑地址转换为物理地址。通常我们要设置一个页表寄存器（PTR）存放页表在内存中的起始地址F和页表长度M。这样我们才可以找到页表，进程未执行时，页表的起始地址和页表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228171319.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228171426.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228154113.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228154458.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228154643.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228160359.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228161048.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228171530.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228171626.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228163435.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228163657.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228164747.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228170258.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201228171151.png">
+<meta property="article:published_time" content="2023-01-27T07:32:10.622Z">
+<meta property="article:modified_time" content="2023-01-27T07:32:10.622Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20201228171319.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><div class="main" ff="title">OS</div><div class="sub cap">不会操作系统的工程师不是优秀的工程师</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/操作系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">操作系统简介</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html#start"><span class="toc-text">什么是操作系统</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html"><span class="toc-text">操作系统的运行环境</span></a></div></div><div class="widget-header cap dis-select"><span class="name">进程管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B/index.html"><span class="toc-text">什么是进程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B/index.html"><span class="toc-text">什么是线程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/index.html"><span class="toc-text">处理机调度</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/index.html"><span class="toc-text">进程调度算法</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/index.html"><span class="toc-text">同步与互斥</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(1)/index.html"><span class="toc-text">信号量与经典同步问题(1)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(2)/index.html"><span class="toc-text">经典同步问题(2)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%AE%A1%E7%A8%8B%E4%B8%8E%E6%AD%BB%E9%94%81/index.html"><span class="toc-text">管程与死锁</span></a></div></div><div class="widget-header cap dis-select"><span class="name">内存管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">内存管理概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%A9%E6%9C%9F%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/index.html"><span class="toc-text">早期分配管理方式</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">基本页式存储管理</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9C%B0%E5%9D%80%E5%8F%98%E6%8D%A2%E6%9C%BA%E6%9E%84"><span class="toc-text"> 基本地址变换机构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E8%A1%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text"> 页表寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E5%8F%98%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text"> 地址变换过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E8%A1%A8%E9%A1%B9%E5%A4%A7%E5%B0%8F%E7%9A%84%E6%B7%B1%E7%A9%B6"><span class="toc-text"> 页表项大小的深究</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E6%A0%B7%E5%81%9A%E6%9C%89%E4%BB%80%E4%B9%88%E6%84%8F%E4%B9%89"><span class="toc-text"> 思考：为什么要这样做，有什么意义？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E6%9C%89%E5%BF%AB%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E5%8F%98%E6%8D%A2%E6%9C%BA%E6%9E%84"><span class="toc-text"> 具有快表的地址变换机构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BF%AB%E8%A1%A8tlb"><span class="toc-text"> 什么是快表（TLB）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E5%8F%98%E6%8D%A2%E8%BF%87%E7%A8%8B%E5%BC%95%E5%85%A5%E5%BF%AB%E8%A1%A8"><span class="toc-text"> 地址变换过程（引入快表）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%A4%E7%A7%8D%E6%9F%A5%E6%89%BE%E6%96%B9%E6%B3%95%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：两种查找方法的本质区别？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%8F%AF%E4%BB%A5%E6%8F%90%E9%80%9F%E5%A4%9A%E5%B0%91"><span class="toc-text"> 思考：可以提速多少？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E8%83%BD%E5%90%A6%E8%BF%9B%E4%B8%80%E6%AD%A5%E6%8F%90%E9%80%9F"><span class="toc-text"> 思考：能否进一步提速？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E6%9E%9C%E6%8A%8A%E6%89%80%E6%9C%89%E9%A1%B5%E8%A1%A8%E5%85%A8%E9%83%A8%E6%94%BE%E5%9C%A8tlb%E9%82%A3%E4%B9%88%E5%B2%82%E4%B8%8D%E6%98%AF%E6%9B%B4%E5%BF%AB"><span class="toc-text"> 思考：如果把所有页表全部放在TLB那么岂不是更快？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86"><span class="toc-text"> 局部性原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text"> 总结：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text"> 两级页表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%BA%A7%E9%A1%B5%E8%A1%A8%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text"> 单级页表存在的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-text"> 注意：页表的存储方式！</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%8A%E9%9D%A2%E7%9A%84%E5%8D%95%E7%BA%A7%E9%A1%B5%E8%A1%A8%E5%AD%98%E5%82%A8%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-text"> 思考：上面的单级页表存储有什么问题？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86-%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84"><span class="toc-text"> 两级页表的原理、地址结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B9%8B%E5%89%8D%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E5%BD%93%E7%BC%BA%E9%A1%B5%E7%8E%87%E9%AB%98%E6%97%B6%E8%AF%B4%E6%98%8E%E5%86%85%E5%AD%98%E7%B4%A7%E5%BC%A0%E4%BA%86"><span class="toc-text"> 思考：之前为什么说当缺页率高时说明内存紧张了？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E6%98%AF%E6%9C%89%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%8F%98%E5%8C%96"><span class="toc-text"> 使用多级页表是有没有什么变化？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text"> 思考：什么时候使用多级页表？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E6%9E%9C%E5%B0%B1%E8%A6%81%E7%94%A8%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8%E4%BC%9A%E6%80%8E%E4%B9%88%E6%A0%B7"><span class="toc-text"> 思考：如果就要用两级页表会怎么样？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF10108%E5%88%86%E5%B8%83"><span class="toc-text"> 思考：为什么不是10,10,8分布？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8%E5%92%8C%E4%B8%89%E7%BA%A7%E9%A1%B5%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%AD%A5%E9%AA%A4%E6%B2%A1%E6%9C%89%E5%BF%AB%E8%A1%A8"><span class="toc-text"> 思考：两级页表和三级页表查询步骤（没有快表）？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-3"><span class="toc-text"> 总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%AE%B5%E9%A1%B5%E5%BC%8F%E7%AE%A1%E7%90%86%E4%B8%8E%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">段页式管理与虚拟内存概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">虚拟内存管理</span></a></div></div><div class="widget-header cap dis-select"><span class="name">文件管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9B%AE%E5%BD%95/index.html"><span class="toc-text">文件系统基础与目录</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html"><span class="toc-text">文件存储与基本操作</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/index.html"><span class="toc-text">文件共享与保护</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A3%81%E7%9B%98/index.html"><span class="toc-text">磁盘</span></a></div></div><div class="widget-header cap dis-select"><span class="name">I/O管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/I/O%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">I/O管理概述</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%AE%BE%E5%A4%87%E7%8B%AC%E7%AB%8B%E6%80%A7%E8%BD%AF%E4%BB%B6/index.html"><span class="toc-text">设备独立性软件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BC%93%E5%86%B2%E5%8C%BA&%E7%BB%93%E6%9D%9F%E8%AF%AD/index.html"><span class="toc-text">缓冲区&结束语</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">OS</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T07:32:10.622Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>基本页式存储管理</span></h1>
+  <h3 id="基本地址变换机构"><a class="markdownIt-Anchor" href="#基本地址变换机构"></a> 基本地址变换机构</h3>
+<p>本节还是讲解基本页式存储管理，在上一节中我们学习了页式存储的地址变换方法，这里我们来理解基本地址变换机构（用于实现逻辑地址到物理地址转换的一组硬件机构）的原理和流程。</p>
+<h4 id="页表寄存器"><a class="markdownIt-Anchor" href="#页表寄存器"></a> 页表寄存器</h4>
+<p>基本地址变换机构可以借助进程的页表将逻辑地址转换为物理地址。通常我们要设置一个页表寄存器（PTR）存放页表在内存中的起始地址F和页表长度M。这样我们才可以找到页表，进程未执行时，页表的起始地址和页表长度放在进程控制块PCB中，当进程被调度室，操作系统内核会把他们放到页表寄存器。</p>
+<h4 id="地址变换过程"><a class="markdownIt-Anchor" href="#地址变换过程"></a> 地址变换过程</h4>
+<p>我们现在已图示的方法演示，注意这里页面大小是2的整数幂，设页面大小为L，逻辑地址A到物理地址E的变换过程如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228171319.png" alt="" /></p>
+<p>其实前面都讲过了，这里只是演示一下借助页表寄存器具体的转换流程。理解后不需要死记硬背。这里我们来练习一下：假设页面大小为1KB，页号2对应的内存块号b=8，将逻辑地址A=2500转换为物理地址E。相当于告诉了我们以下有效信息：</p>
+<ol>
+<li>系统按字节寻址</li>
+<li>页内偏移量占地址的10位</li>
+<li>页号2对应页框8</li>
+</ol>
+<p>那么我们首先计算页号=2500/1024=2,页内偏移为2500%1024=452。所以物理地址实际上就已经出来了是8*1024+452=8644。</p>
+<p>所以在分页存储管理的系统中，只要确定了每个页面的大小，逻辑地址结构就可以啦，因此，页式管理中地址是一维的。即只要给出一个逻辑地址系统就可以自动地算出页号、页内偏移量两个部分，并不需要显示的告诉系统这个逻辑地址中，页内偏移量占多少位。</p>
+<h4 id="页表项大小的深究"><a class="markdownIt-Anchor" href="#页表项大小的深究"></a> 页表项大小的深究</h4>
+<p>我们知道页表项所占字节大小是根据最大页号所占的位数确定的并且每个页表项的长度是相同的，页号是“隐含”的。前面我们讲过一个例题：物理内存为4GB，页面大小4KB，我们最终算出来页表项至少要占3个字节也就是24bit。但是实际上一般我们是让页表项占4个字节，即即使我们一直页表项为20bit，3字节就已经可以表示了我们还是宁愿在让他多占一个字节为4字节。</p>
+<h5 id="思考为什么要这样做有什么意义"><a class="markdownIt-Anchor" href="#思考为什么要这样做有什么意义"></a> 思考：为什么要这样做，有什么意义？</h5>
+<p>我们知道页表项会按顺序连续地存放在内存中。那么如果页表在内存中的存放起始地址为X，那么M号页对应的页表项是存放在内存地址为X+3*M的。但是如果此时一个页面大小为4KB，那么每个页框都可以存放4096/3=1365个页表项（因为页表存在内存中，那么显然页表也是按页式存储的，所以页表项也是存在页框中的，只不过这几个页框会相邻这样就实现了连续存储了），但是这个页框还会剩余4096%3=1B页内碎片。这其实内部碎片大小是可以忽略的，但是此时就会导致X+3*M公式不适用了，即整体看来页表项不再是连续存储的了，而是每1365个页表项就间隔1B这可很难受。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228171426.png" alt="" /></p>
+<p>所以此时我们发现如果每个页表项按4B存储，那么一个页框就可以放4096/4=1024个页表项，并且刚刚好没有内部页内碎片，这样整体看来页表项就还是连续存储的也就说明此时公式X+3*M是可以适用的，所以明显4B更好，即使这样一个页框所存储的页表项就少了但是不差这一点空间。但是我们要注意不是每次都是4个字节都是刚刚好，根据页框大小的不同我们要动态更新但是原则上就是每次都要使得页面恰好可以装得下整数个页表项。</p>
+<h4 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228154113.png" alt="" /></p>
+<h3 id="具有快表的地址变换机构"><a class="markdownIt-Anchor" href="#具有快表的地址变换机构"></a> 具有快表的地址变换机构</h3>
+<p>实际上就是一种在基本地址变换机构的改进版本使得查询速率更快了。</p>
+<h4 id="什么是快表tlb"><a class="markdownIt-Anchor" href="#什么是快表tlb"></a> 什么是快表（TLB）</h4>
+<p>快表，又称联想寄存器（TLB,translation lookaside buffer)，是一种访问速度比内存快很多的高速缓存（注意TLB不是内存），用来存放最近访问的页表项的副本，可以加速地址变换的速度。与此对应，内存中的页表（前面说过页表存放在内存中）称为慢表。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228154458.png" alt="" /></p>
+<h4 id="地址变换过程引入快表"><a class="markdownIt-Anchor" href="#地址变换过程引入快表"></a> 地址变换过程（引入快表）</h4>
+<p>一般访问快表TLB只需要1微秒，而访问内存需要100微秒。现在我们同样以图示演示一下用快表寻找（0,0）（0,4）（0,8）这几个逻辑地址。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228154643.png" alt="" /></p>
+<p>我们发现和之前的过程不相同的是在得到页号后不是立刻取内存慢表中查找对应的内存块号，而是先在TLB寻找有没有最近刚刚查找过此页表项，如果有那么就可以直接命中知道内存块号了，这样就加速了查找速度，但是前提是TLB中得有即最近查找过这个表，如果没有那么还是需要去慢表中查找。</p>
+<h5 id="思考两种查找方法的本质区别"><a class="markdownIt-Anchor" href="#思考两种查找方法的本质区别"></a> 思考：两种查找方法的本质区别？</h5>
+<p>速度不同那是肯定地了，还有就是访问内存单元的次数也是不同的，对于直接TLB命中的，只需要一次内存单元访问即得到物理地址后访问内存中的存储数据的单元，而如果没有在TLB中命中，那么还需要额外在进行一次在内存中的慢表中查询页表项得到物理块号，所以需要两次内存的访问，当然如果这次未命中，那么查询完此次页表项后会将这个页表项的副本加入到TLB中以便下一次再查找这个页表项时可以命中快速查询。</p>
+<h5 id="思考可以提速多少"><a class="markdownIt-Anchor" href="#思考可以提速多少"></a> 思考：可以提速多少？</h5>
+<p>我们知道由于查询快表的速度比查询页表的速度快很多，所以只要尽可能多的快命中，就可以节省很多时间。由局部性原理（即CPU访问存储器时，无论是存取指令还是存取数据，所访问的存储单元都趋于聚集在一个较小的连续区域中）一般来说快表的命中率可以达到90%以上。我们以一道例题来计算：</p>
+<p>某系统使用基本分页存储管理，并采用了具有快表的基本地址变换机构，访问一次快表耗时1微秒，访问一次内存耗时100微秒。如果快表的命中率为90%，那么访问一个逻辑地址的平均耗时时间为多少？</p>
+<p>（1+100）*0.9+（1+100+100）*0.1=111微秒</p>
+<p>对于上面的计算可不要轻视，一定要理解透彻，前面是快表命中，需要一次查询快表的时间1微秒+一次内存访问时间（查询数据）100微秒，而对于未命中时也是查询了一次快表1微秒+两次内存访问时间200微秒（一次慢表查询，一次数据访问）。</p>
+<h5 id="思考能否进一步提速"><a class="markdownIt-Anchor" href="#思考能否进一步提速"></a> 思考：能否进一步提速？</h5>
+<p>可以，对于某些系统来说支持快表和慢表同时查找即两个搜索同时进行，谁先找到就用谁，这样快表找到的时间还是101微秒，但是慢表查询就是200微秒了（因为不查找快表了）这样计算一个逻辑地址平均查找时间为110.9微秒。而如果不采用快表，那么查找一个逻辑地址所用的平均时间为200微秒。显然引入快表以后，访问一个逻辑地址的速度快了一倍。</p>
+<p>这里对于两种查询快表的方式进行对比：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228160359.png" alt="" /></p>
+<h5 id="思考如果把所有页表全部放在tlb那么岂不是更快"><a class="markdownIt-Anchor" href="#思考如果把所有页表全部放在tlb那么岂不是更快"></a> 思考：如果把所有页表全部放在TLB那么岂不是更快？</h5>
+<p>显然不可能，TLB造价高昂，肯定是容量有限不能容下所有页表，所以这种想法目前为止还不可能实现，但是这样就会出现一个问题，当TLB满了以后再添加新的页表项副本时就需要先淘汰一些页表项，这就涉及到了淘汰谁的问题，这里也大有讲究有许多置换算法后面细讲。</p>
+<h4 id="局部性原理"><a class="markdownIt-Anchor" href="#局部性原理"></a> 局部性原理</h4>
+<ul>
+<li>时间局部性原理：如果执行了程序的某条指令，那么不久后这条指令很有可能会再次执行，如果某个数据被访问过，那么不久之后这个数据很有可能会再次被访问。（因为程序中存在大量的循环）</li>
+<li>空间局部性原理：一旦程序访问了某个存储单元，在不久之后其附近的存储单元也很有可能再次被访问。（因为许多数据在内存中都是连续存放的）</li>
+</ul>
+<p>所以对于上节介绍的无快表的基地址变换机构中，每次访问一个逻辑地址，都需要查询内存中的页表。由于局部性原理，可能很多次查到的都是同一个页表项。</p>
+<h4 id="总结-2"><a class="markdownIt-Anchor" href="#总结-2"></a> 总结：</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228161048.png" alt="" /></p>
+<p>这里我们在学习了机组原理后知道有一个和TLB非常类似的机构叫做Cache实际上两者是由区别的：TLB中只有页表项的副本，而普通Cache中可能会有其他各种数据的副本。但是解决问题的思路是类似的，实战请参考：<a target="_blank" rel="noopener" href="https://coolchong.cn/2020/10/23/comsyshomework5/">缓存Cache实验</a></p>
+<h3 id="两级页表"><a class="markdownIt-Anchor" href="#两级页表"></a> 两级页表</h3>
+<h4 id="单级页表存在的问题"><a class="markdownIt-Anchor" href="#单级页表存在的问题"></a> 单级页表存在的问题</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228171530.png" alt="" /></p>
+<p>我们以一个例题为例：某计算即系统按字节寻址，支持32位的逻辑地址，采用分页存储管理，页面大小为4KB，页表项长度为4B。</p>
+<p>那么4KB=2^12B，因此页内地址要用12位表示，所以剩余的20位表示页号。因此，该系统中用户进程最多有2^20页。相应的，一个进程的页表，最多会有2^20=1M=1,048,576个页表项，所以一个页表最大需要2^20*4B=2^22B=4M，共需要2^22/2^12=2^10个页框存储该页表。即需要专门给进程分配1024个连续的页框来存放它的页表。</p>
+<h5 id="注意页表的存储方式"><a class="markdownIt-Anchor" href="#注意页表的存储方式"></a> 注意：页表的存储方式！</h5>
+<p>这里我还是想再谈一谈页表的存储方式，虽然我们知道按照分页存储，数据是可以离散存放的，但是对于页表这一特殊的数据结构在分页内存中存放时还是要连续放的，所以这就要求页框必须是连续的，并且为了地址好查询即X+4*M还尽量要求页框能够放入整数个页表项。</p>
+<h5 id="思考上面的单级页表存储有什么问题"><a class="markdownIt-Anchor" href="#思考上面的单级页表存储有什么问题"></a> 思考：上面的单级页表存储有什么问题？</h5>
+<ol>
+<li>页表必须连续存放，因此当页表很大时，需要占用很多个连续的页框</li>
+<li>没有必要让整个页表常驻内存，因为局部性原理进程可能一般在一个时间段内只会访问几个特定的相邻的页面。</li>
+</ol>
+<p>所以我们想把页表再分页并离散存储，然后在建立一张页表记录各个部分的存放位置，称为页目录表，或称外层页表，或称顶层页表。这就是两级页表甚至多级页表的由来。</p>
+<h4 id="两级页表的原理-地址结构"><a class="markdownIt-Anchor" href="#两级页表的原理-地址结构"></a> 两级页表的原理、地址结构</h4>
+<p>我们先来看一下单机页表时怎么存储的，此时将页表分为了1024个部分即1024个连续页框，每个页框里有1024个页表项如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228171626.png" alt="" /></p>
+<p>现在我们将这1024个部分也离散存放然后建立一张表格来记录各部分所存储的位置。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228163435.png" alt="" /></p>
+<p>此时一级页号（页目录号）有1024项记录的是1024个部分所存储的页框号，然后二级页号对应的是某个页表中的页号（即页号），最后12位还是页内偏移量。例如此时</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228163657.png" alt="" /></p>
+<p>此时我们发现实际上空间并没有变大，还是只能存储2^20页，但是此时可以不用连续存储了并且最终的计算还是满足X+4*M的公式。但是此时内存里的分布就比较复杂了，原先是某一连续区间里存放的全是页表（里面放的是页表项），然后另外的地方存储着数据单元，但是现在3号存放的是页表（里面对应的是页表项）但是2号页框里面存储的就是数据了，所以数据存储和页表存储夹杂在一起了。并且分成二级发现无论是哪个页表都是最大为1023的数不会再出现1048575这么大的数了就是因为两级导致的拆分。相当于原先的0~1048575的一张大表变成了1024个小页表了每个页表时0~1023并且每个小页表有了编号为0#~1023#。</p>
+<p>现在还没有解决页表常驻的问题，所以我们还需要在页目录中添加一栏状态标志位表示此时i#页表是否在内存中如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228164747.png" alt="" /></p>
+<p>只有在需要访问i#页表时才放入到内存中（虚拟存储技术），当然页目录肯定是得一直在内存中的。如果想访问的页面不在内存中，就是缺页中断了（内中断/异常：自发指令触发，在cpu中发出中断信号）然后将目标页面从外村调入内存（此时不能说是中级调度，因为不是挂起进程进入调入内存而是缺的页表调入）。</p>
+<h5 id="思考之前为什么说当缺页率高时说明内存紧张了"><a class="markdownIt-Anchor" href="#思考之前为什么说当缺页率高时说明内存紧张了"></a> 思考：之前为什么说当缺页率高时说明内存紧张了？</h5>
+<p>毕竟内存有限，如果内存很小时那么每次调入缺的页表同时还需要调出某些页表腾地方，那么老缺页中断就说明没有足够的地方存放被访问页的地方了。</p>
+<h5 id="使用多级页表是有没有什么变化"><a class="markdownIt-Anchor" href="#使用多级页表是有没有什么变化"></a> 使用多级页表是有没有什么变化？</h5>
+<p>我们知道在单级页表时每一个页表项的地址就是起始地址+页号*页表大小，但是当使用多级页表时只有同一张页表中的页表项还使用（因为一张页表内还是连续存储的）但是此时页表间的页表项就不再适用了，因为此时各个页目录表是离散存储的了。</p>
+<h5 id="思考什么时候使用多级页表"><a class="markdownIt-Anchor" href="#思考什么时候使用多级页表"></a> 思考：什么时候使用多级页表？</h5>
+<p>若分为两级页表后，页表依然很长，那么我们就可以采用更多级页表，一般来说各级页表的大小不能超过一个页面，毕竟页目录最好就放入一个页框中最合适。例如：某系统按字节编址，采用40位逻辑地址，页面大小为4KB，页表项大小为4B，假设采用纯页式存储，则需要几级页表？页内偏移量多少位？</p>
+<p>页面大小=4KB=2^12B，按字节编址所以页内偏移量就是12位。</p>
+<p>那么页号所占位数=40-12=28。又因为页面大小为4KB=2^12B,页表项为2^2B，那么每个页面可以放2^10个页表项。因此各级页表最多包含2^10个页表项，需要10位二进制才能映射到2^10个页表项，因此每一级的页表对应页号为10位（可以少但是不要多于10要不就会出现一张表放不下两张表多于的情况，少的话后面就空着呗）。所以需要三级页表，逻辑地址结构如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228170258.png" alt="" /></p>
+<h5 id="思考如果就要用两级页表会怎么样"><a class="markdownIt-Anchor" href="#思考如果就要用两级页表会怎么样"></a> 思考：如果就要用两级页表会怎么样？</h5>
+<p>按理论你要是非得用也不是不可以，但是此时就会出现一级页号18位即有2^18个二级页表，那么页目录一张放不下，需要1.8个这就很不优雅。所以不推荐。而如果是8,10,10这样分布就很好，一级页号对应有多少个二级页目录一共有2^8个二级页目录，然后二级页号每一个都是一张二级页目录，页目录中的每一项映射着一个三级页表，三级页号表项映射着页号所对应的物理块号。这样一共是有2^28个物理块存储着数据。</p>
+<h5 id="思考为什么不是10108分布"><a class="markdownIt-Anchor" href="#思考为什么不是10108分布"></a> 思考：为什么不是10,10,8分布？</h5>
+<p>这样很不优雅，意味着有2^20个表都是填不满的，虽然对于查找没什么影响，但是页内碎片多，而8,8,10就只有一级页目录有页内碎片。既节省空间还优雅。</p>
+<h5 id="思考两级页表和三级页表查询步骤没有快表"><a class="markdownIt-Anchor" href="#思考两级页表和三级页表查询步骤没有快表"></a> 思考：两级页表和三级页表查询步骤（没有快表）？</h5>
+<p>两级页表：</p>
+<ol>
+<li>第一次访存：访问内存中的页目录表</li>
+<li>第二次访存：访问内存中的二级页表</li>
+<li>第三次访存：访问目标内存单元</li>
+</ol>
+<p>三级页表：</p>
+<ol>
+<li>第一次访存：访问内存中的一级页目录表</li>
+<li>第二次访存：访问内存中的二级页目录表</li>
+<li>第三次访存：访问内存中的三级页表</li>
+<li>第四次访存：访问目标内存单元</li>
+</ol>
+<h4 id="总结-3"><a class="markdownIt-Anchor" href="#总结-3"></a> 总结</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201228171151.png" alt="" /></p>
+<p>超级重点，必须会计算！</p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%A9%E6%9C%9F%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/index.html">早期分配管理方式</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%AE%B5%E9%A1%B5%E5%BC%8F%E7%AE%A1%E7%90%86%E4%B8%8E%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A6%82%E5%BF%B5/index.html">段页式管理与虚拟内存概念</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="OS"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

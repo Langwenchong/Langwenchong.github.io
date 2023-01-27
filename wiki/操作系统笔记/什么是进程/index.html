@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>OS：什么是进程 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="进程的概念，组成，特征和组织方式  进程的概念 程序是静态的，就是存放在某个磁盘里的可执行文件，是一系列指令的集合。而进程是动态的，是程序的一次执行过程，所以同一个程序会对应多个进程。  如上图，QQ是一个程序，而图中的三个框分别对应着QQ程序三次执行过程，因此各为一个进程。仔细回想，你会注意到并发性所描述的是进程在同一个时间间隔内同时进行。  进程的组成 那么操作系统该如何区分每一个进程呢，毕">
+<meta property="og:type" content="website">
+<meta property="og:title" content="什么是进程">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="进程的概念，组成，特征和组织方式  进程的概念 程序是静态的，就是存放在某个磁盘里的可执行文件，是一系列指令的集合。而进程是动态的，是程序的一次执行过程，所以同一个程序会对应多个进程。  如上图，QQ是一个程序，而图中的三个框分别对应着QQ程序三次执行过程，因此各为一个进程。仔细回想，你会注意到并发性所描述的是进程在同一个时间间隔内同时进行。  进程的组成 那么操作系统该如何区分每一个进程呢，毕">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fd9feb33ffa7d37b36ea1db.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda01c93ffa7d37b371d586.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda02eb3ffa7d37b3731c5f.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda03913ffa7d37b373e775.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda03ec3ffa7d37b3744cb2.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda08333ffa7d37b37976b5.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda08123ffa7d37b379538f.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda0d9b3ffa7d37b381de12.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda0f8e3ffa7d37b383ebab.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda11043ffa7d37b385ac6e.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda12053ffa7d37b386ec84.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda13b93ffa7d37b388d1f1.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda14b63ffa7d37b389e714.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda15263ffa7d37b38a6a79.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda15eb3ffa7d37b38b418a.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda167d3ffa7d37b38be845.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda16b83ffa7d37b38c29eb.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda17f93ffa7d37b38da627.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda18ec3ffa7d37b38ed46f.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda198c3ffa7d37b38f9709.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda1a223ffa7d37b3903c65.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda1dfe3ffa7d37b394887f.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda1e7d3ffa7d37b39526b0.jpg">
+<meta property="og:image" content="https://pic.imgdb.cn/item/5fda1ebf3ffa7d37b39585bf.jpg">
+<meta property="article:published_time" content="2023-01-27T07:24:38.716Z">
+<meta property="article:modified_time" content="2023-01-27T07:24:38.716Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.imgdb.cn/item/5fd9feb33ffa7d37b36ea1db.jpg">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><div class="main" ff="title">OS</div><div class="sub cap">不会操作系统的工程师不是优秀的工程师</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/操作系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">操作系统简介</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html#start"><span class="toc-text">什么是操作系统</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html"><span class="toc-text">操作系统的运行环境</span></a></div></div><div class="widget-header cap dis-select"><span class="name">进程管理</span></div><div class="widget-body fs14"><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B/index.html"><span class="toc-text">什么是进程</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E7%BB%84%E6%88%90%E7%89%B9%E5%BE%81%E5%92%8C%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="toc-text"> 进程的概念，组成，特征和组织方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text"> 进程的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text"> 进程的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%90%E8%A1%8C%E7%9A%84"><span class="toc-text"> 思考：程序是怎么运行的？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-text"> 进程的特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="toc-text"> 进程的组织方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-text"> 链接方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%B9%E5%BC%8F"><span class="toc-text"> 索引方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E4%B8%8E%E8%BD%AC%E6%8D%A2"><span class="toc-text"> 进程的状态与转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-text"> 进程的状态</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%80%81"><span class="toc-text"> 创建态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%B1%E7%BB%AA%E6%80%81"><span class="toc-text"> 就绪态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%80%81"><span class="toc-text"> 运行态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E6%80%81"><span class="toc-text"> 阻塞态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%88%E6%AD%A2%E6%80%81"><span class="toc-text"> 终止态</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-text"> 进程状态的转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-text"> 进程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text"> 进程控制的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%8E%9F%E8%AF%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E6%9C%89%E4%B8%AD%E6%96%AD"><span class="toc-text"> 思考：原语为什么不能有中断？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E8%AF%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="toc-text"> 思考：如何实现原语的“原子性”？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E7%9B%B8%E5%85%B3%E7%9A%84%E5%8E%9F%E8%AF%AD"><span class="toc-text"> 进程控制相关的原语</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E6%98%AF%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C%E7%9A%84"><span class="toc-text"> 程序是如何运行的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text"> 进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8"><span class="toc-text"> 共享存储</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E5%85%B1%E4%BA%AB%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AE%BF%E9%97%AE%E8%A6%81%E4%BA%92%E6%96%A5"><span class="toc-text"> 思考：为什么共享空间的访问要互斥？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%85%B1%E4%BA%AB%E7%A9%BA%E9%97%B4%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text"> 思考：共享空间的实现方式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92"><span class="toc-text"> 消息传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E9%80%9A%E4%BF%A1"><span class="toc-text"> 管道通信</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%8F%E6%B5%8B%E8%AF%95%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="toc-text"> 小测试：项目实战</span></a></li></ol></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B/index.html"><span class="toc-text">什么是线程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/index.html"><span class="toc-text">处理机调度</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/index.html"><span class="toc-text">进程调度算法</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/index.html"><span class="toc-text">同步与互斥</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(1)/index.html"><span class="toc-text">信号量与经典同步问题(1)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(2)/index.html"><span class="toc-text">经典同步问题(2)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%AE%A1%E7%A8%8B%E4%B8%8E%E6%AD%BB%E9%94%81/index.html"><span class="toc-text">管程与死锁</span></a></div></div><div class="widget-header cap dis-select"><span class="name">内存管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">内存管理概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%A9%E6%9C%9F%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/index.html"><span class="toc-text">早期分配管理方式</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">基本页式存储管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%AE%B5%E9%A1%B5%E5%BC%8F%E7%AE%A1%E7%90%86%E4%B8%8E%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">段页式管理与虚拟内存概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">虚拟内存管理</span></a></div></div><div class="widget-header cap dis-select"><span class="name">文件管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9B%AE%E5%BD%95/index.html"><span class="toc-text">文件系统基础与目录</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html"><span class="toc-text">文件存储与基本操作</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/index.html"><span class="toc-text">文件共享与保护</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A3%81%E7%9B%98/index.html"><span class="toc-text">磁盘</span></a></div></div><div class="widget-header cap dis-select"><span class="name">I/O管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/I/O%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">I/O管理概述</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%AE%BE%E5%A4%87%E7%8B%AC%E7%AB%8B%E6%80%A7%E8%BD%AF%E4%BB%B6/index.html"><span class="toc-text">设备独立性软件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BC%93%E5%86%B2%E5%8C%BA&%E7%BB%93%E6%9D%9F%E8%AF%AD/index.html"><span class="toc-text">缓冲区&结束语</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">OS</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T07:24:38.716Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>什么是进程</span></h1>
+  <h3 id="进程的概念组成特征和组织方式"><a class="markdownIt-Anchor" href="#进程的概念组成特征和组织方式"></a> 进程的概念，组成，特征和组织方式</h3>
+<h4 id="进程的概念"><a class="markdownIt-Anchor" href="#进程的概念"></a> 进程的概念</h4>
+<p>程序是静态的，就是存放在某个磁盘里的可执行文件，是一系列指令的集合。而进程是动态的，是程序的一次执行过程，所以同一个程序会对应多个进程。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fd9feb33ffa7d37b36ea1db.jpg" alt="" /></p>
+<p>如上图，QQ是一个程序，而图中的三个框分别对应着QQ程序三次执行过程，因此各为一个进程。仔细回想，你会注意到并发性所描述的是进程在同一个时间间隔内同时进行。</p>
+<h4 id="进程的组成"><a class="markdownIt-Anchor" href="#进程的组成"></a> 进程的组成</h4>
+<p>那么操作系统该如何区分每一个进程呢，毕竟有些进程在我们看来是一模一样的根本不好区分，操作系统则是根据PID来区分不同的进程。当一个进程被创建时，操作系统就会为这个进程分配一个唯一的且不重复的“身份证号”–PID。</p>
+<p>而操作系统要记录PID和进程所属用户ID（UID)，这个是进程最基本的描述信息，可以使操作系统区分各个进程。例如上图中的3个QQ登录进程实际上在操作系统看来并不相同，他们每个进程各对应着一个独一无二的PID号码。</p>
+<p>并且操作系统还要记录为进程分配了那些资源（如：分配了多少内存，正在使用那些I/O设备和正在使用哪些文件），这样以便实现操作系统对于共享资源的管理和分配。</p>
+<p>同时还要记录进程的运行情况（如：CPU使用情况，磁盘使用情况，网络流量使用情况等）以方便实现操作系统对进程的控制和协调调度。</p>
+<p>而这些信息均被存放在一个数据结构–PCB中（Process Control Block)中，即进程控制块，操作系统需要对各个并发运行的进程进行管理，但凡是管理时所需要的的信息，都会被放在PCB中，因此PCB不仅仅是记录PID号码而已，而是进程的信息以及所运行的环境都要记录，这样放切换不同的进程时操作系统可以保证其在合适的运行环境下进行适当的工作。并且要注意每一个进程都对应一个自己的PCB存储着自己的信息，当进程结束时操作系统会回首PCB，因此可以说PCB是存储进程完整信息的最小单位。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda01c93ffa7d37b371d586.jpg" alt="" /></p>
+<p>同时进程还拥有程序段和数据段，分别用来存储程序的代码和运行过程中的各种数据。而PCB虽然也属于进程的一部分，但是他并不是提供给进程自身使用的，而只是一个个人身份信息卡，用来提供给操作系统使用，只有程序段和数据段才是进程自己使用的。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda02eb3ffa7d37b3731c5f.jpg" alt="" /></p>
+<h5 id="思考程序是怎么运行的"><a class="markdownIt-Anchor" href="#思考程序是怎么运行的"></a> 思考：程序是怎么运行的？</h5>
+<p>先看下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda03913ffa7d37b373e775.jpg" alt="" /></p>
+<p>这个是一个高级语言翻译到指令然后由cpu执行的过程，那么高级语言-&gt;指令-&gt;cpu执行所对应的一个程序具体的运行过程是怎样的呢？如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda03ec3ffa7d37b3744cb2.jpg" alt="" /></p>
+<p>高级语言所编写的可执行文件.exe存放于硬盘上存储，当双击打开程序的一个进程时，首先会把程序放入内存，并且操作系统会创建一个PCB分配给这个进程，此时进程所组成的三部分PCB，程序段和数据段都被存放在了内存中，并且程序段中是二进制指令，这样cpu在执行指令时会取出相对应的指令，并将执行所产生的的数据存放在数据段，在进程运行时cpu和内存会频繁的进行信息交换。</p>
+<p>我们在这里定义一个新名词叫做进程实体或者进程映像，就是程序段，数据段，PCB三部分的组合，那么引入进程实体后，我们可以更加准确的定义进程：进程并不是一个可见的物质实体，而是一个进程实体的运行过程即是一种连续性的状态组成的，是系统进行资源分配和调度的独立单位，所以准确来说我们之前所称呼的进程实际上是进程实体，因此对于每一个进程，他们的PCB，数据段各不相同会时刻发生着变化，而程序段就是指令集合，一般同一个程序所产生的进程程序段代码会相同。又因为PCB是记录进程的信息，所以PCB中的某些信息（如占用内存的状况等环境信息，当然PID除外）肯定也是时刻发生变化的并且PCB是进程存在的唯一标志。</p>
+<h4 id="进程的特征"><a class="markdownIt-Anchor" href="#进程的特征"></a> 进程的特征</h4>
+<p>程序是静态的而进程是动态的，因此进程拥有以下几个特征：</p>
+<ol>
+<li>动态性：进程是程序的一次执行过程，是动态产生，变化和消亡的，这也是进程最基本的特征。</li>
+<li>并发性：内存中有多个进程实体，各进程可以并发地执行。</li>
+<li>独立性：进程是能够独立运行、独立获得资源、独立接受调度的基本单位。</li>
+<li>异步性：各进程按各自独立的、不可预知的速度向前推进，操作系统要提供“进程同步机制”来解决异步问题。</li>
+<li>结构性：每个进程都会配置一个PCB，结构上看，进程由程序段、数据段、PCB组成。</li>
+</ol>
+<h4 id="进程的组织方式"><a class="markdownIt-Anchor" href="#进程的组织方式"></a> 进程的组织方式</h4>
+<p>在一个系统中，一般会有数十至数百乃至数千个PCB，为了能够对他们有效的管理，需要适当的方式将PCB组织起来存储管理。进程的组成讨论的是一个进程内部的组成结构信息，而进程的组织讨论的是多个进程之间的组织方式。这里我们讨论两种方式。</p>
+<h5 id="链接方式"><a class="markdownIt-Anchor" href="#链接方式"></a> 链接方式</h5>
+<p>链接方式是按照进程的状态将PCB分为多个队列，操作系统持有各个队列的指针方便管理进程。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda08333ffa7d37b37976b5.jpg" alt="" /></p>
+<p>这种方法优点很明显，各个PCB形成一个队列并且PCB指针执行下一个PCB，由指针统一指向调配，切换时更改指针指向后一个PCB即可，切换简便，但是缺点时当有对个PCB块时采用这种队列，当中途需要删除或者提高某个PCB优先级时则需要对两边的指针进行更新比较复杂。</p>
+<h5 id="索引方式"><a class="markdownIt-Anchor" href="#索引方式"></a> 索引方式</h5>
+<p>根据进程状态的不同，建立几张索引表用来记录PCB地址，操作系统指向各个索引表的指针。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda08123ffa7d37b379538f.jpg" alt="" /></p>
+<p>这种方法优点是建立索引表存储，更改指针执行即可切换进程，并且创建删除只需对索引表项进行操作，非常简便，但是缺点是当PCB很多时，索引表就会长可能需要建立多级索引表，同时索引表也许占用额外的空间。</p>
+<h3 id="进程的状态与转换"><a class="markdownIt-Anchor" href="#进程的状态与转换"></a> 进程的状态与转换</h3>
+<h4 id="进程的状态"><a class="markdownIt-Anchor" href="#进程的状态"></a> 进程的状态</h4>
+<p>这是个非常重要的概念，他根据不同的进程所处信息环境将进程分为以下几个状态：</p>
+<h5 id="创建态"><a class="markdownIt-Anchor" href="#创建态"></a> 创建态</h5>
+<p>进程正在被创建时，他的状态就是创建态，这个阶段操作系统会为进程分配资源并初始化PCB。因此可能会有多个程序处于就绪态都带等待cpu的情况出现。</p>
+<h5 id="就绪态"><a class="markdownIt-Anchor" href="#就绪态"></a> 就绪态</h5>
+<p>当进程创建完成后并不是立刻就上cpu执行，当创建完成后便进入了就绪态，此时已经具备了运行条件，但是如果此时cpu没有空闲，则该就绪态进程则需要等待暂时不运行随时准备进入cpu执行，当然运气好的话，也可能刚创建完就上cpu。</p>
+<h5 id="运行态"><a class="markdownIt-Anchor" href="#运行态"></a> 运行态</h5>
+<p>当cpu空闲时，并且内存中有处于就绪态的进程，操作系统就会选择一个就绪态进程（这个会涉及到多种不同的算法，后面介绍）让其上处理机pu执行，此时这个进程就是处于运行态。</p>
+<h5 id="阻塞态"><a class="markdownIt-Anchor" href="#阻塞态"></a> 阻塞态</h5>
+<p>当然进程不可能会提前将所有图中的准备都一次性做好，他在运行时可能中途会请求等待另一个事件的发生后才能继续执行，或者发现某个所需的共享资源已被占用，则需等待其他进程的相应，此时操作系统会让这个进程下cpu，并让他进入阻塞态等待（毕竟cpu不只是服务这一个进程，可没时间一直等），此时操作系统就会启动另一个就绪态的进程运行。所以阻塞态不可能直接变为运行态，一定要先恢复到就绪态（毕竟要先准备好切回该进程的工作环境等工作）。并且可以看出在阻塞态之前进程一定是处于运行态。</p>
+<h5 id="终止态"><a class="markdownIt-Anchor" href="#终止态"></a> 终止态</h5>
+<p>一个进程已经执行完成或者中途被用户关掉时就会执行exit系统调用，此时会请求系统终止该程序，然后程序就会进入终止态，操作系统让该进程下cpu，并回收内存空间等资源，最后还要回首该进程的PCB，当终止进程的工作完成之后，这个进程就彻底消失了，如果是连接形式组织方式，那么这个PCB就会删除，指针指向它所指向的下一个PCB，而如果是所以方式，则PCB删除的同时，索引表的项也会删掉。注意就绪态/阻塞态/运行态的进程都可能立刻转换为终止态。</p>
+<h4 id="进程状态的转换"><a class="markdownIt-Anchor" href="#进程状态的转换"></a> 进程状态的转换</h4>
+<p>这个模型非常重要，需要牢记。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda0d9b3ffa7d37b381de12.jpg" alt="" /></p>
+<p>从上图可见运行态和就绪态之间是双向可以切换的，而当是外界因素例如时间片或者其他进程抢占导致的下cpu实惠直接回到就绪态，只有是通过系统调用的方式申请请求时才会切换到阻塞态，即是进程一种的自愿让出cpu的主动行为，所以可以理解为此时自愿下cpu,所以会将工作环境，工作的状态等记录下后下cpu,当可以继续执行的时候则首先需要在配置回所需的工作环境并做好之前的工作状态到达就绪态才能继续执行，而当是被动的不情愿下cpu时则会随时准备抢回cpu的使用权所以会直接切换到就绪态。当然要注意阻塞态切换到就绪态是被动地行为因为这不是进程想继续回到就绪态准备执行就可以随时自主切回就绪态的，而是需要等到某个事件发生后才能回到就绪态，由于时间无法预测所以只能被动等待。而运行态到终止态一般是调用了exit函数（不一定是正常执行完成，当遇到重大的bug如数组越界等导致进程无法继续运行也会触发），一旦转换为终止态，则只能重新创建进程了。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda0f8e3ffa7d37b383ebab.jpg" alt="" /></p>
+<p>在进程PCB中，会有一个state变量来记录当下进程的状态，1代表创建态，2代表就绪态，3代表运行态…为了对同一个状态下的各个进程进行统一的管理，操作系统会将各个进程的PCB以链接形式或者索引形式统一存储管理。</p>
+<h3 id="进程控制"><a class="markdownIt-Anchor" href="#进程控制"></a> 进程控制</h3>
+<p>进程控制就是对系统中的进程实施有效的管理，它具有创建新进程，撤销已有进程，实现进程状态转换等功能，其中最重要的就是实现进程的状态转换。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda11043ffa7d37b385ac6e.jpg" alt="" /></p>
+<h4 id="进程控制的实现"><a class="markdownIt-Anchor" href="#进程控制的实现"></a> 进程控制的实现</h4>
+<p>实现进程的控制肯定会也是需要程序来实现的，而这个程序就是内核中的原语部分（重点：原语是一个程序），原语是一种特殊的程序，他的执行具有原子性，即这段程序的运行必须是一气呵成无中断的。</p>
+<h5 id="思考原语为什么不能有中断"><a class="markdownIt-Anchor" href="#思考原语为什么不能有中断"></a> 思考：原语为什么不能有中断？</h5>
+<p>因为如果不能一气呵成，那么就有可能导致操作系统在某些关键数据结构信息处不统一，从而影响操作系统进行个别的管理工作。如果可以中断，就会出现重大的bug，如：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda12053ffa7d37b386ec84.jpg" alt="" /></p>
+<p>这是一个以连接形式组织的PCB队列，此时假设系统要执行将PCB2（此时他在队列头部，该轮到他了）所对应的进程2等待的进程已经发生了，则此时需要从阻塞态转换到就绪态，即放到就绪队列中，此时原语程序需要进行以下两个步骤：</p>
+<ol>
+<li>将PCB的state变量设为1（假设1表示就绪态，2表示阻塞态）</li>
+<li>将PCB2从阻塞队列放到就绪队列</li>
+</ol>
+<p>那么如果原语可以被打断的话，此时刚刚执行完第一个步骤后收到了中断信号停止执行原语程序，就会出现state=1但是却在阻塞队列的bug。所以原语必须具有一气呵成的特点。</p>
+<h5 id="思考如何实现原语的原子性"><a class="markdownIt-Anchor" href="#思考如何实现原语的原子性"></a> 思考：如何实现原语的“原子性”？</h5>
+<p>我们可以使用“关中断指令”和“开中断指令”两个特权指令实现原子性。</p>
+<p>我们首先知道cpu在每执行完一个指令后都会例行检查是否有中断信号需要处理，如果有，就会暂停运行当前的这段程序，转而执行相应的中断处理程序。如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda13b93ffa7d37b388d1f1.jpg" alt="" /></p>
+<p>那么显然在执行原语时我们需要cpu不在根据中断信号而停止运行原语程序，因此就有了关中断指令和开中断指令两个特权指令（此时其他的指令如指令1，2和a,b还是非特权指令），那么可以这样实现：当cpu执行了关中断指令后，就不在例行检查中断信号，知道执行到开中断指令之后在恢复检查。这样关中断和开中断之间的这些指令序列（指令a,b)就是不可被中断的了，当然在这期间cpu还是会受到中断信号，但是此时不检查，就可视为忽略了，知道开中断以后在执行中断信息。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda14b63ffa7d37b389e714.jpg" alt="" /></p>
+<p>显然关开中断指令必须是特权指令，否则用户可以修改就会造成原语程序被打断的情况出现。</p>
+<h4 id="进程控制相关的原语"><a class="markdownIt-Anchor" href="#进程控制相关的原语"></a> 进程控制相关的原语</h4>
+<p>首先我们看有关进程创建的原语：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda15263ffa7d37b38a6a79.jpg" alt="" /></p>
+<p>有关进程终止的原语：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda15eb3ffa7d37b38b418a.jpg" alt="" /></p>
+<p>这里面将该进程拥有的所有资源归还给父进程或操作系统要特别注意。撤销原语是指由就绪态/阻塞态/运行态切换到终止态再到释放时所执行的原语程序。</p>
+<p>有关进程的阻塞和唤醒的原语</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda167d3ffa7d37b38be845.jpg" alt="" /></p>
+<p>有关进程的切换的原语：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda16b83ffa7d37b38c29eb.jpg" alt="" /></p>
+<p>我们可以看出大部分原语都会有许多步骤，并且引起原语的事件也各不相同。</p>
+<h4 id="程序是如何运行的"><a class="markdownIt-Anchor" href="#程序是如何运行的"></a> 程序是如何运行的</h4>
+<p>学完进程转换后，我们在更加详细的讨论一下程序在运行时切换进程在切回进程的具体步骤。首先我们需要了解一个新的概念–寄存器，就是用来存储信息的，这里寄存器可以分为许多类（机组原理有讲），如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda17f93ffa7d37b38da627.jpg" alt="" /></p>
+<p>我们可以看出PC和IR的作用分别是存储下一条指令和现在正在执行的指令的特殊功能寄存器，并且回忆PSW寄存器是用来记录当前cpu处于管态还是目态的，通用寄存器就是用来存储中间的某些计算数据结果的，所以PC和IR肯定是经常与内存中进程处的程序段进行交流的，而通用寄存器就是与数据段进行频繁的信息交换。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda18ec3ffa7d37b38ed46f.jpg" alt="" /></p>
+<p>当执行完指令1后PC和IR会立刻更新，并且如果需要通用寄存器会存储信息。那么鸡舍现在进程A执行到了指令3以后需要开始执行另一个就绪进程B，则此时进程A需要切换到阻塞态，因为通用寄存器和PC,IR都是共享资源，那么进程A的信息肯定就不能在占用了，那么之后执行完进程B切换回进程A时如何能够恢复到之前的运行环境呢？如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda198c3ffa7d37b38f9709.jpg" alt="" /></p>
+<p>上图是执行进程B到指令x，此时需要切换回进程A的运行环境并开始执行进程A。这时我们就需要PCB来保存之前进程A运行态时的环境信息（一些必要的寄存器信息），这样在切换回进程A（当然这之前进程A肯定是要先到达就绪态）后可以保证其正常运行。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda1a223ffa7d37b3903c65.jpg" alt="" /></p>
+<p>因此PCB会存储一些进程必要的环境信息，所以我之前说道PCB会随时发生小部分变化。但是要注意到这个信息是提供给操作系统，然后操作系统进行恢复cpu到之前进程A的运行环境的任务。所以PCB存储的环境信息也是提供给操作系统的，进程自身不使用。</p>
+<h3 id="进程通信"><a class="markdownIt-Anchor" href="#进程通信"></a> 进程通信</h3>
+<p>顾名思义，进程之间也是需要信息交换的，进程是分配系统资源的单位（包括内存地址空间），因此各进程拥有的内存地址空间相互独立。为了保证安全，一个进程不能直接访问另一个进程的地址空间。但是进程之间的信息交换又是必须实现的，所以为了进程之间的通信安全，操作系统提供了一些方法。</p>
+<h4 id="共享存储"><a class="markdownIt-Anchor" href="#共享存储"></a> 共享存储</h4>
+<p>即有一个共享空间可以来实现两个进程之间的信息交换，但是需要满足两个进程对共享空间的访问必须是互斥的（互斥访问通过操作系统提供的工具实现）。操作系统只负责提供共享空间和同步互斥工作，具体的信息编写和读入是由进程之间完成的。</p>
+<h5 id="思考为什么共享空间的访问要互斥"><a class="markdownIt-Anchor" href="#思考为什么共享空间的访问要互斥"></a> 思考：为什么共享空间的访问要互斥？</h5>
+<p>访问互斥即意味着每次只能有一个进程进入共享空间进行读写，原因很简单，如果可以有多个进程同时进入共享空间进行信息的编写，那么就会出现冲突，即两个进程可能同时对某一个变量更改，这种冲突应该避免。</p>
+<h5 id="思考共享空间的实现方式"><a class="markdownIt-Anchor" href="#思考共享空间的实现方式"></a> 思考：共享空间的实现方式</h5>
+<p>共享存储有基于数据结构的共享和基于存储区的共享两种方式来实现，两种不同的共享空间会对共享速度产生影响。</p>
+<p>基于数据结构的共享：比如共享空间里只能放入一个长度为10的数组，这种共享方式速度慢并且限制多，是一种低级的通信方式。</p>
+<p>基于存储区的共享：在内存中划出一块共享存储区，数据的形式，存放位置都由进程控制，而不是操作系统，相比之下，这种共享方式速度更快是一种高级的通信方式。</p>
+<h4 id="消息传递"><a class="markdownIt-Anchor" href="#消息传递"></a> 消息传递</h4>
+<p>进程间的数据交换格式与共享一个空间不同，而是“信书传递”，数据交换以格式化的消息为单位，进程通过操作系统的“发送消息/传递消息”两个原语（不可打断）进行数据交换。一般一个消息由两部分组成：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda1dfe3ffa7d37b394887f.jpg" alt="" /></p>
+<p>而消息传递又有两种方式，一种是直接通信方式，类似于邮递员链接，消息直接挂到接受进程的消息缓冲队列上，另一种是先发送到中间实体类似于信箱，然后另一个进程从中间实体收取，因此也称为“信箱通信方式”。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda1e7d3ffa7d37b39526b0.jpg" alt="" /></p>
+<p>上半部分是直接通信，下半部分是简介通信方式，无好坏之分。</p>
+<h4 id="管道通信"><a class="markdownIt-Anchor" href="#管道通信"></a> 管道通信</h4>
+<p>如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://pic.imgdb.cn/item/5fda1ebf3ffa7d37b39585bf.jpg" alt="" /></p>
+<p>管道实际上是一个用于连接读写进程的一个共享文件，又名pipe文件，其实就是在内存中开辟一个大小固定的缓冲区。那么他和共享空间又有什么本质区别呢？</p>
+<ol>
+<li>管道采用的是半双工通信，某一个时间段内只能实现单向的传输，即一个时间段只能我传给你或者你传给我，当然方向可以任选只是一个时间段只能一个方向，如果需要双向同时通信，则只能在设置一个管道即两个管道才能同时双向通信。因此管道在一个时间段内永远只有一端是可以写数据的口，另一端是读数据的口，且不能同时打开。</li>
+<li>各进程要互斥的访问管道（即读写不同时）。</li>
+<li>数据以字符流的形式写入管道，当管道满时，写进程的write()系统调用就会被阻塞即使没有写完，等待读进程将数据取走。当读进程将数据全部取走后，管道变空后，此时读进程的read()系统调用会被阻塞，此时才能继续write()。</li>
+<li>如果没写满，就不允许读，如果没读空，就不允许写。</li>
+<li>数据一旦被读出，就从管道被抛弃，这就意味着读进程最多只有一个，否则可能会有读错误数据的情况，但是写进程可以有多个。</li>
+</ol>
+<h5 id="小测试项目实战"><a class="markdownIt-Anchor" href="#小测试项目实战"></a> 小测试：项目实战</h5>
+<p>如果你对管道通信了解透彻了，尝试完成以下这个大作业吧😬：<a target="_blank" rel="noopener" href="http://langwenchong.github.io/2020/10/22/opesyshomework1/">作业大礼包</a></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html">操作系统的运行环境</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B/index.html">什么是线程</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="OS"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

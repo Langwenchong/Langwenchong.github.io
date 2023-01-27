@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>OS：文件系统基础与目录 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="初识文件管理  那么我们现在要了解一席文件内部的数据的组织方式与文件之间的组织方式。并且思考从下往上看OS是提供哪些服务方便用户、应用程序使用文件，而从上往下看文件数据又要怎么存放到外存（磁盘）的问题。  文件属性（文件构成）  文件名：由创建文件的用户决定文件名，主要是为了方便用户找到文件，同一目录下不允许有重名文件。 标识符：一个系统内的各文件标识符唯一，对用户来说毫无可读性，因此标识符只是">
+<meta property="og:type" content="website">
+<meta property="og:title" content="文件系统基础与目录">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9B%AE%E5%BD%95/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="初识文件管理  那么我们现在要了解一席文件内部的数据的组织方式与文件之间的组织方式。并且思考从下往上看OS是提供哪些服务方便用户、应用程序使用文件，而从上往下看文件数据又要怎么存放到外存（磁盘）的问题。  文件属性（文件构成）  文件名：由创建文件的用户决定文件名，主要是为了方便用户找到文件，同一目录下不允许有重名文件。 标识符：一个系统内的各文件标识符唯一，对用户来说毫无可读性，因此标识符只是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231092256.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231093259.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231093326.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231093517.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231093811.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231094524.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231094745.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231094910.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231094950.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231095642.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231095754.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231095955.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231100209.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231100248.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231100501.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231100817.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231101420.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231102246.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231104335.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231105036.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231105816.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231110125.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231111051.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231111300.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231111548.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231112640.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231113513.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20201231113603.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210101115352.png">
+<meta property="article:published_time" content="2023-01-27T07:37:10.127Z">
+<meta property="article:modified_time" content="2023-01-27T07:37:10.127Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20201231092256.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><div class="main" ff="title">OS</div><div class="sub cap">不会操作系统的工程师不是优秀的工程师</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/操作系统笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">操作系统简介</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html#start"><span class="toc-text">什么是操作系统</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83/index.html"><span class="toc-text">操作系统的运行环境</span></a></div></div><div class="widget-header cap dis-select"><span class="name">进程管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9B%E7%A8%8B/index.html"><span class="toc-text">什么是进程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E7%A8%8B/index.html"><span class="toc-text">什么是线程</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/index.html"><span class="toc-text">处理机调度</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/index.html"><span class="toc-text">进程调度算法</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/index.html"><span class="toc-text">同步与互斥</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(1)/index.html"><span class="toc-text">信号量与经典同步问题(1)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98(2)/index.html"><span class="toc-text">经典同步问题(2)</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%AE%A1%E7%A8%8B%E4%B8%8E%E6%AD%BB%E9%94%81/index.html"><span class="toc-text">管程与死锁</span></a></div></div><div class="widget-header cap dis-select"><span class="name">内存管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">内存管理概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%97%A9%E6%9C%9F%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/index.html"><span class="toc-text">早期分配管理方式</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%9F%BA%E6%9C%AC%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">基本页式存储管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%AE%B5%E9%A1%B5%E5%BC%8F%E7%AE%A1%E7%90%86%E4%B8%8E%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%A6%82%E5%BF%B5/index.html"><span class="toc-text">段页式管理与虚拟内存概念</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">虚拟内存管理</span></a></div></div><div class="widget-header cap dis-select"><span class="name">文件管理</span></div><div class="widget-body fs14"><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9B%AE%E5%BD%95/index.html"><span class="toc-text">文件系统基础与目录</span></a><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E8%AF%86%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="toc-text"> 初识文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90"><span class="toc-text"> 文件属性（文件构成）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E9%83%A8%E7%9A%84%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="toc-text"> 文件内部的组织方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%BB%84%E7%BB%87%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="toc-text"> 文件之间的组织组织方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%96%87%E4%BB%B6%E5%A4%B9%E6%98%AF%E6%9C%89%E7%BB%93%E6%9E%84%E6%96%87%E4%BB%B6%E5%90%97"><span class="toc-text"> 思考：文件夹是有结构文件吗？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#os%E5%90%91%E4%B8%8A%E6%8F%90%E4%BE%9B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-text"> OS向上提供的服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E5%AD%98%E6%94%BE%E8%87%B3%E5%A4%96%E5%AD%98"><span class="toc-text"> 文件如何存放至外存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E8%BF%99%E9%87%8C%E6%88%91%E4%BB%AC%E6%80%9D%E8%80%83%E6%98%AF%E4%B8%8D%E6%98%AF%E5%A4%96%E5%AD%98%E4%B8%AD%E4%B9%9F%E4%BC%9A%E6%9C%89%E8%BF%9E%E7%BB%AD%E5%AD%98%E5%82%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-text"> 思考：这里我们思考是不是外存中也会有连续存储的方式？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9C%80%E8%A6%81%E5%AE%8C%E6%88%90%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text"> 操作系统需要完成的其他文件管理的操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="toc-text"> 文件的逻辑结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E7%BB%93%E6%9E%84%E6%96%87%E4%BB%B6"><span class="toc-text"> 无结构文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E7%BB%93%E6%9E%84%E6%96%87%E4%BB%B6"><span class="toc-text"> 有结构文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E8%A8%80%E8%AE%B0%E5%BD%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text"> 前言：记录的分类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6"><span class="toc-text"> 顺序文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6"><span class="toc-text"> 索引文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6"><span class="toc-text"> 索引顺序文件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text"> 文件目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6%E5%9D%97"><span class="toc-text"> 文件控制块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text"> 目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E6%9C%BA%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text"> 单机目录结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text"> 两级目录结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text"> 多级目录结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E7%8E%AF%E5%9B%BE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text"> 无环图目录结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#fcb%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-text"> FCB的改进</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-3"><span class="toc-text"> 总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html"><span class="toc-text">文件存储与基本操作</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/index.html"><span class="toc-text">文件共享与保护</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A3%81%E7%9B%98/index.html"><span class="toc-text">磁盘</span></a></div></div><div class="widget-header cap dis-select"><span class="name">I/O管理</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/I/O%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">I/O管理概述</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%AE%BE%E5%A4%87%E7%8B%AC%E7%AB%8B%E6%80%A7%E8%BD%AF%E4%BB%B6/index.html"><span class="toc-text">设备独立性软件</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%BC%93%E5%86%B2%E5%8C%BA&%E7%BB%93%E6%9D%9F%E8%AF%AD/index.html"><span class="toc-text">缓冲区&结束语</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">OS</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-27T07:37:10.127Z">2023-01-27</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>文件系统基础与目录</span></h1>
+  <h3 id="初识文件管理"><a class="markdownIt-Anchor" href="#初识文件管理"></a> 初识文件管理</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231092256.png" alt="" /></p>
+<p>那么我们现在要了解一席文件内部的数据的组织方式与文件之间的组织方式。并且思考从下往上看OS是提供哪些服务方便用户、应用程序使用文件，而从上往下看文件数据又要怎么存放到外存（磁盘）的问题。</p>
+<h4 id="文件属性文件构成"><a class="markdownIt-Anchor" href="#文件属性文件构成"></a> 文件属性（文件构成）</h4>
+<ul>
+<li>文件名：由创建文件的用户决定文件名，主要是为了方便用户找到文件，同一目录下不允许有重名文件。</li>
+<li>标识符：一个系统内的各文件标识符唯一，对用户来说毫无可读性，因此标识符只是操作系统用来区分各文件的一种内部名称（同样的，操作系统为各个进程是通过PID来识别的）。</li>
+<li>类型：文件的类型</li>
+<li>位置：文件存放的路径（让用户使用），在外存中地址（操作系统使用，对用户不可见）</li>
+<li>大小：文件的大小</li>
+<li>创建时间，上次修改时间，文件所有者信息等</li>
+<li>保护信息：对文件进行保护的访问控制信息</li>
+</ul>
+<h4 id="文件内部的组织方式"><a class="markdownIt-Anchor" href="#文件内部的组织方式"></a> 文件内部的组织方式</h4>
+<ol>
+<li>无结构文件：如文件文件，就是一些由二进制或者字符流组成，又称“流式文件”</li>
+<li>有结构文件：如数据库表，由一组相似的记录组成，又称&quot;记录式文件&quot;，这里要注意记录是一组相关数据项的集合，而数据项才是文件系统中最基本的数据单位。</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231093259.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231093326.png" alt="" /></p>
+<h4 id="文件之间的组织组织方式"><a class="markdownIt-Anchor" href="#文件之间的组织组织方式"></a> 文件之间的组织组织方式</h4>
+<p>实际上就是通过目录来实现分层，这里的层最好不要太少（这样会造成目录下文件密度过大），同时也不要太多，否则分层太多，搜索查找文件时间开销大。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231093517.png" alt="" /></p>
+<h5 id="思考文件夹是有结构文件吗"><a class="markdownIt-Anchor" href="#思考文件夹是有结构文件吗"></a> 思考：文件夹是有结构文件吗？</h5>
+<p>当然是，用过电脑的都知道文件夹可以以文件项排列各文件的详细信息，很明显每一个文件此时都是一个记录，而每一个文件的具体文件名，大小，创建时间等就是文件夹这一个记录式文件的数据项。</p>
+<h4 id="os向上提供的服务"><a class="markdownIt-Anchor" href="#os向上提供的服务"></a> OS向上提供的服务</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231093811.png" alt="" /></p>
+<ol>
+<li>创建文件：可以“创建文件”，点击新建后，图形化交互进程在背后使用“create系统调用”</li>
+<li>删除文件：可以“删除文件”，点击删除操作之后，图形化交互进程通过操作系统提供的“删除文件”功能，即delete系统调用，将文件数据从外存中删除</li>
+<li>读文件：将文件数据从外存中读入内存，这样才能让CPU处理，使用的是read系统调用</li>
+<li>写文件：将更改过的数据写回外存，使用的是write系统调用</li>
+<li>打开文件：读/写之前需要打开文件</li>
+<li>关闭文件：读/写文件结束之后需要关闭文件</li>
+</ol>
+<p>基本上更多复杂的功能都是通过上面的基本功能组合实现的。</p>
+<h4 id="文件如何存放至外存"><a class="markdownIt-Anchor" href="#文件如何存放至外存"></a> 文件如何存放至外存</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231094524.png" alt="" /></p>
+<p>我们发现其实这个就是分页存储的思想，所以外存中与内存一样也是分成一个一个存储单元然后将文件切割离散存储，当然如果文件特别小，那么一个存储单元就可以放下整个文件，所以明显外存中也会有内部碎片。</p>
+<h5 id="思考这里我们思考是不是外存中也会有连续存储的方式"><a class="markdownIt-Anchor" href="#思考这里我们思考是不是外存中也会有连续存储的方式"></a> 思考：这里我们思考是不是外存中也会有连续存储的方式？</h5>
+<p>肯定是有的，这里也有固定分区分配的存储思想和分页存储思想两种方式存储文件。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231094745.png" alt="" /></p>
+<h4 id="操作系统需要完成的其他文件管理的操作"><a class="markdownIt-Anchor" href="#操作系统需要完成的其他文件管理的操作"></a> 操作系统需要完成的其他文件管理的操作</h4>
+<ol>
+<li>文件共享：使多个用户共享一个文件</li>
+<li>文件保护：保证不同的用户对文件有不同的操作权限</li>
+</ol>
+<h4 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h4>
+<p>大部分都是概念性知识点，记住即可</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231094910.png" alt="" /></p>
+<h3 id="文件的逻辑结构"><a class="markdownIt-Anchor" href="#文件的逻辑结构"></a> 文件的逻辑结构</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231094950.png" alt="" /></p>
+<p>类似于数据结构的“逻辑结构”和“物理结构”，如线性表就是一种逻辑结构，在用户看来，线性表就是一组有先后顺序的元素序列。而线性表这种逻辑结构可以通过许多种物理结构实现，不如顺序表和链表均可以，顺序表是元素在逻辑和物理上都是连续相邻的，而链表是物理上不相邻但是逻辑上相邻的数据结构。所以顺序表的线性表可以随机访问，而链表形式的线性表就不可以了。所以算法的具体实现与逻辑结构和物理结构都有关（文件也是一样，文件操作的具体实现和文件的逻辑结构，物理结构有关)</p>
+<h4 id="无结构文件"><a class="markdownIt-Anchor" href="#无结构文件"></a> 无结构文件</h4>
+<p>首先无结构文件前面也提到过了就是“流式文件”是一组二进制或者字符流，所以没有明显的结构，也就不用讨论“逻辑结构”的问题。</p>
+<h4 id="有结构文件"><a class="markdownIt-Anchor" href="#有结构文件"></a> 有结构文件</h4>
+<h5 id="前言记录的分类"><a class="markdownIt-Anchor" href="#前言记录的分类"></a> 前言：记录的分类</h5>
+<p>记录式文件，每条记录都是由若干个数据项组成的集合。一般来说，每一条记录的一个数据项都是一个关键字（可以作文识别不同记录的ID）。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231095642.png" alt="" /></p>
+<p>根据各条记录的长度我们可以将记录分为定长记录和可变长记录：</p>
+<ul>
+<li>
+<p>定长记录：一般每条记录的长度是必须等长的，每一个数据项所在位置也都是相同不变的。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231095754.png" alt="" /></p>
+</li>
+<li>
+<p>可变长记录：数据项的长度不一定相同因此记录的长度也是各不相同的，甚至某一个数据项没有是可以删掉的即下图中如果无特长可以直接删掉。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231095955.png" alt="" /></p>
+</li>
+</ul>
+<h5 id="顺序文件"><a class="markdownIt-Anchor" href="#顺序文件"></a> 顺序文件</h5>
+<p>文件中的记录一个一个的地顺序排列（逻辑上），记录可以是定长或者变长的。各个记录在物理上可以是顺序存储或者链式存储。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231100209.png" alt="" /></p>
+<p>根据记录之间的顺序是否与关键字有关我们分成：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231100248.png" alt="" /></p>
+<h6 id="思考加入现在知道文件的起始位置那种文件可以快速找到第i个记录的位置那种文件又可以找到某个关键字对应的记录的位置"><a class="markdownIt-Anchor" href="#思考加入现在知道文件的起始位置那种文件可以快速找到第i个记录的位置那种文件又可以找到某个关键字对应的记录的位置"></a> 思考：加入现在知道文件的起始位置，那种文件可以快速找到第i个记录的位置？那种文件又可以找到某个关键字对应的记录的位置？</h6>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231100501.png" alt="" /></p>
+<p>首先链式存储肯定是不可能实现随机随机存放的，所以每次都需要从头开始查找这样很难快速找到第i个文件的位置。所以快速查找只能在顺序存储中，又由于可变长记录长度不相同不能使用X+i*M的连续查找公式所以也不能和实现快速查找，所以只有定长记录的顺序存储才可以实现，同时只有采用顺序结构即存储的顺序和关键字有关的才可以找到关键字对应的记录的位置。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231100817.png" alt="" /></p>
+<p>很明显从上图我们就可以看出可变长记录不能随机存取的原因了，由于长度不同，连续查找公式是不能使用的。定长记录的顺序文件，如果采用物理上的顺序存储那么就可以实现随机存取。如果还能保证记录的顺序结构那么就可以关键字快速检索了。一般上，考试题中的“顺序文件”指的是逻辑结构和物理结构上都是顺序存储的文件。所以顺序文件一般如果不说都是默认定长记录所以可以随机存放，但是缺点是增加/删除一个记录就很复杂，需要整体记录前移或者后移，但是如果是串结构那么就相对简单。</p>
+<h5 id="索引文件"><a class="markdownIt-Anchor" href="#索引文件"></a> 索引文件</h5>
+<p>对于很多场景都需要快速查找都第i个记录的位置，但是又是可变长记录文件，那么这时就需要索引文件的逻辑结构形式，即建立一张索引表，每个索引表都有唯一的索引号，长度m(毕竟是可变长的需要记录)以及一个指针ptr指向文件再外存中存放的地址，所以索引文件在结构上还顺序的，但是物理结构上是可以离散存储的，当然如果你非得在物理结构上也顺序存储也可以。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231101420.png" alt="" /></p>
+<p>其实感觉就是分页存储的思想，只不过那个是讨论内存存放时提出的方法，现在这种思想应用在了文件管理上，实际上思想类似。索引表本身是定长记录的顺序文件（这里指的是物理结构上也顺序存储，否则不能实现随机存取），因此可以快速找到第i个文件的索引项。并且可以在索引表中以关键字作为索引号内容，若按照关键字顺序排列，那么还可以实现按照关键字折半查找。这是我们在尝试删除/增加一个记录时就是对索引表进行修改。因为索引表有很快的检索速度，所以主要用于对信息处理的及时性要求很高的场合。并且，可以用不同的数据项建立很多个索引表，如：学生信息表可以用关键字“学号”“姓名”都各建立一张索引表。这样就可以根据不同的关键字检索文件了。</p>
+<h5 id="索引顺序文件"><a class="markdownIt-Anchor" href="#索引顺序文件"></a> 索引顺序文件</h5>
+<p>我们思考一个问题，每个记录都会对应一个索引表项，因此索引表可能会非常巨大。比如：文件的每个记录平均只占8B，而每个索引表项占32个文件，那么索引表都要比文件本身还要大4倍，这样就降低了空间利用率。所以提出了索引顺序文件。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231102246.png" alt="" /></p>
+<p>我们可以看出索引顺序文件的索引项不需要按关键字顺序排列，这样就极大方便新表项的插入，同时在上图中我们发现学生记录按照学生的姓名开头字母进行分组，每一个分组就是一个顺序文件，分组内的记录不需要按关键字排序。索引顺序文件就是索引文件和顺序文件思想的结合。索引顺序文件同样会为每个文件建立一个索引表，但是不是每一个记录对应一个索引表项，而是每一组数据对应一个索引表项。然后每一组文件中顺序存储，这样就大大瘦身了。</p>
+<h6 id="思考三种文件的区别"><a class="markdownIt-Anchor" href="#思考三种文件的区别"></a> 思考：三种文件的区别？</h6>
+<p>顺序文件就是顺序存放，那么查找时如果是不定长就只能逐一查找并且顺序存放不好增删所以出现索引文件每一个记录对应索引表一定长个表项，索引表是物理顺序存放那么查找时就可以很快找到并且增删只需要修改索引表项，但是空间会很大毕竟索引表项和文件各占用很大的空间，所以索引顺序文件是将整个文件组按某些标准分成许多组然后为每个组建立一个索引表这样就实现了瘦身。</p>
+<h6 id="思考用这种索引顺序策略能否解决不定长记录的顺序文件检索速度慢的问题"><a class="markdownIt-Anchor" href="#思考用这种索引顺序策略能否解决不定长记录的顺序文件检索速度慢的问题"></a> 思考：用这种索引顺序策略能否解决不定长记录的顺序文件检索速度慢的问题？</h6>
+<p>我们假设现在有一个10000个记录的顺序文件（不定长记录的物理结构顺序存储的顺序文件），那么如果根据关键字检索文件，只能从头开始顺序查找，平均需要查找5000个记录。</p>
+<p>如果是索引文件，虽然表项定长，但是索引文件只是在已知起始地址查找第i个文件时加快了速度，现在是要查找某个关键字的搜索，那么也只能从头开始顺序查找，所以最终也是5000次平均查找。</p>
+<p>如果使用的是索引顺序文件结构，可以把10000个记录分成100组每组100个记录，那么先顺序查找索引表找到分组（共100个分组，所以平均需要查找50次）然后找到分组后再在分组中顺序查找记录也是平均需要50次，那么最终只需要100次。很明显确实相较于顺序文件和索引文件有了检索速度的提升。</p>
+<h6 id="思考但是如果现在是106的记录怎么办"><a class="markdownIt-Anchor" href="#思考但是如果现在是106的记录怎么办"></a> 思考：但是如果现在是10^6的记录怎么办？</h6>
+<p>我们发现如果是10^6个记录，那么此时索引顺序文件的查找次数还是很大，所以此时多建几层次级索引表就好了（毕竟每建一层索引表理论上会减少查找没有必要的多组文件），所以此时就是多级索引顺序文件如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231104335.png" alt="" /></p>
+<p>此时对于一个10^6记录的文件(注意还是可变长记录文件），可以先为该文件建立一张低级索引表，每100个记录为一组，所以总共会有10000个表项，即10000个定长的表项，然后再把这10000个定长记录再次分组为每组100个再为其建立顶级索引表，那么顶级索引表就有100个定长表项。</p>
+<p>这里有个公式：N个记录的文件建立K级索引，则最优的分组是每组N^(1/K+1)个记录。这样检索一个记录的平均查找次数是</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><msup><mi>N</mi><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mi>K</mi><mo>+</mo><mn>1</mn></mrow></msup><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">)</mo><mo>∗</mo><mo stretchy="false">(</mo><mi>K</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(N^{1/K+1}/2)*(K+1)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.188em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.938em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">/</span><span class="mord mathnormal mtight" style="margin-right:0.07153em;">K</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span></p>
+<p>次，例如上面我们分成了2级，那么每组就是(10^6)^1/3=100个记录，并且平均查找次数就是（100/2)*(2+1)=150次。</p>
+<h4 id="总结-2"><a class="markdownIt-Anchor" href="#总结-2"></a> 总结</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231105036.png" alt="" /></p>
+<h3 id="文件目录"><a class="markdownIt-Anchor" href="#文件目录"></a> 文件目录</h3>
+<h4 id="文件控制块"><a class="markdownIt-Anchor" href="#文件控制块"></a> 文件控制块</h4>
+<p>思考当我们双击照片这个文件夹后OS是如何找到文件夹下的文件和显示到我们屏幕上的呢？</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231105816.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231110125.png" alt="" /></p>
+<p>实际上此时是借助文件控制块实现的，我们双击“照片”后，操作系统会在这个目录表中找到关键字“照片”对应的目录项（也就是记录，毕竟记录就是存得许多不同的数据项也就是关键字），然后从外存中将“照片”目录的信息读入内存，于是“照片”目录中的内容就可以显示出来了。所以我们所说的目录实际上就是一个索引表。</p>
+<p>那么目录文件中每一条记录实际上就是一个文件控制(FCB),FCB实现了文件名和文件之间的映射，使得用户(用户程序)可以实现“按名存取”。FCB的有序集合就成为“文件目录”，一个FCB就是一个文件目录项。FCB中包含了一个文件的基本信息，存取控制信息使用信息等。当然最重要的就是文件名和文件存放的物理位置。</p>
+<p>那么通过文件控制块FCB我们可以实现哪些功能呢？</p>
+<ul>
+<li>搜索：当用户使用一个文件时，系统根据文件名搜索目录，找到该文件对应的目录项。</li>
+<li>创建文件：当创建一个文件时，需要在所属的目录中增加一个记录项。</li>
+<li>删除文件：当删除一个文件时，需要在目录中删除相应的目录项。</li>
+<li>显示目录：用户可以请求显示目录的内容，如显示该目录中的所有文件及相应的属性。</li>
+<li>修改目录：某些文件属性保存在目录中，因为这些属性变化时需要修改相应的目录项（如：文件重命名等）。</li>
+</ul>
+<h4 id="目录结构"><a class="markdownIt-Anchor" href="#目录结构"></a> 目录结构</h4>
+<h5 id="单机目录结构"><a class="markdownIt-Anchor" href="#单机目录结构"></a> 单机目录结构</h5>
+<p>早期的操作系统不支持多级目录，所以整个系统只建立一张目录表，每个文件占据一个目录项，单机目录实现“按名存取”，不允许有任何文件重名。在创建一个文件时，需要先检查目录中有没有重名文件，只有确定不重名后才能建立文件，并将新文件对应的目录项插入到目录表中。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231111051.png" alt="" /></p>
+<p>很显然，不适合多用户(这里的用户值得是多程序,应用软件)操作系统。想一想也知道现在的应用程序肯定都有许多重名文件例如：data,dist.source,js等</p>
+<h5 id="两级目录结构"><a class="markdownIt-Anchor" href="#两级目录结构"></a> 两级目录结构</h5>
+<p>早期的多用户操作系统采用两级目录结构，分为主目录(MFD,Master File Directory)和用户文件目录(UFD,User File Directory)。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231111300.png" alt="" /></p>
+<p>此时就允许有重名文件了只要不在一个FCB下，但是此时还是不够灵活，毕竟用户文件夹可能也需要有自己的目录，所以就有了多级目录结构。</p>
+<h5 id="多级目录结构"><a class="markdownIt-Anchor" href="#多级目录结构"></a> 多级目录结构</h5>
+<p>又称树形目录结构，灵活高效，解决了上面两种目录结构的缺陷。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231111548.png" alt="" /></p>
+<p>此时因为有许多可能重名的文件但是他们所在的位置是不同的，所以要访问某个文件时要用文件路径标识文件，文件路径是一个字符串。各级目录之间用&quot;/&quot;隔开，从根目录出发的就是绝对路径，从当前位置或者当前位置的父目录出发就是相对路径。例如：./就是相对路径表示从现在的位置出发，…/是从当前位置的父文件开始出发明显也是相对路径，但是…/或者/就是根目录出发就是绝对路径了。</p>
+<h6 id="思考为什么要用相对路径"><a class="markdownIt-Anchor" href="#思考为什么要用相对路径"></a> 思考：为什么要用相对路径？</h6>
+<p>考虑一个问题现在我们要对某个文件夹下的许多文件进行操作，那么如果使用绝对路径，那么每一次都要输入很长的根目录路径明显低效，而如果此时使用相对路径./就很方便简洁。同时不仅仅是为了输入简便，如果我们使用绝对路径，那每一次都需要从根目录开始逐一从外存读入对应的目录表，然后在找到该文件夹下的文件，而是用相对路径就可以直接一次性将这个文件夹读入内存然后访问文件。可以见到，在引入“当前目录”和“相对路径”以后，磁盘的I/O次数减少了，这样就提升了访问文件的效率。所以相对路径是常用的文件路径方式，当然对于某些特殊的情况是必须使用绝对路径的。</p>
+<p>所以树形目录结构不仅可以很方便的对文件进行分类，层次结构清晰，而且也能够更加有效的进行文件的管理和保护。但是树形结构不便于实现文件的共享，所以提出了“无环图目录结构”。</p>
+<h5 id="无环图目录结构"><a class="markdownIt-Anchor" href="#无环图目录结构"></a> 无环图目录结构</h5>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231112640.png" alt="" /></p>
+<p>可以用不同的文件名指向一个文件，甚至可以指向同一个目录（共享一个目录下的所有内容）。需要为每一个共享节点设置一个共享计数器，用于记录此时有多少个地方在共享该节点。用户提出删除节点的请求时，只是删除该用户FCB、并且使共享计数器减1，并不会直接删除共享节点。直至共享计数器为0时，才删除节点。</p>
+<p>我们发现共享文件不是赋值文件。在共享文件中，由于各用户指向的都是同一个文件，因此只要其中一个用户修改了文件数据，其他所有用户都可以看到文件数据的变化。</p>
+<h5 id="fcb的改进"><a class="markdownIt-Anchor" href="#fcb的改进"></a> FCB的改进</h5>
+<p>我们之前进行的瘦身策略，实际上是对目录项进行分组然后多级索引表的存储，但是对于同一个目录下的目录项最好是对应一个目录表，那么该怎样实现瘦身呢？我们可以对FCB进行修改，毕竟查找时只是按照“文件名”进行查找，只有文件名匹配才能读出文件的信息，所以可以考虑让目录表瘦身吗，如下：</p>
+<p>瘦身前：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231113513.png" alt="" /></p>
+<p>瘦身后：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20201231113603.png" alt="" /></p>
+<h6 id="思考好处是什么"><a class="markdownIt-Anchor" href="#思考好处是什么"></a> 思考：好处是什么？</h6>
+<p>假设一个FCB是64B，磁盘块大小为1KB=2^10B，那么每个盘块只能存放16个FCB，如果一个文件目录中共有640个目录项，那么需要占640/16=40个盘块。因此按照某文件名检索目录平均需要查找320个目录项，平均需要启动磁盘20次（每次磁盘I/O读入一块）。但是如果瘦身后即使用索引节点机制那么文件名占14B，索引节点指针占2B，一个FCB只占用16B，那么一个盘就可以放64个目录项，那么按文件名目录平均只需要读入320/64=5个磁盘块。显然这就大大提升了文件检索速度。</p>
+<p>只有找到文件名对应的目录项才会将索引节点放到内存中，索引节点中记录了文件的各种信息，包括在文件再外存中的位置，根据“存放位置”即可找到文件。存放在外存中的索引节点就叫做“磁盘索引节点”而当索引节点放入到内存后就称为“内存索引节点”。相比之下内存索引节点需要增加一些信息，比如：文件是否被修改，此时有几个进程正在访问该文件等。</p>
+<h4 id="总结-3"><a class="markdownIt-Anchor" href="#总结-3"></a> 总结</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210101115352.png" alt="" /></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">虚拟内存管理</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">文件存储与基本操作</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="OS"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0">C++学习笔记</a><a href="/wiki/GAMES101%E7%AC%94%E8%AE%B0">GAMES101笔记</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">处理工具</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/">友链</a></div></div><div class="text"><p>@2023 Powered by Stellar | 本站由<img class="lazy" style="height:12px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/配置文件/七牛云logo.png"/>七牛云提供cdn加速/云存储 | 署<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://img.alicdn.com/tfs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png" height="17px"><a href="https://beian.miit.gov.cn/)#/Integrated/index"  target="_blank">津ICP备2021009044号</a></p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
