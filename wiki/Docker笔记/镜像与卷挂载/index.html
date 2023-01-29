@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Docker：镜像与卷挂载 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="可视化管理工具——portainer 1234567891011121314151617#首先我们需要下载portainer镜像[root@VM-0-7-centos ~]# docker pull portainer&#x2F;portainerUsing default tag: latestlatest: Pulling from portainer&#x2F;portainer94cfa856b2b1: P">
+<meta property="og:type" content="website">
+<meta property="og:title" content="镜像与卷挂载">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/Docker%E7%AC%94%E8%AE%B0/%E9%95%9C%E5%83%8F%E4%B8%8E%E5%8D%B7%E6%8C%82%E8%BD%BD/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="可视化管理工具——portainer 1234567891011121314151617#首先我们需要下载portainer镜像[root@VM-0-7-centos ~]# docker pull portainer&#x2F;portainerUsing default tag: latestlatest: Pulling from portainer&#x2F;portainer94cfa856b2b1: P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121140602.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121140723.png">
+<meta property="og:image" content="c:%5CUsers%5C86159%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20211121141053931.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121142822.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121144215.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121144412.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122210158.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122210209.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121145527.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121145823.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121151407.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121155805.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121161248.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121184817.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121190447.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121190857.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121191510.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121191844.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121192240.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121201210.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121201645.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121203747.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121204448.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121204658.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211121205113.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122171422.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122171622.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122172002.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122173918.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122174033.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122174859.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122175506.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122180107.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122181308.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122181916.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122203111.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211122204643.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125202857.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125205519.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125210640.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125210854.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125213045.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125212155.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125213638.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20211125214046.png">
+<meta property="article:published_time" content="2023-01-28T06:16:58.812Z">
+<meta property="article:modified_time" content="2023-01-28T06:16:58.812Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20211121140602.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/Docker%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html"><div class="main" ff="title">Docker</div><div class="sub cap">一起成为可爱的蓝鲸搬运工吧</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/Docker笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Docker%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html#start"><span class="toc-text">常用操作</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Docker%E7%AC%94%E8%AE%B0/%E9%95%9C%E5%83%8F%E4%B8%8E%E5%8D%B7%E6%8C%82%E8%BD%BD/index.html"><span class="toc-text">镜像与卷挂载</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7portainer"><span class="toc-text"> 可视化管理工具——portainer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E9%95%9C%E5%83%8F%E8%AE%B2%E8%A7%A3"><span class="toc-text"> Docker镜像讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text"> 镜像是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dokcer%E9%95%9C%E5%83%8F%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86"><span class="toc-text"> Dokcer镜像加载原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text"> 联合文件系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker%E9%95%9C%E5%83%8F%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86"><span class="toc-text"> Docker镜像加载原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E7%90%86%E8%A7%A3"><span class="toc-text"> 镜像分层理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#commit%E9%95%9C%E5%83%8F"><span class="toc-text"> commit镜像</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="toc-text"> 容器数据卷</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="toc-text"> 使用数据卷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-v%E5%91%BD%E4%BB%A4%E6%8C%82%E8%BD%BD"><span class="toc-text"> 使用-v命令挂载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD%E5%AE%89%E8%A3%85mysql"><span class="toc-text"> 实战：数据卷挂载安装mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E5%90%8D%E6%8C%82%E8%BD%BD%E5%92%8C%E5%8C%BF%E5%90%8D%E6%8C%82%E8%BD%BD"><span class="toc-text"> 具名挂载和匿名挂载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dockerfile"><span class="toc-text"> DockerFile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dockerfile%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="toc-text"> DockerFile构建过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text"> 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83dockerfile%E5%92%8Cdocker-images%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：DockerFile和Docker images的区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83docker-commit%E6%8F%90%E4%BA%A4%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%AE%8C%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81dockerfile"><span class="toc-text"> 思考：docker commit提交也可以完成自定义镜像构建，为什么还需要dockerfile?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dockerfile%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-text"> DockerFile的指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E6%B5%8B%E8%AF%95"><span class="toc-text"> 实战测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmd%E5%92%8Centrypoint"><span class="toc-text"> CMD和ENTRYPOINT</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cmd%E6%B5%8B%E8%AF%95"><span class="toc-text"> CMD测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#entrypoint%E6%B5%8B%E8%AF%95"><span class="toc-text"> ENTRYPOINT测试</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98tomcat%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA"><span class="toc-text"> 实战：Tomcat镜像构建</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Docker%E7%AC%94%E8%AE%B0/Docker%E7%BD%91%E7%BB%9C/index.html"><span class="toc-text">网络与Dockerhub</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多进阶技能</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/index.html"><span class="title">设计模式笔记</span><span class="excerpt">设计模式即DesignPatterns是指在软件设计中，被反复使用的一种代码设计经验。使用设计模式的目的是为了可重用代码，提高代码的可扩展性和可维护性。</span></a><a class="item wiki" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html"><span class="title">Git笔记</span><span class="excerpt">Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/Docker%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html">Docker</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-28T06:16:58.812Z">2023-01-28</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>镜像与卷挂载</span></h1>
+  <h2 id="可视化管理工具portainer"><a class="markdownIt-Anchor" href="#可视化管理工具portainer"></a> 可视化管理工具——portainer</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">首先我们需要下载portainer镜像</span></span><br><span class="line">[root@VM-0-7-centos ~]# docker pull portainer/portainer</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from portainer/portainer</span><br><span class="line">94cfa856b2b1: Pull complete </span><br><span class="line">49d59ee0881a: Pull complete </span><br><span class="line">a2300fd28637: Pull complete </span><br><span class="line">Digest: sha256:fb45b43738646048a0a0cc74fcee2865b69efde857e710126084ee5de9be0f3f</span><br><span class="line">Status: Downloaded newer image for portainer/portainer:latest</span><br><span class="line">docker.io/portainer/portainer:latest</span><br><span class="line">[root@VM-0-7-centos ~]# docker images</span><br><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">nginx                 latest    ea335eea17ab   3 days ago     141MB</span><br><span class="line">centos                latest    5d0da3dc9764   2 months ago   231MB</span><br><span class="line">portainer/portainer   latest    580c0e4e98b0   8 months ago   79.1MB</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建一个容器运行服务，这里我暴露到了外网的9000端口</span></span><br><span class="line">[root@VM-0-7-centos ~]# docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name prtainer01  portainer/portainer</span><br></pre></td></tr></table></figure>
+<p>然后我们就可以在<code>http://ip:9000</code>上看到portainer可视化面板了如下图所示，首先我们需要创建账号然后就可以登录了</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121140602.png" alt="" /></p>
+<p>然后我们选择本地local选项即可，因为一般我们都是单机测试使用的</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121140723.png" alt="" /></p>
+<p>然后我们就进入到了管理面板，映入眼前的有我们非常熟悉的镜像、容器等展示，我们可以在这里使用UI进行容器、镜像的管理，比如查看日志、进入容器的终端界面、删除创建、运行停止等等。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="C:%5CUsers%5C86159%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20211121141053931.png" alt="image-20211121141053931" /></p>
+<h2 id="docker镜像讲解"><a class="markdownIt-Anchor" href="#docker镜像讲解"></a> Docker镜像讲解</h2>
+<h3 id="镜像是什么"><a class="markdownIt-Anchor" href="#镜像是什么"></a> 镜像是什么</h3>
+<p>镜像是一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行换开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。所有应用，直接打包成docker镜像，就可以直接跑起来。那么我们如何获取到打包好的镜像呢？我们可以通过如下几种途径获取：</p>
+<ol>
+<li>从远程仓库下载</li>
+<li>朋友拷贝给你</li>
+<li>自己制作一个镜像DockerFile</li>
+</ol>
+<h3 id="dokcer镜像加载原理"><a class="markdownIt-Anchor" href="#dokcer镜像加载原理"></a> Dokcer镜像加载原理</h3>
+<h4 id="联合文件系统"><a class="markdownIt-Anchor" href="#联合文件系统"></a> 联合文件系统</h4>
+<p>联合文件系统（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/UnionFS">UnionFS</a>）是一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下(unite several directories into a single virtual filesystem)。</p>
+<p>联合文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承，基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。</p>
+<p>另外，不同 Docker 容器就可以共享一些基础的文件系统层，同时再加上自己独有的改动层，大大提高了存储的效率。</p>
+<h4 id="docker镜像加载原理"><a class="markdownIt-Anchor" href="#docker镜像加载原理"></a> Docker镜像加载原理</h4>
+<p>docker的镜像实际上是由一层一层的文件系统组成，这种层级的文件系统就是UnionFS。</p>
+<p>bootfs(boot file system)：docker镜像的最底层是bootfs，主要包含bootloader（加载器）和kernel（内核)。bootloader主要是引导加载kernel，linux刚启动时会加载bootfs文件系统。这一层与典型的linux/Unix系统一样，包含bootloader和kernel。当boot加载完成后，整个内核就在内存中了，此时内存的使用权已由bootfs转交给了内核，此时系统也会卸载bootfs(减少资源浪费)。这里的加载，可以理解为，我们windows电脑开机时候，从黑屏到进入操作系统的过程。</p>
+<p>rootfs(root file system)：在bootfs之上，包含的就是典型linux系统中的<code>/dev、/proc、/bin、/etc</code>等标准目录和文件。rootfs就是各种不同的操作系统发行版，比如Ubuntu、Centos等等。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121142822.png" alt="" /></p>
+<p>图中以一个debian系统为例，从左到右，分为3个过程:</p>
+<ol>
+<li>首先下载一个debian系统</li>
+<li>让安装了emacs，这是后可以看到在图1基础上加了一层image</li>
+<li>然后又安装了Apache,这时候就是在之前的基础上又加了一层image</li>
+</ol>
+<p>这正验证了之前的那句话，<strong>docker的镜像实际上是由层一层的文件系统组成的</strong>。对于不同的的linux发行版本，bootfs基本是一致的，rootfs会有差别，<strong>所以不同的发行版可以共用bootfs</strong>。</p>
+<p>平时我们安装虚拟机的CentOS都是好几个G，但是为什么Docker这里安装CentOS才200M呢？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-0-7-centos ~]# docker images centos</span><br><span class="line">REPOSITORY   TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">centos       latest    5d0da3dc9764   2 months ago   231MB</span><br></pre></td></tr></table></figure>
+<p>这就是因为首先docker安装会优先安装最精简版的OS,同时对于一个精简的OS，rootfs可以非常小，只需要包含最基本的命令、工具和程序库即可。而更底层的bootfs并不需要镜像来携带安装，他可以使用主机的内核，因此没有了最浪费时间的引导加载过程，启动速度也就快了，同时大小也轻巧了许多。</p>
+<h3 id="镜像分层理解"><a class="markdownIt-Anchor" href="#镜像分层理解"></a> 镜像分层理解</h3>
+<p>知道了镜像的加载原理，不妨再回头看下镜像分层的原理。之前提过，镜像下载的时候是分层下载的，有些层如果已经存在了，就无需再次下载。比如我下载一个redis的镜像。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121144215.png" alt="" /></p>
+<p>这种方式最大的好处就在于资源共享。比如有多个镜像都从相同的BASE镜像构建来的，那么宿主机只需要在磁盘上保留1分BASE镜像，同时内存中<br />
+也只需要加载一份BASE镜像，这样所有的容器都可以使用。另外，镜像的每一层都是可以共享的。我们可以通过<code>docker image inspect</code>来查看镜像的分层，比如我们现在查看刚才下在的redis镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image inspect redis:latest</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121144412.png" alt="" /></p>
+<p>上面就是redis镜像的所有分层文件，因此所有的docker镜像都起始于一个基础镜像层，当进行修改或者增加新的内容时，就会在当前镜像之层上创建新的镜像层，如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122210158.png" alt="" /></p>
+<p>假如现在我们要制作一个镜像，这个镜像基于Ubuntu linux 16.04，那么这个也就是镜像的第一层，然后我们还要继续安装python包，那么就会在第一层之上创建第二个镜像层即python层，继续打补丁的话，就会在第二层python镜像层的基础上创建第三个层。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>我们一定要注意镜像和镜像层的区别，在添加额外的镜像层时，镜像始终保持是当前所有镜像层的组合。</p></div></div>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122210209.png" alt="" /></p>
+<p>如上图所示这里有2个镜像层，第一个镜像层包含了3个文件，而镜像则是包含了两个镜像层的6个文件。**同时当需要对某个层文件进行更新操作时，并不是替换，而是使用更高一层的文件去覆盖旧文件。**如下图所示，如果现在我们需要更新第二个镜像层文件5，那么此时生成镜像中的文件会覆盖底层镜像中对应的文件，使得文件里更新版本为一个新镜像层添加到镜像中。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121145527.png" alt="" /></p>
+<p>此时这个镜像实际上有7个文件，但是我们从镜像外的角度来看，会认为他有6个文件，这是因为文件7覆盖而不是更换的文件5。即我们从外部的视角有点类似于搭盒子以后的俯视图，即如下图所示</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121145823.png" alt="" /></p>
+<p>我们从外部看这个三层镜像层组成的镜像会认为没有文件5，但是实际上此时文件5并没有消失，他还存在于第二个镜像层，只是被更高层次的同功能的位置文件7覆盖了而已。</p>
+<p>因此我们在下载一个镜像时并不是一次性下载完成的，而是逐层逐层的下载，当发现他需要的某些层已经在下方存在过了，那么他就无需再下载这个镜像层了。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>同时我们还要记住docker的一个特点，即docker镜像都是只读的，当容器启动时，一个新的可写层被加载到镜像的顶部，这一层就是我们通常说的容器层，容器层之下的叫做镜像层。</p></div></div>
+<p>这样当我们这个我们修改过的容器为一个新的镜像时，实际上就是在原基础镜像的基础上又新添加了我们的操作层，但是别人下载我们的这个镜像时如果他之前已经安装了基础镜像层，那么根据分层的理论他就只需要下载我们的操作层即可了，效率大大提升！如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121151407.png" alt="" /></p>
+<h3 id="commit镜像"><a class="markdownIt-Anchor" href="#commit镜像"></a> commit镜像</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker commit 提交容器为一个新的副本</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">命令和git原理类似</span></span><br><span class="line">docker commit -m=&quot;提交的描述信息&quot; -a=&quot;作者&quot; 容器id 目标镜像名:[tag]</span><br></pre></td></tr></table></figure>
+<p>我们以tomcat测试为例，首先我们下载tomcat镜像，让创建并运行容器，但是会发现<code>webapps</code>下没有任何东西，这是因为他默认安装的是最精简的阉割版，我们需要把webapps.dist下的所有内容copy到webapps下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-0-7-centos ~]# docker run -it -p 8080:8080 tomcat</span><br><span class="line">[root@VM-0-7-centos ~]# docker exec -it 866a0027304a /bin/bash</span><br><span class="line">root@866a0027304a:/usr/local/tomcat# cp -r  webapps.dist/* webapps/</span><br></pre></td></tr></table></figure>
+<p>现在我们已经部署tomcat成功了，可以输入<code>http://ip:8090</code> 查看界面了：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121155805.png" alt="" /></p>
+<p>然后刚刚我们已经修改了在tomcat容器上进行了文件移动的操作了，那么我们现在就可以commit提交我们刚刚的修改了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们提交后命名为tomcatwenchong 1.0版本</span></span><br><span class="line">[root@VM-0-7-centos ~]# docker commit -a=&quot;wenchong&quot; -m=&quot;add webapps app&quot; 866a0027304a tomcatwenchon:1.0</span><br><span class="line">sha256:dfe08bc422460ad9dddf275c5f45f387fd4f2c6596991eb51da5a4df36975b6f</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121161248.png" alt="" /></p>
+<p>然后我们就得到了我们自己的一个镜像，我们会发现它比tomcat要大一点点，这是因为我们在tomcat镜像的基础上加上了一个新的操作层。这也间接体现了镜像分层的原理。我们可以多次commit获得多个版本，和git commit类似。</p>
+<h2 id="容器数据卷"><a class="markdownIt-Anchor" href="#容器数据卷"></a> 容器数据卷</h2>
+<p>我们回顾一下之前的mysql容器有没有什么弊端。我们发现这个数据都是存储在mysql容器内部的，那么只要我们不小心删除了容器就会造成数据的永久丢失，这显然是很危险的，因此我们需要保证数据持久化存储在本地，即docker内部产生的数据可以同步到本地，这样删除容器后本地还会保留有数据，这就是<code>容器数据卷</code>的作用。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121184817.png" alt="" /></p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>使用容器卷技术不仅仅可以实现容器和外部主机的数据共享，同时多个容器之间可以通过挂载相同的主机路径实现容器间的数据共享。</p></div></div>
+<h2 id="使用数据卷"><a class="markdownIt-Anchor" href="#使用数据卷"></a> 使用数据卷</h2>
+<h3 id="使用-v命令挂载"><a class="markdownIt-Anchor" href="#使用-v命令挂载"></a> 使用-v命令挂载</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -v 主机目录:容器目录</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">如下我们将centos容器内部的home挂载到主机的/home/ceshi</span></span><br><span class="line"></span><br><span class="line">[root@VM-0-7-centos home]# docker run -it -v /home/ceshi:/home centos /bin/bash</span><br><span class="line">[root@c384462e385f /]# cd /home</span><br><span class="line">[root@c384462e385f home]# ls</span><br><span class="line">[root@c384462e385f home]# [root@VM-0-7-centos home]# </span><br><span class="line">[root@VM-0-7-centos home]# ls</span><br><span class="line">ceshi  compile  demo  hexo  wenchong</span><br><span class="line">[root@VM-0-7-centos home]# docker inspect c384462e385f</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121190447.png" alt="" /></p>
+<p>接下来我们写一点东西测试一下是否真正实现了数据共享</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121190857.png" alt="" /></p>
+<p>发现通过数据卷挂载以后确实实现了类似<code>共享文件夹</code>的功能。这样我们就可以保证容器的数据持久化存储了。并且当主机下修改这个目录，容器也会自动同步（即使容器没有运行）。如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121191510.png" alt="" /></p>
+<p>此时我们修改test.java后再查看容器内的内容</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121191844.png" alt="" /></p>
+<p>并且此时如果我们删除容器，test.java也并不会丢失，还会存储在主机的<code>/home/ceshi</code>下，如下图所示</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121192240.png" alt="" /></p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>要注意虽然删除容器后，主机的文件还会存在。但是如果删除了容器内的这个文件夹，那么主机上也会同步删除所有的数据文件。</p></div></div>
+<h3 id="实战数据卷挂载安装mysql"><a class="markdownIt-Anchor" href="#实战数据卷挂载安装mysql"></a> 实战：数据卷挂载安装mysql</h3>
+<p>这个实战非常常用，因为我们经常需要容器运行mysql进行数据管理，但是数据又需要本地存储，因此会用到卷技术。这里我们实战演练一下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">首先我们获取镜像，这里下载mysql:5.7</span></span><br><span class="line">[root@VM-0-7-centos home]# docker pull mysql:5.7</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">然后我们需要创建容器</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">但是我们知道mysql需要创建账户，这里会用到如下命令</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">（你可以在docker hub mysql手册中找到这个命令）</span></span><br><span class="line"></span><br><span class="line">-d 后台运行</span><br><span class="line">-p 端口映射</span><br><span class="line">-v 数据卷挂载</span><br><span class="line">-e 环境配置，这里配置了mysql的账户密码</span><br><span class="line">--name 容器命名</span><br><span class="line">[root@VM-0-7-centos home]$ docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql:5.7</span><br></pre></td></tr></table></figure>
+<p>自此我们就启动了一个mysql容器，并且注册了账号，密码为123456，同时容器向外暴露的端口是3310，那么接下来我们启动navicat工具尝试连接这个数据，填写完账号，密码和地址后我们会发现成功连接了这个容器内的数据库</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121201210.png" alt="" /></p>
+<p>并且此时卷挂载成功，我们在主机<code>/home/mysql</code>下可以查看到data和conf文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-0-7-centos home]# ls</span><br><span class="line">compile  demo  hexo  mysql  wenchong</span><br><span class="line">[root@VM-0-7-centos home]# cd mysql</span><br><span class="line">[root@VM-0-7-centos mysql]# ls</span><br><span class="line">conf  data</span><br></pre></td></tr></table></figure>
+<p>接下来我们尝试navicat中操作为数据库建一个表test，然后我们进入数据存储目录data下发现确实容器这里确实同步了一个数据库test如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121201645.png" alt="" /></p>
+<p>这样我们就实现了在本地创建数据库后，容器内自动同步，实现了mysql数据的持久化本地存储，即使这时候删除容器也不会波及到数据。同时当我们再修改配置时，无需在连接服务器进入容器去修改配置了，而是可以直接在本地修改配置，远程服务器的容器将会自动同步这个配置，这样修改配置更加高效了😍。</p>
+<h3 id="具名挂载和匿名挂载"><a class="markdownIt-Anchor" href="#具名挂载和匿名挂载"></a> 具名挂载和匿名挂载</h3>
+<p>之前我们使用-v挂载时总是声明了主机路径和容器路径，即如下图所示</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P --name nginx01 -v /主机路径:/容器路径 nginx</span><br></pre></td></tr></table></figure>
+<p>这样我们就实现了把nginx01容器的一个路径挂载到主机的一个路径下，但是有时候我们并不想主动声明要挂载的主机路径，那么此时我们可以如下书写</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P --name nginx02 -v /容器路径 nginx</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121203747.png" alt="" /></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker volume ls  查看所有卷</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这种就是匿名挂载，我们在-v时只写了容器内路径，不写主机路径</span></span><br></pre></td></tr></table></figure>
+<p>但是此时他挂载到了哪里呢？实际上未直接声明要挂在主句路径的卷都会默认放到docker下，这里我们为了方便验证，再学习一下具名挂载，具名挂载实际上也没有声明主句路径，但是他为这个新建的卷起了一个名字方便一会我们取寻找到他，格式如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -P --name nginx03 -v 卷名:/容器路径 nginx</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121204448.png" alt="" /></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">然后我们查看juming-nginx这个卷默认存储的位置</span></span><br><span class="line">docker volume inspect juming-nginx  查找juming-nginx卷的默认挂载地址</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121204658.png" alt="" /></p>
+<div class="tag-plugin note" color="yellow"><div class="title">具名和匿名卷都是没有指定挂载路径的，但是他们会默认挂载到`</div><div class="body"><p>/var/lib/docker/volumes/xxxxx/_data,`下</p></div></div>
+<p>然后我们进入这个路径查看一下这个匿名卷是否真的取出了我们需要的conf.d以便后面和主机进行文件同步。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211121205113.png" alt="" /></p>
+<p>我们通过具名挂载可以方便的找到我们的卷，后面我们就可以动态的挂载这个卷了，因此大多数情况下我们使用的都是具名挂载。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">总结-v的写法</span></span><br><span class="line">-v /容器内路径 #匿名挂载</span><br><span class="line">-v 卷名:容器内路径 #具名挂载</span><br><span class="line">-v /宿主机路径:/容器内路径 #指定路径挂载</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">同时我们还可以为容器内设置权限</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">当卷容器路径后面加上:ro那么这个文件就只能宿主机修改了，容器只能读此文件了</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">当卷容器路径后面加上:rw那么容器可以读或者写这个共享文件(默认不写也是这个权限)</span></span><br><span class="line">docker run -d -P --name nginx03 juming-nginx:/etc/nginx:ro nginx</span><br><span class="line">docker run -d -P --name nginx03 juming-nginx:/etc/nginx:rw nginx</span><br></pre></td></tr></table></figure>
+<h2 id="dockerfile"><a class="markdownIt-Anchor" href="#dockerfile"></a> DockerFile</h2>
+<p>dockerfile就是构建docker镜像的文件，因此是一个命令参数脚本。他的构建步骤如下</p>
+<ol>
+<li>编写一个dockerfile文件</li>
+<li>docker build构建为一个镜像</li>
+<li>docker run运行镜像</li>
+<li>docker push发布镜像到远程镜像仓库平台（Docker hub 或者阿里云)</li>
+</ol>
+<p>实际上官方的镜像也是用dickerfile构建的，比如docker hub上的centos镜像，我们点击他的标签就会跳转到对应的github仓库里面就是dockerfile文件。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122171422.png" alt="" /></p>
+<p>比如这里我们点击最新版本的latest标签，我们会发现他跳转到了如下的dockerfile界面，首先他使用指令<code>from scratch</code>提供最基础的镜像层，然后添加了centos最纯净版本，然后又添加了额外的指令集扩充并打上了标签，最终使用<code>bin/bash</code>完成运行。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122171622.png" alt="" /></p>
+<p>很多官方镜像都是基础包，很多功能都没有，我们通常都会搭建自己的镜像。只有自己制作的才是最适合自己的开发环境。因此我们可以构建自己的dockerfile来创建自己的docker镜像。</p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>dockerfile类似于一个自动化执行指令不断创建commit镜像提交并最终打包发布的一个脚本，可以用来构建一个docker镜像。</p></div></div>
+<h2 id="dockerfile构建过程"><a class="markdownIt-Anchor" href="#dockerfile构建过程"></a> DockerFile构建过程</h2>
+<h3 id="基础知识"><a class="markdownIt-Anchor" href="#基础知识"></a> 基础知识</h3>
+<ol>
+<li>每一个保留关键字（指令）都必须是大写字母组成</li>
+<li>指令是从上到下顺序执行的</li>
+<li><code>#</code>表示注释</li>
+<li>每一个指令运行后会创建提交生成一个新的创建层</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122172002.png" alt="" /></p>
+<p>dockerfile是面向开发，我们以后发布项目，就需要做镜像为我们的项目提供相对应的运行环境，此时我们就需要编写dockerfile文件，这个文件十分简单。项目交付由以前的<code>jar包</code>、<code>war包</code>等代码项目提交逐渐演化为了<code>docker镜像</code>代码项目+环境集成一体的阶段。因此Docker镜像逐渐成为企业交付的标准，必须要掌握。</p>
+<h4 id="思考dockerfile和docker-images的区别"><a class="markdownIt-Anchor" href="#思考dockerfile和docker-images的区别"></a> 思考：DockerFile和Docker images的区别？</h4>
+<p>正如上文所述，dockerfile是docker images的构建文件，dockerfile定义了创建一个镜像的一切步骤，只要按照dockerfile中的指令执行即可构建生成一个我们最终所需要的docker镜像。而镜像就是最终我们需要发布和运行的产品，他直接包含了要运行的项目以及其需要的运行环境，因此保证了项目打包文件即拆即用，大大简化了运维部署的流程。</p>
+<h4 id="思考docker-commit提交也可以完成自定义镜像构建为什么还需要dockerfile"><a class="markdownIt-Anchor" href="#思考docker-commit提交也可以完成自定义镜像构建为什么还需要dockerfile"></a> 思考：docker commit提交也可以完成自定义镜像构建，为什么还需要dockerfile?</h4>
+<p>我们回顾一下之前的docker commit是我们手动修改了一个容器，在上面进行了一系列的操作然后commit提交打包成一个新的镜像。但是当面临需要添加许多新的依赖，并且添加环境配置，端口暴露等复杂需求时，使用commit就略显麻烦和鸡肋了，因此我们需要一个自动化构建镜像的脚本文件，这就是dockerfile存在的价值。</p>
+<h3 id="dockerfile的指令"><a class="markdownIt-Anchor" href="#dockerfile的指令"></a> DockerFile的指令</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FROM 		#引入基础镜像 centos ubuntu等都是基础镜像，一些从这里开始构建</span><br><span class="line">MAINTAINER 	#镜像是谁写的，姓名+邮箱</span><br><span class="line">RUN			#镜像构建的时候需要运行的命令</span><br><span class="line">ADD			#在基础镜像基础上添加其他功能</span><br><span class="line">WORKDIR		#镜像的工作目录</span><br><span class="line">VOLUME		#卷要挂载的目录位置</span><br><span class="line">EXPOSE		#指定暴露端口（如果定义了，那么run创建容器时就无需在-p指定暴露端口）</span><br><span class="line">RUN 		#需要运行的指令</span><br><span class="line">CMD			#指定容器启动时要运行的命令（只有最终一个会生效，且可被替代）</span><br><span class="line">ENTRYPOINT	#指定容器启动时要运行的命令（可以追加命令）</span><br><span class="line">ONBUILD		#当构建一个被继承的DockerFile就会运行ONBUILD指令</span><br><span class="line">COPY		#类似于ADD，将指定的文件拷贝到镜像中</span><br><span class="line">ENV			#构建时设置环境便令</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122173918.png" alt="" /></p>
+<h3 id="实战测试"><a class="markdownIt-Anchor" href="#实战测试"></a> 实战测试</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122174033.png" alt="" /></p>
+<p>假设我们要自己创建一个centos镜像，我们在<code>/home</code>路径下创建<code>/home/dockerfile</code>用来存储我们创建的dockerfile文件。因为官方的centos镜像是最精简版的，许多我们平时需要的命令比如<code>vim</code>,<code>ll</code>等都是没有的，因此我们想基于官方的centos镜像基础上再添加一些指令。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122174859.png" alt="" /></p>
+<p>这里我们在centos基础上添加<code>vim</code>，<code>ifconfig</code>等指令，同时希望在启动运行后能够输入语句提示我们镜像已经构建</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122175506.png" alt="" /></p>
+<p>编写完成后保存退出，然后我们运行这个dockerfile尝试构建我们自己的docker镜像如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122180107.png" alt="" /></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">运行dockerfile构建docker镜像</span></span><br><span class="line">docker build -f dockerfile文件路径 -t 镜像名:[tag]</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">然后会依次执行我们的指令，最终得到如下输出及说明运行构建镜像成功</span></span><br><span class="line">Successfully built c5f9b92260c5</span><br><span class="line">Successfully tagged mycentos:0.1</span><br></pre></td></tr></table></figure>
+<p>然后我们进行这个镜像的测试，创建一个对应的容器并查看刚刚我们添加的指令集是否安装成功</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122181308.png" alt="exit" /></p>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>要注意，ENV类似于map只是存储了不同的配置变量的具体值，而具体的首次进入路径设置是由WORKDIR完成的。</p></div></div>
+<p>同时我们还可以使用如下命令轻松查看这个自定义的镜像是如何一步一步构建完成的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker history 镜像id</span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122181916.png" alt="" /></p>
+<h3 id="cmd和entrypoint"><a class="markdownIt-Anchor" href="#cmd和entrypoint"></a> CMD和ENTRYPOINT</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD			#指定容器启动时要运行的命令（只有最终一个会生效，且可被替代）</span><br><span class="line">ENTRYPOINT	#指定容器启动时要运行的命令（只有最终一个会生效，可以追加命令）</span><br></pre></td></tr></table></figure>
+<p>刚刚我们也运行了CMD指令，那么他和ENTRYPOINT具体是干什么的？又有什么区别呢？</p>
+<h4 id="cmd测试"><a class="markdownIt-Anchor" href="#cmd测试"></a> CMD测试</h4>
+<p>我们再创建一个新的dockerfile命名为dockerfile-cmd-test，并且在里面添加<code>CMD</code>指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM centos</span><br><span class="line">CMD [&quot;ls&quot;,&quot;-a&quot;] #启动容器后面添加 ls -a打印全部内容</span><br></pre></td></tr></table></figure>
+<p>然后现在我们运行这个dockerfile文件生成一个新的镜像，并创建容器启动它，我们可以看到如下结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-0-7-centos dockerfile]# docker build -f dockerfile-cmd-test -t cmdtest .</span><br><span class="line">Sending build context to Docker daemon  3.072kB</span><br><span class="line">Step 1/2 : FROM centos</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">5d0da3dc9764</span></span><br><span class="line">Step 2/2 : CMD [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">Running <span class="keyword">in</span> d14c7e0b26d5</span></span><br><span class="line">Removing intermediate container d14c7e0b26d5</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">48fe3fde9750</span></span><br><span class="line">Successfully built 48fe3fde9750</span><br><span class="line">Successfully tagged cmdtest:latest</span><br><span class="line">[root@VM-0-7-centos dockerfile]# docker run 48fe3fde9750</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122203111.png" alt="" /></p>
+<p>因此CMD指令是容器创建成功并启动后会执行的指令。但是此时如果我们在启动时再追加一个<code>-l</code>参数使得启动后打印的操作变为<code>ls -al</code>，但是此时会发现报错了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-0-7-centos dockerfile]# docker run 48fe3fde9750 -l</span><br><span class="line">docker: Error response from daemon: OCI runtime create failed: container_linux.go:380: starting container process caused: exec: &quot;-l&quot;: executable file not found in $PATH: unknown.</span><br></pre></td></tr></table></figure>
+<p>这是因为此时<code>-l</code>参数并不是追加到了<code>ls -a</code>后面，而是直接替换了<code>ls -a</code>，因此此时相当于创建容器并启动容器后要运行的指令变成了<code>-l</code>，很显然容器并不知道这是个什么指令，因此报错了。因此如果我们在<code>CMD</code>的情况下向最后运行<code>ls -al</code>指令，需要全部替换，即创建并启动容器的指令应该是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run 48fe3fde9750 ls -al</span><br></pre></td></tr></table></figure>
+<h4 id="entrypoint测试"><a class="markdownIt-Anchor" href="#entrypoint测试"></a> ENTRYPOINT测试</h4>
+<p>这个指令就是解决了上面的弊端，他是允许直接为要运行的指令追加参数的。比如此时我们再创建一个dockerfile文件命名为dockerfile-cmd-entrypoint。然后在里面添加如下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM centos</span><br><span class="line">ENTRYPOINT [&quot;ls&quot;,&quot;-a&quot;]   #这里使用了ENTRYPOINT代替之前的CMD                 </span><br></pre></td></tr></table></figure>
+<p>然后也是运行dockerfile创建镜像，然后创建并启动容器，正常情况下不加新的指令参数也是会正常执行<code>ls -a </code>指令的，和CMD没有什么区别。但是如果此时我们再后面追加一个<code>-l</code>，那么此时指令并不会被替换为<code>-l</code>而是追加这个参数变成了<code>ls -al</code>，因此此时可以正确执行命令得到如下结果</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211122204643.png" alt="" /></p>
+<p>DockerFile中许多命令都十分类似，我们需要了解他们的区别，CMD和ENTRYPOINT只是其中一组，我们要通过对比测试学习区分两个指令的不同点。</p>
+<h2 id="实战tomcat镜像构建"><a class="markdownIt-Anchor" href="#实战tomcat镜像构建"></a> 实战：Tomcat镜像构建</h2>
+<p>这次我们不再是基于已有的tomcat容器或者镜像进行操作构建一个tomcat新镜像了，而是完完全全使用压缩包原文件，引入并使用脚本自动化构建环境创建一个tomcat镜像。因此首先我们需要一个tomcat源文件压缩包，然后由于tomcat基于java运行，因此我们还需要一个jdk压缩包。这里我们可以前往<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/#java8">jdk官网</a>下和<a target="_blank" rel="noopener" href="https://tomcat.apache.org/download-80.cgi">tomcat官网</a>下载需要的tar.gz压缩包文件。这里博主宝宝贴心的提供我实操用的压缩包文件😁,密码是wssb</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="实验资源" href="https://pan.baidu.com/s/1a6nOATjckhAOTAlVcrQSew" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">实验资源</span><span class="cap link fs12">https://pan.baidu.com/s/1a6nOATjckhAOTAlVcrQSew</span></div><div class="right"><div class="lazy img" data-bg="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>下载完成以后我们使用xftp上传到服务器上，这里我上传到了<code>/home/dockerfile/tomcat/</code>路径下,在编写之前我们需要先写一个声明文件为<code>readme.txt</code>，在tomcat下创建即可然后我们现在就开始编写dockerfile文件。此时tomcat文件夹文件如下</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125202857.png" alt="" /></p>
+<p>我们要注意按照官方的规范写法，我们需要将容器构建文件命名为<code>Dockerfile</code>。这样我们之后运行dockerfile取构建镜像时服务器会自动寻找这个Dockerfile文件，前面不再需要添加<code>-f</code>选项了。接下来我们开始编写Dockerfile文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">引入基本镜像</span></span><br><span class="line">FROM centos</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创作者信息</span></span><br><span class="line">MAINTAINER wenchong&lt;1422257646@qq.com&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">把之前的说明文档readme.txt放到容器的/usr/local/下</span></span><br><span class="line">COPY readme.txt /usr/local/readme.txt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">注意这里使用ADD而不是COPY是因为ADD可以解压缩</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">同样解压缩后将文件夹放到容器的/usr/local/下</span></span><br><span class="line">ADD jdk-8u311-linux-x64.tar.gz /usr/local/</span><br><span class="line">ADD apache-tomcat-9.0.55.tar.gz /usr/local/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装vim指令集</span></span><br><span class="line">RUN yum -y install vim</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">pwd</span>后账号的基础工作路径</span></span><br><span class="line">ENV MYPATH /usr/local</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这里是核心，他自动的使用之前添加的tomcat和jdk依赖文件</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">自动搭建环境，这里就是使用脚本指令设置环境变量</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">注意不同的版本略有区别，需要根据实际情况设置</span></span><br><span class="line">ENV JAVA_HOME /usr/local/jdk1.8.0_311</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">分号用来区分路径1和路径2</span></span><br><span class="line">ENV CLASS_PATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">ENV CATALINA_HOME /usr/local/apache-tomcat-9.0.55</span><br><span class="line">ENV CATALINA_BASH /usr/local/apache-tomcat-9.0.55</span><br><span class="line">ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">希望tomcat运行后在容器内部的8080端口暴露</span></span><br><span class="line">EXPOSE 8080</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">最后每一次打开都会打印日志</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">也是为了让他有一个前端进程，从而保证不会让容器自动关闭</span></span><br><span class="line">CMD /usr/local/apache-tomcat-9.0.55/bin/startup.sh &amp;&amp; tail -F /usr/local/apache-tomcat-9.0.55/logs/catalina.out</span><br></pre></td></tr></table></figure>
+<p>然后我们就完成了Dockerfile的编写，接下来我们就运行这个dockerfile来创建我们自己的diytomcat镜像，命令如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">一定不要忘记最后面有一个.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">同时由于我们命名为了Dockerfile因此这里不需要-f选中dockerfile文件了</span></span><br><span class="line">[root@VM-0-7-centos tomcat]# docker build -t diytomcat .</span><br></pre></td></tr></table></figure>
+<p>然后他就会逐行 指令去执行，最后我们得到如下图则说明镜像创建完成：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125205519.png" alt="" /></p>
+<p>接下来我们运行这个镜像来创建并启动一个diytomcat容器，指令如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">有点长，我们依次解释</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">首先-d 容器后台运行，由于我们设置了启动后打印日志的前端进程因此容器不会自动关闭</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--name 设置容器名称为diytomcat01</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">然后-p 将容器内部8080端口映射暴露到宿主机的9090端口，这样我们可以在外部访问</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">然后两个-v分别是挂载路径映射</span></span><br><span class="line">[root@VM-0-7-centos tomcat]# docker run -d -p 9090:8080 --name diytomcat01 -v /home/dockerfile/tomcat/test:/usr/local/apache-tomcat-9.0.55/webapps/test -v /home/dockerfile/tomcat/tomcatlogs/:/usr/local/apache-tomcat-9.0.55/logs diytomcat</span><br></pre></td></tr></table></figure>
+<p>我们创建并启动成功以后，发现他确实没有自动关闭，同时我们进入这个容器输入<code>pwd</code>后发现默认的工作目录确实是<code>/usr/local</code>，同时输入<code>ls -ll</code>发现我们需要的tomcat和jdk的文件夹都存在，说明配置成功了</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125210640.png" alt="" /></p>
+<p>然后我们再去访问<code>https://云服务器ip:9090</code>查看能否访问到tomcat入口页面，结果成功！</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125210854.png" alt="" /></p>
+<p>那么接下来我们可以尝试发布项目了，由于我们做了卷挂载，因此我们可以直接在本地将项目放置到<code>/home/dockerfile/tomcat/test</code>文件夹下既可以自动同步到容器内tomcat的test目录下自动发布，也就意味着现在我们通过了卷挂载实现了本地项目编写完成后后远程容器内的tomcat自动部署项目😎!</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125213045.png" alt="" />我们进入本地的test路径创建一个WEB-INF目录，然后里面编写一个web.xml文件内容如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://java.sun.com/xml/ns/j2ee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/j2ee</span></span></span><br><span class="line"><span class="string"><span class="tag">         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;2.4&quot;</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125212155.png" alt="" />然后我们再返回到test文件夹下编写一个入口页面，这里我们使用index.jsp文件实现，内容如下</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">&lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">Hello World!&lt;br/&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	System.out.println(<span class="string">&quot;Hello Wenchong&quot;</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>编写完成，此时我们的本地test目录下新添加了一个入口页面indexjsp,由于使用了卷挂载，容器内的tomcat也会自动同步这个文件，因此此时我们输入<code>http:云服务器ip:90980/test</code>就可以立即看到这个页面自动部署成功了，如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125213638.png" alt="" /></p>
+<p>这就是使用卷挂载实现的项目自动部署，我们的nginx的nginx.conf配置文件也可以和本地的同步，这样每次我们都无需再去容器内部修改配置文件了，大大简化了修改流程。同时我们还可以通过查看本地的<code>tomcatlogs</code>时刻看到容器中tomcat的日志如下图</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20211125214046.png" alt=" " /></p>
+<p>每次有人访问和这个服务，我们tomcat都会在日志中打印信息，但是我们无需到容器内不去查看日志，而是通过卷挂载后只需通过本地的tomcatlogs下的catalina.out就可以实时查看日志。</p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/Docker%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html">常用操作</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/Docker%E7%AC%94%E8%AE%B0/Docker%E7%BD%91%E7%BB%9C/index.html">网络与Dockerhub</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="Docker"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/dennounce">隐私政策</a><a href="/">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://cloud.tencent.com/" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

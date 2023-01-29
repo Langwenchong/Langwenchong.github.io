@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>ComputerSystem：存储器概述 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="存储器简介 我们之前学习到冯诺依曼体系中的五大重要部件：输入设备，输出设备，运算器，控制器，存储器。上一节我们学习的算术逻辑单元是运算器的一小部分，这里我们详细学习一下存储器。  存储器的分类  存储器只是一个总名称，其种类繁多有许多种，首先我们可以按照几个不同的角度将存储器分类。  按在计算机中的作用（层次）分类   主存储器：又称为主存，内存，用来存放计算机运行期间所需的大量程序和数据，CP">
+<meta property="og:type" content="website">
+<meta property="og:title" content="存储器概述">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="存储器简介 我们之前学习到冯诺依曼体系中的五大重要部件：输入设备，输出设备，运算器，控制器，存储器。上一节我们学习的算术逻辑单元是运算器的一小部分，这里我们详细学习一下存储器。  存储器的分类  存储器只是一个总名称，其种类繁多有许多种，首先我们可以按照几个不同的角度将存储器分类。  按在计算机中的作用（层次）分类   主存储器：又称为主存，内存，用来存放计算机运行期间所需的大量程序和数据，CP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218141503.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218143608.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218145702.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218150031.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218150229.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218150459.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210218151734.png">
+<meta property="article:published_time" content="2023-01-28T06:46:02.516Z">
+<meta property="article:modified_time" content="2023-01-28T06:46:02.516Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20210218141503.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html"><div class="main" ff="title">ComputerSystem</div><div class="sub cap">从零入门计算机体系结构</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/计算机组成原理笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">什么是计算机系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html#start"><span class="toc-text">计算机系统概述</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据的表示和运算</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%88%B6%E4%B8%8E%E7%BC%96%E7%A0%81%E8%A7%84%E5%88%99/index.html"><span class="toc-text">数制与编码规则</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B8%8E%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83ALU/index.html"><span class="toc-text">算术逻辑单元ALU</span></a></div></div><div class="widget-header cap dis-select"><span class="name">存储系统</span></div><div class="widget-body fs14"><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">存储器概述</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%AE%80%E4%BB%8B"><span class="toc-text"> 存储器简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text"> 存储器的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8%E5%B1%82%E6%AC%A1%E5%88%86%E7%B1%BB"><span class="toc-text"> 按在计算机中的作用（层次）分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E5%AD%98%E5%82%A8%E4%BB%8B%E8%B4%A8%E5%88%86%E7%B1%BB"><span class="toc-text"> 按存储介质分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E5%AD%98%E5%8F%96%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB"><span class="toc-text"> 按存取方式分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83ram%E5%92%8Crom%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-text"> 思考：RAM和ROM存储方式？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85rom%E6%B4%BE%E7%94%9F%E5%AD%98%E5%82%A8%E5%99%A8%E6%98%AF%E5%8F%AF%E4%BB%A5%E5%86%99%E5%85%A5%E7%9A%84"><span class="toc-text"> 补充：ROM派生存储器是可以写入的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E5%99%A8%E5%92%8C%E7%9B%B4%E6%8E%A5%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：顺序存取存储器和直接存取存储器的区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E4%BF%A1%E6%81%AF%E7%9A%84%E5%8F%AF%E4%BF%9D%E5%AD%98%E6%80%A7%E5%88%86%E7%B1%BB"><span class="toc-text"> 按信息的可保存性分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-text"> 存储器的性能指标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%AE%B9%E9%87%8F"><span class="toc-text"> 存储容量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%BD%8D%E6%88%90%E6%9C%AC"><span class="toc-text"> 单位成本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E9%80%9F%E5%BA%A6"><span class="toc-text"> 存储速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%AD%98%E5%8F%96%E6%97%B6%E9%97%B4%E5%92%8C%E5%AD%98%E5%8F%96%E5%91%A8%E6%9C%9F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：存取时间和存取周期的区别？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E5%8C%96%E7%BB%93%E6%9E%84"><span class="toc-text"> 存储器的层次化结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%8A%E5%B1%82%E5%86%85%E5%AE%B9%E4%B8%8E%E4%B8%8B%E5%B1%82%E5%86%85%E5%AE%B9%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text"> 思考：上层内容与下层内容的关系？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text"> 总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">主存储器</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E8%BF%9E%E6%8E%A5/index.html"><span class="toc-text">存储器与CPU连接</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">高性能存储器</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多计算机基础</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><span class="title">操作系统笔记</span><span class="excerpt">操作系统是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a><a class="item wiki" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html"><span class="title">数字逻辑与数字系统笔记</span><span class="excerpt">本门课程是由我最喜欢的王立老师精编的原创课程，深入浅出的讲解带领我们从零开始自己尝试设计一个指令集架构，还不进来看一看？</span></a><a class="item wiki" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html"><span class="title">计算机网络笔记</span><span class="excerpt">计算机网络是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a><a class="item wiki" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/index.html"><span class="title">手撕算法笔记</span><span class="excerpt">程序=数据结构+算法,世界上最优秀的程序一定使用了最先进优雅的算法，让我们一同进入算法的世界中学习，感受编程的魅力吧！</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html">ComputerSystem</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-28T06:46:02.516Z">2023-01-28</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>存储器概述</span></h1>
+  <h2 id="存储器简介"><a class="markdownIt-Anchor" href="#存储器简介"></a> 存储器简介</h2>
+<p>我们之前学习到冯诺依曼体系中的五大重要部件：输入设备，输出设备，运算器，控制器，存储器。上一节我们学习的算术逻辑单元是运算器的一小部分，这里我们详细学习一下存储器。</p>
+<h3 id="存储器的分类"><a class="markdownIt-Anchor" href="#存储器的分类"></a> 存储器的分类</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218141503.png" alt="" /></p>
+<p>存储器只是一个总名称，其种类繁多有许多种，首先我们可以按照几个不同的角度将存储器分类。</p>
+<h4 id="按在计算机中的作用层次分类"><a class="markdownIt-Anchor" href="#按在计算机中的作用层次分类"></a> 按在计算机中的作用（层次）分类</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218143608.png" alt="" /></p>
+<ul>
+<li>主存储器：又称为主存，内存，用来存放计算机运行期间所需的大量程序和数据，CPU可以直接对齐进行访问，他也可以和告诉缓存cache以及辅助存储设备交换数据。特点是容量小，存取速度较快，每位价格高。</li>
+<li>辅助存储器：又称为辅存，外存，是后援存储器，用来存放当前暂时用不到的数据和程序，以及一些永久性保存的信息，他不能够直接和CPU进行信息交换。特点是容量大，存取速度慢，单位成本低。</li>
+<li>高速缓冲器：又简称为cache，位于主存和CPU之间，用来存放正在执行的程序段和数据段，以便CPU能够高速使用。cache的存取速度可与CPU相匹配速度最快，但是容量小，价格高昂。目前的高档计算机都会将它们制作在CPU中。</li>
+</ul>
+<h4 id="按存储介质分类"><a class="markdownIt-Anchor" href="#按存储介质分类"></a> 按存储介质分类</h4>
+<p>存储器可以分为磁表面存储器（磁带，磁盘）、磁心存储器半导体存储器（MOS型存储器，双极型存储器）和光存储器（光盘）。</p>
+<h4 id="按存取方式分类"><a class="markdownIt-Anchor" href="#按存取方式分类"></a> 按存取方式分类</h4>
+<ul>
+<li>
+<p>随机存储器（RAM）：存储器的每一个存储单元都可以将内容随机存取，而且存取的时间与存储单元的物理位置无关。优点是读写方便，使用灵活，主要用于主存或告诉缓冲存储器。RAM又分为静态RAM（以触发器原理寄存信息）和动态RAM（以电容充电原理寄存信息）。但是断电内容会丢失。</p>
+</li>
+<li>
+<p>只读存储器（ROM）：存储器的内容只能随机读入不能写入，信息一旦写入存储器就固定不变，即使断电，内容也不会丢失。因此，通常用它存放固定不变的程序，常数和汉字字库，甚至用于操作系统的固化。他和随机存储器共同作为主存的一部分，统一构成主存的地址域。</p>
+<h4 id="思考ram和rom存储方式"><a class="markdownIt-Anchor" href="#思考ram和rom存储方式"></a> 思考：RAM和ROM存储方式？</h4>
+<p>我们可以大胆猜测，由于它们都是随机存取，并且和物理位置无关，那么就和索引表式的离散存储方法很相似。所以应该会有一个存储数据单元的索引表，这样随机存取就实现了与物理位置无关的特点了。</p>
+<h4 id="补充rom派生存储器是可以写入的"><a class="markdownIt-Anchor" href="#补充rom派生存储器是可以写入的"></a> 补充：ROM派生存储器是可以写入的</h4>
+<p>由ROM派生出的存储器也包含可反复重写的类型，ROM和RAM的存取方式都是随机存取。并且要注意广义上的ROM已可通过电擦除等方式进行写入了，“只读”的概念并未保留，但是仍然保留了断电内容保留、随机存取的特性。仅仅是可以通过一些特定的方法可以进行更改内容了而已，其写入速度比读取速度慢的多。</p>
+</li>
+<li>
+<p>串行访问存储器：顾名思义，对存储单元进行读/写操作时，需要按照其物理地址的先后顺序寻址，包括顺序存取存储器（如磁带）和直接存取存储器（如磁盘）。</p>
+<h4 id="思考顺序存取存储器和直接存取存储器的区别"><a class="markdownIt-Anchor" href="#思考顺序存取存储器和直接存取存储器的区别"></a> 思考：顺序存取存储器和直接存取存储器的区别？</h4>
+<p>顺序存取存储器的内容只能够按某种顺序存取，存取的时间长短与信息在存储体上的物理位置相关，其特点是存取速度慢。直接存取存储器既不像RAM那样随机的访问任何一个存储单元，又不像顺序存储器那样完全按顺序存取，而是介于两者之间。存取信息时现寻找整个存储器的某个小区域（例如磁道上的磁道），再在小区域内顺序查找。</p>
+</li>
+</ul>
+<h4 id="按信息的可保存性分类"><a class="markdownIt-Anchor" href="#按信息的可保存性分类"></a> 按信息的可保存性分类</h4>
+<ul>
+<li>易失性存储器：断电后，存储信息即消失的存储器，例如RAM。</li>
+<li>非易失性存储器：断电后信息仍然保持的存储器，例如ROM、磁表面存储器和光存储器。</li>
+<li>破坏性读入存储器：其某个存储单元的信息被读入时，原存储信息被破坏，因为存储单元信息会被破坏，所以每一次读出操作后，必须紧接一个再生的操作，以便恢复被破坏的信息。</li>
+<li>非坏性读入存储器：其某个存储单元的信息被读入时，原存储信息不会被破坏。</li>
+</ul>
+<h3 id="存储器的性能指标"><a class="markdownIt-Anchor" href="#存储器的性能指标"></a> 存储器的性能指标</h3>
+<p>存储器有三个重要的性能指标，分别是存储容量 ，单位成本和存储速度。这三个指标相互制约，设计一个优秀的存储器就是要使这三个指标尽可能都同时更好。</p>
+<h4 id="存储容量"><a class="markdownIt-Anchor" href="#存储容量"></a> 存储容量</h4>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>存储容量</mtext><mo>=</mo><mtext>存储字数</mtext><mo>×</mo><mtext>字长（如</mtext><mn>1</mn><mi>M</mi><mo>×</mo><mn>8</mn><mtext>位）</mtext></mrow><annotation encoding="application/x-tex">存储容量=存储字数×字长（如1M×8位）
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">储</span><span class="mord cjk_fallback">容</span><span class="mord cjk_fallback">量</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">储</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">数</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">长</span><span class="mord cjk_fallback">（</span><span class="mord cjk_fallback">如</span><span class="mord">1</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">8</span><span class="mord cjk_fallback">位</span><span class="mord cjk_fallback">）</span></span></span></span></span></p>
+<p>1B=8bit,其中存储字数是存储器的地址空间大小，字长表示的是一次存取操作的数据量。所以存储容量表示的就是存储器存储数据的位数大小。</p>
+<h4 id="单位成本"><a class="markdownIt-Anchor" href="#单位成本"></a> 单位成本</h4>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>单位价格</mtext><mo>=</mo><mtext>总成本</mtext><mi mathvariant="normal">/</mi><mtext>总容量</mtext></mrow><annotation encoding="application/x-tex">单位价格=总成本/总容量
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">单</span><span class="mord cjk_fallback">位</span><span class="mord cjk_fallback">价</span><span class="mord cjk_fallback">格</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">本</span><span class="mord">/</span><span class="mord cjk_fallback">总</span><span class="mord cjk_fallback">容</span><span class="mord cjk_fallback">量</span></span></span></span></span></p>
+<p>就是造价成本，要保证一位的成本尽可能的小。</p>
+<h4 id="存储速度"><a class="markdownIt-Anchor" href="#存储速度"></a> 存储速度</h4>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>数据传输率</mtext><mo>=</mo><mtext>数据的宽度</mtext><mi mathvariant="normal">/</mi><mtext>存储周期</mtext></mrow><annotation encoding="application/x-tex">数据传输率=数据的宽度/存储周期
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">传</span><span class="mord cjk_fallback">输</span><span class="mord cjk_fallback">率</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">宽</span><span class="mord cjk_fallback">度</span><span class="mord">/</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">储</span><span class="mord cjk_fallback">周</span><span class="mord cjk_fallback">期</span></span></span></span></span></p>
+<p>这里我们介绍几个重要的时间指标：</p>
+<ol>
+<li>存取时间Ta：存取时间是指从启动一次存储器操作到完成该操作所经历的时间，分为读入时间和写入时间。所以这个时间表示的仅仅是数据读取/写入操作的时间。</li>
+<li>存取周期Tm：存储周期又称为读写周期或访问周期，它是指存储器进行一次完整的读写操作所需要的全部时间，即连续两次独立访问存储器操作（读或写操作）之间所需的最小时间间隔。</li>
+<li>主存宽带Bm：主存宽带又称为数据传输率，表示每秒从主存进出信息的最大数量。单位是字/秒、字节/秒，或者位/秒。</li>
+</ol>
+<h4 id="思考存取时间和存取周期的区别"><a class="markdownIt-Anchor" href="#思考存取时间和存取周期的区别"></a> 思考：存取时间和存取周期的区别？</h4>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218145702.png" alt="" /></p>
+<p>存取时间不等于存取周期，通常存取周期大于存取时间，这是因为任何一个存储器，在读写操作之后一定还需要一段时间恢复内部状态，这段时间我们成为恢复时间。对于破坏性读出的存储器，存取周期往往比存取时间大得多，甚至存取周期是存取时间的两倍之大。因为存储器中的信息读出后需要迅速进行再生。</p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218150031.png" alt="" /></p>
+<h2 id="存储器的层次化结构"><a class="markdownIt-Anchor" href="#存储器的层次化结构"></a> 存储器的层次化结构</h2>
+<p>为了解决存储系统大容量、高速度、低成本3个相互制约的矛盾。在计算机系统中，通常采用多级存储结构来存储信息。如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218150229.png" alt="" /></p>
+<p>在图中越靠上的部分造价越高，容量越小但是同时存取速度就越快，CPU的访问频率就越大。CPU,Cache,主存和辅存组成了最经典的三级存储系统结构如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218150459.png" alt="" /></p>
+<p>存储系统的层次结构主要体现在“Cache-主存”层次和“主存-辅存”层次。前者是为了解决CPU和主存的速度不匹配问题而产生的，后者则是为了解决存储系统容量问题的。在存储体系中，Cache,主存可以和CPU直接进行信息交换，而辅存中的信息需要先导入都主存以后才可以被cpu进行存取访问。</p>
+<p>存储器层次结构的主要思想就是上一层的存储器作为低一层存储器的高速缓存。从CPU的角度看，“Cache-主存”层次的数据存取速度接近于Cache，容量和位价都接近于主存。从“主存-辅存”层次分析，其速度接近于主存，容量和位价接近于辅存。这样就缓解了速度，容量和位价三者的制约关系了，现代计算机系统几乎采用的都是这种三级存储系统，需要注意，主存和Cache之间的数据调动都是由硬件自动完成的，对所有程序员都是透明的，而主存和辅存之间的数据调动则是由硬件和操作系统共同完成的，只是对应用程序员透明。在“主存-辅存”这次层次的不断发展中，逐渐形成了虚拟存储系统，在这个系统中程序员变成的范围与虚拟存储器的地址空间相对应，远大于实际物理地址范围。对于具有虚拟存储器的计算机系统而言，编程可用地址空间远大于主存空间。</p>
+<h3 id="思考上层内容与下层内容的关系"><a class="markdownIt-Anchor" href="#思考上层内容与下层内容的关系"></a> 思考：上层内容与下层内容的关系？</h3>
+<p>在&quot;Cache-主存&quot;和“主存-辅存”层次中，上一层的内容一定是来自与下一层的内容副本，所以Cache（或主存）中的内容只是主存（或辅存）中内容的一部分。越到底层，数据存储范围越大，而越到上层，存储的数据范围越小。</p>
+<h3 id="总结-2"><a class="markdownIt-Anchor" href="#总结-2"></a> 总结</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210218151734.png" alt="" /></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83ALU/index.html">算术逻辑单元ALU</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html">主存储器</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="ComputerSystem"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/dennounce">隐私政策</a><a href="/">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://cloud.tencent.com/" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

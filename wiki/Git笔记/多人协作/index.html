@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Git：多人协作 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="bug分支 我们这里在讨论一种特殊的情况，这个场景一般发生在实际的业务开发工作中，我们假设现在某个项目已经开发出来一个不稳定的版本readme.txt存在于dev分支上，然后我们现在自己的分支myjob上正在开发自己的业务功能板块，实现一个矩阵相乘的c文件maxtrix-mul.c，但是我们现在还处于中途开发阶段，还没有commit。即此时我们的分支情况下图：  此时我们假设现在matrix-m">
+<meta property="og:type" content="website">
+<meta property="og:title" content="多人协作">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/Git%E7%AC%94%E8%AE%B0/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="bug分支 我们这里在讨论一种特殊的情况，这个场景一般发生在实际的业务开发工作中，我们假设现在某个项目已经开发出来一个不稳定的版本readme.txt存在于dev分支上，然后我们现在自己的分支myjob上正在开发自己的业务功能板块，实现一个矩阵相乘的c文件maxtrix-mul.c，但是我们现在还处于中途开发阶段，还没有commit。即此时我们的分支情况下图：  此时我们假设现在matrix-m">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128161809.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128155833.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128161318.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128161346.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128162032.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128162405.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128162509.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128162756.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128163105.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128163144.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128164903.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128165107.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128165323.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128165756.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128170547.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128170954.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128171219.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128195611.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128195751.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128202959.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210128203520.png">
+<meta property="article:published_time" content="2023-01-28T05:38:08.151Z">
+<meta property="article:modified_time" content="2023-01-28T05:38:08.151Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20210128161809.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html"><div class="main" ff="title">Git</div><div class="sub cap">每一个coder必备技能</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/Git笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html#start"><span class="toc-text">本地仓库</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/index.html"><span class="toc-text">远程仓库</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">分支管理</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/index.html"><span class="toc-text">多人协作</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bug%E5%88%86%E6%94%AF"><span class="toc-text"> bug分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF%E6%97%B6%E6%89%80%E5%A4%84%E5%88%86%E6%94%AF%E5%AF%B9%E5%91%BD%E4%BB%A4%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text"> 注意：删除分支时所处分支对命令的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%9C%89%E6%B2%A1%E6%9C%89%E5%8F%A6%E4%B8%80%E7%A7%8D%E4%BF%AE%E5%A4%8Ddev%E5%88%86%E6%94%AF%E7%9A%84bug"><span class="toc-text"> 思考：有没有另一种修复dev分支的bug?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C"><span class="toc-text"> 多人协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text"> 远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E9%80%81%E5%88%86%E6%94%AF"><span class="toc-text"> 推送分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%93%E5%8F%96%E5%88%86%E6%94%AF"><span class="toc-text"> 抓取分支</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E6%9E%9C%E4%B8%A4%E4%B8%AA%E4%BA%BA%E9%83%BD%E5%90%8C%E6%97%B6%E6%8E%A8%E9%80%81%E4%B8%80%E4%B8%AA%E7%89%B9%E5%AE%9A%E5%88%86%E6%94%AF%E4%BC%9A%E6%80%8E%E6%A0%B7"><span class="toc-text"> 思考：如果两个人都同时推送一个特定分支会怎样？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E5%A6%82%E6%9E%9C%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%88%86%E6%94%AF%E5%92%8C%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%88%86%E6%94%AF%E6%B2%A1%E6%9C%89%E5%BB%BA%E7%AB%8B%E5%85%B3%E8%81%94%E4%BC%9A%E6%8A%A5%E9%94%99"><span class="toc-text"> 注意：如果本地仓库分支和远程仓库分支没有建立关联会报错</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">多人协作</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多进阶技能</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/index.html"><span class="title">设计模式笔记</span><span class="excerpt">设计模式即DesignPatterns是指在软件设计中，被反复使用的一种代码设计经验。使用设计模式的目的是为了可重用代码，提高代码的可扩展性和可维护性。</span></a><a class="item wiki" href="/wiki/Docker%E7%AC%94%E8%AE%B0/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/index.html"><span class="title">Docker笔记</span><span class="excerpt">Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html">Git</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-28T05:38:08.151Z">2023-01-28</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>多人协作</span></h1>
+  <h2 id="bug分支"><a class="markdownIt-Anchor" href="#bug分支"></a> bug分支</h2>
+<p>我们这里在讨论一种特殊的情况，这个场景一般发生在实际的业务开发工作中，我们假设现在某个项目已经开发出来一个不稳定的版本readme.txt存在于dev分支上，然后我们现在自己的分支myjob上正在开发自己的业务功能板块，实现一个矩阵相乘的c文件maxtrix-mul.c，但是我们现在还处于中途开发阶段，还没有commit。即此时我们的分支情况下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128161809.png" alt="" /></p>
+<p>此时我们假设现在matrix-mul.c还没有开发完，即如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128155833.png" alt="" /></p>
+<p>那么显然此时我们就还没有将matrix-mul开发完不能commit为一个版本（在实际开发中，一般只有开发完一个阶段形成一个版本后才会commit,而不是随心所欲的提交）。但是此时我们已经修改了matrix-mul.c，此时老板告诉我们开发的dev分支上的新版本中readme.txt有Bug需要修改并且要求我们现在就要修改这个bug。此时我们第一想法就是切换到dev分支，然后新建一个Issue分支来解决这个bug，然后再将这个issue上改完bug的分支合并到dev上从而达到修改bug的目的（注意这种创建新分支修改bug再合并到dev分支的策略，我们一般不能够直接修改dev分支上的文件以防破坏了dev分支）。但是此时我们发现当尝试切换到dev分支再创建issue分支时是不行的，会报错：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128161318.png" alt="" /></p>
+<p>我们发现他报错还没有对已被修改的文件matrix-mul.c进行保存，所以切换分支的行为被终止了。我们分析一下发现确实此时我们编辑了matrix-mul.c文件但是此时还没有commit到一个新节点保存。理论上来说我们未尝不可已先将这个文件的修改提交为一个版本然后注释为&quot;不是一个新版本，而是临时需要改bug切换分支而保存的行为&quot;以此来达到在git日志中记录我们这次上传的提示。但是我们想一想平常工作中肯定需要时常进行修改bug的任务，难道每次都要这样暂存一个版本吗？那这样git日志里绘充斥了许多没有意义的切换分支的信息记录，无疑阻碍工作。所以此时我们需要一个办法来暂存这个已被修改的matrix-mul.c文件同时不会记录到git日志上成为一个节点，然后我们可以切换到dev分支上先解决bug，解决完后在切换回来继续工作直至开发成一个阶段了再提交commit。这时我们需要输入以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br></pre></td></tr></table></figure>
+<p>这样git会将myjob分支上的我们现在开发到一半的matrix-mul.c存到一个特殊的地方并且不会新增commit,此时我们再查看工作区状态</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128161346.png" alt="" /></p>
+<p>我们发现此时git认为myjob分支是干净的，即假装认为此时所有被修改的文件都已经存储了(实际上此时myjob分支的被修改的matrix-mul.c只是被暂存到了一个地方)。然后此时我们就可以切换到了dev分支上了。此时我们就到达了如下图的情况</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128162032.png" alt="" /></p>
+<p>然后我们现在查看一下这个有bug的readme.txt文件，他的内容如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128162405.png" alt="" /></p>
+<p>果然有bug,我们现在修改一下readme.txt的bug，修复成无bug的版本：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128162509.png" alt="" /></p>
+<p>然后在issue上提交这个修改好bug的版本，此时分支情况如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128162756.png" alt="" /></p>
+<p>所以新的issue分支现在领先dev一个版本是修复好bug的版本，我们采用Fast forward模式的分支合并将dev分支也移到这个无bug版本：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128163105.png" alt="" /></p>
+<p>我们发现此时dev分支上的最新版本确实修复了bug:</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128163144.png" alt="" /></p>
+<p>所以dev分支上的版本已经修改好了bug了，所以我们可以删除issue分支了并切换到myjob分支继续我们的板块开发了。</p>
+<h3 id="注意删除分支时所处分支对命令的影响"><a class="markdownIt-Anchor" href="#注意删除分支时所处分支对命令的影响"></a> 注意：删除分支时所处分支对命令的影响</h3>
+<p>一定要注意在上面这种情况下，如果我们处在dev分支上删除issue分支，那么命令就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d issue</span><br></pre></td></tr></table></figure>
+<p>即可，但是如果此时我们是先切换到了myjob分支上在删除issue分支时会有一个小报错如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128164903.png" alt="" /></p>
+<p>此时我们需要输入如下的指令进行强制删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -D issue</span><br></pre></td></tr></table></figure>
+<p>效果是一样的，但是为了防止出现这种报错，我们最好是在上游分支即dev分支上删除合并的分支issue分支最好。</p>
+<p>那么此时我们就回到了issue分支了，分支分布情况如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128165107.png" alt="" /></p>
+<p>此时我们的myjob分支上的文件还在被暂存处呢，我们输入以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash list</span><br></pre></td></tr></table></figure>
+<p>可以查看暂存处确实还存储这之前的文件：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128165323.png" alt="" /></p>
+<p>接下来我们从暂存处取出这个文件版本，这里有两种方式</p>
+<p>①输入git stash apply恢复文件但是暂存处还会保存这个文件，所以还需要在输入git stash drop来删除暂存处的文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash apply <span class="comment">//从暂存处取出文件恢复我们的myjob分支</span></span><br><span class="line">git stash drop  <span class="comment">//删除暂存处的文件</span></span><br></pre></td></tr></table></figure>
+<p>②或者直接一键取出暂存处的文件同时清空暂存处</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+<p>此时我们在查看stash list 发现确实清空了暂存处同时恢复了文件工作区有记录了被修改的但是还没有被保存的文件:</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128165756.png" alt="" /></p>
+<p>我们现在思考一个问题，dev分支上的bug确实是修复好了，但是我们想一下我们的myjob分支的版本肯定是在之前的dev分支上clone来的基础上进行开发的，所以我们的myjob当前版本肯定也存在和dev分支上的bug,所以我们也需要将myjob分支上同样的bug进行修复，但是此时就不需要再重复创建分支-修改bug-合并等过程了，可以直接使用下面的方法一步修改相同的bug：</p>
+<p>我们查看一下dev分支的git log:</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128170547.png" alt="" /></p>
+<p>我们可以找到之前修复bug的提交commit ID是4857ad1c，然后切换回myjob分支：</p>
+<p>输入以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 4857ad1c</span><br></pre></td></tr></table></figure>
+<p>即可以将dev分支上修复bug的操作（注意仅仅是修复bug的操作，而不是dev上的文件）复制同步到了myjob分支上，这样myjob分支就修复好了和dev相同的bug了，并且一定要注意此时git会自动生成一次新的提交即git日志上新增加了一次提交历史并且commit信息就是dev修复bug的信息。我们此时查看一下myjob分支上的readme.txt文件：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128170954.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128171219.png" alt="" /></p>
+<p>确实修复好了相同的bug。并且此时myjob分支上确实新增加了一个提交&quot;reapai bug&quot;和dev的commit信息相同，但是注意这真的是一个新的提交所以commit ID是不同于dev分支的git日志的commit ID。这样我们就可以继续开发我们的myjob分支了。</p>
+<h3 id="思考有没有另一种修复dev分支的bug"><a class="markdownIt-Anchor" href="#思考有没有另一种修复dev分支的bug"></a> 思考：有没有另一种修复dev分支的bug?</h3>
+<p>聪明的你一定想到了另一种修复bug的方法了。即先把myjob上的bug修复了，然后切换到dev分支上，使用git  cherry-pick [commitID]同步myjob上的修复bug操作即可。并且此时dev分支还会自动生成一个新提交即为新版本。但是注意即使是这个方法切换分支时也还是需要输入git stash暂时存储那些被修改但是还没有提交的文件。</p>
+<h2 id="多人协作"><a class="markdownIt-Anchor" href="#多人协作"></a> 多人协作</h2>
+<h3 id="远程仓库"><a class="markdownIt-Anchor" href="#远程仓库"></a> 远程仓库</h3>
+<p>这里我们介绍一下多人协作的指令。首先我们知道当从远程仓库克隆时，git就是把本地的master分支和远程的master分支对应，所以我们克隆下来的都默认克隆master分支。并且要注意远程仓库的默认名称是origin。我们使用指令</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote <span class="comment">//查看远程仓库信息</span></span><br></pre></td></tr></table></figure>
+<p>可以查看远程仓库的名字：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128195611.png" alt="" /></p>
+<p>如果没有更改过一般就是origin，然后我们使用以下指令可以查看远程仓库的地址：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git romote -v <span class="comment">//查看远程仓库详细信息</span></span><br></pre></td></tr></table></figure>
+<p>我们可以查看到远程仓库的地址：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128195751.png" alt="" /></p>
+<p>这里会显示两个地址一般是一样的，你可能是https协议的也有可能是我这种git协议的，通过上面我们就可以知道抓取和推送的远程仓库origin的地址。但是要注意如果你没有推送权限，比如你克隆了别人的仓库的git地址，你会发现你没有push的地址。</p>
+<h3 id="推送分支"><a class="markdownIt-Anchor" href="#推送分支"></a> 推送分支</h3>
+<p>我们现在再来回忆一下推送的指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<p>实际上这条指令的意思是说把本地仓库你现在所处的分支推送到远程仓库oirgin的master分支上。再比如我们要将本地的分支版本推送到dev分支上，那么指令就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin debv</span><br></pre></td></tr></table></figure>
+<p>这里我们并不是要将所有的分支都推送到远程仓库，我们规定：</p>
+<ul>
+<li>master分支时主分支，存储的是项目稳定的版本，因此要时刻保证本地远程同步</li>
+<li>dev分支时开发分支，一般存储的是项目不稳定的版本，可能存在Bug，一般团队中所有成员的最终开发分支要合并到这个分支上形成多个版本，所以也要与远程仓库同步</li>
+<li>bug分支，比如issue-1,issue-1001,bug-7等你自己本地命名的新分支用来修复bug，修复后就会删掉的分支就没必要上传到远程仓库了</li>
+<li>feature分支，一般是开发一些未知的功能板块（可能不会应用到实际项目中）时的分支，可上传也可不上传</li>
+<li>chong，yourjob等自己开发时的分支一般不用推送到这个项目的远程分支，你可以推送到自己的git仓库的分支上</li>
+</ul>
+<h3 id="抓取分支"><a class="markdownIt-Anchor" href="#抓取分支"></a> 抓取分支</h3>
+<p>在多人写作时，master分支和dev分支无疑经常需要被抓取，比如你要在稳定版本1.0之上开发2.0版本，那么就需要克隆版本1.0作为开发基础版本。现在假设你要克隆这个项目，由于肯定也是开发团队中的一员，所以sshkey肯定已经加到这个团队仓库中了，所以可以直接使用git协议抓取，这样就可以免密上传了。重点是一般可能作为开发人员，你克隆的都是dev分支，然而git默认只会抓取master分支，所以你需要输入如下指令抓取特定分支：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b [branchname] [git-addr] <span class="comment">// 抓取远程仓库的某一个特定分支</span></span><br></pre></td></tr></table></figure>
+<h4 id="思考如果两个人都同时推送一个特定分支会怎样"><a class="markdownIt-Anchor" href="#思考如果两个人都同时推送一个特定分支会怎样"></a> 思考：如果两个人都同时推送一个特定分支会怎样？</h4>
+<p>我们举一个例子，假如有一个dev分支上的项目版本是1.0，然后你克隆了这个仓库的dev分支到了你的本地开发分支myjon上，那么你开发了一个新版本你将其命名为版本2.0。此时你想将这个新版本推送到dev分支上，但是在你推送之前，已经由另一个开发伙伴也用1.0开发了一小部分功能命名为1.1上传到了dev分支上了，那么此时你就会出现报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">To github.com:michaelliao/learngit.git</span><br><span class="line"> ! [rejected]        dev -&gt; dev (non-fast-forward)</span><br><span class="line">error: failed to push some refs to &#x27;git@github.com:michaelliao/learngit.git&#x27;</span><br><span class="line">hint: Updates were rejected because the tip of your current branch is behind</span><br><span class="line">hint: its remote counterpart. Integrate the remote changes (e.g.</span><br><span class="line">hint: &#x27;git pull ...&#x27;) before pushing again.</span><br><span class="line">hint: See the &#x27;Note about fast-forwards&#x27; in &#x27;git push --help&#x27; for details.</span><br></pre></td></tr></table></figure>
+<p>一般如上面这样，我们分析一下为什么会报错，此时分支情况如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128202959.png" alt="" /></p>
+<p>此时就是这种情况，你会发现在我们推送2.0版本之前小明已经将1.1推送到了远程仓库dev分支上，那么此时如果我们要将我们的2.0版本推送到远程仓库的2.0分支时git就会出现报错，原因是此时远程仓库已经是1.0-&gt;1.1了，而要推送的是1.0-&gt;2.0，那么就产生了歧义，2.0版本到底是推送到1.0和1.1版本之间还是1.1版本之后？所以我们需要先同步一下远程分支。</p>
+<p>因为我们之前clone过远程仓库了，所以我们这条分支已经和远程仓库的dev分支有了联系，所以此时不需要删除仓库重新克隆远程仓库来更新分支，而只需要输入如下指令更新：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull <span class="comment">//同步远程仓库分支到本地仓库分支</span></span><br></pre></td></tr></table></figure>
+<p>那么就会变成如下图所示情况：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210128203520.png" alt="" /></p>
+<p>那么此时我们的本地分支已经同步更新了，此时在git push到远程仓库就可以上传我们的2.0版本了。当然在git pull时由于版本不同可能会产生冲突即版本1.1和版本2.0之间有冲突（毕竟你们两个人个能同时对同一个文件进行了修改），那么我们就需要手动解决一下即可。所以在本地仓库的分支必须领先远程仓库的分支才可以推送。</p>
+<h4 id="注意如果本地仓库分支和远程仓库分支没有建立关联会报错"><a class="markdownIt-Anchor" href="#注意如果本地仓库分支和远程仓库分支没有建立关联会报错"></a> 注意：如果本地仓库分支和远程仓库分支没有建立关联会报错</h4>
+<p>此时要注意只有clone后我们的这条分支myjob才会和远程仓库的dev分支建立了关联，这样git pull 时git才会知道是将dev分支要同步更新到myjob分支上，但是如果此时你使用的是另一个自己新建的本地分支feature，那么git pull时由于feature和dev分枝没有建立关联，git pill时会报错（因为git不知道feature分支要同步远程仓库的那一条分支）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">no tracking information</span><br></pre></td></tr></table></figure>
+<p>所以此时我们需要手动关联一下本地分支，我们输入</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch --<span class="built_in">set</span>-upstream-to &lt;branch-nameA&gt; origin/&lt;branch-nameB&gt;</span><br><span class="line"><span class="comment">//将本地仓库的分支A和远程仓库的B分支建立关联</span></span><br></pre></td></tr></table></figure>
+<p>这样我们再git pull时则可以将远程仓库的B分支更新同步到本地仓库的A分支了。</p>
+<p>这里还有一小节是变基，不太好看懂，学有余力不妨看一看：<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/1216289527823648">《Rebase》</a></p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令名字</th>
+<th style="text-align:center">指令功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">git stash</td>
+<td style="text-align:center">将现在分支上的工作区中已被修改但是还没有上传的文件暂存起来</td>
+</tr>
+<tr>
+<td style="text-align:center">git stash apply</td>
+<td style="text-align:center">将暂存区的文件恢复，但是不会清空暂存区</td>
+</tr>
+<tr>
+<td style="text-align:center">git stash drop</td>
+<td style="text-align:center">清空暂存区</td>
+</tr>
+<tr>
+<td style="text-align:center">git stash pop</td>
+<td style="text-align:center">将暂存取文件恢复的同时清空暂存区</td>
+</tr>
+<tr>
+<td style="text-align:center">git stash list</td>
+<td style="text-align:center">查看暂存区</td>
+</tr>
+<tr>
+<td style="text-align:center">git branch -d [branchname]</td>
+<td style="text-align:center">删除分支</td>
+</tr>
+<tr>
+<td style="text-align:center">git branch -D [branchname]</td>
+<td style="text-align:center">强制删除分支</td>
+</tr>
+<tr>
+<td style="text-align:center">git cherry-pick [commit ID]</td>
+<td style="text-align:center">同步某一次操作同时自动新生成一次提交，提交的注释和pick的注释相同</td>
+</tr>
+<tr>
+<td style="text-align:center">git remote</td>
+<td style="text-align:center">查看远程仓库（显示远程仓库名字）</td>
+</tr>
+<tr>
+<td style="text-align:center">git remote -v</td>
+<td style="text-align:center">查看远程仓库的具体信息（显示远程仓库地址）</td>
+</tr>
+<tr>
+<td style="text-align:center">git clone -b [branchname] [origin_addr]</td>
+<td style="text-align:center">克隆远程仓库的某一个特定分支到当前分支同时建立两个分支的关联</td>
+</tr>
+<tr>
+<td style="text-align:center">git pull</td>
+<td style="text-align:center">更新同步远程仓库的分支到当前已关联的分支</td>
+</tr>
+<tr>
+<td style="text-align:center">git branch --set-upstream-to [branch-nameA] origin/[branch-nameB]</td>
+<td style="text-align:center">将本地仓库的分支A和远程仓库的B分支建立关联</td>
+</tr>
+</tbody>
+</table>
+<p>多人协作模式：</p>
+<ol>
+<li>git clone从远程仓库克隆之前的稳定版本后在本地分支上开发</li>
+<li>首先试图push推送自己的分支</li>
+<li>如果推送失败，git pull更新本地分支</li>
+<li>如果合并有冲突，先手动解决冲突并本地提交</li>
+<li>如果没有冲突或者冲突已解决再次尝试push即可</li>
+<li>如果git pull时报错无关联，那么需要先将本地分支和远程仓库的远程分支相关联</li>
+</ol>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html">分支管理</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html">多人协作</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="Git"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/dennounce">隐私政策</a><a href="/">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://cloud.tencent.com/" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

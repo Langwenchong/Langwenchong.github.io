@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Algorithm：二分思想 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="本文参考了pengpenglang友人的《二分与三分查找》，非常感谢精彩的讲解😎。 由于翀翀在学习Python算法题，因此以下模板均是Python所写，如果要参考c++板子请前往pengpenglang 博客获取。  整数二分查找 首先我们学习一个最简单的二分查找，即在一个有序递增的数组中寻找一个特定值的索引值。我们第一想法就是遍历整个数组中的元素然后逐一对比，没有就返还-1，找到了就返还索引值">
+<meta property="og:type" content="website">
+<meta property="og:title" content="二分思想">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E4%BA%8C%E5%88%86%E6%80%9D%E6%83%B3/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="本文参考了pengpenglang友人的《二分与三分查找》，非常感谢精彩的讲解😎。 由于翀翀在学习Python算法题，因此以下模板均是Python所写，如果要参考c++板子请前往pengpenglang 博客获取。  整数二分查找 首先我们学习一个最简单的二分查找，即在一个有序递增的数组中寻找一个特定值的索引值。我们第一想法就是遍历整个数组中的元素然后逐一对比，没有就返还-1，找到了就返还索引值">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220129165949.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220129173135.png">
+<meta property="article:published_time" content="2023-01-28T09:21:46.179Z">
+<meta property="article:modified_time" content="2023-01-28T09:21:46.179Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20220129165949.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/index.html"><div class="main" ff="title">Algorithm</div><div class="sub cap">编程也不能总用暴力解，您说呢？</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/手撕算法笔记/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/index.html#start"><span class="toc-text">算法分析</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%88%86%E6%B2%BB%E6%80%9D%E6%83%B3/index.html"><span class="toc-text">分治思想</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3/index.html"><span class="toc-text">贪心思想</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html"><span class="toc-text">动态规划</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/index.html"><span class="toc-text">回溯算法</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%88%86%E6%9E%9D%E9%99%90%E7%95%8C/index.html"><span class="toc-text">分枝限界</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E4%BA%8C%E5%88%86%E6%80%9D%E6%83%B3/index.html"><span class="toc-text">二分思想</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text"> 整数二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E5%9F%BA%E6%9C%AC%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text"> 一、基本二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88while%E5%BE%AA%E7%8E%AF%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%98%AFlr%E8%80%8C%E4%B8%8D%E6%98%AFlr"><span class="toc-text"> 思考：为什么while循环的条件是l&lt;&#x3D;r而不是l&lt;r?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%A6%82%E4%B8%8A%E7%9A%84%E8%A1%A5%E4%B8%81%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="toc-text"> 思考：如上的补丁是什么意思？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8B%E6%AC%A1%E8%A6%81%E6%9F%A5%E6%89%BE%E7%9A%84%E5%8C%BA%E9%97%B4%E8%BE%B9%E7%95%8C%E5%8F%96%E5%80%BC%E6%98%AFlmid1rmid-1%E8%80%8C%E6%9C%89%E7%9A%84%E5%86%99%E6%B3%95%E5%8D%B4%E6%98%AFlmid1rmid%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%8C%BA%E5%88%86"><span class="toc-text"> 思考：为什么下次要查找的区间边界取值是l&#x3D;mid+1,r&#x3D;mid-1，而有的写法却是l&#x3D;mid+1,r&#x3D;mid，如何理解区分？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%8A%E9%9D%A2%E7%9A%84%E7%AE%97%E6%B3%95%E6%9C%89%E4%BB%80%E4%B9%88%E7%BC%BA%E9%99%B7"><span class="toc-text"> 思考：上面的算法有什么缺陷？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E6%9F%A5%E6%89%BE%E5%B7%A6%E4%BE%A7%E8%BE%B9%E7%95%8C%E7%9A%84%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text"> 二、查找左侧边界的二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88while%E5%BE%AA%E7%8E%AF%E6%9D%A1%E4%BB%B6%E6%98%AFlr%E8%80%8C%E4%B8%8D%E6%98%AF"><span class="toc-text"> 思考：为什么while循环条件是l&lt;r，而不是&lt;&#x3D;?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%80%E5%87%BA%E5%BE%AA%E7%8E%AF%E4%BB%A5%E5%90%8E%E5%87%BA%E7%8E%B0%E4%BA%86%E5%AF%B9l%E7%9A%84%E9%A2%9D%E5%A4%96%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6%E6%9D%A5%E8%BF%94%E8%BF%98-1"><span class="toc-text"> 思考：为什么退出循环以后出现了对l的额外判断条件来返还-1?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88lmid1rmid%E5%92%8C%E4%B9%8B%E5%89%8D%E7%9A%84%E6%93%8D%E4%BD%9C%E4%B8%8D%E4%B8%80%E6%A0%B7%E4%BA%86"><span class="toc-text"> 思考：为什么l&#x3D;mid+1,r&#x3D;mid和之前的操作不一样了？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E7%AE%97%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%90%9C%E7%B4%A2%E5%B7%A6%E4%BE%A7%E8%BE%B9%E7%95%8C"><span class="toc-text"> 思考：为什么这个算法可以搜索左侧边界？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%94%E5%9B%9El%E8%80%8C%E4%B8%8D%E6%98%AFr"><span class="toc-text"> 思考：为什么返回l而不是r?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E6%9F%A5%E6%89%BE%E5%8F%B3%E4%BE%A7%E8%BE%B9%E7%95%8C%E7%9A%84%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text"> 三、查找右侧边界的二分查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E7%AE%97%E6%B3%95%E8%83%BD%E5%A4%9F%E6%89%BE%E5%88%B0%E5%8F%B3%E4%BE%A7%E8%BE%B9%E7%95%8C"><span class="toc-text"> 思考：为什么这个算法能够找到右侧边界？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%80%E5%90%8E%E8%BF%94%E5%9B%9E%E7%9A%84%E6%98%AFl-1%E8%80%8C%E4%B8%8D%E6%98%AF%E5%83%8F%E5%B7%A6%E4%BE%A7%E8%BE%B9%E7%95%8C%E6%9F%A5%E6%89%BE%E4%B8%80%E6%A0%B7%E8%BF%94%E5%9B%9El%E8%80%8C%E4%B8%94%E6%88%91%E8%A7%89%E5%BE%97%E8%BF%99%E9%87%8C%E5%BA%94%E8%AF%A5%E6%98%AF%E8%BF%94%E5%9B%9Er%E5%B0%B1%E8%A1%8C%E4%BA%86"><span class="toc-text"> 思考：为什么最后返回的是l-1，而不是像左侧边界查找一样返回l？而且我觉得这里应该是返回r就行了？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%94%E5%9B%9E%E7%9A%84-1%E7%9A%84%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6%E5%8F%98%E6%88%90%E4%BA%86l0"><span class="toc-text"> 思考：为什么返回的-1的判断条件变成了l&#x3D;&#x3D;0?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E6%80%BB%E7%BB%93"><span class="toc-text"> 最后总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83c%E4%B8%ADstl%E5%BA%93%E4%B8%AD%E7%9A%84lowerbound%E5%92%8Cupperbound%E5%A6%82%E4%BD%95%E5%9C%A8python%E4%B8%AD%E5%AE%9E%E7%8E%B0"><span class="toc-text"> 思考：C++中stl库中的lowerbound和upperbound如何在python中实现？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lowerbound%E5%AE%9E%E7%8E%B0"><span class="toc-text"> lowerbound()实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#upperbound%E5%AE%9E%E7%8E%B0"><span class="toc-text"> upperbound()实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="toc-text"> 浮点数二分查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0"><span class="toc-text"> 算法练习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0"><span class="toc-text"> 1）完全平方数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E9%93%BE%E6%8E%A5"><span class="toc-text"> 题目链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-text"> 题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%8F%8F%E8%BF%B0"><span class="toc-text"> 输入描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%8F%8F%E8%BF%B0"><span class="toc-text"> 输出描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text"> 示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8"><span class="toc-text"> 备注</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text"> 解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81"><span class="toc-text"> 解题代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2carry%E7%88%B1%E6%9C%A8%E5%A4%B4"><span class="toc-text"> 2）Carry爱木头</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><span class="toc-text"> 题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%8F%8F%E8%BF%B0-2"><span class="toc-text"> 输入描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%8F%8F%E8%BF%B0-2"><span class="toc-text"> 输出描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B1"><span class="toc-text"> 样例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B2"><span class="toc-text"> 样例2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B3"><span class="toc-text"> 样例3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E4%BE%8B%E8%A7%A3%E9%87%8A"><span class="toc-text"> 样例解释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-2"><span class="toc-text"> 解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E4%BB%A3%E7%A0%81-2"><span class="toc-text"> 解题代码</span></a></li></ol></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html"><span class="toc-text">并查集</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%89%8D%E7%BC%80%E5%92%8C%E4%B8%8E%E5%B7%AE%E5%88%86/index.html"><span class="toc-text">前缀和与差分</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">更多计算机基础</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><span class="title">操作系统笔记</span><span class="excerpt">操作系统是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a><a class="item wiki" href="/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%9F%BA%E6%9C%AC%E5%85%83%E4%BB%B6/index.html"><span class="title">数字逻辑与数字系统笔记</span><span class="excerpt">本门课程是由我最喜欢的王立老师精编的原创课程，深入浅出的讲解带领我们从零开始自己尝试设计一个指令集架构，还不进来看一看？</span></a><a class="item wiki" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html"><span class="title">计算机组成原理笔记</span><span class="excerpt">计算机组成原理是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a><a class="item wiki" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html"><span class="title">计算机网络笔记</span><span class="excerpt">计算机网络是每一名计算机科班生都必会的基础内容之一，借着考研的机会我参考王道图书重新学习了操作系统并记录下了我的一些浅显理解。</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/index.html">Algorithm</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-01-28T09:21:46.179Z">2023-01-28</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>二分思想</span></h1>
+  <div class="tag-plugin note" color="cyan"><div class="body"><p>本文参考了pengpenglang友人的<a target="_blank" rel="noopener" href="https://pengpenglang.cn/posts/2852476022/#%E6%A8%A1%E6%9D%BF">《二分与三分查找》</a>，非常感谢精彩的讲解😎。</p></div></div>
+<p>由于翀翀在学习Python算法题，因此以下模板均是Python所写，如果要参考c++板子请前往pengpenglang 博客获取。</p>
+<h2 id="整数二分查找"><a class="markdownIt-Anchor" href="#整数二分查找"></a> 整数二分查找</h2>
+<p>首先我们学习一个最简单的二分查找，即在一个<strong>有序递增</strong>的数组中寻找一个特定值的索引值。我们第一想法就是遍历整个数组中的元素然后逐一对比，没有就返还-1，找到了就返还索引值。这种方法时间复杂度为O(n)，耗时太长，因此产生了二分搜索，他的思路很简单，就是每一次都折半查找，我们需要设置记录left,right以及mid来进行折半的操作。如果你对二分查找的基础思路还不太熟悉请看下方的视频讲解：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="二分查找讲解" href="https://www.bilibili.com/video/BV1d54y1q7k7?from=search&seid=2027361541815860198&spm_id_from=333.337.0.0" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">二分查找讲解</span><span class="cap link fs12">https://www.bilibili.com/video/BV1d54y1q7k7?from=search&seid=2027361541815860198&spm_id_from=333.337.0.0</span></div><div class="right"><div class="lazy img" data-bg="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>我们发现无论是多么复杂的二分查找，不同的二分板子中大体框架都如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">binarySearch</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">    <span class="type">int</span> left = <span class="number">0</span>, right = ...;  <span class="comment">//查找左边界、右边界</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (...) &#123;                      <span class="comment">//判断何时查找终止</span></span><br><span class="line">        <span class="type">int</span> mid = (right + left) / <span class="number">2</span>;  <span class="comment">//去中点</span></span><br><span class="line">        <span class="keyword">if</span> (nums[mid] == target) &#123;     <span class="comment">//相等时的操作</span></span><br><span class="line">            ...</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target) &#123;  <span class="comment">//小于时的操作</span></span><br><span class="line">            left = ...</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target) &#123;  <span class="comment">//大于时的操作</span></span><br><span class="line">            right = ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ...;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>在二分查找中，我们不要出现else，最好使用elif将每种情况都写出来，这样可以清楚的展示所有细节。本文中都会使用elif罗列出每一种情况的操作即使有些情况的操作相同。其中标记的<code>...</code>部分是可能出现的细节问题的地方，需要着重注意。</p></div></div>
+<h3 id="一-基本二分查找"><a class="markdownIt-Anchor" href="#一-基本二分查找"></a> 一、基本二分查找</h3>
+<p>使用场合就是最简单的情况，一个有序递增的序列中，使用二分查找搜索一个数，找到了就返回的索引下表，不存在就输出-1。板子如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到首次出现的target</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearch</span>(<span class="params">nums, target</span>):</span><br><span class="line">    l, r = <span class="number">0</span>, <span class="built_in">len</span>(nums)-<span class="number">1</span> <span class="comment"># 注意r的起始位置</span></span><br><span class="line">    <span class="keyword">while</span> l &lt;= r: <span class="comment"># 注意l和r的关系</span></span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target: <span class="comment"># 找到了就返回索引并退出</span></span><br><span class="line">            <span class="keyword">return</span> mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            r = mid-<span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>实际上上面的思路就是和视频中的讲解一样，但是我们发现有几个细节判断条件我们要注意。</p>
+<h4 id="思考为什么while循环的条件是lr而不是lr"><a class="markdownIt-Anchor" href="#思考为什么while循环的条件是lr而不是lr"></a> 思考：为什么while循环的条件是l&lt;=r而不是l&lt;r?</h4>
+<p>我们注意观察l和r的起始取值，可以看出要查找的是一个闭区间<code>[left,right]</code>，因此每次的查找区间都是全闭区间，如果中途找到了target就直接返回索引下表即可，否则一直寻找下去直至搜索完整个元组，也就是要查找的区间为空的时候，很明显此时也是<code>while(left&lt;=right)</code>终止的条件，那么只有当<code>left==right+1</code>时查找的全闭空间才是空的，因此循环的条件是l&lt;=r。</p>
+<p>当然如果你非要用<code>while(left&lt;right)</code>也可以，我们只需要针对错误原因出现的地方打一个补丁即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">while</span> l &lt; r :</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"><span class="keyword">return</span> l <span class="keyword">if</span> nums[left] == target <span class="keyword">else</span>  -<span class="number">1</span>;  //再额外判断区间为<span class="number">1</span>的时候</span><br></pre></td></tr></table></figure>
+<h4 id="思考如上的补丁是什么意思"><a class="markdownIt-Anchor" href="#思考如上的补丁是什么意思"></a> 思考：如上的补丁是什么意思？</h4>
+<p>while(left &lt; right)的终止条件是 left == right，写成区间的形式就是 [right, right]，或者带个具体的数字进去 [2, 2]，<strong>这时候搜索区间非空</strong>，还有一个数 2，但此时 while 循环终止了。也就是说这区间 [2, 2] 被漏掉了，索引2没有被搜索，如果这时候直接返回 -1 就可能出现错误。</p>
+<h4 id="思考为什么下次要查找的区间边界取值是lmid1rmid-1而有的写法却是lmid1rmid如何理解区分"><a class="markdownIt-Anchor" href="#思考为什么下次要查找的区间边界取值是lmid1rmid-1而有的写法却是lmid1rmid如何理解区分"></a> 思考：为什么下次要查找的区间边界取值是<code>l=mid+1,r=mid-1</code>，而有的写法却是<code>l=mid+1,r=mid</code>，如何理解区分？</h4>
+<p>理解的问题一种的查找区间这个概念就好及理解，因为本算法的查找区间的全闭区间，那么当我们发现索引mid不是要找的target时当然从中去除该判断过的点，所以下次查找区间取 [left,mid-1] 或者 [mid+1,right] 中的一个即可。</p>
+<h4 id="思考上面的算法有什么缺陷"><a class="markdownIt-Anchor" href="#思考上面的算法有什么缺陷"></a> 思考：上面的算法有什么缺陷？</h4>
+<p>算法缺陷是很明显的，如果存在重复的数那么我们找到的那个值可能数值上和target相同但是位置是随机的，如果题目想要和target数值相同的最左侧的值或者和target数值相同的最右侧的值的索引又如何解决呢？这需要下面的左侧边界和右侧边界的二分查找了。</p>
+<h3 id="二-查找左侧边界的二分查找"><a class="markdownIt-Anchor" href="#二-查找左侧边界的二分查找"></a> 二、查找左侧边界的二分查找</h3>
+<p>我们更改一下使用情景，现在要求找到最靠左侧的数值相同的元素的索引下表，如果不存在就返回-1，比如对于[2,2,3]数组，要找2元素的索引，那么此时应该返回0而不能是1。板子如下所示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到最左边界或者最靠近左侧的满足条件的target</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearch</span>(<span class="params">nums, target</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span>: <span class="comment"># 列表长度为0直接退出搜索</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    l, r = <span class="number">0</span>, <span class="built_in">len</span>(nums) <span class="comment">#注意r的起始条件</span></span><br><span class="line">    <span class="keyword">while</span> l &lt; r: <span class="comment">#注意二分查找的终止条件是l==r</span></span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="comment"># 找到某个target时不返回而是缩小右边界</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> l == <span class="built_in">len</span>(nums): <span class="comment">#target比所有的值都大</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    <span class="comment"># 打补丁额外再检验一下l对应的值是否满足条件</span></span><br><span class="line">    <span class="keyword">return</span> l <span class="keyword">if</span> nums[l] == target <span class="keyword">else</span> -<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h4 id="思考为什么while循环条件是lr而不是"><a class="markdownIt-Anchor" href="#思考为什么while循环条件是lr而不是"></a> 思考：为什么while循环条件是l&lt;r，而不是&lt;=?</h4>
+<p>我们要注意此时r的起始索引值为len(nums)，但是我们知道这个索引实际上已经越界了，因此很明显此时我们需要使用<code>[l,r)</code>左闭右开的区间去查找。那么此时当l==r时要查找的区间就是[l,l)或者[r,r)了，很明显此时这个搜索区间已经是空了，因此只需要l&lt;r进行循环即可，当l&gt;=r时都是搜索区间为空了，退出循环即可。</p>
+<h4 id="思考为什么退出循环以后出现了对l的额外判断条件来返还-1"><a class="markdownIt-Anchor" href="#思考为什么退出循环以后出现了对l的额外判断条件来返还-1"></a> 思考：为什么退出循环以后出现了对l的额外判断条件来返还-1?</h4>
+<p>我们发现如果不添加这个条件，我们没有了返回-1的代码操作。我们首先理解一下<code>最左侧边界</code>的含义：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220129165949.png" alt="" /></p>
+<p>对于这个数组，算法会返回1。这个1的含义可以这样理解：nums中小于2的元素有1个。比如对于有序数组nums=[2,3,5,7],target=1，算法会返回0，及说明nums中小于1的元素有0个。如果target为8，那么算法返回4，即说明nums中小于8的元素有4个。</p>
+<p>综上我们可以看出，函数的返回值（即l变量的值）取值区间是[0,len(nums)]，当<code>l==len(nums)</code>时很显然l索引下标对应的元素不存在，访问越界了，另一层含义即数组中所有的元组都小于target，那么此时这个判断式表达的意思就是没有找到target。因此此时返回-1。</p>
+<h4 id="思考为什么lmid1rmid和之前的操作不一样了"><a class="markdownIt-Anchor" href="#思考为什么lmid1rmid和之前的操作不一样了"></a> 思考：为什么<code>l=mid+1,r=mid</code>和之前的操作不一样了？</h4>
+<p>这个很好解释，因为我们的搜索区间是<code>[l,r)</code>左闭右开，所以当nums[mid]被检测之后，下一步的搜索区间应该去掉mid分成两个区间，即[l,mid)或者[mid+1,r)，因此对应的操作就是l=mid+1和r=mid。</p>
+<h4 id="思考为什么这个算法可以搜索左侧边界"><a class="markdownIt-Anchor" href="#思考为什么这个算法可以搜索左侧边界"></a> 思考：为什么这个算法可以搜索左侧边界？</h4>
+<p>关键就在于<code>nums[mid]==target</code>这种情况的处理是<code>r=mid</code>，也就是说，当我们找到target时不要立即返回，而是缩小搜索区间的上界r，在区间[l,r)中继续搜索，即不断向左收缩，达到锁定左侧边界的目的。</p>
+<h4 id="思考为什么返回l而不是r"><a class="markdownIt-Anchor" href="#思考为什么返回l而不是r"></a> 思考：为什么返回l而不是r?</h4>
+<p>实际上此时返回l和r都是一样的，因为while终止的条件就是l==r。</p>
+<h3 id="三-查找右侧边界的二分查找"><a class="markdownIt-Anchor" href="#三-查找右侧边界的二分查找"></a> 三、查找右侧边界的二分查找</h3>
+<p>寻找最右侧边界和寻找左侧边界的代码差不多，只有两处不同，已标注：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到最右边界或者最靠近右侧的满足条件的target</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearch</span>(<span class="params">nums, target</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    l, r = <span class="number">0</span>, <span class="built_in">len</span>(nums)</span><br><span class="line">    <span class="keyword">while</span> l &lt; r:</span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target:</span><br><span class="line">            l = mid+<span class="number">1</span> <span class="comment"># 注意</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> l == <span class="number">0</span>: <span class="comment"># 注意</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span> </span><br><span class="line">    <span class="keyword">return</span> l-<span class="number">1</span> <span class="keyword">if</span> nums[l-<span class="number">1</span>] == target <span class="keyword">else</span> -<span class="number">1</span> <span class="comment"># 注意</span></span><br></pre></td></tr></table></figure>
+<h4 id="思考为什么这个算法能够找到右侧边界"><a class="markdownIt-Anchor" href="#思考为什么这个算法能够找到右侧边界"></a> 思考：为什么这个算法能够找到右侧边界？</h4>
+<p>类似的，找到关键点还是这里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> nums[mid] == target:</span><br><span class="line">            l = mid+<span class="number">1</span> <span class="comment"># 注意</span></span><br></pre></td></tr></table></figure>
+<p>当nums[mid]==target时，不要立即返回，而是增大搜索区间的下界l，使得区间不断向右收缩，达到锁定右侧边界的目的。</p>
+<h4 id="思考为什么最后返回的是l-1而不是像左侧边界查找一样返回l而且我觉得这里应该是返回r就行了"><a class="markdownIt-Anchor" href="#思考为什么最后返回的是l-1而不是像左侧边界查找一样返回l而且我觉得这里应该是返回r就行了"></a> 思考：为什么最后返回的是l-1，而不是像左侧边界查找一样返回l？而且我觉得这里应该是返回r就行了？</h4>
+<p>首先while循环的终止条件是l==r,因此返回l-1或者r-1都是一样的， 但是返回r肯定是错误的。那么为什么要减一呢？这是因为右侧边界的一个特殊点：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> nums[mid] == target:</span><br><span class="line">            l = mid+<span class="number">1</span> <span class="comment"># 这样想：mid=l-1</span></span><br></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220129173135.png" alt="" /></p>
+<p>因为我们对l的更新时l=mid+1,因此while循环结束的时候，nums[l]一定不等于target了（一定是第一个大于target的元素的索引下标值），而nums[l-1]可能是target。至于为什么l的更新时l=mid+1就不再赘述了。</p>
+<h4 id="思考为什么返回的-1的判断条件变成了l0"><a class="markdownIt-Anchor" href="#思考为什么返回的-1的判断条件变成了l0"></a> 思考：为什么返回的-1的判断条件变成了l==0?</h4>
+<p>很显然此时l的搜索范围是[0,len(nums)]，那么当l==0时对应要返还的索引是-1很明显越界了，同时此时的另一个含义是数组中所有的元素都大于target明显此时没有找到target因此返回-1。</p>
+<h3 id="最后总结"><a class="markdownIt-Anchor" href="#最后总结"></a> 最后总结</h3>
+<p>先来梳理一下这些细节差异的因果逻辑：</p>
+<p>第一个，最基本的二分查找算法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">因为我们初始化 right = nums.length - <span class="number">1</span></span><br><span class="line">所以决定了我们的「搜索区间」是 [left, right]</span><br><span class="line">所以决定了 <span class="keyword">while</span> (left &lt;= right)</span><br><span class="line">同时也决定了 left = mid+<span class="number">1</span> 和 right = mid-<span class="number">1</span></span><br><span class="line"></span><br><span class="line">因为我们只需找到一个 target 的索引即可</span><br><span class="line">所以当 nums[mid] == target 时可以立即返回</span><br></pre></td></tr></table></figure>
+<p>第二个，寻找左侧边界的二分查找：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">因为我们初始化 right = nums.length</span><br><span class="line">所以决定了我们的「搜索区间」是 [left, right)</span><br><span class="line">所以决定了 <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">同时也决定了 left = mid+<span class="number">1</span> 和 right = mid</span><br><span class="line"></span><br><span class="line">因为我们需找到 target 的最左侧索引</span><br><span class="line">所以当 nums[mid] == target 时不要立即返回</span><br><span class="line">而要收紧右侧边界以锁定左侧边界</span><br></pre></td></tr></table></figure>
+<p>第三个，寻找右侧边界的二分查找：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">因为我们初始化 right = nums.length</span><br><span class="line">所以决定了我们的「搜索区间」是 [left, right)</span><br><span class="line">所以决定了 <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">同时也决定了 left = mid+<span class="number">1</span> 和 right = mid</span><br><span class="line"></span><br><span class="line">因为我们需找到 target 的最右侧索引</span><br><span class="line">所以当 nums[mid] == target 时不要立即返回</span><br><span class="line">而要收紧左侧边界以锁定右侧边界</span><br><span class="line"></span><br><span class="line">又因为收紧左侧边界时必须 left = mid + <span class="number">1</span></span><br><span class="line">所以最后无论返回 left 还是 right，必须减一</span><br></pre></td></tr></table></figure>
+<p>如果以上内容你都能理解，那么恭喜你，二分查找算法的细节不过如此。</p>
+<h3 id="思考c中stl库中的lowerbound和upperbound如何在python中实现"><a class="markdownIt-Anchor" href="#思考c中stl库中的lowerbound和upperbound如何在python中实现"></a> 思考：C++中stl库中的lowerbound和upperbound如何在python中实现？</h3>
+<p>很明显python中肯定也是有对应的库的，但是我们知道对于一般的算法比赛中，Python是不让引入第三方库的，因此我们需要自己来手动实现一下lowerbound和upperbound函数。</p>
+<h4 id="lowerbound实现"><a class="markdownIt-Anchor" href="#lowerbound实现"></a> lowerbound()实现</h4>
+<p>lowerbound()方法的功能是找到第一个不小于target的值的索引值，而我们的二分查找寻找最左侧边界就是找到最左侧的target值的索引下标。因此略微修改一下就可以实现和lowerbound相似的功能：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到第一个不小于target的的索引下标</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lowerbound</span>(<span class="params">nums, target</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span>: <span class="comment"># 列表长度为0直接退出搜索</span></span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    l, r = <span class="number">0</span>, <span class="built_in">len</span>(nums) <span class="comment">#注意r的起始条件</span></span><br><span class="line">    <span class="keyword">while</span> l &lt; r: <span class="comment">#注意二分查找的终止条件是l==r</span></span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="comment"># 找到某个target时不返回而是缩小右边界</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> l <span class="comment">#这里直接返还l就是最靠左的不小于target值的索引下标</span></span><br></pre></td></tr></table></figure>
+<h4 id="upperbound实现"><a class="markdownIt-Anchor" href="#upperbound实现"></a> upperbound()实现</h4>
+<p>我们知道在二分查找寻找最右侧边界找到的就是最靠右侧的和target值相同的元素的下标，当时我们是返还的l-1，原因是因为l对应的一定是第一个大于target的值，l-1索引对应的元素才有可能是和target相同的。那么现在我们只需要再返还l即可实现upperbound()方法的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到第一个大于target的值对应的下标</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upperbound</span>(<span class="params">nums, target</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nums) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    l, r = <span class="number">0</span>, <span class="built_in">len</span>(nums)</span><br><span class="line">    <span class="keyword">while</span> l &lt; r:</span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> nums[mid] == target:</span><br><span class="line">            l = mid+<span class="number">1</span> <span class="comment"># 注意</span></span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &gt; target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> nums[mid] &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> l <span class="comment">#直接返还l索引即可</span></span><br></pre></td></tr></table></figure>
+<h2 id="浮点数二分查找"><a class="markdownIt-Anchor" href="#浮点数二分查找"></a> 浮点数二分查找</h2>
+<p>这里我们再额外学习一下浮点数的二分查找，它相比于整数的二分查找要简单，由于在计算机中浮点数不能准确表示，而是在一个精度差范围内表示，因此我们通常在浮点数中使用二分查找并不是要找到准确数值对应的下标，而是找到第一个满足精度要求的浮点数，比如我们要在[1,10]范围内找到5的平方根的值，要求这个值和准确值精度差在1e-18内。那么此时我们就可以使用二分查找。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 浮点数的二分查找</span></span><br><span class="line"><span class="comment"># 遍历六十次精度为1e-18,一百次精度为1e-30</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearch</span>(<span class="params">l,r,target</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">        mid=(l+r)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span>(mid&gt;=target):</span><br><span class="line">            r=mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l=mid</span><br><span class="line">    <span class="keyword">return</span> (l+r)/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="yellow"><div class="title">通过控制循环的次数来取得要求精度，60</div><div class="body"><p>次循环达到 1e-18 。100 次的循环则可以达到 1e-30 的精度范围，基本上足以解决所有问题</p></div></div>
+<h2 id="算法练习"><a class="markdownIt-Anchor" href="#算法练习"></a> 算法练习</h2>
+<p>学习完二分查找以后，我们再通过以下两个题来练习一下二分查找算法的应用。</p>
+<h3 id="1完全平方数"><a class="markdownIt-Anchor" href="#1完全平方数"></a> 1）完全平方数</h3>
+<h4 id="题目链接"><a class="markdownIt-Anchor" href="#题目链接"></a> 题目链接</h4>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="完全平方数" href="https://ac.nowcoder.com/acm/problem/14733" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">完全平方数</span><span class="cap link fs12">https://ac.nowcoder.com/acm/problem/14733</span></div><div class="right"><div class="lazy img" data-bg="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<h4 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h4>
+<p>多次查询[l,r]范围内的完全平方数个数 ，定义整数x为完全平方数当且仅当可以找到整数y使得y*y=x。</p>
+<h4 id="输入描述"><a class="markdownIt-Anchor" href="#输入描述"></a> 输入描述</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第一行一个数n表示查询次数</span><br><span class="line">之后n行每行两个数l,r</span><br></pre></td></tr></table></figure>
+<h4 id="输出描述"><a class="markdownIt-Anchor" href="#输出描述"></a> 输出描述</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于每个查询，输出一个数表示答案</span><br></pre></td></tr></table></figure>
+<h4 id="示例"><a class="markdownIt-Anchor" href="#示例"></a> 示例</h4>
+<p>输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">1 3</span><br><span class="line">1 4</span><br><span class="line">2 4</span><br><span class="line">4 4</span><br><span class="line">1 1000000000</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">1</span><br><span class="line">1</span><br><span class="line">31622</span><br></pre></td></tr></table></figure>
+<h4 id="备注"><a class="markdownIt-Anchor" href="#备注"></a> 备注</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n &lt;= 100000</span><br><span class="line">0&lt;= l &lt;= r &lt;= 1000000000</span><br></pre></td></tr></table></figure>
+<h4 id="解题思路"><a class="markdownIt-Anchor" href="#解题思路"></a> 解题思路</h4>
+<p>首先我们知道实际上就是找到[l,r]中所有的平方数，即可以开平方后得到整数根的数值，那么最简单的思路就是暴搜注意检验，但是这样很明显会超时，因此我们可以使用另一个思路，即找到边界值，首先找到大于等于l的最小的平方数minn和小于等于r的最大的平方数maxx，然后maxx-minn就是答案。那么我们如何找到maxx和minn呢？有以下两种策略：</p>
+<ul>
+<li>假设对于l就是直接使用sqrt(l)并向上取整，同时对于r使用sqrt®向下取整即可得到minn和maxx</li>
+<li>使用二分查找中的左侧边界和右侧边界分别找到minn和maxx</li>
+</ul>
+<p>很明显第一种更简单，但是这里我们为了练习二分查找使用第二个策略，代码如下</p>
+<h4 id="解题代码"><a class="markdownIt-Anchor" href="#解题代码"></a> 解题代码</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearchLeft</span>(<span class="params">l, r, target</span>):</span><br><span class="line">    <span class="keyword">while</span> l &lt; r:</span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> mid**<span class="number">2</span> == target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">if</span> mid**<span class="number">2</span> &gt; target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> mid**<span class="number">2</span> &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> l</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearchRight</span>(<span class="params">l, r, target</span>):</span><br><span class="line">    <span class="keyword">while</span> l &lt; r:</span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> mid**<span class="number">2</span> == target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> mid**<span class="number">2</span> &gt; target:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="keyword">elif</span> mid**<span class="number">2</span> &lt; target:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> l-<span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">n = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    <span class="comment"># 使用map映射更快获取输入</span></span><br><span class="line">    left, right = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line">    <span class="comment"># 要注意1e10的表现形式在Python中默认为浮点数，需要转换为整数</span></span><br><span class="line">    minn = binarySearchLeft(<span class="number">0</span>, <span class="built_in">int</span>(<span class="number">1e10</span>), left)</span><br><span class="line">    maxx = binarySearchRight(<span class="number">0</span>, <span class="built_in">int</span>(<span class="number">1e10</span>), right)</span><br><span class="line">    <span class="built_in">print</span>(maxx-minn+<span class="number">1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2carry爱木头"><a class="markdownIt-Anchor" href="#2carry爱木头"></a> 2）Carry爱木头</h3>
+<h4 id="题目描述-2"><a class="markdownIt-Anchor" href="#题目描述-2"></a> 题目描述</h4>
+<p>CarryNotKarry 最近迷上了砍木头，已知他需要砍 n 个木头，他有一把神奇但又有束缚的斧头，这个斧头每一次只能砍若干个<strong>长度一样</strong>的木头，但是**却又只能砍恰好 **m−1 次，也就是将木头分成 m 组。当然，不同组木头的长度当然可以一样的，毕竟若干个同一长度的木头可以分好几次来砍。但是，CarryNotKarry 不希望任何一组的木头个数过多，否则他会觉得分配很不均匀，也就是说，他希望木头中最多个数的组的个数尽量小。他想问问你，最多个数的那个组最小个数是多少，如果无法顺利完成，请告诉他输出 <code>-1</code></p>
+<h4 id="输入描述-2"><a class="markdownIt-Anchor" href="#输入描述-2"></a> 输入描述</h4>
+<p>第一行两个正整数 n,m(1≤m≤n≤1×105)，其中 n 表示一共需要砍 n 个木头，m 表示需要恰好砍 m 组。第二行有 n 个数，ai(1≤ai≤n)代表第i个木头的长度。</p>
+<h4 id="输出描述-2"><a class="markdownIt-Anchor" href="#输出描述-2"></a> 输出描述</h4>
+<p>输出一个数，表示 <em>m</em> 个组中，个数最多的组的最小值是多少。</p>
+<h4 id="样例1"><a class="markdownIt-Anchor" href="#样例1"></a> 样例1</h4>
+<p>输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6 4</span><br><span class="line">2 2 2 3 3 3</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
+<h4 id="样例2"><a class="markdownIt-Anchor" href="#样例2"></a> 样例2</h4>
+<p>输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6 3</span><br><span class="line">2 2 2 3 3 3</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3</span><br></pre></td></tr></table></figure>
+<h4 id="样例3"><a class="markdownIt-Anchor" href="#样例3"></a> 样例3</h4>
+<p>输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">6 1</span><br><span class="line">2 2 2 3 3 3</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-1</span><br></pre></td></tr></table></figure>
+<h4 id="样例解释"><a class="markdownIt-Anchor" href="#样例解释"></a> 样例解释</h4>
+<p>对于样例一，我们可以将 [2,2,2,3,3,3] 分成 [2],[2,2],[3],[3,3] 四组，这时候组数最多的那个数是 2，这时候 2 是最优解。</p>
+<p>对于样例二，一种方案是将 [2,2,2,3,3,3] 分成 [2],[2,2],[3,3,3] 三组，这时候组数最多的那个数是3，同理也可以分成 [2,2,2],[3],[3,3]，这时候也是 3，注意，你不能分为 [2,3] ，因为同一组木头要长度一样。</p>
+<p>对于样例三，你不能将他们只分成一组。</p>
+<h4 id="解题思路-2"><a class="markdownIt-Anchor" href="#解题思路-2"></a> 解题思路</h4>
+<p>乍一看，感觉并不能使用二分。实际上对于这种寻找最大的最小值或者最小的最大值都是二分题，例如这里我们可以直接枚举答案的取值，然后检验这个答案取值能不能满足条件，那么显然此时使用暴力枚举可能的答案（范围为[0,1e5 ]）是不现实的，会超时，因此枚举可能的答案需要使用到二分法。但是此时我们并不需要使用二分来查找某一个元素，而是仅仅使用二分来进行折半的切割范围即可，因此判断条件很显然不是nums[mid]和target的关系，而是能否满足条件，此时这个条件判断就需要我们自己去实现一个check()函数了，仅仅是是否满足条件判断的后的处理操作和二分很相似而已。又因为我们要找到的是最多个数的那个组的最小个数很明显是最小的最大值，因此使用左侧边界查找。</p>
+<h4 id="解题代码-2"><a class="markdownIt-Anchor" href="#解题代码-2"></a> 解题代码</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">n, m = [<span class="built_in">int</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">input</span>().split()]</span><br><span class="line">trees = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check</span>(<span class="params">x</span>):</span><br><span class="line">    l = []</span><br><span class="line">    num = <span class="number">0</span></span><br><span class="line">    idx = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> idx &lt; <span class="built_in">len</span>(trees):</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">len</span>(l) == <span class="number">0</span> <span class="keyword">or</span> l[<span class="built_in">len</span>(l)-<span class="number">1</span>] == trees[idx]) <span class="keyword">and</span> <span class="built_in">len</span>(l) != x:</span><br><span class="line">            l.append(trees[idx])</span><br><span class="line">            idx += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            l.clear()</span><br><span class="line">            num += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span> <span class="keyword">if</span> num &gt; m-<span class="number">1</span> <span class="keyword">else</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">binarySearch</span>(<span class="params">l, r</span>):</span><br><span class="line">    <span class="keyword">while</span>(l &lt; r):</span><br><span class="line">        mid = (l+r)//<span class="number">2</span></span><br><span class="line">        <span class="comment"># 枚举可能的答案，然后检测check是否满足条件</span></span><br><span class="line">        <span class="comment"># 满足，那么可能可以进一步缩小</span></span><br><span class="line">        <span class="keyword">if</span> check(mid) == <span class="literal">True</span>:</span><br><span class="line">            r = mid</span><br><span class="line">        <span class="comment"># 不满足，l右移</span></span><br><span class="line">        <span class="keyword">elif</span> check(mid) == <span class="literal">False</span>:</span><br><span class="line">            l = mid+<span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> l == n:</span><br><span class="line">        <span class="built_in">print</span>(-<span class="number">1</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="built_in">print</span>(l, end=<span class="string">&quot;&quot;</span>) <span class="keyword">if</span> check(l) <span class="keyword">else</span> <span class="built_in">print</span>(-<span class="number">1</span>, end=<span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#要注意我们需要先对数目进行排序</span></span><br><span class="line">trees.sort()</span><br><span class="line">binarySearch(<span class="number">1</span>, n)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>也即是说二分查找仅仅是一种折半的思想，我们要熟悉这种折半的思想，同时理解左界和有界的查找原理，真正解题时可能还需要自己进行变化例如上题中重新构建判断条件。</p></div></div>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%88%86%E6%9E%9D%E9%99%90%E7%95%8C/index.html">分枝限界</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E6%89%8B%E6%92%95%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html">并查集</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="Algorithm"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/dennounce">隐私政策</a><a href="/">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://cloud.tencent.com/" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

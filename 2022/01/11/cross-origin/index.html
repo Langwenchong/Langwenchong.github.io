@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>前后端跨域请求解决策略 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="在前后端分离开发的项目中，我们总是会遇到请求跨域的问题，每一次都避免不了开发人员之间的对线，为了缓解同事友谊，翀翀特此提供一篇完美解决前后端跨域请求的攻略😉~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前后端跨域请求解决策略">
+<meta property="og:url" content="https://scholar.coolchong.cn/2022/01/11/cross-origin/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="在前后端分离开发的项目中，我们总是会遇到请求跨域的问题，每一次都避免不了开发人员之间的对线，为了缓解同事友谊，翀翀特此提供一篇完美解决前后端跨域请求的攻略😉~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111144458.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111150522.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111153354.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111153607.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111154211.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111154707.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111155211.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111155251.png">
+<meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20220111155749.png">
+<meta property="article:published_time" content="2022-01-11T06:33:09.000Z">
+<meta property="article:modified_time" content="2023-01-29T03:02:41.727Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta property="article:tag" content="跨域">
+<meta property="article:tag" content="springboot">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://langwenchong.gitee.io/figure-bed/20220111144458.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="http://cdn.coolchong.cn/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/langwenchong.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">雨中•学圃堂</div><div class="sub normal cap">纵有疾风起，人生不言弃👊</div><div class="sub hover cap" style="opacity:0"> 别再学习啦，人家都困了🥱</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">主页</a><a class="nav-item" href="/wiki/">笔记</a><a class="nav-item" href="/notes/">便笺</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">前后端跨域请求解决策略</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-text"> 什么是跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text"> 跨域请求产生的原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E9%9D%9E%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="toc-text"> 简单请求&#x2F;非简单请求</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="toc-text"> 简单请求</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="toc-text"> 非简单请求</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E7%9A%84%E8%B7%A8%E5%9F%9F"><span class="toc-text"> 简单请求的跨域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E7%9A%84%E8%B7%A8%E5%9F%9F"><span class="toc-text"> 非简单请求的跨域</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F"><span class="toc-text"> 开发环境解决跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E4%B8%80chrome%E6%8F%92%E4%BB%B6%E4%BB%A3%E7%90%86"><span class="toc-text"> 策略一：chrome插件代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E4%BA%8Cvue%E4%B8%ADproxytable%E4%BB%A3%E7%90%86"><span class="toc-text"> 策略二：vue中proxyTable代理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E7%BA%BF%E4%B8%8A%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F"><span class="toc-text"> 部署线上解决跨域</span></a></li></ol></div></div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="http://github.com/langwenchong" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/08a41b181ce68.svg"/></a><a class="social" href="mailto:1422257646@qq.com" rel="noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/a1b00e20f425d.svg"/></a><a class="social" href="http://wpa.qq.com/msgrd?v=3&uin=1422257646&site=qq&menu=yes" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/942ebbf1a4b91.svg"/></a><a class="social" href="/atom.xml" rel="noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/25678f144c438.svg"/></a></div></footer>
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/">开发技能</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-01-11T06:33:09.000Z">2022-01-11</time></div></div>
+
+<article class='md-text content post reveal'>
+<h1 class="article-title"><span>前后端跨域请求解决策略</span></h1>
+<p>在前后端分离开发的项目中，我们总是会遇到请求跨域的问题，每一次都避免不了开发人员之间的对线，为了缓解同事友谊，翀翀特此提供一篇完美解决前后端跨域请求的攻略😉~</p>
+<span id="more"></span>
+<h3 id="什么是跨域"><a class="markdownIt-Anchor" href="#什么是跨域"></a> 什么是跨域</h3>
+<p>我们在进行本地前后端项目的接口对接或者是项目打包部署到线上以后（但是前后端项目部署到了不同的服务器上），那么此时就可能会出现跨域的问题，他总是出现如下的报错：</p>
+<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111144458.png" style="zoom:150%;" />
+<p>如上所示，控制台警告信息中提示我们这个从本地<code>http://localhost:8080</code>发起的向<code>http://api.cheeseburgerim.space/api/user/login</code>的请求被跨域限制策略所阻挡了，并且如果想要通过请在请求函数中添加一系列请求头，但是往往我们在添加以后仍然不能解决。</p>
+<p>如果想要解决这个跨域问题，我们首先需要了解跨域请求被阻拦的原因：</p>
+<h4 id="跨域请求产生的原因"><a class="markdownIt-Anchor" href="#跨域请求产生的原因"></a> 跨域请求产生的原因</h4>
+<p>我们首先要了解什么是<code>跨域</code>,跨域是因为浏览器的同源策略限制，是浏览器的一种安全机制，服务端之间就不会产生跨域的。所谓<code>同源</code>就是指两个页面具有相同的协议，相同的主机和相同的端口，三者之中有一个不同的时候就会产生跨域。如下所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">当前页面url</th>
+<th style="text-align:center">被请求页面url</th>
+<th style="text-align:center">是否跨域</th>
+<th style="text-align:center">产生原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www.test.com/">http://www.test.com/</a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www.test.com/index.html">http://www.test.com/index.html</a></td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">同源（协议、域名、端口号均相同）</td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www.test.com/">http://www.test.com/</a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://www.test.com/index.html">https://www.test.com/index.html</a></td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">协议不同（http/https)</td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www.test.com/">http://www.test.com/</a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www.baidu.com/">http://www.baidu.com/</a></td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">主域名不同（test/baidu）</td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www/test.com/">http://www/test.com/</a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://api.test.com/">http://api.test.com/</a></td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">子域名不同（www/api)</td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://www.test.com:8080/">http://www.test.com:8080/</a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="http://test.com:7001/">http://test.com:7001/</a></td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">端口号不同（8080/7001)</td>
+</tr>
+</tbody>
+</table>
+<div class="tag-plugin note" color="cyan"><div class="body"><p>我们可以总结出不产生跨请求域的条件是：①协议必须一致②域名必须完全相同③端口号必须一致</p></div></div>
+<h4 id="简单请求非简单请求"><a class="markdownIt-Anchor" href="#简单请求非简单请求"></a> 简单请求/非简单请求</h4>
+<p>然后接下来我们再来了解一下简单请求和非简单请求，在有时候我们会发现请求发出以后在控制的network栏监控处可以发现有些请求明明应该只执行一次，但是实际上他会执行两次，这是因为它属于非简单请求，此时会先发送一个预检验请求如下所示：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111150522.png" alt="" /></p>
+<p>我们在一些传送复杂文件的请求A中就会发现在这个请求发送之前，他会先发送一个如上所示的OPTIONS请求并且通常返还的是200，包括了响应请求的信息即对方服务器关于请求的一些限制信息，然后接下来才会发送这个真正的传输文件的请求A，如果不满足对方的要求就会报错。</p>
+<h5 id="简单请求"><a class="markdownIt-Anchor" href="#简单请求"></a> 简单请求</h5>
+<p>但是一般情况下我们使用的都是简单请求，他包括：</p>
+<ol>
+<li>请求方法为：HEAD、GET、POST中的一种</li>
+<li>HTTP请求头中字段不超过：Accept、Accept-Language、Content-Language、Last-Event-ID</li>
+<li>Content-Type字段值为application/x-www-form-urlencoded、multipart/form-data、text/plain中的一种</li>
+</ol>
+<h5 id="非简单请求"><a class="markdownIt-Anchor" href="#非简单请求"></a> 非简单请求</h5>
+<p>对于简单请求不会发起预检验请求，而以下的这些就是非简单请求，他在请求真正发起之前会先进行预检验请求可以获取到服务器设置的响应请求信息以及对发起请求的限制：</p>
+<ol>
+<li>请求方法为PUT、DELETE</li>
+<li>发送JSON格式的ajax请求</li>
+<li>http中带自定义请求头</li>
+</ol>
+<h5 id="简单请求的跨域"><a class="markdownIt-Anchor" href="#简单请求的跨域"></a> 简单请求的跨域</h5>
+<p>对于简单请求，如果浏览器发现是跨域请求，就会自动在请求头中加入Origin字段，代表请求来自哪个域（协议+主机名+端口号），服务器收到请求以后，根据请求头中Origin中字段值来判断是否允许跨域请求通过。如果想要解决跨域问题，只需要在服务器的响应头Access-Control-Allow-Origin字段中设置指定的域名，表示允许这些域名的跨域请求。如果请求头中Origin字段的域名包含在这些域名中，则可以实现跨域请求（当然有时候还需要结合其他字段来判断），否则不通过。</p>
+<h5 id="非简单请求的跨域"><a class="markdownIt-Anchor" href="#非简单请求的跨域"></a> 非简单请求的跨域</h5>
+<p>而对于非简单请求的跨域，会先发送一次“预检”（OPTIONS)请求。预检请求会事先询问服务器，当前域名是否在服务器允许的范围内，以及可以使用那些HTTP动词和信息字段。只有得到肯定答复以后，浏览器才会发出真正的HTTP请求，否则就会报错。</p>
+<div class="tag-plugin note" color="cyan"><div class="body"><p>了解完以上的信息以后，我们会发现无论是哪种跨域，实际上解决办法就是两种策略：①代理请求端使其请求源和服务端一致②后端服务器配置请求允许不同源的请求</p></div></div>
+<h3 id="开发环境解决跨域"><a class="markdownIt-Anchor" href="#开发环境解决跨域"></a> 开发环境解决跨域</h3>
+<p>在开发环境中我们可以向后端大大为我们配置跨域允许，这样我们前端就无需在配置任何东西了，但是俗话说的好：“自己动手，丰衣足食”，我们才不要作一个看后端开发脸色的前端攻城狮🤣，因此我们可以在开发环境中在前端自己解决跨域问题：</p>
+<div class="tag-plugin note" color="cyan"><div class="body"><p>要注意，如果你在开发时使用POSTman进行接口的调试工作，那么请注意POSTman是默认永远不会产生跨域的，因此如果你的请求在POSTman中请求成功了并不一定就不会产生跨域而被浏览器所拦截。</p></div></div>
+<h4 id="策略一chrome插件代理"><a class="markdownIt-Anchor" href="#策略一chrome插件代理"></a> 策略一：chrome插件代理</h4>
+<p>在前端配置解决跨域的策略无非就是使用代理，让我们的请求在被封装以后能够以同源的身份被后台服务器所能允许接收，此时我们可以使用代码进行配置，但是如果你是小白的话，完全可以试一试这种使用插件代理的方法：</p>
+<p>这里给出插件的百度网盘地址</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="提取码：wssb" href="https://pan.baidu.com/s/1koaZyGBNhKp6uZOVlTP5iQ" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">提取码：wssb</span><span class="cap link fs12">https://pan.baidu.com/s/1koaZyGBNhKp6uZOVlTP5iQ</span></div><div class="right"><div class="lazy img" data-bg="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>下载完成以后，在chrome中打开扩展程序选择开发者模式将这个插件进行安装：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111153354.png" alt="" /></p>
+<p>安装完成以后将会这个插件开启并置顶，那么我们就可以使用这个插件进行代理了：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111153607.png" alt="" /></p>
+<h4 id="策略二vue中proxytable代理"><a class="markdownIt-Anchor" href="#策略二vue中proxytable代理"></a> 策略二：vue中proxyTable代理</h4>
+<p>如果你前端使用的是vue框架，那么可以试试这种方法，即使用vue提供的ProxyTable进行代理从而实现同源请求，假设现在我们要请求的是一个登录接口：<code>https://api.coolchong.cn/api/user/login</code>,同时其他的请求接口也类似比如注册是<code>https://api.coolchong.cn/api/user/register</code>等等，而我们本地开发时热加载预览的地址是<code>http://localhost:8080</code>, 此时为了解决跨域，我们需要将我们的源也代理成<code>https://coolchong.cn</code>，此时我们就可以使用proxyTable，如果你的vue也是2.x版本那么可以直接在<code>/config/index.js</code>中找到如下代码，如果是vue3.x那么也可以在类似的路径中找到：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111154211.png" alt="" /></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Paths</span></span><br><span class="line">   <span class="attr">assetsSubDirectory</span>: <span class="string">&#x27;static&#x27;</span>,</span><br><span class="line">   <span class="attr">assetsPublicPath</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">   <span class="attr">proxyTable</span>: &#123;</span><br><span class="line">     <span class="string">&#x27;/apis&#x27;</span>: &#123;</span><br><span class="line">       <span class="attr">target</span>: <span class="string">&#x27;https://api.coolchong.cn&#x27;</span>, <span class="comment">// 你要代理的域名和端口号，要加上http</span></span><br><span class="line">       <span class="attr">changeOrigin</span>: <span class="literal">true</span>, <span class="comment">// 跨域</span></span><br><span class="line">       <span class="attr">pathRewrite</span>: &#123;</span><br><span class="line">         <span class="string">&#x27;^/apis&#x27;</span>: <span class="string">&#x27;&#x27;</span> <span class="comment">// 这里用‘/apis’代替target里面的地址，组件中调用接口时直接用api代替 比如我要调用&#x27;http://xxx.com:8080/api/NEWS/getNews.json?page=1&amp;pageSize=10&#x27;，直接写‘/api/NEWS/getNews.json?page=1&amp;pageSize=10’即可</span></span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;,</span><br></pre></td></tr></table></figure>
+<div class="tag-plugin note" color="cyan"><div class="body"><p>一定要注意修改的是dev即开发环境下的proxyTable，不要改错了。同时当修改了配置以后需要重启这个项目才能加载新的配置。</p></div></div>
+<p>配置完成以后，如果此时我们再在本地请求这个接口时，使用<code>/apis/user/login</code>代替<code>https://api.coolchong.cn/api/user/login</code>,用<code>/api/user/register</code>代替<code>htts://api.coolchong.cn/api/user/register</code>即可。如下我用axios来演示一下写法：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111154707.png" alt="" /></p>
+<p>自此我们就完成了开发环境下前端解决跨域问题的配置。</p>
+<h3 id="部署线上解决跨域"><a class="markdownIt-Anchor" href="#部署线上解决跨域"></a> 部署线上解决跨域</h3>
+<p>但是我们会发现上面这种方法只适用于本地开发调试环境时使用，一个项目真正打包完成部署上去还是会面临跨域，因此接下来我们讲一讲后台的配置来解决项目打包部署线上的跨域问题解决策略。此时我们还是以上面的例子作为讲解。</p>
+<p>我们知道实际上前端最终要进行请求的接口还是<code>https://api.coolchong.cn/api/user/login</code>，因此我们在完成开发以后部署前先将axios的默认地址baseURL更改回：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111155211.png" alt="" /></p>
+<p>同时在项目打包前将代理proxyTable注释掉：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111155251.png" alt="" /></p>
+<p>那么很显然此时项目的所有请求都会处于跨域状态，但是不用担心，此时我们是在后端解决跨域，因此前端可以直接打包部署了，具体流程参考本篇博客：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="vue项目部署" href="https://scholar.coolchong.cn/2021/10/18/nginx-web/" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">vue项目部署</span><span class="cap link fs12">https://scholar.coolchong.cn/2021/10/18/nginx-web/</span></div><div class="right"><div class="lazy img" data-bg="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>接下来我们进行后端的配置，此时的跨域解决策略就是后端允许任何不同源的请求进行响应，操作很简单，我们只需要为项目添加一个<code>/configuration/WebMvcConfig.java</code>配置类，代码如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20220111155749.png" alt="" /></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.deliverysystem.configuration;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.CorsRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> Lang wenchong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2021/12/25 21:55</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebMvcConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addCorsMappings</span><span class="params">(CorsRegistry registry)</span> &#123;</span><br><span class="line">        registry.addMapping(<span class="string">&quot;/**&quot;</span>)</span><br><span class="line">                .allowCredentials(<span class="literal">true</span>)</span><br><span class="line">                .allowedOriginPatterns(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">                .allowedMethods(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;PUT&quot;</span>, <span class="string">&quot;DELETE&quot;</span>)</span><br><span class="line">                .allowedHeaders(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">                .exposedHeaders(<span class="string">&quot;origin&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这样我们再将后端代码打包成jar包部署到服务器即可，此时前后端部署的主机不同也不会产生跨域请求了，解决了线上部署环境下的跨域问题。</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://scholar.coolchong.cn/2022/01/11/cross-origin/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://scholar.coolchong.cn/2022/01/11/cross-origin/&title=前后端跨域请求解决策略 - 雨中•学圃堂&pics=https://langwenchong.gitee.io/figure-bed/20220111161316.png&summary=在前后端分离开发的项目中，我们总是会遇到请求跨域的问题，每一次都避免不了开发人员之间的对线，为了缓解同事友谊，翀翀特此提供一篇完美解决前后端跨域请求的攻略😉~"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=前后端跨域请求解决策略 - 雨中•学圃堂&amp;body=https://scholar.coolchong.cn/2022/01/11/cross-origin/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://scholar.coolchong.cn/2022/01/11/cross-origin/index.html"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/2022/02/24/dp01bag/">浅谈用一维数组dp解决0/1背包问题</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/2021/12/12/vuex/">vuex从入门到实战</a></div></section></div>
+
+
+<div class="related-wrap reveal" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣的文章</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="\2021\10\18\nginx-web\" title="浅谈vue项目部署到nginx"><span class="title">浅谈vue项目部署到nginx</span><span class="excerpt">针对小白的快速前端vue项目打包部署教程，包含二级域名解析配置以及https认证等，还不赶快进来看看👀？</span></a></div></section></div>
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="/dennounce">隐私政策</a><a href="/">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://cloud.tencent.com/" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
