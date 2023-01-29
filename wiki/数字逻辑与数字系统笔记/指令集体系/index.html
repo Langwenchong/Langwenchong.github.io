@@ -220,7 +220,7 @@
 <li>读/写半字（2个字节）：<code>lh</code>(load half byte),<code>sh</code>(store half byte)</li>
 <li>读/写字（4个字节）：<code>lw</code>(load a word),<code>sw</code>(store a word)</li>
 </ul>
-<div class="tag-plugin note" color="yellow"><div class="title">info</div><div class="body"><p>, 一个字(32bit=4byte)为4字节，字地址按4递增，字节地址按1递增</p></div></div>
+<div class="tag-plugin note" ><div class="title">info</div><div class="body"><p>, 一个字(32bit=4byte)为4字节，字地址按4递增，字节地址按1递增</p></div></div>
 <p>因此，如果我们想在按字编址的存储器中读一个字节只能先取出一个字，在拆分处相应的需要的字节数据，而在一个按字节编址的存储器中如果我们想要读一个字的数据，那么应该一次性读4个字节的信息，因此访存地址应为4的倍数，即地址最后两位均为0，否则会出错。</p>
 <p>假设我们现在想从存储器地址4处，加载一个字到寄存器$3中，那么MIPS汇编代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#基地址为0，因此$0永远存储的是常数0，请区分$s0和$0寄存器</span><br><span class="line">#因此偏移4个单位对应的访存地址就是000000004</span><br><span class="line">#又因为使用的是lw按字读，因此一次性读4个字节</span><br><span class="line">lw $s3,4($0)</span><br></pre></td></tr></table></figure>
