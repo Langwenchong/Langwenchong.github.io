@@ -118,6 +118,22 @@
 .fas {
   font-size: 8px;
 }
+.highlight {
+  background: #21252b;
+  border-radius: 5px;
+  padding-top: 10px;
+}
+.highlight::before {
+  background: #fc625d;
+  border-radius: 50%;
+  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+  content: ' ';
+  height: 12px;
+  left: 12px;
+  margin-top: 0px;
+  position: absolute;
+  width: 12px;
+}
 :root {
   --site-bg: #f9fafb;
   --card: #fff;
