@@ -33,7 +33,7 @@
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url("https://gcore.jsdelivr.net/gh/Langwenchong/cdn/font/hytmr55.woff") format('woff');
+  src: url("https://fastly.jsdelivr.net/gh/Langwenchong/cdn/font/hytmr55.woff") format('woff');
 }
 @font-face {
   font-family: 'Dancing Script';
@@ -133,6 +133,10 @@
   margin-top: 0px;
   position: absolute;
   width: 12px;
+}
+.hljs {
+  color: #ccc !important;
+  background: transparent !important;
 }
 :root {
   --site-bg: #f9fafb;
@@ -1362,11 +1366,11 @@ nav.cap a+a {
 }
 .paginator-wrap .extend.next {
   border-left: 1px dashed var(--block-border);
-  background-image: url("https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/arrow/064b95430caf4.svg");
+  background-image: url("https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/arrow/064b95430caf4.svg");
 }
 .paginator-wrap .extend.prev {
   border-right: 1px dashed var(--block-border);
-  background-image: url("https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/arrow/f049bbd4e88ec.svg");
+  background-image: url("https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/arrow/f049bbd4e88ec.svg");
 }
 .paginator-wrap .current {
   font-family: Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif;
@@ -2198,7 +2202,7 @@ details.folding[child=iframe] >div.body {
   margin-bottom: 20px;
 }
 .md-text .frame-wrap#iphone11 .frame {
-  background-image: url("https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/frame/iphone11.svg");
+  background-image: url("https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/frame/iphone11.svg");
   width: 329px;
   height: 658px;
 }

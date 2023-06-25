@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fc63ac4843a697431e3d43c4d48b99de";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>GraduationDesign：项目简介&技术调研 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="语音驱动说话人情绪动画 ​	随着硬件与虚拟现实设备的快速发展，人们说话时的面部表情、唇部动作，甚至是头部与肢体的动作都可以帮助听众理解对话内容。视觉和听觉的双模态信息融合的交互方式，不仅能提高用户对内容的理解度，还能提供一种更为准确的交互体验，提高歌唱的艺术性和观赏度。语音驱动嘴型和面部动画生成技术可以让开发者快速构建一些基于数字人的应用，如虚拟主持人、虚拟客服和虚拟教师等。除了能提供更友好的人">
+<meta property="og:type" content="website">
+<meta property="og:title" content="项目简介&amp;技术调研">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="语音驱动说话人情绪动画 ​	随着硬件与虚拟现实设备的快速发展，人们说话时的面部表情、唇部动作，甚至是头部与肢体的动作都可以帮助听众理解对话内容。视觉和听觉的双模态信息融合的交互方式，不仅能提高用户对内容的理解度，还能提供一种更为准确的交互体验，提高歌唱的艺术性和观赏度。语音驱动嘴型和面部动画生成技术可以让开发者快速构建一些基于数字人的应用，如虚拟主持人、虚拟客服和虚拟教师等。除了能提供更友好的人">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/1.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/2.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/3.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/4.png">
+<meta property="og:image" content="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/5.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/6.png">
+<meta property="article:published_time" content="2023-03-07T10:28:32.171Z">
+<meta property="article:modified_time" content="2023-03-07T10:28:32.171Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/1.png">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
+
+  
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
+    
+  
+</head>
+
+<body>
+  
+
+<div class="l_cover wiki reveal"><article class="cover-wrap md-text"><div class="preview"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E6%9C%BA%E5%99%A8%E4%BA%BA.png" height="240px"></div><div class="cover-title"><span>语音驱动说话人表情渲染</span></div><div class="description">我的毕业课题项目，实现基于物理真实感的语音驱动说话人表情生成，包括语音驱动生成表情与头发渲染两个方向。</div><div class="start-wrap"><a class="button start gradient" href="#start">开始阅读</a></div></article></div><hr>
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html"><div class="main" ff="title">GraduationDesign</div><div class="sub cap">AI&CG毕业设计</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/语音驱动说话人表情渲染/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">课题调研</span></div><div class="widget-body fs14"><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html#start"><span class="toc-text">项目简介&技术调研</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E6%83%85%E7%BB%AA%E5%8A%A8%E7%94%BB"><span class="toc-text"> 语音驱动说话人情绪动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#audio-driven-facial-animation-by-joint-end-to-end-learning-of-pose-and-emotion"><span class="toc-text"> 《Audio-Driven Facial Animation by Joint End-to-End Learning of Pose and Emotion》</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#capture-learning-and-synthesis-of-3d-speaking-styles"><span class="toc-text"> 《Capture, Learning, and Synthesis of 3D Speaking Styles》</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#meshtalk-3d-face-animation-from-speech-using-cross-modality-disentanglement"><span class="toc-text"> 《MeshTalk: 3D Face Animation from Speech using Cross-Modality Disentanglement》</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#faceformer-speech-driven-3d-facial-animation-with-transformers"><span class="toc-text"> 《FaceFormer: Speech-Driven 3D Facial Animation with Transformers》</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%BA%E8%84%B8%E6%AF%9B%E5%8F%91%E7%9C%9F%E5%AE%9E%E6%84%9F%E6%B8%B2%E6%9F%93"><span class="toc-text"> 人脸毛发真实感渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kajiya-kay-model"><span class="toc-text"> Kajiya-kay Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#marschners-hair-model"><span class="toc-text"> Marschner’s  hair Model</span></a></li></ol></li></ol></div></div><div class="widget-header cap dis-select"><span class="name">毛发真实感渲染</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%A4%B4%E5%8F%91%E7%9D%80%E8%89%B2%E5%8E%9F%E7%90%86/index.html"><span class="toc-text">头发着色原理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%89%96%E6%9E%90UE4%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B%E6%BA%90%E7%A0%81/index.html"><span class="toc-text">剖析UE4着色模型源码</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html"><span class="toc-text">Kajiya-Kay头发渲染</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html"><span class="toc-text">Marschner头发渲染</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fc63ac4843a697431e3d43c4d48b99de";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html">GraduationDesign</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-03-07T10:28:32.171Z">2023-03-07</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>项目简介&技术调研</span></h1>
+  <h2 id="语音驱动说话人情绪动画"><a class="markdownIt-Anchor" href="#语音驱动说话人情绪动画"></a> 语音驱动说话人情绪动画</h2>
+<p>​	随着硬件与虚拟现实设备的快速发展，人们说话时的面部表情、唇部动作，甚至是头部与肢体的动作都可以帮助听众理解对话内容。视觉和听觉的双模态信息融合的交互方式，不仅能提高用户对内容的理解度，还能提供一种更为准确的交互体验，提高歌唱的艺术性和观赏度。语音驱动嘴型和面部动画生成技术可以让开发者快速构建一些基于数字人的应用，如虚拟主持人、虚拟客服和虚拟教师等。除了能提供更友好的人机交互方式之外，该技术在感知研究、声音辅助学习等方面具有重要应用价值，同时，能够在游戏和电影特效等娱乐化方面降低作品制作成本。 语音驱动嘴型与面部动画生成技术，可以让用户输入文本或语音，通过某种规则或者深度学习算法生成对应的虚拟形象的表情系数，从而完成虚拟形象的口型和面部表情的精准驱动。但是当前的技术或多或少都有一定的缺陷，如：</p>
+<ol>
+<li>采集的训练数据量少以及训练效率不理想导致技术可操作性不高，只有在达到一定充分的情况下才能获得比较好的判断效果，否则会导致明显的形变、走样。</li>
+<li>真实性不强，许多研究仅仅关注语音驱动三维人脸的口型动画，而忽视了整体的人脸面部姿势，导致生成的虚拟人脸表情木讷呆滞，没有较强的信息反馈。同时由于人眼对于面部信息极其敏感，因此不真实的人脸动画很容易产生恐怖谷效应。</li>
+<li>同步性欠佳，深度学习合成的嘴型与面部动画存在合成动画不连贯，跳变频繁的情况，整体人脸动画的流畅度和自然度不足，语音常常比生成的视频帧要超前造成一定的音画不同步的现象。</li>
+</ol>
+<p>本课题旨在调研当下先进的语音驱动三维人脸技术，进一步研究和优化训练模型，采用深度学习的方式在现有工程的基础上进行完善，力求降低以上缺陷问题的影响。这其中需要主要参考以下论文的内容：</p>
+<h3 id="audio-driven-facial-animation-by-joint-end-to-end-learning-of-pose-and-emotion"><a class="markdownIt-Anchor" href="#audio-driven-facial-animation-by-joint-end-to-end-learning-of-pose-and-emotion"></a> 《Audio-Driven Facial Animation by Joint End-to-End Learning of Pose and Emotion》</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/1.png" alt="" /></p>
+<p>早期提出的一种采用端到端的卷积网络，从输入的音频在直接推断出人脸表情变化对应的顶点位置的偏移量实现音频驱动人脸表情动画的效果。</p>
+<h3 id="capture-learning-and-synthesis-of-3d-speaking-styles"><a class="markdownIt-Anchor" href="#capture-learning-and-synthesis-of-3d-speaking-styles"></a> 《Capture, Learning, and Synthesis of 3D Speaking Styles》</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/2.png" alt="" /></p>
+<p>本篇论文主要提出了使用一种独特的4D人脸数据集进行训练，包括以60fps帧速率捕捉到的4D扫描以及12名说话者的同期声作为基础的训练模板。同时还提出了VOCA模型，一种可以使用任意语言信号作为输入（即使不是英语也可以），然后将大量面目转换为逼真的动图。并且VOCA是已知唯一的可以做到关联与身份相关的面部姿势（包括头部、下巴和眼球旋转）来实现说话风格的改变，并且还可以适用于训练集中未出现过的人物形象，这一优势可以在游戏虚拟任务中明显体现。</p>
+<h3 id="meshtalk-3d-face-animation-from-speech-using-cross-modality-disentanglement"><a class="markdownIt-Anchor" href="#meshtalk-3d-face-animation-from-speech-using-cross-modality-disentanglement"></a> 《MeshTalk: 3D Face Animation from Speech using Cross-Modality Disentanglement》</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/3.png" alt="" /></p>
+<p>这篇论文提出了一种采用自回归的方式来用基于模型训练的过去数据点来预测新数据点，也就是利用时序信息来进一步进行高真实感人脸动画的合成。同时由于VOCA并没有对面部表情的所有方面进行编码，因此音频驱动的面部动画问题试图学习一对多的映射，每个输入对应有多个输出，这样可以实现过渡平滑的结果，在面部区域只有微弱不相关的音频信号。因此需要涉及到一种新的面部动画分类隐空间，这个空间可以来解耦声音相关和不相关的信息。</p>
+<h3 id="faceformer-speech-driven-3d-facial-animation-with-transformers"><a class="markdownIt-Anchor" href="#faceformer-speech-driven-3d-facial-animation-with-transformers"></a> 《FaceFormer: Speech-Driven 3D Facial Animation with Transformers》</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/4.png" alt="" /></p>
+<p>同上论文，驱动模型与MeshTalk类似，采用自回归的思想来对输入的音频和中性的3D人脸mesh生成一段带嘴型运动的3D人脸动画，但是生成的效果更佳。可以对比两篇代码实现尝试学习优化思路。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/5.png" alt="" /></p>
+<p>最后还可以参考开源的项目<a target="_blank" rel="noopener" href="https://github.com/FACEGOOD/FACEGOOD-Audio2Face">Voice2Face</a>学习具体的代码实现。</p>
+<h2 id="人脸毛发真实感渲染"><a class="markdownIt-Anchor" href="#人脸毛发真实感渲染"></a> 人脸毛发真实感渲染</h2>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/6.png" alt="" /></p>
+<p>本课题还将在基于语音驱动生成三维人脸情绪动画的基础上，尝试对人脸进行人脸毛发和眼睛的真实渲染。在虚拟游戏，影视作品等应用场景中，虚拟人物的占比越来越多而且已经成为一个体系，渲染和优化的时候都会为角色量身定制一套真实感渲染的方案。甚至为了表现角色使其更加逼真，会为展示在大厅的角色单独做一套效果和资源，因此这就要求需要先进的技术来优化实现人物毛发与眼睛的真实渲染。</p>
+<p>对于头发的渲染我们可以从头发的模型、头发的贴图、头发的shader等展开分别进行优化处理。对于头发渲染会面临一下结果难题：</p>
+<ol>
+<li>发丝数量过多，一般为了实现真实渲染至少需要8w-13w根头发，这会导致开销过大</li>
+<li>头发种类繁多，形式多样，并且不同颜色和质感的头发对光线的吸收不同</li>
+<li>在角色的渲染中，复杂的头发渲染可能占用角色25%左右的渲染时间</li>
+</ol>
+<p>为了优化解决以上问题，我们首先可以再模型头发模型方面进行选择尝试减少开销，当下比较常见的方案有</p>
+<ol>
+<li>基于引导线制作，这种方案优点是更加偏向写实，但是也就需要更加细致的调整，需要发丝间的穿插细节和更多的发丝点缀。基于引导线来生成头发，可以轻易实现头发的疏密、厚度等。</li>
+<li>基于面片，由于用strands去渲染会对性能影响较大，因此采用一种妥协式的方案，通过用多边形模拟绘制毛发横截面，不断划分堆叠多层面片直至达到预期效果，这种方案虽然也会伴随着截面增多开销增大，但是在某些场景下可以使用更小的开销达到理想的预期效果。</li>
+<li>基于网格，基于引导线或者面片更适合写实场景，而对于卡通向场景，则可以尝试使用基于网格模型，虽然这会导致丢失发丝间的细节。</li>
+</ol>
+<p>由于头发具有各向异性材质的特点，因此人的头发会有一种”天使环“的效果，即各向异性高光，一般呈现环状出现在头顶。我们可以将头发中的每一个发丝都是为一个非常细长的圆柱体，那么头发整体的高光就是这每一根圆柱形发丝高光组成的，因此为了为了表现每一根都发的高光使用贴图是不可或缺的，包括：漫反射贴图、法线贴图、环境光遮蔽贴图、偏移贴图、透明贴图等。</p>
+<p>对于头发的渲染还衍生了不同的渲染模型，以下几种模型复杂程度逐渐递增，真实感效果也更优秀。</p>
+<h3 id="kajiya-kay-model"><a class="markdownIt-Anchor" href="#kajiya-kay-model"></a> Kajiya-kay Model</h3>
+<p>参考文献：</p>
+<ul>
+<li>《Light Scattering from Filaments》</li>
+<li>《Practical real-time hair rendering and shading》</li>
+</ul>
+<p>这是一种基于经验的着色模型，即并不能完全的着色物理正确，但是对于开销小的情况下仍可以得到不错的真实感效果。在这个模型中，头发纤维被抽象为一个不透明的圆柱体，不能够透射和产生内部反射，因此这种模型不能表现一些肉眼观察到的头发效果，同时能量也是不守恒的，在这个模型中光照主要是Diffuse(使用Lambert)和Specular(Phong)。由于该模型将头发看成不透明的圆柱体，因此不能模拟光纤穿透头发或者在头发中传播的情况，这就导致其并不能模拟出背光或者二次高光的效果。</p>
+<h3 id="marschners-hair-model"><a class="markdownIt-Anchor" href="#marschners-hair-model"></a> <strong>Marschner’s</strong>  hair Model</h3>
+<p>参考文献：</p>
+<ul>
+<li>《Light Scattering from Human Hair Fibers》</li>
+<li>《Dual Scattering Approximation for Fast Multiple Scattering in Hair 》</li>
+</ul>
+<p>这种模型与前者区别就是基于物理的，而不再是基于经验的。该模型通过将头发纤维抽象为一个透明的椭圆柱体，可以模拟头发丝之间的散射现象。</p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%A4%B4%E5%8F%91%E7%9D%80%E8%89%B2%E5%8E%9F%E7%90%86/index.html">头发着色原理</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="GraduationDesign"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://www.qiniu.com//" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

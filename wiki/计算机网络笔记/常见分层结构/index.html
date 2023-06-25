@@ -17,8 +17,8 @@ var _hmt = _hmt || [];
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
-  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -32,12 +32,12 @@ var _hmt = _hmt || [];
   <title>ComputerNetwork：常见分层结构 - 雨中•学圃堂</title>
 
   
-    <meta name="description" content="title: 计算机网络笔记—Part3comments: falsetop: falsedate: 2021-03-27 19:35:05tags: [408,计算机网络]categories:  - [个人笔记,计算机网络]  这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战争。在这">
+    <meta name="description" content="title: 计算机网络笔记–Part3 comments: false top: false date: 2021-03-27 19:35:05 tags: [408,计算机网络] categories: - [个人笔记,计算机网络]  这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战">
 <meta property="og:type" content="website">
 <meta property="og:title" content="常见分层结构">
 <meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
-<meta property="og:description" content="title: 计算机网络笔记—Part3comments: falsetop: falsedate: 2021-03-27 19:35:05tags: [408,计算机网络]categories:  - [个人笔记,计算机网络]  这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战争。在这">
+<meta property="og:description" content="title: 计算机网络笔记–Part3 comments: false top: false date: 2021-03-27 19:35:05 tags: [408,计算机网络] categories: - [个人笔记,计算机网络]  这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210327200618.png">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210327201722.png">
@@ -74,11 +74,15 @@ var _hmt = _hmt || [];
   
 
   
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
 
   
-    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
   
 
 
@@ -87,6 +91,8 @@ var _hmt = _hmt || [];
       <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
     
       <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
     
   
 </head>
@@ -112,7 +118,7 @@ var _hmt = _hmt || [];
 
 
 
-<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">计网概述</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html#start"><span class="toc-text">什么是计算机网络</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82/index.html"><span class="toc-text">计算机网络分层</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/index.html"><span class="toc-text">常见分层结构</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E3%80%81%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%9C%8D%E5%8A%A1"><span class="toc-text">协议、接口和服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE"><span class="toc-text">协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text">接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1"><span class="toc-text">服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E5%8D%8F%E8%AE%AE%E3%80%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">思考：协议、服务的区别？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8F%90%E4%BE%9B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-text">计算机网络提供的服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E4%B8%8E%E6%97%A0%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="toc-text">面向连接服务与无连接服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%9C%8D%E5%8A%A1%E5%92%8C%E4%B8%8D%E5%8F%AF%E9%9D%A0%E6%9C%8D%E5%8A%A1"><span class="toc-text">可靠服务和不可靠服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%BA%94%E7%AD%94%E6%9C%8D%E5%8A%A1%E5%92%8C%E6%97%A0%E5%BA%94%E7%AD%94%E6%9C%8D%E5%8A%A1"><span class="toc-text">有应答服务和无应答服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ISO-OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-text">ISO&#x2F;OSI参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%AD%E7%BB%A7%E7%B3%BB%E7%BB%9F%E6%9C%80%E9%AB%98%E4%BD%8D3%E5%B1%82%EF%BC%9F"><span class="toc-text">思考：为什么中继系统最高位3层？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E5%8D%8F%E8%AE%AE%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F%E9%80%9A%E4%BF%A1%E5%AD%90%E7%BD%91%EF%BC%88%E4%B8%8B%E4%B8%89%E5%B1%82%EF%BC%89%E4%B8%8E%E8%B5%84%E6%BA%90%E5%AD%90%E7%BD%91%EF%BC%88%E4%B8%8A%E4%B8%89%E5%B1%82%EF%BC%89%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%EF%BC%88Physical-Layer"><span class="toc-text">物理层（Physical Layer)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93"><span class="toc-text">思考：什么是透明传输</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%EF%BC%88Data-Link-Layer"><span class="toc-text">数据链路层（Data Link Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%EF%BC%88Network-Layer"><span class="toc-text">网络层（Network Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82%EF%BC%88Transport-Layer"><span class="toc-text">传输层（Transport Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82%EF%BC%88Session-Layer"><span class="toc-text">会话层（Session Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%B1%82%EF%BC%88Presentation-Layer"><span class="toc-text">表示层（Presentation Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%88Application-Layer"><span class="toc-text">应用层（Application Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88RIP%E6%98%AF%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE%EF%BC%9F"><span class="toc-text">思考：为什么RIP是应用层协议？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-text">TCP&#x2F;IP参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94%EF%BC%9F"><span class="toc-text">思考：参考模型的结构对比？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP%E4%B8%8EOSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">TCP&#x2F;IP与OSI参考模型的比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E7%82%B9"><span class="toc-text">相似点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%EF%BC%9F%E4%B8%A4%E8%80%85%E9%83%BD%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E8%81%94%E7%9A%84%EF%BC%9F"><span class="toc-text">思考：什么是异构网络？两者都是如何实现异构网络的互联的？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="toc-text">不同点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E5%92%8C%E6%97%A0%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">面向连接和无连接的区别？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%B1%82%E7%BB%93%E6%9E%84%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">五层结构的提出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%95%E6%9C%9B"><span class="toc-text">展望</span></a></li></ol></div></div><div class="widget-header cap dis-select"><span class="name">物理层</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/index.html"><span class="toc-text">通信基础</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E4%B8%8E%E4%BA%A4%E6%8D%A2/index.html"><span class="toc-text">数据生成与交换</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E4%B8%8E%E8%AE%BE%E5%A4%87/index.html"><span class="toc-text">传输介质与设备</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据链路层</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/DL%E5%B1%82%E5%8A%9F%E8%83%BD%E4%B8%8E%E7%BB%84%E5%B8%A7/index.html"><span class="toc-text">DL层功能与组帧</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/index.html"><span class="toc-text">流量传输与可靠传输</span></a></div></div></widget>
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">计网概述</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html#start"><span class="toc-text">什么是计算机网络</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82/index.html"><span class="toc-text">计算机网络分层</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/index.html"><span class="toc-text">常见分层结构</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%9C%8D%E5%8A%A1"><span class="toc-text"> 协议、接口和服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE"><span class="toc-text"> 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text"> 接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1"><span class="toc-text"> 服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%8D%8F%E8%AE%AE-%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：协议、服务的区别？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%8F%90%E4%BE%9B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-text"> 计算机网络提供的服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1%E4%B8%8E%E6%97%A0%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="toc-text"> 面向连接服务与无连接服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%9C%8D%E5%8A%A1%E5%92%8C%E4%B8%8D%E5%8F%AF%E9%9D%A0%E6%9C%8D%E5%8A%A1"><span class="toc-text"> 可靠服务和不可靠服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%BA%94%E7%AD%94%E6%9C%8D%E5%8A%A1%E5%92%8C%E6%97%A0%E5%BA%94%E7%AD%94%E6%9C%8D%E5%8A%A1"><span class="toc-text"> 有应答服务和无应答服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#isoosi%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-text"> ISO&#x2F;OSI参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%AD%E7%BB%A7%E7%B3%BB%E7%BB%9F%E6%9C%80%E9%AB%98%E4%BD%8D3%E5%B1%82"><span class="toc-text"> 思考：为什么中继系统最高位3层？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%8D%8F%E8%AE%AE%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8C%BA%E5%88%AB%E9%80%9A%E4%BF%A1%E5%AD%90%E7%BD%91%E4%B8%8B%E4%B8%89%E5%B1%82%E4%B8%8E%E8%B5%84%E6%BA%90%E5%AD%90%E7%BD%91%E4%B8%8A%E4%B8%89%E5%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82physical-layer"><span class="toc-text"> 物理层（Physical Layer)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93"><span class="toc-text"> 思考：什么是透明传输</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82data-link-layer"><span class="toc-text"> 数据链路层（Data Link Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82network-layer"><span class="toc-text"> 网络层（Network Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82transport-layer"><span class="toc-text"> 传输层（Transport Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82session-layer"><span class="toc-text"> 会话层（Session Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%B1%82presentation-layer"><span class="toc-text"> 表示层（Presentation Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82application-layer"><span class="toc-text"> 应用层（Application Layer)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88rip%E6%98%AF%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="toc-text"> 思考：为什么RIP是应用层协议？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tcpip%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-text"> TCP&#x2F;IP参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94"><span class="toc-text"> 思考：参考模型的结构对比？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tcpip%E4%B8%8Eosi%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text"> TCP&#x2F;IP与OSI参考模型的比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E7%82%B9"><span class="toc-text"> 相似点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E4%B8%A4%E8%80%85%E9%83%BD%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E8%81%94%E7%9A%84"><span class="toc-text"> 思考：什么是异构网络？两者都是如何实现异构网络的互联的？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="toc-text"> 不同点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E8%BF%9E%E6%8E%A5%E5%92%8C%E6%97%A0%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 面向连接和无连接的区别？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E5%B1%82%E7%BB%93%E6%9E%84%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text"> 五层结构的提出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%95%E6%9C%9B"><span class="toc-text"> 展望</span></a></li></ol></div></div><div class="widget-header cap dis-select"><span class="name">物理层</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/index.html"><span class="toc-text">通信基础</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E4%B8%8E%E4%BA%A4%E6%8D%A2/index.html"><span class="toc-text">数据生成与交换</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E4%B8%8E%E8%AE%BE%E5%A4%87/index.html"><span class="toc-text">传输介质与设备</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据链路层</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/DL%E5%B1%82%E5%8A%9F%E8%83%BD%E4%B8%8E%E7%BB%84%E5%B8%A7/index.html"><span class="toc-text">DL层功能与组帧</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93/index.html"><span class="toc-text">流量传输与可靠传输</span></a></div></div></widget>
 
 
 
@@ -142,16 +148,25 @@ var _hmt = _hmt || [];
 
   <article class='md-text content wiki reveal'>
   <h1 class="article-title"><span>常见分层结构</span></h1>
-  <hr>
-<p>title: 计算机网络笔记—Part3<br>comments: false<br>top: false<br>date: 2021-03-27 19:35:05<br>tags: [408,计算机网络]<br>categories: </p>
-<pre><code>- [个人笔记,计算机网络]
-</code></pre><hr>
+  <hr />
+<p>title: 计算机网络笔记–Part3<br />
+comments: false<br />
+top: false<br />
+date: 2021-03-27 19:35:05<br />
+tags: [408,计算机网络]<br />
+categories:<br />
+- [个人笔记,计算机网络]</p>
+<hr />
 <p>这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战争。在这种时候，你的心被颠倒了，但在别人眼里，你只是比平时安静一点，没有人会觉得奇怪。这种战争注定是单枪匹马的。</p>
 <span id="more"></span>
-<h2 id="协议、接口和服务"><a href="#协议、接口和服务" class="headerlink" title="协议、接口和服务"></a>协议、接口和服务</h2><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>协议是一些规则的集合。在网络中要做到有条不紊的交换数据，就必须遵循一些实现约定好的规则，这些规则明确规定了所交换的数据的格式和一些其他问题。这些为进行网络中的数据交换而建立的规则、标准和约定称为网络协议，他是控制两个或多个对等实体进行通信的规则的集合，是水平的。不定等实体之间是没有协议的，比如用TCP/IP协议栈通信的两个节点，节点A的传输层和节点B的传输层之间存在协议，但是节点A的传输层和节点B的网络层之间就不存在协议，网络协议也称为协议。</p>
+<h2 id="协议-接口和服务"><a class="markdownIt-Anchor" href="#协议-接口和服务"></a> 协议、接口和服务</h2>
+<h3 id="协议"><a class="markdownIt-Anchor" href="#协议"></a> 协议</h3>
+<p>协议是一些规则的集合。在网络中要做到有条不紊的交换数据，就必须遵循一些实现约定好的规则，这些规则明确规定了所交换的数据的格式和一些其他问题。这些为进行网络中的数据交换而建立的规则、标准和约定称为网络协议，他是控制两个或多个对等实体进行通信的规则的集合，是水平的。不定等实体之间是没有协议的，比如用TCP/IP协议栈通信的两个节点，节点A的传输层和节点B的传输层之间存在协议，但是节点A的传输层和节点B的网络层之间就不存在协议，网络协议也称为协议。</p>
 <p>一个协议由语法、语义和同步三部分组成。语法规定了传输数据的格式，语义规定了所要完成的功能，即需要发出何种控制信息、完成何种动作以及做出何种应答，同步规定了执行各操作的条件、时序关系等，即事件实现顺序的详细说明。一个完整的协议通常应该具有线路管理（建立、释放连接）、差错控制。数据转转换等功能。</p>
-<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>接口是同一节点内相邻两层之间交换信息的连接点，是一个系统内部的规定。每层只能相邻的两层之间定义接口，不能跨层定义接口，在典型的接口上，同一节点的相邻两层的实体通过服务访问点（SAP）进行交互。服务是通过SAP提供给上层使用的，第n层的SAP就是第n+1层可以访问第n层的地方。每一个SAP都有一个能够标识他的地址。SAP是一个抽象概念，他实际上是一个逻辑接口（类似于信箱），与通常所说的两个设备之间的接口是不同的，即使一个区域为接口，并不是实体上的“接口”。</p>
-<h3 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h3><p>服务是指下层为紧邻的上层提供的功能调用，他是垂直的，对等实体在协议的控制下，使得本层能为上一层提供服务，但要实现本层协议还需要下一层所提供的的服务。</p>
+<h3 id="接口"><a class="markdownIt-Anchor" href="#接口"></a> 接口</h3>
+<p>接口是同一节点内相邻两层之间交换信息的连接点，是一个系统内部的规定。每层只能相邻的两层之间定义接口，不能跨层定义接口，在典型的接口上，同一节点的相邻两层的实体通过服务访问点（SAP）进行交互。服务是通过SAP提供给上层使用的，第n层的SAP就是第n+1层可以访问第n层的地方。每一个SAP都有一个能够标识他的地址。SAP是一个抽象概念，他实际上是一个逻辑接口（类似于信箱），与通常所说的两个设备之间的接口是不同的，即使一个区域为接口，并不是实体上的“接口”。</p>
+<h3 id="服务"><a class="markdownIt-Anchor" href="#服务"></a> 服务</h3>
+<p>服务是指下层为紧邻的上层提供的功能调用，他是垂直的，对等实体在协议的控制下，使得本层能为上一层提供服务，但要实现本层协议还需要下一层所提供的的服务。</p>
 <p>上层使用下层所提供的服务时必须与下层交换一些指令，这些命令在OSI中称为服务原语，OSI服务原语可以分为下面四种：</p>
 <ul>
 <li>请求（Request)：由服务用户发往服务提供者，请求完成某项工作。</li>
@@ -160,39 +175,49 @@ var _hmt = _hmt || [];
 <li>证实（Confirmation)：由服务提供者发往服务用户，作为对请求的证实。</li>
 </ul>
 <p>这四类原语用于不同的功能，如建立连接、传输数据和断开连接等，有应答服务包括全部4类原语，而无应答服务则只有请求和指示两类原语。我们用一个图来说明：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210327200618.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210327200618.png" alt="" /></p>
 <p>假设现在端系统A的n+1层向端系统Bn+1层进行了一个交换信息行为，那么n+1层需要先向n层发送请求，然后n层也一直向下发送请求直至物理层，然后物理层传输信号到达系统B的物理层再逐层向上传递指示。当端系统B的n+1层处理完信号以后，如果不需要响应，那么这次操作就完成了，否则B中的n+1层向n层发送响应，然后n层及以下层也是逐层向下发送响应，最后到达物理层通过传输到达系统A，再逐层向上传递证实。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>我们一定要注意服务是上下相邻层之间才能进行的，即n+1层只能使用第n的服务，他不能跨层使用。当原语传递到n层后，继续再向上或向下传递就是通过第n层使用n-1层的服务了。此时就和n+1层没有直接关系了。</p></div></div> 
-<h4 id="思考：协议、服务的区别？"><a href="#思考：协议、服务的区别？" class="headerlink" title="思考：协议、服务的区别？"></a>思考：协议、服务的区别？</h4><p>注意协议和服务概念上不同。首先，只有本层协议的实现才能保证向上一层提供服务，本层的服务用户只能看见服务而无法看见下面的协议，即下面的协议对上层的服务是透明的而协议不透明。其次协议是水平的，协议是控制对等实体之间通信的规则，而服务时垂直的，服务是由下层通过层间接口向上层提供的。另外，并非在一层内完成的全部功能都称为服务，只有能够被高层实体”看得见“的功能才是服务。</p>
+<h4 id="思考协议-服务的区别"><a class="markdownIt-Anchor" href="#思考协议-服务的区别"></a> 思考：协议、服务的区别？</h4>
+<p>注意协议和服务概念上不同。首先，只有本层协议的实现才能保证向上一层提供服务，本层的服务用户只能看见服务而无法看见下面的协议，即下面的协议对上层的服务是透明的而协议不透明。其次协议是水平的，协议是控制对等实体之间通信的规则，而服务时垂直的，服务是由下层通过层间接口向上层提供的。另外，并非在一层内完成的全部功能都称为服务，只有能够被高层实体”看得见“的功能才是服务。</p>
 <p>协议、接口、服务的关系如下图：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210327201722.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210327201722.png" alt="" /></p>
 <p>接口就是实体n+1和实体n之间能够交换原语的通道。</p>
-<h3 id="计算机网络提供的服务"><a href="#计算机网络提供的服务" class="headerlink" title="计算机网络提供的服务"></a>计算机网络提供的服务</h3><h4 id="面向连接服务与无连接服务"><a href="#面向连接服务与无连接服务" class="headerlink" title="面向连接服务与无连接服务"></a>面向连接服务与无连接服务</h4><p>面向连接服务中，通信前双方必须先建立连接，分配相应的资源（如缓冲区等），以保证通信能够正常进行，传输结束以后释放连接和占用的资源。这种服务可以分为连接建立，数据传输和连接释放三个阶段，比如TCP就是一种面向连接服务的协议。</p>
+<h3 id="计算机网络提供的服务"><a class="markdownIt-Anchor" href="#计算机网络提供的服务"></a> 计算机网络提供的服务</h3>
+<h4 id="面向连接服务与无连接服务"><a class="markdownIt-Anchor" href="#面向连接服务与无连接服务"></a> 面向连接服务与无连接服务</h4>
+<p>面向连接服务中，通信前双方必须先建立连接，分配相应的资源（如缓冲区等），以保证通信能够正常进行，传输结束以后释放连接和占用的资源。这种服务可以分为连接建立，数据传输和连接释放三个阶段，比如TCP就是一种面向连接服务的协议。</p>
 <p>在无连接服务中，通信前双方不需要先建立连接，需要发送数据时可以直接发送，把每个带有目的地址的包（报文分组）传送到线路上，有系统选定路线进行传输，这是一种不可靠的服务。这种服务被描述为“尽最大努力交付”，他并不保证通信的可靠性。例如IP、UDP等就是一种无连接服务的协议。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>我们可以总结出面向连接服务是一种可靠传输，而无连接服务是一种不可靠连接。</p></div></div> 
-<h4 id="可靠服务和不可靠服务"><a href="#可靠服务和不可靠服务" class="headerlink" title="可靠服务和不可靠服务"></a>可靠服务和不可靠服务</h4><p>可靠服务就是指网络具有纠错、检错、应答进制，能够保证数据正确、可靠地传送到目的地。</p>
+<h4 id="可靠服务和不可靠服务"><a class="markdownIt-Anchor" href="#可靠服务和不可靠服务"></a> 可靠服务和不可靠服务</h4>
+<p>可靠服务就是指网络具有纠错、检错、应答进制，能够保证数据正确、可靠地传送到目的地。</p>
 <p>不可靠服务是指网络只是尽量正确、可靠地传送，而不能保证数据正确、可靠地传输到目的地，是一种尽力而为的服务。</p>
 <p>对于提供不可靠服务的网络，网络的正确性、可靠性应该由应用或者用户来保证。例如：用户收到信息后要判断信息是否正确，如果不正确，那么用户要把出错信息报告给信息的发送者，以便发送者进行纠正措施。通过用户的这些措施，可以把不可靠的服务变成可靠的服务。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>在一层内完成的全部功能并非都称为服务，只有那些能够被高一层实体“看得见”的功能才能成为服务。</p></div></div> 
-<h4 id="有应答服务和无应答服务"><a href="#有应答服务和无应答服务" class="headerlink" title="有应答服务和无应答服务"></a>有应答服务和无应答服务</h4><p>有应答服务是指接收方收到数据以后向发送方给出相应的应答，该应答有传输系统内部自动实现，而不由用户实现。所发送的应答既可以是肯定的应答也可以是否定应答，通常在接收到的数据有错误时发送否定应答。例如：文件传输服务就是一种有应答服务。</p>
+<h4 id="有应答服务和无应答服务"><a class="markdownIt-Anchor" href="#有应答服务和无应答服务"></a> 有应答服务和无应答服务</h4>
+<p>有应答服务是指接收方收到数据以后向发送方给出相应的应答，该应答有传输系统内部自动实现，而不由用户实现。所发送的应答既可以是肯定的应答也可以是否定应答，通常在接收到的数据有错误时发送否定应答。例如：文件传输服务就是一种有应答服务。</p>
 <p>无应答服务是指接收方收到数据后不自动给出应答。若需要应答，则由高层实现，例如：对于www服务，客户端收到服务器发送的页面文件后不给出应答。</p>
-<h2 id="ISO-OSI参考模型"><a href="#ISO-OSI参考模型" class="headerlink" title="ISO/OSI参考模型"></a>ISO/OSI参考模型</h2><p>我们在上一章中讲到计算机网络中会进行结构分层，这里就将以下网络体系的分层结构模型。第一种就是OSI参考模型。</p>
+<h2 id="isoosi参考模型"><a class="markdownIt-Anchor" href="#isoosi参考模型"></a> ISO/OSI参考模型</h2>
+<p>我们在上一章中讲到计算机网络中会进行结构分层，这里就将以下网络体系的分层结构模型。第一种就是OSI参考模型。</p>
 <p>OSI参考模型是由国际标准化组织（ISO）提出的网络体系结构模型，称为开放系统互联参考模型（OSI/RM），通常简称为OSI参考模型。OSI一共分为了7层，从下到上依次为物理层、数据链路层、网络层、传输层、会话层、表示层、应用层。第三层统称为通信子网，他是为了联网而附加的通信设备，完成数据的传输功能，高三层统称为资源子网，它相当于计算机系统，完成数据的处理功能。而传输层承上启下。OSI参考模型如下图：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328104559.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328104559.png" alt="" /></p>
 <p>我们前面还讲过打包的过程和拆包的过程以及PDU和SDU的关系：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328104706.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328104706.png" alt="" /></p>
 <p>我们通过上图可以看到在传输时实际上只是一直在通信子网传输，只有发送端和接收端会涉及到资源子网的上三层。并且上四层之间貌似是通过协议直接进行的数据交换，但是实际上都是通过通信子网的下三层呈现一个U型方向传送实现的。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>只有源端和目的端的主机是7层，中继系统是3层或者3层以下。每一层之间通过OSAP接口实现连接。</p></div></div>
-<h3 id="思考：为什么中继系统最高位3层？"><a href="#思考：为什么中继系统最高位3层？" class="headerlink" title="思考：为什么中继系统最高位3层？"></a>思考：为什么中继系统最高位3层？</h3><p>我们在了解了一个分组信息的传输过程后就不难理解了，一个数据信息最终会分成分组在网络层进行转发，选择合适的路径进行通信网络间的传输，而转发需要在网络层实现（通过IP地址实现跨网），因此中继系统最高位3层。但是有些数据并不需要跨网传输，而仅仅需要在一个以太网下进行传输，因此不会用到网络层的服务，仅仅需要数据链路层即可，因此有些中继系统是2层。第二层的转发设备是交换机，第三层的转发设备是路由器。</p>
-<h3 id="思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？"><a href="#思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？" class="headerlink" title="思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？"></a>思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？</h3><p>协议是水平的，服务是纵向的。对于上三层的协议是端到端的，点都点的或者C/S模型。而对于下三层的通信子网是跳到跳的，一般一个转发过程需要经过5-6跳经过许许多多个中继设备。</p>
+<h3 id="思考为什么中继系统最高位3层"><a class="markdownIt-Anchor" href="#思考为什么中继系统最高位3层"></a> 思考：为什么中继系统最高位3层？</h3>
+<p>我们在了解了一个分组信息的传输过程后就不难理解了，一个数据信息最终会分成分组在网络层进行转发，选择合适的路径进行通信网络间的传输，而转发需要在网络层实现（通过IP地址实现跨网），因此中继系统最高位3层。但是有些数据并不需要跨网传输，而仅仅需要在一个以太网下进行传输，因此不会用到网络层的服务，仅仅需要数据链路层即可，因此有些中继系统是2层。第二层的转发设备是交换机，第三层的转发设备是路由器。</p>
+<h3 id="思考协议和服务的区别通信子网下三层与资源子网上三层的区别"><a class="markdownIt-Anchor" href="#思考协议和服务的区别通信子网下三层与资源子网上三层的区别"></a> 思考：协议和服务的区别？通信子网（下三层）与资源子网（上三层）的区别？</h3>
+<p>协议是水平的，服务是纵向的。对于上三层的协议是端到端的，点都点的或者C/S模型。而对于下三层的通信子网是跳到跳的，一般一个转发过程需要经过5-6跳经过许许多多个中继设备。</p>
 <p>下面我们详细学习一下各个层的功能：</p>
-<h3 id="物理层（Physical-Layer"><a href="#物理层（Physical-Layer" class="headerlink" title="物理层（Physical Layer)"></a>物理层（Physical Layer)</h3><p>物理层的传输单位是比特，任务是透明的传输比特流，功能是在物理媒体上为数据端设备透明地传输原始比特流。</p>
-<h4 id="思考：什么是透明传输"><a href="#思考：什么是透明传输" class="headerlink" title="思考：什么是透明传输"></a>思考：什么是透明传输</h4><p>透明传输是指不管是什么数据，都可以以一定的比特组合，在物理层链路上进行传送：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328105401.png" alt=""></p>
+<h3 id="物理层physical-layer"><a class="markdownIt-Anchor" href="#物理层physical-layer"></a> 物理层（Physical Layer)</h3>
+<p>物理层的传输单位是比特，任务是透明的传输比特流，功能是在物理媒体上为数据端设备透明地传输原始比特流。</p>
+<h4 id="思考什么是透明传输"><a class="markdownIt-Anchor" href="#思考什么是透明传输"></a> 思考：什么是透明传输</h4>
+<p>透明传输是指不管是什么数据，都可以以一定的比特组合，在物理层链路上进行传送：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328105401.png" alt="" /></p>
 <p>也就是说物理层可以承担传输所有数据的功能。</p>
 <p>物理层主要是定义数据端设备（DTE）和数据通信设备（DCE）的物理与逻辑连接方法，所以物理层协议也称为物理层接口标准。由于在通信技术的早期阶段，通信规则称为规程，因此物理层协议也称为物理层规程。</p>
 <p>物理层接口标准很多，如：EIA-232C、EIA/TIA RS-449、CCITT的X2.1等。下图表示了两个通信节点及它们间的一段通信链路，物理层主要研究以下内容：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328105903.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328105903.png" alt="" /></p>
 <ol>
 <li>通信链路与通信节点的链接需要一些电路接口，物理层规定了这些接口的一些参数，如机械形状和尺寸、交换电路的数量和排列等，例如：笔记本电脑上的网线接口，就是物理层规定的内容之一</li>
 <li>物理层也规定了通信链路上传输的信号的意义和电气特征。例如物理层规定信号A代表数字0，那么当节点要传输数字0时，就会发送信号A，当节点接收到A信号以后，就知道在自己接收到的实际上是数字0.</li>
@@ -206,10 +231,11 @@ var _hmt = _hmt || [];
 <li>比特同步</li>
 <li>比特编码</li>
 </ul>
-<h3 id="数据链路层（Data-Link-Layer"><a href="#数据链路层（Data-Link-Layer" class="headerlink" title="数据链路层（Data Link Layer)"></a>数据链路层（Data Link Layer)</h3><p>数据链路层的传输单位是帧，任务是将网络层传来的IP数据报组装成帧。数据链路层的功能可以概括为成帧、差错控制、流量控制和传输管理等。</p>
+<h3 id="数据链路层data-link-layer"><a class="markdownIt-Anchor" href="#数据链路层data-link-layer"></a> 数据链路层（Data Link Layer)</h3>
+<p>数据链路层的传输单位是帧，任务是将网络层传来的IP数据报组装成帧。数据链路层的功能可以概括为成帧、差错控制、流量控制和传输管理等。</p>
 <p>由于外界噪声的干扰，原始的物理连接在传输比特流时可能发生错误：左边节点想向右边节点传输数字0，于是发送了信号A，但是由于传输过程中受到了干扰，信号A变成了限号B，而信号B又刚好代表1，右边节点接收到信号B时，就会误以为左边节点传送了数字1，从而发生差错。这种差错我们称之为信号翻转，即0变成了1,1变成了0，其实我们在学习了数字逻辑以后就知道导致这种现象的原因是电平电压受噪音干扰发生了波动导致的。此时我们需要通过适当的办法避免这种错误的干扰，于是两个节点之间如果规定了数据链路层协议，那么就可以检测出这些数据翻转的差错，然后把收到的错误信息丢弃，这就是差错控制功能。因此差错控制功能是通过数据链路层完成的。</p>
 <p>同时，在两个相邻接点之间传送数据时，由于两个节点的性能不同，可能节点A发送数据速率会快于节点B接受数据的速率，如果不加以控制，那么节点B就会丢弃很多来不及接受的正确数据，造成传输线路效率的下降。流量控制可以协调两个节点的速率，使节点A发送数据的速率刚好是节点B可以接受到的速率。总之就是A节点发送数据的速率要小于等于节点B接受数据的速率。</p>
-<p>广播式网络在数据链路层还要处理新的问题（快速跳转-&gt;<a target="_blank" rel="noopener" href="https://coolchong.cn/2021/03/03/comnet-note1/">《广播式网络》</a>），即如何控制对共享信道的访问，数据链路层的一个特殊的子层—介质访问子层，就是专门处理这个问题的以保证公共信道不会出现信息传输冲突。</p>
+<p>广播式网络在数据链路层还要处理新的问题（快速跳转-&gt;<a target="_blank" rel="noopener" href="https://coolchong.cn/2021/03/03/comnet-note1/">《广播式网络》</a>），即如何控制对共享信道的访问，数据链路层的一个特殊的子层–介质访问子层，就是专门处理这个问题的以保证公共信道不会出现信息传输冲突。</p>
 <p>典型的数据链路层协议有SDLC,HDLC,PPP,STP和帧中继等。</p>
 <p>下面我们总结一下数据链路层的功能：</p>
 <ul>
@@ -218,7 +244,8 @@ var _hmt = _hmt || [];
 <li>流量控制</li>
 <li>访问（介入）控制</li>
 </ul>
-<h3 id="网络层（Network-Layer"><a href="#网络层（Network-Layer" class="headerlink" title="网络层（Network Layer)"></a>网络层（Network Layer)</h3><p>网络层的传输数据单位是数据报，它主要是实现通信子网间的数据传输运行控制，主要任务就是把网络层的协议数据单元（分组）从源端传送到目的端，为分组在交换网上的不同主机提供通信服务。我们一定要注意在网络层上<strong>端指的是服务端和客户端，即是主机，而不是端口，因此不区分是哪一个程序</strong>。网络层为了实现分组的传输的最短路径以及速率稳定，提供了以下功能：流量控制，拥塞控制，差错控制和网际互联等功能。</p>
+<h3 id="网络层network-layer"><a class="markdownIt-Anchor" href="#网络层network-layer"></a> 网络层（Network Layer)</h3>
+<p>网络层的传输数据单位是数据报，它主要是实现通信子网间的数据传输运行控制，主要任务就是把网络层的协议数据单元（分组）从源端传送到目的端，为分组在交换网上的不同主机提供通信服务。我们一定要注意在网络层上<strong>端指的是服务端和客户端，即是主机，而不是端口，因此不区分是哪一个程序</strong>。网络层为了实现分组的传输的最短路径以及速率稳定，提供了以下功能：流量控制，拥塞控制，差错控制和网际互联等功能。</p>
 <p>其中流量控制和数据链路层的流量控制类似，就是保证了发送端的速率和接收端的速率保持在一个合理的范围，使得两端的缓冲区不会出现溢出过多从而造成大量丢弃分组造成的浪费现象。而拥塞控制是网络层专属的功能，他主要是用来保证在子网传输的过程中不会出现子网间分组过多而造成的通信体系整体瘫痪通信功能下降的问题。差错控制还是进行错误的检测，当检测有错误后选择重传即可，常用的差错检测方法有奇偶校验，海明码，CRC循环冗余等，接收方根据这个规则保证向上传递的数据时无误的。</p>
 <p>因特网是一个很大的互联网，他由大量的异构网络通过路由器（Router)相互连接起来。因特网的主要网络层协议是无连接的网际协议（Internet,IP)和许多路由选择协议，因此网络层也称为网际层或者IP层。</p>
 <p>网络是许许多多多个子网构成的包含了路由器，主机等概念，因此他和我们生活中所理解的网络有一定的区别，是在计算机网络体系结构中使用的专属名词。在网络层常见的协议有IP、IPX、ICMP、IGMP、ARP、RARP和OSPF等。</p>
@@ -228,11 +255,12 @@ var _hmt = _hmt || [];
 <li>流量控制，差错控制</li>
 <li>特有的拥塞控制</li>
 </ul>
-<h3 id="传输层（Transport-Layer"><a href="#传输层（Transport-Layer" class="headerlink" title="传输层（Transport Layer)"></a>传输层（Transport Layer)</h3><p>传输层又称为运输层，传输数据单元是报文段（TCP）或者用户数据报（UDP），传输层是层负责主机中两个进程间的通信，功能是为端到端连接提供可靠的传输服务，为端到端提供流量控制、差错控制、服务质量、数据传输管理等服务。</p>
+<h3 id="传输层transport-layer"><a class="markdownIt-Anchor" href="#传输层transport-layer"></a> 传输层（Transport Layer)</h3>
+<p>传输层又称为运输层，传输数据单元是报文段（TCP）或者用户数据报（UDP），传输层是层负责主机中两个进程间的通信，功能是为端到端连接提供可靠的传输服务，为端到端提供流量控制、差错控制、服务质量、数据传输管理等服务。</p>
 <p>数据链路层、网络层提供的是点到点的服务，即一个主机到另一个主机的数据通信，但是我们知道实际使用时许多个进程应用需要同时进行数据的传输，因此点到点需要进一步分化，也就是端到端，即每一个进程对应着同一个主机IP不同的端口号，实现不同的进程使用相同的IP+不同的端口号同时独立的进行数据的传输，彼此之间互不影响。而传输层和应用层就是实现端到端的服务。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>我们可以这样理解点到点和端到端的区别，一个点就是指一个硬件地址或IP地址，同一个硬件上的应用显然IP地址相同，而一个端就是一个主机上的某一个软件进程的通信端口，因此同一个主机上的不用应用进程端口号不同。</p></div></div>
 <p>使用传输层的服务，高层用户可以直接进行端到端的数据传输，从而忽略通信子网的存在。通过传输层的屏蔽，高层用户是看不到子网的交替和变化的。我们看下图就可以理解：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328104559.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210328104559.png" alt="" /></p>
 <p>我们可以看到实际上传输层协议也是由下三层服务为基础实现的，但是在中继系统是不会涉及到传输层的协议的，就好像在传输过程中，传输层上面的协议服务是直接连接源端和目的端的，这就是所说的忽略通信子网的存在。</p>
 <p>同时我们还要理解<code>透明</code>一词在计网这种的意思，它是指看不见的意思，就好像空气看不到的样子。而低层协议相对于高层协议就是透明的，即高层协议是通过低层协议提供的服务实现的更高层功能的，但是他只关心低层协议提供的服务，而不关心低层协议的服务具体是如何实现的。这就有点像OS中低层硬件层和高层软件层的关系，软件只关注如何使用硬件层提供的服务，而不关系硬件层如何实现这些功能的。因此高层协议是不知道低层协议的运行机制的。</p>
 <p>因为传输层实现的是端到端服务，而一个主机可以有多个进程，因此传输层是具有复用和分用的功能。复用是指多个应用进程可同时使用下面传输层的服务，分用是指传输层把收到的信息分别交付给上面应用层中相应的进程。即复用是数据从上到下汇聚的过程，而分用是聚合的数据从下到上分开分别服务与对应进程的过程，两者是对立的概念、</p>
@@ -245,12 +273,15 @@ var _hmt = _hmt || [];
 <li>在不可靠传输基础上实现了可靠传输</li>
 <li>复用分用</li>
 </ul>
-<h3 id="会话层（Session-Layer"><a href="#会话层（Session-Layer" class="headerlink" title="会话层（Session Layer)"></a>会话层（Session Layer)</h3><p>会话层允许不同主机上的各个进程之间进行会话，会话层利用传输层提供的端到端服务，向表示层提供它的增值服务。他为表示层实体或用户进程建立连接并在连接上有序地传输数据，这就是会话，也称为建立同步（SYN)。会话层负责管理主机间的会话进程，包括建立、管理及终止进程间的会话，会话层可以使用检验点是通信会话在通信失效时从校验点继续恢复通信，实现数据同步。常用的协议是ADSP、ASP，适用于传输大文件。</p>
-<h3 id="表示层（Presentation-Layer"><a href="#表示层（Presentation-Layer" class="headerlink" title="表示层（Presentation Layer)"></a>表示层（Presentation Layer)</h3><p>表示层主要处理两个通信系统交换信息的方式，不同机器采用的编码和表示方法可能不同，使用的数据结构也是不同的。为了使不同表示方法的数据和信息之间能够相互交换，表示层采用抽象的标准方法定义数据结构，并且采用标准的编码形式。数据压缩、加密和解密也是在表示层提供的数据变换功能。主要的协议有JPEG、ASII等。</p>
+<h3 id="会话层session-layer"><a class="markdownIt-Anchor" href="#会话层session-layer"></a> 会话层（Session Layer)</h3>
+<p>会话层允许不同主机上的各个进程之间进行会话，会话层利用传输层提供的端到端服务，向表示层提供它的增值服务。他为表示层实体或用户进程建立连接并在连接上有序地传输数据，这就是会话，也称为建立同步（SYN)。会话层负责管理主机间的会话进程，包括建立、管理及终止进程间的会话，会话层可以使用检验点是通信会话在通信失效时从校验点继续恢复通信，实现数据同步。常用的协议是ADSP、ASP，适用于传输大文件。</p>
+<h3 id="表示层presentation-layer"><a class="markdownIt-Anchor" href="#表示层presentation-layer"></a> 表示层（Presentation Layer)</h3>
+<p>表示层主要处理两个通信系统交换信息的方式，不同机器采用的编码和表示方法可能不同，使用的数据结构也是不同的。为了使不同表示方法的数据和信息之间能够相互交换，表示层采用抽象的标准方法定义数据结构，并且采用标准的编码形式。数据压缩、加密和解密也是在表示层提供的数据变换功能。主要的协议有JPEG、ASII等。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>在计网的OSI结构中，我们通常把7层结构简化为5层结构，而会话层和表示层通常被简化掉，因为他们的功能较为简单且偏向理论，在实际传输中并不常见，因此OSI结构有时也称为5层结构。</p></div></div>
-<h3 id="应用层（Application-Layer"><a href="#应用层（Application-Layer" class="headerlink" title="应用层（Application Layer)"></a>应用层（Application Layer)</h3><p>表示层是OSI模型的最高层，是用户与网络的界面。应用层为特定类型的网络应用提供访问OSI环境的手段。因为用户的实际应用多种多样，这就要求应用层采用不同的应用协议来解决不同类型的应用要求，因此应用层是最复杂的一层，使用的协议也是最多的。典型的协议有用于文件传输的FTP、用于电子邮件的SMTP、用于万维网的HTTP等。同时在应用层还涉及到了两个模型即P2P和C/S模型我们在后面也会详细学习。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>自此我们简单的了解了OSI各个层之间的主要功能，那么我们就来横向对比以下各个层的区别：</p>
-<div class="table-container">
+<h3 id="应用层application-layer"><a class="markdownIt-Anchor" href="#应用层application-layer"></a> 应用层（Application Layer)</h3>
+<p>表示层是OSI模型的最高层，是用户与网络的界面。应用层为特定类型的网络应用提供访问OSI环境的手段。因为用户的实际应用多种多样，这就要求应用层采用不同的应用协议来解决不同类型的应用要求，因此应用层是最复杂的一层，使用的协议也是最多的。典型的协议有用于文件传输的FTP、用于电子邮件的SMTP、用于万维网的HTTP等。同时在应用层还涉及到了两个模型即P2P和C/S模型我们在后面也会详细学习。</p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>自此我们简单的了解了OSI各个层之间的主要功能，那么我们就来横向对比以下各个层的区别：</p>
 <table>
 <thead>
 <tr>
@@ -305,12 +336,13 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="思考：为什么RIP是应用层协议？"><a href="#思考：为什么RIP是应用层协议？" class="headerlink" title="思考：为什么RIP是应用层协议？"></a>思考：为什么RIP是应用层协议？</h4><p>我们简单了解一下RIP协议，他是基于路径向量算法实现的一种路径选择协议，谈到路径选择，因此它主要是在网络层实现的，但是为什么属于应用层呢？ 我们要注意协议属于那一层不是由实现的层决定的，而是他针对于哪一层工作决定的，而RIP虽然由网络层实现的，但是他应用于应用层，因此RIP是应用层协议。</p>
-<h2 id="TCP-IP参考模型"><a href="#TCP-IP参考模型" class="headerlink" title="TCP/IP参考模型"></a>TCP/IP参考模型</h2><p>前面一讲中我们重点学习了OSI7层模型以及对OSI7层模型简化后的5层模型，但是这种参考模型实际上只是在理论上被广泛的认可，并未广泛应用与商业中，究其原因是分层过于理想，偏向理论。因此APPA在研究ARPnet时提出了TCP/IP模型，这种模型从低到高依次为网络接口层（对应OSI参考模型中的物理层和数据链路层）、网际层、传输层和应用层（对应OSI中的会话层、表示层和应用层）。这种模型更加利于应用，因此得到了广泛的应用而成为了事实上的国际标准。TCP/IP的结构及各层的主要协议如下图：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810111949.png" alt=""></p>
+<h4 id="思考为什么rip是应用层协议"><a class="markdownIt-Anchor" href="#思考为什么rip是应用层协议"></a> 思考：为什么RIP是应用层协议？</h4>
+<p>我们简单了解一下RIP协议，他是基于路径向量算法实现的一种路径选择协议，谈到路径选择，因此它主要是在网络层实现的，但是为什么属于应用层呢？ 我们要注意协议属于那一层不是由实现的层决定的，而是他针对于哪一层工作决定的，而RIP虽然由网络层实现的，但是他应用于应用层，因此RIP是应用层协议。</p>
+<h2 id="tcpip参考模型"><a class="markdownIt-Anchor" href="#tcpip参考模型"></a> TCP/IP参考模型</h2>
+<p>前面一讲中我们重点学习了OSI7层模型以及对OSI7层模型简化后的5层模型，但是这种参考模型实际上只是在理论上被广泛的认可，并未广泛应用与商业中，究其原因是分层过于理想，偏向理论。因此APPA在研究ARPnet时提出了TCP/IP模型，这种模型从低到高依次为网络接口层（对应OSI参考模型中的物理层和数据链路层）、网际层、传输层和应用层（对应OSI中的会话层、表示层和应用层）。这种模型更加利于应用，因此得到了广泛的应用而成为了事实上的国际标准。TCP/IP的结构及各层的主要协议如下图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810111949.png" alt="" /></p>
 <p>网络接口层的功能与OSI的物理层和数据链路层类似。表示物理网络的接口，但是实际上TCP/IP并未真正描述这一部分的功能，只是指出主机必须使用某种协议与网络连接，以便在其上传递IP分组。具体的物理层网络可以是各种类型的局域网，比如以太网，令牌环网、令牌总线等，也可以是电话网、SDH等数据公共网络。总之网络接口层的作用就是从主机或节点接受IP分组，并把它们发送到指定的物理网络上。</p>
-<p><strong>我们不难发现网际层（主机-主机）是TCP/IP体系结构的核心关键部分。</strong>他和OSI网络层的功能非常类似。网际层将分组发送任何一个网络，并为之独立的选择合适的路由来实现跳转，但是每一个分组可能走的路径都是不同的，因此是乱序抵达的，不能保证分组是有序抵达目的主机的，因此各个分组的有序交付由高层负责。网际层定义了标准的分组格式和协议，即IP。他是唯一标识目的的地址，不会在中继系统的跳转中发生变化。当前我们采用的IP协议是第4版，即IPv4,但是现在IPv4地址已经快被使用耗尽了，因此正在向下一版IPv6转换。</p>
+<p>**我们不难发现网际层（主机-主机）是TCP/IP体系结构的核心关键部分。**他和OSI网络层的功能非常类似。网际层将分组发送任何一个网络，并为之独立的选择合适的路由来实现跳转，但是每一个分组可能走的路径都是不同的，因此是乱序抵达的，不能保证分组是有序抵达目的主机的，因此各个分组的有序交付由高层负责。网际层定义了标准的分组格式和协议，即IP。他是唯一标识目的的地址，不会在中继系统的跳转中发生变化。当前我们采用的IP协议是第4版，即IPv4,但是现在IPv4地址已经快被使用耗尽了，因此正在向下一版IPv6转换。</p>
 <p>传输层（应用-应用或者进程-进程）的功能同OSI模型的传输层类似，即使得发送端和目的端主机上的对等实体进行会话。传输层主要有以下两种协议：</p>
 <ol>
 <li>传输控制协议（TCP），这种协议是面向连接的，数据传输的单位是报文段，能够提供可靠的交付即不出错。</li>
@@ -318,19 +350,23 @@ var _hmt = _hmt || [];
 </ol>
 <p>而应用层（用户-用户）包含了所有的高层协议，如虚拟终端协议（Telnet)、文件传输协议（FTP）、域名解析服务（DNS）、电子邮件协议（SMTP）和超文本传输协议（HTTP)等。</p>
 <p>我们连接了TCP/IP参考模型后可以看出IP协议是因特网中的核心协议，上层的一切服务都是依托于网际层的IP实现的。由于TCP/IP可以实现为各种应用提供服务，同时TCP/IP也允许IP协议在各种网络构成的互联网上运行（所谓的IP over everything)，因此因特网才能发展成巨大的规模，同时TCP/IP也能被广泛的应用于认可。</p>
-<h3 id="思考：参考模型的结构对比？"><a href="#思考：参考模型的结构对比？" class="headerlink" title="思考：参考模型的结构对比？"></a>思考：参考模型的结构对比？</h3><p>如下图是不同的参考模型的直视对比图，相同颜色对应的功能是类似的：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810113606.png" alt=""></p>
-<h2 id="TCP-IP与OSI参考模型的比较"><a href="#TCP-IP与OSI参考模型的比较" class="headerlink" title="TCP/IP与OSI参考模型的比较"></a>TCP/IP与OSI参考模型的比较</h2><p>首先我们认同TCP/IP和OSI模型时有许多相似之处的，只不过一个偏向理想的模型，一个偏向于商业应用的便利。</p>
-<h3 id="相似点"><a href="#相似点" class="headerlink" title="相似点"></a>相似点</h3><p>两者都是采取分层的体系结构，将庞大且复杂的问题规划为若干个较容易处理的，范围较小的问题，而且分层的功能也相似。</p>
+<h3 id="思考参考模型的结构对比"><a class="markdownIt-Anchor" href="#思考参考模型的结构对比"></a> 思考：参考模型的结构对比？</h3>
+<p>如下图是不同的参考模型的直视对比图，相同颜色对应的功能是类似的：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810113606.png" alt="" /></p>
+<h2 id="tcpip与osi参考模型的比较"><a class="markdownIt-Anchor" href="#tcpip与osi参考模型的比较"></a> TCP/IP与OSI参考模型的比较</h2>
+<p>首先我们认同TCP/IP和OSI模型时有许多相似之处的，只不过一个偏向理想的模型，一个偏向于商业应用的便利。</p>
+<h3 id="相似点"><a class="markdownIt-Anchor" href="#相似点"></a> 相似点</h3>
+<p>两者都是采取分层的体系结构，将庞大且复杂的问题规划为若干个较容易处理的，范围较小的问题，而且分层的功能也相似。</p>
 <p>其次，两者都是基于独立的协议栈的概念</p>
 <p>最后，两者都可以解决异构网络的互联，实现世界上不同厂家生产的计算机之间的通信。</p>
-<h4 id="思考：什么是异构网络？两者都是如何实现异构网络的互联的？"><a href="#思考：什么是异构网络？两者都是如何实现异构网络的互联的？" class="headerlink" title="思考：什么是异构网络？两者都是如何实现异构网络的互联的？"></a>思考：什么是异构网络？两者都是如何实现异构网络的互联的？</h4><p>首先异构网络就是指组成结构不同的网络，例如A子网是星形结构，B可能是总线形结构，但是通过参考模型描述的功能都可以实现两者的数据通信，网间互联。归根结底，两个模型最终都是通过IP来实现的异构网络的互联的。</p>
-<h3 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h3><p>首先OSI模型的最大贡献就是精确的定义了三个主要概念：服务、协议和接口。服务是纵向相邻两层之间的概念，协议是水平源端和目的端对等实体之间的概念，而接口就是相邻两层数据交付的概念。这与现代的面向对象程序设计思想非常吻合。而TCP/IP模型在这三个概念上却没有明确的区分，不符合软件工程的思想。</p>
+<h4 id="思考什么是异构网络两者都是如何实现异构网络的互联的"><a class="markdownIt-Anchor" href="#思考什么是异构网络两者都是如何实现异构网络的互联的"></a> 思考：什么是异构网络？两者都是如何实现异构网络的互联的？</h4>
+<p>首先异构网络就是指组成结构不同的网络，例如A子网是星形结构，B可能是总线形结构，但是通过参考模型描述的功能都可以实现两者的数据通信，网间互联。归根结底，两个模型最终都是通过IP来实现的异构网络的互联的。</p>
+<h3 id="不同点"><a class="markdownIt-Anchor" href="#不同点"></a> 不同点</h3>
+<p>首先OSI模型的最大贡献就是精确的定义了三个主要概念：服务、协议和接口。服务是纵向相邻两层之间的概念，协议是水平源端和目的端对等实体之间的概念，而接口就是相邻两层数据交付的概念。这与现代的面向对象程序设计思想非常吻合。而TCP/IP模型在这三个概念上却没有明确的区分，不符合软件工程的思想。</p>
 <p>其次，OSI模型产生在协议发明之前，没有偏向于任何特定的协议，通用性良好。但是由于设计者在协议方面没有充足的经验，不知道该把那些功能放到那一层更加合适，因此出现了不适应于商业应用的缺陷。而TCP/IP模型是在协议出现后提出的，因此不会出现协议不能匹配模型的情况。</p>
 <p>第三，TCP/IP模型在设计之初就考虑到了多种异构网络的互联的问题，因此将网际协议（IP）作为了一个独立的重要层次。而OSI模型最初只考虑了利用一种标准的共用数据网络将不同的系统互联，因此OSI模型在认识到网际协议IP的重要性后，只好在网络层中又划分出了一个子层来完成类似于TCP/IP中IP的功能。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>因此OSI参考模型的网络层实际上比TCP/IP参考模型的网际层功能范围更加广，结构也更加复杂。IP协议提供的服务是TCP/IP参考模型的核心也是主要功能，而对于OSI模型网络层还包括了RIP,OSPF等协议提供的服务。</p></div></div>
 <p>最后，OSI模型在网络层支持无连接和面向连接的通信（TCP和UDP），但在传输层仅有面向连接的通信。而TCP/IP模型认为可靠性是端到端的问题，因此他在网际层仅有一种无连接的通信模式，但是传输层支持了无连接和面向连接的两种模式。<strong>这个不同点要牢记！</strong></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -352,14 +388,16 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="面向连接和无连接的区别？"><a href="#面向连接和无连接的区别？" class="headerlink" title="面向连接和无连接的区别？"></a>面向连接和无连接的区别？</h4><p>面向连接分为三个阶段，第一是建立连接，在此阶段，发出一个建立连接的请求，只有在连接成功后，才能开始第二阶段的数据传输，第三阶段当数据传输完毕后，还需要释放连接。而无连接就没有这么复杂的过程，直接进行数据传输。因此面向连接的传输更加可靠但是开销也更大，无连接开销小更加广泛应用于数据传输（毕竟大部分应用对于数据的正确性并不是极高）。</p>
-<h2 id="五层结构的提出"><a href="#五层结构的提出" class="headerlink" title="五层结构的提出"></a>五层结构的提出</h2><p>我们发现OSI和TCP/IP协议都不是完美的，两者都有各自的优缺点。OSI模型试图建立一个全世界计算机网络都要遵循的统一标准，从技术角度来看是追求一种完美的理想状态，但是这也导致了基于OSI模型的软件效率极低，OSI模型缺乏市场与商业动力，结构复杂，实现周期长，运行效率低。而TCP/IP模型又对概念定义模糊，造成层与层之间的界限模糊，协议栈不发。因此我们要采取一种折中的方法，即综合两者的优点，也就提出了5层结构，我们熟知的物理层，数据链路层、网络层、传输层和应用层。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810120321.png" alt=""></p>
+<h4 id="面向连接和无连接的区别"><a class="markdownIt-Anchor" href="#面向连接和无连接的区别"></a> 面向连接和无连接的区别？</h4>
+<p>面向连接分为三个阶段，第一是建立连接，在此阶段，发出一个建立连接的请求，只有在连接成功后，才能开始第二阶段的数据传输，第三阶段当数据传输完毕后，还需要释放连接。而无连接就没有这么复杂的过程，直接进行数据传输。因此面向连接的传输更加可靠但是开销也更大，无连接开销小更加广泛应用于数据传输（毕竟大部分应用对于数据的正确性并不是极高）。</p>
+<h2 id="五层结构的提出"><a class="markdownIt-Anchor" href="#五层结构的提出"></a> 五层结构的提出</h2>
+<p>我们发现OSI和TCP/IP协议都不是完美的，两者都有各自的优缺点。OSI模型试图建立一个全世界计算机网络都要遵循的统一标准，从技术角度来看是追求一种完美的理想状态，但是这也导致了基于OSI模型的软件效率极低，OSI模型缺乏市场与商业动力，结构复杂，实现周期长，运行效率低。而TCP/IP模型又对概念定义模糊，造成层与层之间的界限模糊，协议栈不发。因此我们要采取一种折中的方法，即综合两者的优点，也就提出了5层结构，我们熟知的物理层，数据链路层、网络层、传输层和应用层。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810120321.png" alt="" /></p>
 <p>最后简单介绍一下使用通信协议栈进行通信的节点的数据传输过程。每一个协议栈的最顶端都是一个面向用户的接口。下面各层是通信服务的协议，用户传输一个数据报时，通常给出用户能够理解的自然语言，然后通过应用层，将自然语言转换成用于通信的通信数据。通信数据到达传输层，作为传输层的数据部分（传输层SDU），加上传输层的控制信息（传输层PCI），组成传输层的PDU,然后交付到网络层，传输层的PDU下放到网络层后，就成为了网络层的SDU，然后加上网络层的PCI，又组成了网络层的PDU，下方到数据链路层，<strong>数据链路层要同时在网络层的PDU头和尾都进行包裹形成数据帧</strong>，下放到物理层再进行包裹然后通过光缆信道传输。最后到达接收方节点协议栈，接收方再逆向逐层的将包裹拆开，然后把收到的数据交给用户。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810120455.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210810120455.png" alt="" /></p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>一定要注意只有在数据链路层的成帧过程，是要在数据主体的首部和尾部都进行包裹，而其他层都只是在头部进行包裹。同时传输层是第一个要对信息进行切割分段的过程，当然网络层和数据链路层也可能会对其进一步再分割。</p></div></div>
-<h2 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h2><p>我们现在对计网有了一个整体的认知，接下来我们将以五层参考模型展开进行每一层的协议、服务的详细讲解。通常在学习计网时有自上向下和自下向上的两种学习策略。在学校中我们是自上向下讲解的，但是我发现这样会造成在学习初期有许多疑惑不能理解，因此我在笔记中采用了自下向上的讲解策略，从最底层开始循序渐进的向上层进行学习，更方便于初学者透彻理解每一个协议、服务提出的作用，同时对整体有更全面的掌握。</p>
+<h2 id="展望"><a class="markdownIt-Anchor" href="#展望"></a> 展望</h2>
+<p>我们现在对计网有了一个整体的认知，接下来我们将以五层参考模型展开进行每一层的协议、服务的详细讲解。通常在学习计网时有自上向下和自下向上的两种学习策略。在学校中我们是自上向下讲解的，但是我发现这样会造成在学习初期有许多疑惑不能理解，因此我在笔记中采用了自下向上的讲解策略，从最底层开始循序渐进的向上层进行学习，更方便于初学者透彻理解每一个协议、服务提出的作用，同时对整体有更全面的掌握。</p>
 
   
 
@@ -517,7 +555,7 @@ var _hmt = _hmt || [];
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
   if ('local_search') {
@@ -535,19 +573,19 @@ var _hmt = _hmt || [];
   stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
     stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
@@ -573,7 +611,7 @@ var _hmt = _hmt || [];
       if (!path) {
         path = decodeURI(window.location.pathname);
       }
-      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
         el: '#waline_container',
         path: path,
       }));

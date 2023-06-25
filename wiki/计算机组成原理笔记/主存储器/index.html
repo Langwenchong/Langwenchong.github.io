@@ -17,8 +17,8 @@ var _hmt = _hmt || [];
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
-  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -32,12 +32,12 @@ var _hmt = _hmt || [];
   <title>ComputerSystem：主存储器 - 雨中•学圃堂</title>
 
   
-    <meta name="description" content="易失性半导体随机存储器主存储器由DRAM实现，靠近处理器的那一层（Cache)是由SRAM实现的，这两种半导体随机存储器都属于易失性存储器，只要电源被切断了，那么原来保存的信息便会丢失。DRAM的位成本低于SRAM，速度也慢于SRAM，主要原因是制造DRAM需要更多硅。而ROM属于非易失性存储器。ROM我们后面详细介绍，我们先来学习一下易失性存储器DRAM和SRAM的工作原理。 SRAM工作原理我">
+    <meta name="description" content="易失性半导体随机存储器 主存储器由DRAM实现，靠近处理器的那一层（Cache)是由SRAM实现的，这两种半导体随机存储器都属于易失性存储器，只要电源被切断了，那么原来保存的信息便会丢失。DRAM的位成本低于SRAM，速度也慢于SRAM，主要原因是制造DRAM需要更多硅。而ROM属于非易失性存储器。ROM我们后面详细介绍，我们先来学习一下易失性存储器DRAM和SRAM的工作原理。  SRAM工作">
 <meta property="og:type" content="website">
 <meta property="og:title" content="主存储器">
 <meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
-<meta property="og:description" content="易失性半导体随机存储器主存储器由DRAM实现，靠近处理器的那一层（Cache)是由SRAM实现的，这两种半导体随机存储器都属于易失性存储器，只要电源被切断了，那么原来保存的信息便会丢失。DRAM的位成本低于SRAM，速度也慢于SRAM，主要原因是制造DRAM需要更多硅。而ROM属于非易失性存储器。ROM我们后面详细介绍，我们先来学习一下易失性存储器DRAM和SRAM的工作原理。 SRAM工作原理我">
+<meta property="og:description" content="易失性半导体随机存储器 主存储器由DRAM实现，靠近处理器的那一层（Cache)是由SRAM实现的，这两种半导体随机存储器都属于易失性存储器，只要电源被切断了，那么原来保存的信息便会丢失。DRAM的位成本低于SRAM，速度也慢于SRAM，主要原因是制造DRAM需要更多硅。而ROM属于非易失性存储器。ROM我们后面详细介绍，我们先来学习一下易失性存储器DRAM和SRAM的工作原理。  SRAM工作">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210219143150.png">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210219143201.png">
@@ -73,11 +73,15 @@ var _hmt = _hmt || [];
   
 
   
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
 
   
-    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
   
 
 
@@ -86,6 +90,8 @@ var _hmt = _hmt || [];
       <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
     
       <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
     
   
 </head>
@@ -111,7 +117,7 @@ var _hmt = _hmt || [];
 
 
 
-<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">什么是计算机系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html#start"><span class="toc-text">计算机系统概述</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据的表示和运算</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%88%B6%E4%B8%8E%E7%BC%96%E7%A0%81%E8%A7%84%E5%88%99/index.html"><span class="toc-text">数制与编码规则</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B8%8E%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83ALU/index.html"><span class="toc-text">算术逻辑单元ALU</span></a></div></div><div class="widget-header cap dis-select"><span class="name">存储系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">存储器概述</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">主存储器</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%93%E5%A4%B1%E6%80%A7%E5%8D%8A%E5%AF%BC%E4%BD%93%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">易失性半导体随机存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SRAM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">SRAM工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DRAM%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">DRAM的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E5%9C%B0%E5%9D%80%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%EF%BC%9F"><span class="toc-text">思考：什么是地址复用技术？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DRAM%E7%9A%84%E5%88%B7%E6%96%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">DRAM的刷新方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E6%80%BB%E7%BB%93%EF%BC%9F"><span class="toc-text">思考：三种方法的总结？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E5%88%B7%E6%96%B0%E5%92%8C%E5%AD%98%E5%8F%96%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="toc-text">思考：刷新和存取的关系？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E5%88%B7%E6%96%B0%E5%91%A8%E6%9C%9F%E5%92%8C%E6%89%80%E6%9C%89%E8%A1%8C%E5%88%B7%E6%96%B0%E6%97%B6%E9%97%B4%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">思考：刷新周期和所有行刷新时间和的区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9ADRAM%E5%88%B7%E6%96%B0%E7%9A%84%E8%A1%A5%E5%85%85%EF%BC%9F"><span class="toc-text">思考：DRAM刷新的补充？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SRAM%E4%B8%8EDRAM%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-text">SRAM与DRAM的总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E8%AF%BB%E3%80%81%E5%86%99%E5%91%A8%E6%9C%9F"><span class="toc-text">存储器的读、写周期</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RAM%E7%9A%84%E8%AF%BB%E5%91%A8%E6%9C%9F"><span class="toc-text">RAM的读周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RAM%E7%9A%84%E5%86%99%E5%91%A8%E6%9C%9F"><span class="toc-text">RAM的写周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E6%98%93%E5%A4%B1%E6%80%A7%E5%8D%8A%E5%AF%BC%E4%BD%93%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">非易失性半导体存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ROM%E5%88%86%E7%B1%BB"><span class="toc-text">ROM分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A9%E6%A8%A1%E5%BC%8F%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">掩模式只读存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">一次可编程只读存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E6%93%A6%E9%99%A4%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">可擦除可编程只读存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AA%E9%80%9F%E5%AD%98%E5%82%A8%E5%99%A8%EF%BC%88Flash-Memory"><span class="toc-text">闪速存储器（Flash Memory)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="toc-text">固态硬盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9AROM%E6%98%AF%E9%9D%9E%E7%A0%B4%E5%9D%8F%E6%80%A7%E8%AF%BB%E5%87%BA%E5%90%97%EF%BC%9F"><span class="toc-text">思考：ROM是非破坏性读出吗？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="toc-text">主存储器的基本组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-text">总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E8%BF%9E%E6%8E%A5/index.html"><span class="toc-text">存储器与CPU连接</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">高性能存储器</span></a></div></div></widget>
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">什么是计算机系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html#start"><span class="toc-text">计算机系统概述</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据的表示和运算</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%88%B6%E4%B8%8E%E7%BC%96%E7%A0%81%E8%A7%84%E5%88%99/index.html"><span class="toc-text">数制与编码规则</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B8%8E%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83ALU/index.html"><span class="toc-text">算术逻辑单元ALU</span></a></div></div><div class="widget-header cap dis-select"><span class="name">存储系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">存储器概述</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">主存储器</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%93%E5%A4%B1%E6%80%A7%E5%8D%8A%E5%AF%BC%E4%BD%93%E9%9A%8F%E6%9C%BA%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text"> 易失性半导体随机存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sram%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text"> SRAM工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dram%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text"> DRAM的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%98%AF%E5%9C%B0%E5%9D%80%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="toc-text"> 思考：什么是地址复用技术？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dram%E7%9A%84%E5%88%B7%E6%96%B0%E6%96%B9%E5%BC%8F"><span class="toc-text"> DRAM的刷新方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-text"> 思考：三种方法的总结？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%88%B7%E6%96%B0%E5%92%8C%E5%AD%98%E5%8F%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text"> 思考：刷新和存取的关系？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E5%88%B7%E6%96%B0%E5%91%A8%E6%9C%9F%E5%92%8C%E6%89%80%E6%9C%89%E8%A1%8C%E5%88%B7%E6%96%B0%E6%97%B6%E9%97%B4%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：刷新周期和所有行刷新时间和的区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83dram%E5%88%B7%E6%96%B0%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-text"> 思考：DRAM刷新的补充？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sram%E4%B8%8Edram%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-text"> SRAM与DRAM的总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E8%AF%BB-%E5%86%99%E5%91%A8%E6%9C%9F"><span class="toc-text"> 存储器的读、写周期</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ram%E7%9A%84%E8%AF%BB%E5%91%A8%E6%9C%9F"><span class="toc-text"> RAM的读周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ram%E7%9A%84%E5%86%99%E5%91%A8%E6%9C%9F"><span class="toc-text"> RAM的写周期</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E6%98%93%E5%A4%B1%E6%80%A7%E5%8D%8A%E5%AF%BC%E4%BD%93%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text"> 非易失性半导体存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rom%E5%88%86%E7%B1%BB"><span class="toc-text"> ROM分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A9%E6%A8%A1%E5%BC%8F%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text"> 掩模式只读存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E6%AC%A1%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text"> 一次可编程只读存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E6%93%A6%E9%99%A4%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%8F%AA%E8%AF%BB%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text"> 可擦除可编程只读存储器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AA%E9%80%9F%E5%AD%98%E5%82%A8%E5%99%A8flash-memory"><span class="toc-text"> 闪速存储器（Flash Memory)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="toc-text"> 固态硬盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83rom%E6%98%AF%E9%9D%9E%E7%A0%B4%E5%9D%8F%E6%80%A7%E8%AF%BB%E5%87%BA%E5%90%97"><span class="toc-text"> 思考：ROM是非破坏性读出吗？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="toc-text"> 主存储器的基本组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text"> 总结</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E8%BF%9E%E6%8E%A5/index.html"><span class="toc-text">存储器与CPU连接</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">高性能存储器</span></a></div></div></widget>
 
 
 
@@ -141,26 +147,34 @@ var _hmt = _hmt || [];
 
   <article class='md-text content wiki reveal'>
   <h1 class="article-title"><span>主存储器</span></h1>
-  <h2 id="易失性半导体随机存储器"><a href="#易失性半导体随机存储器" class="headerlink" title="易失性半导体随机存储器"></a>易失性半导体随机存储器</h2><p>主存储器由DRAM实现，靠近处理器的那一层（Cache)是由SRAM实现的，这两种半导体随机存储器都属于易失性存储器，只要电源被切断了，那么原来保存的信息便会丢失。DRAM的位成本低于SRAM，速度也慢于SRAM，主要原因是制造DRAM需要更多硅。而ROM属于非易失性存储器。ROM我们后面详细介绍，我们先来学习一下易失性存储器DRAM和SRAM的工作原理。</p>
-<h3 id="SRAM工作原理"><a href="#SRAM工作原理" class="headerlink" title="SRAM工作原理"></a>SRAM工作原理</h3><p>我们通常把一个存放二进制位的物理器件称为存储元，他是存储器的最基本的构件。地址码相同的多个存储元构成一个存储单元。若干个存储单元就构成了存储体。</p>
+  <h2 id="易失性半导体随机存储器"><a class="markdownIt-Anchor" href="#易失性半导体随机存储器"></a> 易失性半导体随机存储器</h2>
+<p>主存储器由DRAM实现，靠近处理器的那一层（Cache)是由SRAM实现的，这两种半导体随机存储器都属于易失性存储器，只要电源被切断了，那么原来保存的信息便会丢失。DRAM的位成本低于SRAM，速度也慢于SRAM，主要原因是制造DRAM需要更多硅。而ROM属于非易失性存储器。ROM我们后面详细介绍，我们先来学习一下易失性存储器DRAM和SRAM的工作原理。</p>
+<h3 id="sram工作原理"><a class="markdownIt-Anchor" href="#sram工作原理"></a> SRAM工作原理</h3>
+<p>我们通常把一个存放二进制位的物理器件称为存储元，他是存储器的最基本的构件。地址码相同的多个存储元构成一个存储单元。若干个存储单元就构成了存储体。</p>
 <p>静态随机存储器SRAM的存储元是用双稳态触发器（六晶体管MOS）来记忆信息的，因此即使信息被读出以后，他仍然能够保持其原状态而不需要再生，所以是非破坏性读出。SRAM的存取速度快符合高速缓存Cache的要求，但是集成度低，功耗大，所以一般来组成高速缓冲存储器。</p>
-<h3 id="DRAM的工作原理"><a href="#DRAM的工作原理" class="headerlink" title="DRAM的工作原理"></a>DRAM的工作原理</h3><p>和SRAM的存储原理不同，动态随机存储器DRAM是利用存储元电路中栅极电容上的电荷来存储信息的，DRAM的基本存储元通常只会使用一个晶体管（注意SRAM一个存储元是使用的六晶体管），所以它比SRAM的密度要高很多。DRAM采用地址复用技术，地址线是原来的1/2，且地址线信号分行、列两次传送。</p>
-<h4 id="思考：什么是地址复用技术？"><a href="#思考：什么是地址复用技术？" class="headerlink" title="思考：什么是地址复用技术？"></a>思考：什么是地址复用技术？</h4><p>地址复用技术只适用于DRAM，不适用于SRAM，地址复用技术的目的就是为了减少地址线的数量，便于增加DRAM的集成度。地址复用技术的本质就是分两次送行地址和列地址，因为半导体存储芯片的核心存储矩阵是采用行列地址交叉确定存储单元的，而SRAM需要一次性传入行列地址，假设行列地址一共需要40根地址线，那么SRAM需要至少40根地址线才可以完成一个存储单元的查找读取，而DRAM可以先传入行地址，再传入列地址，因而只需要20根即可。这样就减少了地址线的数量，SRAM和DRAM有许多不同，这个技术也是导致不同的原因之一。</p>
+<h3 id="dram的工作原理"><a class="markdownIt-Anchor" href="#dram的工作原理"></a> DRAM的工作原理</h3>
+<p>和SRAM的存储原理不同，动态随机存储器DRAM是利用存储元电路中栅极电容上的电荷来存储信息的，DRAM的基本存储元通常只会使用一个晶体管（注意SRAM一个存储元是使用的六晶体管），所以它比SRAM的密度要高很多。DRAM采用地址复用技术，地址线是原来的1/2，且地址线信号分行、列两次传送。</p>
+<h4 id="思考什么是地址复用技术"><a class="markdownIt-Anchor" href="#思考什么是地址复用技术"></a> 思考：什么是地址复用技术？</h4>
+<p>地址复用技术只适用于DRAM，不适用于SRAM，地址复用技术的目的就是为了减少地址线的数量，便于增加DRAM的集成度。地址复用技术的本质就是分两次送行地址和列地址，因为半导体存储芯片的核心存储矩阵是采用行列地址交叉确定存储单元的，而SRAM需要一次性传入行列地址，假设行列地址一共需要40根地址线，那么SRAM需要至少40根地址线才可以完成一个存储单元的查找读取，而DRAM可以先传入行地址，再传入列地址，因而只需要20根即可。这样就减少了地址线的数量，SRAM和DRAM有许多不同，这个技术也是导致不同的原因之一。</p>
 <p>相比于SRAM，DRAM具有容易集成，位价低，容量大和功耗小的优点，但是DRAM比SRAM存取速度要慢， ，一般用来组成大容量主存系统。</p>
-<h4 id="DRAM的刷新方式"><a href="#DRAM的刷新方式" class="headerlink" title="DRAM的刷新方式"></a>DRAM的刷新方式</h4><p>DRAM电容上的电荷一般只能维持1~2ms,因此即使电源不断电，信息也会自动消失，所以每隔一段时间必须刷新，通常取2ms,这个时间称为刷新周期。常用的刷新方式有3种：集中刷新，分散刷新和异步刷新。</p>
+<h4 id="dram的刷新方式"><a class="markdownIt-Anchor" href="#dram的刷新方式"></a> DRAM的刷新方式</h4>
+<p>DRAM电容上的电荷一般只能维持1~2ms,因此即使电源不断电，信息也会自动消失，所以每隔一段时间必须刷新，通常取2ms,这个时间称为刷新周期。常用的刷新方式有3种：集中刷新，分散刷新和异步刷新。</p>
 <ul>
-<li><p>集中刷新：在一段刷新周期内，利用一段固定的时间，依次对存储器的所有行进行逐一再生，在此期间停止对存储器的读写操作，称为“死时间”，又称访存“死区”。集中刷新的优点是读写操作时不受刷新工作的影响，因此系统的存取速度较高，缺点是在集中刷新期间不能访问存储器。例如有128行且每行刷新时间是0.5μs，那么每隔2ms就要占用一段固定时间64μs对128行统一进行刷新。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143150.png" alt=""></p>
+<li>
+<p>集中刷新：在一段刷新周期内，利用一段固定的时间，依次对存储器的所有行进行逐一再生，在此期间停止对存储器的读写操作，称为“死时间”，又称访存“死区”。集中刷新的优点是读写操作时不受刷新工作的影响，因此系统的存取速度较高，缺点是在集中刷新期间不能访问存储器。例如有128行且每行刷新时间是0.5μs，那么每隔2ms就要占用一段固定时间64μs对128行统一进行刷新。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143150.png" alt="" /></p>
 </li>
-<li><p>分散刷新：把对每行的刷新分散到各个工作周期中。一个存储器的系统工作周期分为两部分：前半部分用于正常读、写或保持，后半部分用于刷新某一行。这种刷新方式增加了系统的存取周期，如存储芯片的存取周期为0.5μs,但是系统的存取周期却为1μs（因为还包括了行刷新时间）。很明显分散刷新的优点是没有死区，缺点是加长了系统的存取周期，降低了整机的速度。即128行某一行被读取后就要立刻进行未检查的一行刷新操作，所以每隔128次读取操作就可以刷新完所有行一遍，此时刷新周期不再是2ms而是128μs。虽然整体上刷新周期减少了，但是每一行的刷新时间都增大为了1μs。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143201.png" alt=""></p>
+<li>
+<p>分散刷新：把对每行的刷新分散到各个工作周期中。一个存储器的系统工作周期分为两部分：前半部分用于正常读、写或保持，后半部分用于刷新某一行。这种刷新方式增加了系统的存取周期，如存储芯片的存取周期为0.5μs,但是系统的存取周期却为1μs（因为还包括了行刷新时间）。很明显分散刷新的优点是没有死区，缺点是加长了系统的存取周期，降低了整机的速度。即128行某一行被读取后就要立刻进行未检查的一行刷新操作，所以每隔128次读取操作就可以刷新完所有行一遍，此时刷新周期不再是2ms而是128μs。虽然整体上刷新周期减少了，但是每一行的刷新时间都增大为了1μs。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143201.png" alt="" /></p>
 </li>
-<li><p>异步刷新：异步刷新结合了前面两种方法，它既可缩短“死时间”，又能充分利用最大刷新间隔为2ms的特点。具体做法是将刷新周期除以行数，得到两次刷新操作之间的时间间隔t，利用逻辑电路每隔时间t产生一次刷新请求。这样可以避免CPU连续等待过程时间，而且减少了刷新次数，从根本上提升了整机的工作效率。即128行，那么2ms/128=15.6μs，每隔15.6μs就进行一次刷新一行且每一行的刷新时间就是0.5s即此时相对于每一行来说是集中刷新而相对整体是分散刷新。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143219.png" alt=""></p>
+<li>
+<p>异步刷新：异步刷新结合了前面两种方法，它既可缩短“死时间”，又能充分利用最大刷新间隔为2ms的特点。具体做法是将刷新周期除以行数，得到两次刷新操作之间的时间间隔t，利用逻辑电路每隔时间t产生一次刷新请求。这样可以避免CPU连续等待过程时间，而且减少了刷新次数，从根本上提升了整机的工作效率。即128行，那么2ms/128=15.6μs，每隔15.6μs就进行一次刷新一行且每一行的刷新时间就是0.5s即此时相对于每一行来说是集中刷新而相对整体是分散刷新。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143219.png" alt="" /></p>
 </li>
 </ul>
 <p>如果将刷新安排在不需要访问存储器的移码阶段，那么就既不会加长存取周期，又不会产生“死时间”了。这是分散刷新方式的发展，也称为“透明刷新”。</p>
-<h4 id="思考：三种方法的总结？"><a href="#思考：三种方法的总结？" class="headerlink" title="思考：三种方法的总结？"></a>思考：三种方法的总结？</h4><div class="table-container">
+<h4 id="思考三种方法的总结"><a class="markdownIt-Anchor" href="#思考三种方法的总结"></a> 思考：三种方法的总结？</h4>
 <table>
 <thead>
 <tr>
@@ -199,10 +213,12 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="思考：刷新和存取的关系？"><a href="#思考：刷新和存取的关系？" class="headerlink" title="思考：刷新和存取的关系？"></a>思考：刷新和存取的关系？</h4><p>前面也讲过了刷新和存取并不能并行发生，即刷新就不能存取，所以刷新时间就是死时间，刷新与存取很相似，他也是选中一行，这期间片选线，地址线和地址译码器全部占用，只是不同于存取没有输入和输出。所以刷新时间一般和存取时间相同因此存取时间也是0.5μs。集中刷新有64μs刷新时间也就是64μs的死时间。而分散刷新是将刷新放到了存取的后面，所以不会占用存取时间，所以无死时间。而异步刷新虽然集成了两者的优点，但是也是又死时间的，因为异步刷新每个15.6μs产生的某一行的刷新时间0.5μs就是死时间。</p>
-<h4 id="思考：刷新周期和所有行刷新时间和的区别？"><a href="#思考：刷新周期和所有行刷新时间和的区别？" class="headerlink" title="思考：刷新周期和所有行刷新时间和的区别？"></a>思考：刷新周期和所有行刷新时间和的区别？</h4><p>刷新周期是指每隔多少时间后所有的行都刷新了一遍，这其中还包括了其他操作的时间。而所有行刷新时间和是仅仅将所有的行刷新时间累加。</p>
-<h4 id="思考：DRAM刷新的补充？"><a href="#思考：DRAM刷新的补充？" class="headerlink" title="思考：DRAM刷新的补充？"></a>思考：DRAM刷新的补充？</h4><p>我们要注意上面所讲的刷新仅仅是为了维持存储单元存储的信息不变，这对于内存厂商来说并不难实现，只要在隔多少时间后进行刷新就好了。但是同时还要注意当DRAM某一个存储单元被信息访存后不仅仅要进行保存内容不变的刷新，还需要再刷新一遍因为主存的读取操作是破坏性的，需要再生存储数据。所以DRAM读取操作后可能某一行需要两次刷新一次是维持自身电荷稳定，还有一次是存储信息的再生刷新，而SRAM是非破坏性读取，永远也不需要刷新。</p>
+<h4 id="思考刷新和存取的关系"><a class="markdownIt-Anchor" href="#思考刷新和存取的关系"></a> 思考：刷新和存取的关系？</h4>
+<p>前面也讲过了刷新和存取并不能并行发生，即刷新就不能存取，所以刷新时间就是死时间，刷新与存取很相似，他也是选中一行，这期间片选线，地址线和地址译码器全部占用，只是不同于存取没有输入和输出。所以刷新时间一般和存取时间相同因此存取时间也是0.5μs。集中刷新有64μs刷新时间也就是64μs的死时间。而分散刷新是将刷新放到了存取的后面，所以不会占用存取时间，所以无死时间。而异步刷新虽然集成了两者的优点，但是也是又死时间的，因为异步刷新每个15.6μs产生的某一行的刷新时间0.5μs就是死时间。</p>
+<h4 id="思考刷新周期和所有行刷新时间和的区别"><a class="markdownIt-Anchor" href="#思考刷新周期和所有行刷新时间和的区别"></a> 思考：刷新周期和所有行刷新时间和的区别？</h4>
+<p>刷新周期是指每隔多少时间后所有的行都刷新了一遍，这其中还包括了其他操作的时间。而所有行刷新时间和是仅仅将所有的行刷新时间累加。</p>
+<h4 id="思考dram刷新的补充"><a class="markdownIt-Anchor" href="#思考dram刷新的补充"></a> 思考：DRAM刷新的补充？</h4>
+<p>我们要注意上面所讲的刷新仅仅是为了维持存储单元存储的信息不变，这对于内存厂商来说并不难实现，只要在隔多少时间后进行刷新就好了。但是同时还要注意当DRAM某一个存储单元被信息访存后不仅仅要进行保存内容不变的刷新，还需要再刷新一遍因为主存的读取操作是破坏性的，需要再生存储数据。所以DRAM读取操作后可能某一行需要两次刷新一次是维持自身电荷稳定，还有一次是存储信息的再生刷新，而SRAM是非破坏性读取，永远也不需要刷新。</p>
 <p>DRAM的刷新需要注意一下问题：</p>
 <ol>
 <li>刷新对CPU是透明的，即刷新不依赖于外部的访问，是特定时间自动刷新的。</li>
@@ -211,7 +227,7 @@ var _hmt = _hmt || [];
 <li>一定要区分维持自身信息的刷新和读取后刷新的目的是不同的。</li>
 </ol>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>我们一定要注意易失性存储器和刷新的区别。易失性存储器是指断电后数据丢失，SRAM和DRAM都满足断电内容消失。但是需要定时刷新只有DRAM，而SRAM不需要。究其原因是SRAM是使用双稳态触发器来记忆信息的，而DRAM使用的是栅极电容发上的电荷，电荷会逐渐减少，所以需要定时补充。</p></div></div> 
-<h3 id="SRAM与DRAM的总结"><a href="#SRAM与DRAM的总结" class="headerlink" title="SRAM与DRAM的总结"></a>SRAM与DRAM的总结</h3><div class="table-container">
+<h3 id="sram与dram的总结"><a class="markdownIt-Anchor" href="#sram与dram的总结"></a> SRAM与DRAM的总结</h3>
 <table>
 <thead>
 <tr>
@@ -273,33 +289,46 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="存储器的读、写周期"><a href="#存储器的读、写周期" class="headerlink" title="存储器的读、写周期"></a>存储器的读、写周期</h3><h4 id="RAM的读周期"><a href="#RAM的读周期" class="headerlink" title="RAM的读周期"></a>RAM的读周期</h4><p>从给出有效地址开始，到读出所选中单元的内容并在外部数据总线上稳定地出现所需要的时间，称为读出时间(tA)。地址片选信息号非CS必须保持到数据稳定输出（注意不是必须为高/低电位，而是只要稳定即可），tCO为片选信息号的保持时间，在读周期写命令信号非WE必须为高电平。RAM芯片的读周期时序图如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143934.png" alt=""></p>
+<h3 id="存储器的读-写周期"><a class="markdownIt-Anchor" href="#存储器的读-写周期"></a> 存储器的读、写周期</h3>
+<h4 id="ram的读周期"><a class="markdownIt-Anchor" href="#ram的读周期"></a> RAM的读周期</h4>
+<p>从给出有效地址开始，到读出所选中单元的内容并在外部数据总线上稳定地出现所需要的时间，称为读出时间(tA)。地址片选信息号非CS必须保持到数据稳定输出（注意不是必须为高/低电位，而是只要稳定即可），tCO为片选信息号的保持时间，在读周期写命令信号非WE必须为高电平。RAM芯片的读周期时序图如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219143934.png" alt="" /></p>
 <p>一定要注意读周期tRC与读出时间tA是不同的，读周期tRC表示存储芯片进行两次连续读操作时必须间隔的时间，他总是大于等于读出时间。即读周期是从地址有效一直到地址失效的过程，而读出时间仅仅是地址有效到内容稳定出现到数据总线的时间，所以读周期更加长。在读周期中包括了数据有效到数据稳定的过程，而读出时间仅仅有数据有效时间，因为到了数据稳定读出时间就停止了。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219144933.png" alt=""></p>
-<h4 id="RAM的写周期"><a href="#RAM的写周期" class="headerlink" title="RAM的写周期"></a>RAM的写周期</h4><p>要实现写操作，要求片选信号非CS和写命令信号WE都必须为低电平，为了使数据总线上的信息能够可靠的写入存储器，要求非CS信号和非WE信号相“与”的宽度至少为tW（即相较时间，也是写数据时间）。具体的写操作时序图如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219144955.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219144933.png" alt="" /></p>
+<h4 id="ram的写周期"><a class="markdownIt-Anchor" href="#ram的写周期"></a> RAM的写周期</h4>
+<p>要实现写操作，要求片选信号非CS和写命令信号WE都必须为低电平，为了使数据总线上的信息能够可靠的写入存储器，要求非CS信号和非WE信号相“与”的宽度至少为tW（即相较时间，也是写数据时间）。具体的写操作时序图如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219144955.png" alt="" /></p>
 <p>为了保证在地址变化期间不会发生错误写入而破坏存储器的内容，非WE信号在地址变化期间必须保持高电位。为了保证有效数据的可靠写入，地址有效时间至少应为tWC=tAW+tW+tWR即整个写周期地址都要有效。为了保证在非WE和非CS变为无效前能够把数据可靠的写入，要求写入的数据必须在tDW以前在数据总线上已经稳定。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219145502.png" alt=""></p>
-<h2 id="非易失性半导体存储器"><a href="#非易失性半导体存储器" class="headerlink" title="非易失性半导体存储器"></a>非易失性半导体存储器</h2><p>RAM和ROM都是支持随机存取的存储器，其中SRAM和DRAM均是易失性半导体存储器。而ROM是一旦有了信息，那么就不能轻易改变，即使断电了也不会丢失信息，他在计算机中是只供读出的存储器，ROM有两个优点：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210219145502.png" alt="" /></p>
+<h2 id="非易失性半导体存储器"><a class="markdownIt-Anchor" href="#非易失性半导体存储器"></a> 非易失性半导体存储器</h2>
+<p>RAM和ROM都是支持随机存取的存储器，其中SRAM和DRAM均是易失性半导体存储器。而ROM是一旦有了信息，那么就不能轻易改变，即使断电了也不会丢失信息，他在计算机中是只供读出的存储器，ROM有两个优点：</p>
 <ol>
 <li>结构简单，位密度比可读写存储器的高</li>
 <li>具有非易失性，所以可靠性高</li>
 </ol>
 <p>ROM同样也有许多类型，我们一一了解即可：</p>
-<h3 id="ROM分类"><a href="#ROM分类" class="headerlink" title="ROM分类"></a>ROM分类</h3><p>根据制造工艺的不同，ROM可以分为掩模式只读存储器（MROM)、一次可编程只读存储器（PROM)、可擦除可编程只读存储器（EPROM)、闪速存储器（Flash Memory)和固态硬盘（Solid State Drives)。</p>
-<h4 id="掩模式只读存储器"><a href="#掩模式只读存储器" class="headerlink" title="掩模式只读存储器"></a>掩模式只读存储器</h4><p>MROM的内容由半导体制造商按用户提出的要求在芯片的生产过程中直接写入，写入以后任何人都无法改变其内容。优点是可靠性高，集成度高，价格便宜，缺点是灵活性差。</p>
-<h4 id="一次可编程只读存储器"><a href="#一次可编程只读存储器" class="headerlink" title="一次可编程只读存储器"></a>一次可编程只读存储器</h4><p>PROM是可以实现一次性变成的只读存储器，允许用户利用专门的设备（编程器）写入自己的程序，一旦写入，内容就无法改变。</p>
-<h4 id="可擦除可编程只读存储器"><a href="#可擦除可编程只读存储器" class="headerlink" title="可擦除可编程只读存储器"></a>可擦除可编程只读存储器</h4><p>EPROM不仅可以由用户利用编程器写入信息，而且可以对内容进行多次修改。需要修改EPROM内容时，先将全部内容擦除，然后编程。EPROM又可以分为两种，紫外线擦除（UEPROM)和电擦除（E2PROM)。EPROM虽然既可以读又可以写，但是不能取代RAM，因为EPROM的编程次数有限且写入时间长。</p>
-<h4 id="闪速存储器（Flash-Memory"><a href="#闪速存储器（Flash-Memory" class="headerlink" title="闪速存储器（Flash Memory)"></a>闪速存储器（Flash Memory)</h4><p>闪速存储器是在EPROM与E2PROM的基础上发展而来，主要特点是既可以在不加电情况下长期保存信息，又能在线进行快速擦除与重写。闪速存储器既有EPROM的价格便宜，集成度高的优点，又有E2PROM电擦除可重写的特点，且擦除重写的速度快。</p>
-<h4 id="固态硬盘"><a href="#固态硬盘" class="headerlink" title="固态硬盘"></a>固态硬盘</h4><p>基于闪存的固态硬盘是固态电子存储芯片阵列制成的硬盘，由控制单元和存储单元（FLASH芯片)组成。保留了闪速存储器长期保存信息、快速擦除和重写的特性。对比传统硬盘具有读写速度快、低功耗的特性、缺点是价格高昂。</p>
-<h4 id="思考：ROM是非破坏性读出吗？"><a href="#思考：ROM是非破坏性读出吗？" class="headerlink" title="思考：ROM是非破坏性读出吗？"></a>思考：ROM是非破坏性读出吗？</h4><p>很明显ROM是非破坏性读出的方式进行工作的，因为再生数据就是重写数据，而ROM一般是不能进行数据写修改的。一般ROM用来存储固定不修改的数据和程序的，例如Apple II或者IBM PC XT/AT等早期个人电脑的开机程序（操作系统）或是其他各种微电脑系统中的韧体所使用的硬件都是ROM。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210220134113.png" alt=""></p>
-<h2 id="主存储器的基本组成"><a href="#主存储器的基本组成" class="headerlink" title="主存储器的基本组成"></a>主存储器的基本组成</h2><p>下面我们来从整体学习一下一个主存信息存储，读取的操作过程。下图是主存储器（Main Memory,MM)的基本组成框图，其中由许多个存储0或1的记忆单元（也称为存储元件）构成的存储矩阵（也称存储体）是存储器的核心部件。记忆单元是具有两种稳态的能表示二进制0和1的物理器件。为了存取存储体中的信息，必须对存储单元进行编号（也称为编址）。编制单位是指具有相同地址的那些存储元件构成一个单位，可以按照字节编址，也可以按字编址。现代计算机常使用字节编址方式，此时存储体内的一个地址中有一个字节。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210220134955.png" alt=""></p>
-<p>指令执行过程中需要访问主存，CPU首先会把访问存储单元的地址送到MAR中，然后通过地址线（注意是单向的，MDR-&gt;地址寄存器）将主存地址送到主存中的地址寄存器，以便地址编码器进行译码选中相应的存储单元，同时CPU将读写信号通过控制线送到主存中读写控制电路。如果是写操作，那么将信号写入选中的存储单元，如果是读操作，那么主存读出选中存储单元的内容送到数据线，然后送到MDR中。数据线的宽度和MDR的宽度相同，地址线的宽度和MAR宽度相同。上图中数据线是64位，所以在按字节编址方式下，每次最多可以存取8个单元的内容。地址线的位数决定了主存地址空间的最大可寻址范围。例如上图中地址线是36位，所以寻址范围是0~2\^36-1。数据线和地址线共同反应存储体的最大容量，上图中最大容量是2^36*64位。</p>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210220135849.png" alt=""></p>
+<h3 id="rom分类"><a class="markdownIt-Anchor" href="#rom分类"></a> ROM分类</h3>
+<p>根据制造工艺的不同，ROM可以分为掩模式只读存储器（MROM)、一次可编程只读存储器（PROM)、可擦除可编程只读存储器（EPROM)、闪速存储器（Flash Memory)和固态硬盘（Solid State Drives)。</p>
+<h4 id="掩模式只读存储器"><a class="markdownIt-Anchor" href="#掩模式只读存储器"></a> 掩模式只读存储器</h4>
+<p>MROM的内容由半导体制造商按用户提出的要求在芯片的生产过程中直接写入，写入以后任何人都无法改变其内容。优点是可靠性高，集成度高，价格便宜，缺点是灵活性差。</p>
+<h4 id="一次可编程只读存储器"><a class="markdownIt-Anchor" href="#一次可编程只读存储器"></a> 一次可编程只读存储器</h4>
+<p>PROM是可以实现一次性变成的只读存储器，允许用户利用专门的设备（编程器）写入自己的程序，一旦写入，内容就无法改变。</p>
+<h4 id="可擦除可编程只读存储器"><a class="markdownIt-Anchor" href="#可擦除可编程只读存储器"></a> 可擦除可编程只读存储器</h4>
+<p>EPROM不仅可以由用户利用编程器写入信息，而且可以对内容进行多次修改。需要修改EPROM内容时，先将全部内容擦除，然后编程。EPROM又可以分为两种，紫外线擦除（UEPROM)和电擦除（E2PROM)。EPROM虽然既可以读又可以写，但是不能取代RAM，因为EPROM的编程次数有限且写入时间长。</p>
+<h4 id="闪速存储器flash-memory"><a class="markdownIt-Anchor" href="#闪速存储器flash-memory"></a> 闪速存储器（Flash Memory)</h4>
+<p>闪速存储器是在EPROM与E2PROM的基础上发展而来，主要特点是既可以在不加电情况下长期保存信息，又能在线进行快速擦除与重写。闪速存储器既有EPROM的价格便宜，集成度高的优点，又有E2PROM电擦除可重写的特点，且擦除重写的速度快。</p>
+<h4 id="固态硬盘"><a class="markdownIt-Anchor" href="#固态硬盘"></a> 固态硬盘</h4>
+<p>基于闪存的固态硬盘是固态电子存储芯片阵列制成的硬盘，由控制单元和存储单元（FLASH芯片)组成。保留了闪速存储器长期保存信息、快速擦除和重写的特性。对比传统硬盘具有读写速度快、低功耗的特性、缺点是价格高昂。</p>
+<h4 id="思考rom是非破坏性读出吗"><a class="markdownIt-Anchor" href="#思考rom是非破坏性读出吗"></a> 思考：ROM是非破坏性读出吗？</h4>
+<p>很明显ROM是非破坏性读出的方式进行工作的，因为再生数据就是重写数据，而ROM一般是不能进行数据写修改的。一般ROM用来存储固定不修改的数据和程序的，例如Apple II或者IBM PC XT/AT等早期个人电脑的开机程序（操作系统）或是其他各种微电脑系统中的韧体所使用的硬件都是ROM。</p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210220134113.png" alt="" /></p>
+<h2 id="主存储器的基本组成"><a class="markdownIt-Anchor" href="#主存储器的基本组成"></a> 主存储器的基本组成</h2>
+<p>下面我们来从整体学习一下一个主存信息存储，读取的操作过程。下图是主存储器（Main Memory,MM)的基本组成框图，其中由许多个存储0或1的记忆单元（也称为存储元件）构成的存储矩阵（也称存储体）是存储器的核心部件。记忆单元是具有两种稳态的能表示二进制0和1的物理器件。为了存取存储体中的信息，必须对存储单元进行编号（也称为编址）。编制单位是指具有相同地址的那些存储元件构成一个单位，可以按照字节编址，也可以按字编址。现代计算机常使用字节编址方式，此时存储体内的一个地址中有一个字节。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210220134955.png" alt="" /></p>
+<p>指令执行过程中需要访问主存，CPU首先会把访问存储单元的地址送到MAR中，然后通过地址线（注意是单向的，MDR-&gt;地址寄存器）将主存地址送到主存中的地址寄存器，以便地址编码器进行译码选中相应的存储单元，同时CPU将读写信号通过控制线送到主存中读写控制电路。如果是写操作，那么将信号写入选中的存储单元，如果是读操作，那么主存读出选中存储单元的内容送到数据线，然后送到MDR中。数据线的宽度和MDR的宽度相同，地址线的宽度和MAR宽度相同。上图中数据线是64位，所以在按字节编址方式下，每次最多可以存取8个单元的内容。地址线的位数决定了主存地址空间的最大可寻址范围。例如上图中地址线是36位，所以寻址范围是0~2^36-1。数据线和地址线共同反应存储体的最大容量，上图中最大容量是2^36*64位。</p>
+<h3 id="总结-2"><a class="markdownIt-Anchor" href="#总结-2"></a> 总结</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210220135849.png" alt="" /></p>
 
   
 
@@ -457,7 +486,7 @@ var _hmt = _hmt || [];
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
   if ('local_search') {
@@ -475,19 +504,19 @@ var _hmt = _hmt || [];
   stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
     stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
@@ -513,7 +542,7 @@ var _hmt = _hmt || [];
       if (!path) {
         path = decodeURI(window.location.pathname);
       }
-      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
         el: '#waline_container',
         path: path,
       }));

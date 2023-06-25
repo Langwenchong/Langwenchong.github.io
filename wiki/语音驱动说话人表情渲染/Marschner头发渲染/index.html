@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fc63ac4843a697431e3d43c4d48b99de";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>GraduationDesign：Marschner头发渲染 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="本文在讲解之前，请您先仔细阅读《头发着色原理》 理解Marschner渲染模型的基本推导，同时非常感谢雨轩大大提供的关于全局光照和pbr的系列讲解：《Unity PBR Standard Shader》  实验材料 本实验我们将实现一个褐色头发的少女，实现基于物理的头发渲染，因此不再是像上一篇文章那样自己模拟高光，而是要基于bsdf用公式实时渲染形成天使环效果，同时我们还将进一步解决Kajiya-">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Marschner头发渲染">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="本文在讲解之前，请您先仔细阅读《头发着色原理》 理解Marschner渲染模型的基本推导，同时非常感谢雨轩大大提供的关于全局光照和pbr的系列讲解：《Unity PBR Standard Shader》  实验材料 本实验我们将实现一个褐色头发的少女，实现基于物理的头发渲染，因此不再是像上一篇文章那样自己模拟高光，而是要基于bsdf用公式实时渲染形成天使环效果，同时我们还将进一步解决Kajiya-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Base.jpg">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hari_Alpha.png">
+<meta property="og:image" content="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Normal.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Roughness.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Metallic.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Emission.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/AO.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Kajiya%E8%83%8C%E5%85%89.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E6%AD%A3%E9%9D%A2%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E4%BE%A7%E9%9D%A2%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Kajiay%E6%95%A3%E5%B0%84.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E9%AB%98%E5%85%89.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E9%80%8F%E5%85%89%E6%95%88%E6%9E%9C.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E4%B8%8D%E9%80%8F%E5%85%89.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E5%AF%B9%E6%AF%94%E5%9B%BE1.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E5%AF%B9%E6%AF%94%E5%9B%BE2.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E6%95%88%E6%9E%9C%E5%9B%BE.png">
+<meta property="article:published_time" content="2023-04-24T08:39:36.220Z">
+<meta property="article:modified_time" content="2023-04-24T08:39:36.220Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Base.jpg">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
+
+  
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html"><div class="main" ff="title">GraduationDesign</div><div class="sub cap">AI&CG毕业设计</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/语音驱动说话人表情渲染/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">课题调研</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html#start"><span class="toc-text">项目简介&技术调研</span></a></div></div><div class="widget-header cap dis-select"><span class="name">毛发真实感渲染</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%A4%B4%E5%8F%91%E7%9D%80%E8%89%B2%E5%8E%9F%E7%90%86/index.html"><span class="toc-text">头发着色原理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%89%96%E6%9E%90UE4%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B%E6%BA%90%E7%A0%81/index.html"><span class="toc-text">剖析UE4着色模型源码</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html"><span class="toc-text">Kajiya-Kay头发渲染</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html"><span class="toc-text">Marschner头发渲染</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%9D%90%E6%96%99"><span class="toc-text"> 实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shader%E4%BB%A3%E7%A0%81"><span class="toc-text"> Shader代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF%E4%B8%8E%E7%BB%86%E8%8A%82%E6%8E%A2%E8%AE%A8"><span class="toc-text"> 实现思路与细节探讨</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7"><span class="toc-text"> 全局光照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9D%80%E8%89%B2%E5%87%BD%E6%95%B0"><span class="toc-text"> 着色函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kajiya-kay%E6%95%A3%E5%B0%84"><span class="toc-text"> Kajiya-Kay散射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#marschner%E6%A8%A1%E5%9E%8B%E7%9A%84rtrttt%E8%BF%91%E4%BC%BC%E6%B8%B2%E6%9F%93%E6%95%88%E6%9E%9C"><span class="toc-text"> Marschner模型的R,TRT,TT近似渲染效果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%BB%80%E4%B9%88%E6%98%AF%E5%9F%BA%E4%BA%8E%E7%89%A9%E7%90%86%E7%9A%84%E6%B8%B2%E6%9F%93"><span class="toc-text"> 思考：什么是基于物理的渲染？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="toc-text"> 效果图</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fc63ac4843a697431e3d43c4d48b99de";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html">GraduationDesign</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-04-24T08:39:36.220Z">2023-04-24</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>Marschner头发渲染</span></h1>
+  <div class="tag-plugin note" color="cyan"><div class="title">本文在讲解之前，请您先仔细阅读</div><div class="body"><p><a href="https://scholar.coolchong.cn/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%A4%B4%E5%8F%91%E7%9D%80%E8%89%B2%E5%8E%9F%E7%90%86/index.html">《头发着色原理》</a> 理解Marschner渲染模型的基本推导，同时非常感谢雨轩大大提供的关于全局光照和pbr的系列讲解：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/135874778">《Unity PBR Standard Shader》</a></p></div></div>
+<h2 id="实验材料"><a class="markdownIt-Anchor" href="#实验材料"></a> 实验材料</h2>
+<p>本实验我们将实现一个褐色头发的少女，实现基于物理的头发渲染，因此不再是像上一篇文章那样自己模拟高光，而是要基于bsdf用公式实时渲染形成天使环效果，同时我们还将进一步解决Kajiya-Kay中无法解决的背光透射效果，最后我们还将根据NormalMap进行法线采样贴图，因此我们仍然使用上一个少女模型，只是这次我们使用一个新的头发模型以及所需要的纹理材质可以从下面的网盘中获取：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="提取码：wssb" href="https://pan.baidu.com/s/1HeuCqXa8pzlcxxb1Kk5Cxg" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">提取码：wssb</span><span class="cap link fs12">https://pan.baidu.com/s/1HeuCqXa8pzlcxxb1Kk5Cxg</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>下面简单介绍一下几张图片的作用：</p>
+<div class="tag-plugin tabs"id="tab_47"><div class="nav-tabs"><div class="tab active"><a href="#tab_47-1">Hair_Base</a></div><div class="tab"><a href="#tab_47-2">Hair_Alpha</a></div><div class="tab"><a href="#tab_47-3">Hair_Normal</a></div><div class="tab"><a href="#tab_47-4">Hair_Roughness</a></div><div class="tab"><a href="#tab_47-5">Hair_Metallic</a></div><div class="tab"><a href="#tab_47-6">Hair_Emission</a></div><div class="tab"><a href="#tab_47-7">Hair_AO</a></div></div><div class="tab-content"><div class="tab-pane active" id="tab_47-1"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Base.jpg" alt="" /></p>
+<p>纹理贴图用来模拟头发效果，不提供颜色，透明度等贡献，采样贴图后可以得到一个类似于头发的蓝图。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_47-2"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hari_Alpha.png" alt="" /></p>
+<p>头发灰度渐变实现纵向的渐变效果从而得到更加真实的头发效果，采样后主要是最终体现在color的alpha值上。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_47-3"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Normal.png" alt="" /></p>
+<p>由于头发建模不可能真的一根一根头发丝构建，因此实际上细看是有多个mesh组成，但是这在高光处会体现的非常不真实，因此这里引入发现贴图来加深头发丝之间的凹凸从而给观察者一种“许多头发丝”的假象。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_47-4"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Roughness.png" alt="" /></p>
+<p>同样的，头发由于表面粗糙不一会形成表面散射同时对高光有扰动作用，因此这里提供一张粗糙纹理。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_47-5"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Metallic.png" alt="" /></p>
+<p>反射金属性光泽，由于头发基本上不会呈现非常明显的金属反光属性，因此这里基本上呈现全黑</p>
+<!-- endatab --></div><div class="tab-pane" id="tab_47-6"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Emission.png" alt="" /></p>
+<p>头发散射纹理，主要会用到全局光照中。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_47-7"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/AO.png" alt="" /></p>
+<p>环境光遮蔽，主要是加深头发之间的遮盖阴影效果</p>
+<!-- endtab --></div></div></div>
+<p>最后头发的颜色我们可以直接进行选择，最终根据baseColor图片计算出发射率，其实为了体现头发之间的厚度，应该还要使用一张HeightMap采样高度增加凹凸型，可惜博主在网上找了很多天都没有找到，如果好巧你有的话希望可以分享给我，接下来我们直接先上代码看一下实现思路。</p>
+<h2 id="shader代码"><a class="markdownIt-Anchor" href="#shader代码"></a> Shader代码</h2>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br></pre></td><td class="code"><pre><code class="hljs glsl">Shader &quot;Custom/Marschner&quot;<br>&#123;<br>    Properties<br>    &#123;    <br>        <span class="hljs-comment">// 头发主色调</span><br>        _DiffuseColor(&quot;Hair Diffuse Color&quot;,Color)= (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        <span class="hljs-comment">// 基础反射率与纹理</span><br>        _MainTex(&quot;Main Tex&quot;,<span class="hljs-number">2</span>D)= &quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 灰度渐变</span><br>        _AlphaTex(&quot;Alpha Tex&quot;,<span class="hljs-number">2</span>D) = &quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 环境光遮蔽增加阴影效果</span><br>        _AoTex(&quot;Ao Tex&quot;,<span class="hljs-number">2</span>D) = &quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 粗糙度</span><br>        _RoughnessTex(&quot;Roughness Tex&quot;,<span class="hljs-number">2</span>D)=&quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 散射能力</span><br>        _EmissionTex(&quot;Emission Tex&quot;,<span class="hljs-number">2</span>D)=&quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 金属度</span><br>        _Metallic(&quot;Metallic Tex&quot;,<span class="hljs-number">2</span>D)=&quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 法线贴图</span><br>        _NormalMap(&quot;Nromal Map&quot;,<span class="hljs-number">2</span>D) = &quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 设置凹凸程度</span><br>        _BumpScale(&quot;Hair Bump Scale&quot;,Range(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>))=<span class="hljs-number">0.2</span><br>        <span class="hljs-comment">// 偏移量</span><br>        _Shift(&quot;Specular Shift Scale&quot;,Range(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>))=<span class="hljs-number">0.04</span><br>    &#125;<br>    SubShader<br>    &#123;<br>        Tags &#123; &quot;RenderType&quot; = &quot;Opaque&quot;&#125;<br>        LOD <span class="hljs-number">200</span><br>        <span class="hljs-comment">// 关闭面剔除</span><br>        Cull off<br>        <br>        Pass&#123;<br>            <span class="hljs-comment">// 会调用计算光照</span><br>            Tags &#123; &quot;LightMode&quot; = &quot;ForwardBase&quot; &#125;<br><br>            CGPROGRAM<br><br>            <span class="hljs-meta">#include &quot;UnityCG.cginc&quot;</span><br>            <span class="hljs-meta">#include &quot;Lighting.cginc&quot;</span><br>            <span class="hljs-comment">// pbr光照需要</span><br>            <span class="hljs-meta">#include &quot;UnityPBSLighting.cginc&quot;</span><br>            <span class="hljs-meta">#include &quot;AutoLight.cginc&quot;</span><br><br>            <span class="hljs-meta">#pragma vertex vert</span><br>            <span class="hljs-meta">#pragma fragment frag</span><br><br>            <span class="hljs-meta">#pragma multi_compile_fwdbase</span><br><br><br>            struct appdata&#123;<br>                <span class="hljs-comment">// 顶点坐标，采样坐标，发现，切线</span><br>                float4 vertex :POSITION;<br>                float2 uv : TEXCOORD0;<br>                float3 normal :NORMAL;<br>                float4 texcoord1 : TEXCOORD1;<br>                float4 tangent : TANGENT;<br>            &#125;;<br><br>            struct v2f&#123;<br>                <span class="hljs-comment">// 裁剪坐标，采样坐标，法线，副切线，世界坐标，切线空间转世界空间的矩阵</span><br>                float4 pos : SV_POSITION;<br>                float2 uv : TEXCOORD0;<br>                float3 normal : TEXCOORD1;<br>                float3 bitangent :TEXCOORD2;<br>                float3 worldPos : TEXCOORD3;<br>                <span class="hljs-comment">// 变换矩阵</span><br>                float4 TtoW0 : TEXCOORD4;<br>                float4 TtoW1 : TEXCOORD5;<br>                float4 TtoW2 : TEXCOORD6;<br><br>                <span class="hljs-comment">// 光照贴图阴影坐标</span><br>                UNITY_SHADOW_COORDS(<span class="hljs-number">7</span>)<br>            &#125;;<br><br>            struct SurfaceOutputHair&#123;<br>                <span class="hljs-comment">// 会使用的头发性质，反射率，法线，粗糙度，光照吸收模拟环境光遮蔽，透明度，离心率，金属度，高光偏移量</span><br>                half3 Albedo;<br>                half3 Normal;<br>                half Roughness;<br>                half AO;<br>                half Alpha;<br>                half3 Emission;<br>                half Metallic;<br>                half Shift;<br>            &#125;;<br><br>            float4 _DiffuseColor;<br>            <span class="hljs-type">sampler2D</span> _MainTex;<br>            <span class="hljs-type">sampler2D</span> _AlphaTex;<br>            <span class="hljs-type">sampler2D</span> _AoTex;<br>            <span class="hljs-type">sampler2D</span> _RoughnessTex;<br>            <span class="hljs-type">sampler2D</span> _EmissionTex;<br>            <span class="hljs-type">sampler2D</span> _MetallicTex;<br>            <span class="hljs-type">sampler2D</span> _NormalMap;<br><br><br>            fixed _Shift;<br>            fixed _BumpScale;<br><br>            <span class="hljs-comment">// π和π^0.5，主要是加速计算</span><br>            <span class="hljs-meta">#define PI 3.1415926</span><br>            <span class="hljs-meta">#define SQRT2PI 2.50663</span><br><br>            v2f vert(appdata v)&#123;<br>                v2f o;<br>                UNITY_INITIALIZE_OUTPUT(v2f, o);<span class="hljs-comment">//初始化归零</span><br>                o.pos = UnityObjectToClipPos(v.vertex);<br>                o.uv = v.uv;<br>                float3 worldPos=mul(unity_ObjectToWorld, v.vertex).xyz;<br>                float3 worldNormal=UnityObjectToWorldNormal(v.normal);<br>                float3 worldTangent=UnityWorldToObjectDir(v.tangent).xyz;<br>                float3 worldBitangent=<span class="hljs-built_in">cross</span>(worldTangent,worldNormal)*v.tangent.w;<br>                o.worldPos = worldPos;<br>                o.normal=UnityObjectToWorldNormal(v.normal);<br>                o.bitangent =<span class="hljs-built_in">cross</span>(v.normal,v.tangent.xyz)*v.tangent.w*unity_WorldTransformParams.w;<br>                o.TtoW0 = float4(worldTangent.x,worldBitangent.x,worldNormal.x,worldPos.x);<br>                o.TtoW1 = float4(worldTangent.y,worldBitangent.y,worldNormal.y,worldPos.y);<br>                o.TtoW2 = float4(worldTangent.z,worldBitangent.z,worldNormal.z,worldPos.z);<br>                <span class="hljs-comment">// 光照贴图纹理坐标</span><br>                UNITY_TRANSFER_LIGHTING(o,v.texcoord1.xy);<br>                <span class="hljs-keyword">return</span> o;<br>            &#125;<br><br>            <span class="hljs-comment">// 采样法线贴图获取法线</span><br>            float3 getNormal(float4 TtoW0,float4 TtoW1,float4 TtoW2,float2 uv)&#123;<br>                <span class="hljs-comment">// 采样发现，这里注意必须是设置为NromalMap</span><br>                float4 packedNormal = tex2D(_NormalMap,uv);<br>                <span class="hljs-comment">//图片没有设置成normal map</span><br>                <span class="hljs-comment">//float33 tangentNormal;</span><br>                <span class="hljs-comment">//tangentNormal.xy = (packedNormal.xy * 2 - 1)*_BumpScale;</span><br>                <span class="hljs-comment">//tangentNormal.z = sqrt(1 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));</span><br>                <span class="hljs-comment">// 解码得到采样后的切线坐标系下的法线</span><br>                float3 tangentNormal=UnpackNormal(packedNormal);<br>                tangentNormal.xy*=_BumpScale;<br>                <span class="hljs-comment">// 需要转换为世界坐标系下的法线</span><br>                float3 worldNormal = <span class="hljs-built_in">normalize</span>(float3(<span class="hljs-built_in">dot</span>(TtoW0.xyz,tangentNormal),<span class="hljs-built_in">dot</span>(TtoW1.xyz,tangentNormal),<span class="hljs-built_in">dot</span>(TtoW2.xyz,tangentNormal)));<br>                <span class="hljs-keyword">return</span> worldNormal;<br><br>            &#125;<br><br>            inline <span class="hljs-type">float</span> square(<span class="hljs-type">float</span> x)&#123;<br>                <span class="hljs-comment">// 不用pow加速计算</span><br>                <span class="hljs-keyword">return</span> x*x;<br>            &#125;<br><br>            <span class="hljs-comment">// M项使用的高斯分布计算式</span><br>            <span class="hljs-type">float</span> Hair_g(<span class="hljs-type">float</span> B,<span class="hljs-type">float</span> Theta)&#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">exp</span>(<span class="hljs-number">-0.5</span> * square(Theta) / (B * B)) / (SQRT2PI * B);<br>            &#125;<br><br>            <span class="hljs-comment">// 菲涅尔项</span><br>            inline float3 SpecularFresnel(<span class="hljs-type">float</span> F0, <span class="hljs-type">float</span> x) &#123;<br>                <span class="hljs-keyword">return</span> F0 + (<span class="hljs-number">1.0</span>f - F0) * <span class="hljs-built_in">pow</span>(<span class="hljs-number">1</span> - x, <span class="hljs-number">5</span>);<br>            &#125;<br><br>            <span class="hljs-comment">// 核心公式，计算BSDF，这里采用UE类似的模拟加速计算，参考文章：</span><br>            <span class="hljs-comment">// [Marschner et al. 2003, &quot;Light Scattering from Human Hair Fibers&quot;]</span><br>            <span class="hljs-comment">// [Pekelis et al. 2015, &quot;A Data-Driven Light Scattering Model for Hair&quot;]</span><br>            float3 HairSpecularMarschner(SurfaceOutputHair sh,float3 N,float3 V,float3 L,<span class="hljs-type">float</span> Shadow,<span class="hljs-type">float</span> Backlit,<span class="hljs-type">float</span> Area)&#123;<br>                float3 S = <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">const</span> <span class="hljs-type">float</span> dotVL = <span class="hljs-built_in">dot</span>(V,L);<br>                <span class="hljs-keyword">const</span> <span class="hljs-type">float</span> SinThetaL = <span class="hljs-built_in">clamp</span>(<span class="hljs-built_in">dot</span>(N,L),<span class="hljs-number">-1.</span>f,<span class="hljs-number">1.</span>f);<br>                <span class="hljs-keyword">const</span> <span class="hljs-type">float</span> SinThetaV = <span class="hljs-built_in">clamp</span>(<span class="hljs-built_in">dot</span>(N,V),<span class="hljs-number">-1.</span>f,<span class="hljs-number">1.</span>f);<br>                <span class="hljs-type">float</span> CosThetaL = <span class="hljs-built_in">sqrt</span>(<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>-SinThetaL*SinThetaL));<br>                <span class="hljs-type">float</span> CosThetaV = <span class="hljs-built_in">sqrt</span>(<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>-SinThetaV*SinThetaV));<br>                <span class="hljs-type">float</span> CosThetaD = <span class="hljs-built_in">sqrt</span>((<span class="hljs-number">1</span> + CosThetaL * CosThetaV + SinThetaL * SinThetaV) / <span class="hljs-number">2.0</span>);<br><br>                <span class="hljs-keyword">const</span> float3 Lp = L-SinThetaL*N;<br>                <span class="hljs-keyword">const</span> float3 Vp = V-SinThetaV*N;<br>                <span class="hljs-keyword">const</span> <span class="hljs-type">float</span> CosPhi = <span class="hljs-built_in">dot</span>(Lp,Vp)*rsqrt(<span class="hljs-built_in">dot</span>(Lp,Lp)*<span class="hljs-built_in">dot</span>(Vp,Vp) + <span class="hljs-number">1e-4</span>);<br>                <span class="hljs-keyword">const</span> <span class="hljs-type">float</span> CosHalfPhi = <span class="hljs-built_in">sqrt</span>(saturate(<span class="hljs-number">0.5</span>+<span class="hljs-number">0.5</span>*CosPhi));<br><br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * η&#x27;的拟合</span><br><span class="hljs-comment">                * 原型：η&#x27; = sqrt( η * η - 1 + CosThetaD^2) / CosThetaD;</span><br><span class="hljs-comment">                * float n_prime = sqrt( n*n - 1 + Pow2( CosThetaD ) ) / CosThetaD;</span><br><span class="hljs-comment">                * 拟合思路：η即人类发丝折射率写死为1.55, 拟合后的η&#x27;如下：</span><br><span class="hljs-comment">                * η&#x27; = 1.19 / CosThetaD + 0.36 * CosThetaD;</span><br><span class="hljs-comment">                */</span><br>                <span class="hljs-type">float</span> n=<span class="hljs-number">1.55</span>;<br>                <span class="hljs-type">float</span> n_prime = <span class="hljs-number">1.19</span>/CosThetaD+<span class="hljs-number">0.36</span>*CosThetaD;<br><br>                <span class="hljs-type">float</span> Shift=sh.Shift;<br>                <span class="hljs-type">float</span> Alpha[] = &#123;<br>                    -Shift*<span class="hljs-number">2</span>,<br>                    Shift,<br>                    Shift*<span class="hljs-number">4</span><br>                &#125;;<br><br>                <span class="hljs-type">float</span> B[]=&#123;<br>                    Area+square(sh.Roughness),<br>                    Area+square(sh.Roughness)/<span class="hljs-number">2</span>,<br>                    Area+square(sh.Roughness)*<span class="hljs-number">2</span><br>                &#125;;<br><br>                <span class="hljs-type">float</span> F0=square((<span class="hljs-number">1</span>-n)/(<span class="hljs-number">1</span>+n));<br><br>                float3 Tp;<br>                <span class="hljs-type">float</span> Mp,Np,A,f,Fp,h,a;<br><br>                <span class="hljs-comment">// R</span><br>                <span class="hljs-comment">// N_R\left(\theta_i, \theta_r, \phi\right)=\left(\frac&#123;1&#125;&#123;4&#125; \Cos \frac&#123;\phi&#125;&#123;2&#125;\right) A(0, h)</span><br>                Mp=Hair_g(B[<span class="hljs-number">0</span>],SinThetaL+SinThetaV-Alpha[<span class="hljs-number">0</span>]);<br>                A=SpecularFresnel(F0,<span class="hljs-built_in">sqrt</span>(saturate(<span class="hljs-number">0.5</span> + <span class="hljs-number">0.5</span> * dotVL)));<br>                Np=<span class="hljs-number">0.25</span>*CosHalfPhi*A;<br>                S+=Mp*Np*lerp(<span class="hljs-number">1</span>,Backlit,saturate(-dotVL));<br><br>                <span class="hljs-comment">// TT</span><br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * Step1: 对h的拟合</span><br><span class="hljs-comment">                * h的原型计算公式如下：</span><br><span class="hljs-comment">                * float h = CosHalfPhi * rsqrt( 1 + a*a - 2*a * sqrt( 0.5 - 0.5 * CosPhi ) );</span><br><span class="hljs-comment">                * float h = CosHalfPhi * ( ( 1 - Pow2( CosHalfPhi ) ) * a + 1 );</span><br><span class="hljs-comment">                *</span><br><span class="hljs-comment">                * 最终曲线拟合完的h_tt如下：</span><br><span class="hljs-comment">                */</span><br>                Mp=Hair_g(B[<span class="hljs-number">1</span>],SinThetaL+SinThetaV-Alpha[<span class="hljs-number">1</span>]);<br>                a=<span class="hljs-number">1</span>/n_prime;<br>                h=CosHalfPhi*(<span class="hljs-number">1</span>+a*(<span class="hljs-number">0.6</span> - <span class="hljs-number">0.8</span> * CosPhi));<br>                <br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * Step2：η&#x27;的拟合</span><br><span class="hljs-comment">                * 原型：η&#x27; = sqrt( η * η - 1 + CosThetaD^2) / CosThetaD;</span><br><span class="hljs-comment">                * 拟合思路：η即人类发丝折射率写死为1.55, 拟合后的η&#x27;如下：</span><br><span class="hljs-comment">                * η&#x27; = 1.19 / CosThetaD + 0.36 * CosThetaD;</span><br><span class="hljs-comment">                * 代码往上翻</span><br><span class="hljs-comment">                */</span><br>                f=SpecularFresnel(F0,CosThetaD*<span class="hljs-built_in">sqrt</span>(saturate(<span class="hljs-number">1</span> - h*h)));<br>                Fp=square(<span class="hljs-number">1</span> - f);<br><br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * Step3：对于吸收项T的拟合：选择Pixar的方案但没有直接用，还是做了拟合</span><br><span class="hljs-comment">                *</span><br><span class="hljs-comment">                * T与γ_t的计算原型如下：</span><br><span class="hljs-comment">                * T(θ，φ) = e^&#123;-2 * μ_a * (1 + Cos(2γ_t)) / (Cosθt)&#125;，其中γt = sin^-1(h / η&#x27;)</span><br><span class="hljs-comment">                * 代码实现：float yi = asinFast(h); float yt = asinFast(h / n_prime);</span><br><span class="hljs-comment">                * </span><br><span class="hljs-comment">                * 参考Pixar的实现：</span><br><span class="hljs-comment">                * T(θ，φ) = e^&#123;-epsilo(C) * Cosγt / Cosθd&#125;</span><br><span class="hljs-comment">                * 代码实现：float3 Tp = pow( GBuffer.BaseColor, 0.5 * ( 1 + Cos(2*yt) ) / CosThetaD );</span><br><span class="hljs-comment">                */</span><br>                <span class="hljs-comment">// 这里C直接使用折射率进一步简化</span><br>                Tp = <span class="hljs-built_in">pow</span>(sh.Albedo, <span class="hljs-number">0.5</span> * <span class="hljs-built_in">sqrt</span>(<span class="hljs-number">1</span> - square((h * a))) / CosThetaD);<br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * Step4: 对分布项D的拟合</span><br><span class="hljs-comment">                * 技术原型：Pixar&#x27;s Logistic Distribution Function</span><br><span class="hljs-comment">                * D(φ，s, μ) = (e^&#123;(φ - μ) / s&#125;) / (s^&#123;1 + e^&#123;(φ - μ) / s&#125;&#125;^2)</span><br><span class="hljs-comment">                * </span><br><span class="hljs-comment">                * 考虑s_tt实际上贡献很小，因此近似如下：</span><br><span class="hljs-comment">                * D_TT(φ) = D(φ，0.35，Π) ≈ e^&#123;-3.65Cosφ - 3.98&#125;</span><br><span class="hljs-comment">                */</span><br>                Np=<span class="hljs-built_in">exp</span>(<span class="hljs-number">-3.65</span>*CosPhi<span class="hljs-number">-3.98</span>);<br>                S+=Mp*Np*Fp*Tp*Backlit;<br><br>                <span class="hljs-comment">// TRT</span><br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * Step1 ：对h的拟合</span><br><span class="hljs-comment">                * h_trt = sqrt(3) / 2</span><br><span class="hljs-comment">                * float h = 0.75;</span><br><span class="hljs-comment">                */</span><br>                Mp=Hair_g(B[<span class="hljs-number">2</span>],SinThetaL+SinThetaV-Alpha[<span class="hljs-number">2</span>]);<br>                f=SpecularFresnel(F0,CosThetaD*<span class="hljs-number">0.5</span>f);<br>                Fp=square(<span class="hljs-number">1</span> - f)*f;<br>                <br>                <span class="hljs-comment">/**</span><br><span class="hljs-comment">                * Step2：对于吸收项T的拟合</span><br><span class="hljs-comment">                * T_TRT(θ，φ) = C^&#123;0.8 / Cosθd&#125;</span><br><span class="hljs-comment">                */</span><br>                Tp=<span class="hljs-built_in">pow</span>(sh.Albedo,<span class="hljs-number">0.8</span>/CosThetaD);<br>                Np=<span class="hljs-built_in">exp</span>(<span class="hljs-number">17</span>*CosPhi<span class="hljs-number">-16.78</span>);<br>                S+=Mp*Np*Fp*Tp;<br>                <br>                <span class="hljs-keyword">return</span> S;<br>            &#125;<br><br>            <span class="hljs-comment">// Kajiya推导的解析解，主要是模拟头发间的散射</span><br>            float3 HairDiffuseKajiya(SurfaceOutputHair sh,float3 N,float3 V,float3 L,<span class="hljs-type">float</span> Shadow,<span class="hljs-type">float</span> Backlit,<span class="hljs-type">float</span> Area)&#123;<br>                float3 S = <span class="hljs-number">0</span>;<br>                <span class="hljs-type">float</span> KajiyaDiffuse = <span class="hljs-number">1</span>-<span class="hljs-built_in">abs</span>(<span class="hljs-built_in">dot</span>(N,L));<br><br>                float3 FakeNormal = <span class="hljs-built_in">normalize</span>(V-N*<span class="hljs-built_in">dot</span>(V,N));<br>                N=FakeNormal;<br><br>                <span class="hljs-comment">// Hack approximation for multiple scattering.</span><br>                <span class="hljs-type">float</span> Wrap=<span class="hljs-number">1</span>;<br>                <span class="hljs-type">float</span> dotNL=saturate((<span class="hljs-built_in">dot</span>(N,L)+Wrap)/square(<span class="hljs-number">1</span>+Wrap));<br>                <span class="hljs-type">float</span> DiffuseScatter=( (<span class="hljs-number">1</span> / PI) * lerp(dotNL, KajiyaDiffuse, <span class="hljs-number">0.33</span>))*sh.Metallic;<br>                <span class="hljs-type">float</span> Luma=Luminance(sh.Albedo);<br>                float3 ScatterTint=<span class="hljs-built_in">pow</span>(sh.Albedo/Luma,<span class="hljs-number">1</span> - Shadow);<br>                S=<span class="hljs-built_in">sqrt</span>(sh.Albedo)*DiffuseScatter*ScatterTint;<br><br>                <span class="hljs-keyword">return</span> S;<br>            &#125;<br><br>            float3 HairShading(SurfaceOutputHair sh,float3 N,float3 V,float3 L,<span class="hljs-type">float</span> Shadow,<span class="hljs-type">float</span> Backlit,<span class="hljs-type">float</span> Area)&#123;<br>                float3 S= float3(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>                <span class="hljs-comment">// add Specualr</span><br>                S=HairSpecularMarschner(sh,N,V,L,Shadow,Backlit,Area);<br>                <span class="hljs-comment">// add Diffuse</span><br>                S+=HairDiffuseKajiya(sh,N,V,L,Shadow,Backlit,Area);<br>                <span class="hljs-comment">// 校验一下，保证S不会小于零</span><br>                S=-<span class="hljs-built_in">min</span>(-S,<span class="hljs-number">0.0</span>);<br>                <span class="hljs-keyword">return</span> S;<br>            &#125;<br><br>            float3 HairBxDF(SurfaceOutputHair sh,float3 N,float3 V,float3 L,<span class="hljs-type">float</span> Shadow,<span class="hljs-type">float</span> Backlit,<span class="hljs-type">float</span> Area)&#123;<br>                <span class="hljs-comment">// 这里sh提供表面材质属性，Shadow提供头发之间的阴影遮蔽强度，Backlit影响透光强度，Area决定散射强度</span><br>                <span class="hljs-keyword">return</span> HairShading(sh,N,V,L,Shadow,Backlit,Area);<br>            &#125;<br><br>            inline <span class="hljs-type">void</span>  LightingHair_GI(SurfaceOutputHair sh,UnityGIInput giInput,<span class="hljs-keyword">inout</span> UnityGI gi)&#123;<br>                <span class="hljs-comment">// 计算全局光照效果，会更新gi中的light和diffuse参数，参考了giInput,法线和环境光遮蔽生成</span><br>                gi=UnityGlobalIllumination(giInput,sh.AO,sh.Normal);<br>            &#125;<br><br>            inline fixed4 LightingHair(SurfaceOutputHair sh,float3 viewDir,UnityGI gi)&#123;<br>                fixed4 c = fixed4(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,sh.Alpha);<br>                <span class="hljs-comment">// 直接光照，由于光照直射强度高，所以是提供透射的主要因素，但是散射能力弱</span><br>                c.rgb=gi.light.color*HairBxDF(sh,sh.Normal,viewDir,gi.light.dir,<span class="hljs-number">0.1</span>f,<span class="hljs-number">0.5</span>f,<span class="hljs-number">0.0</span>f);<br>                <span class="hljs-comment">// 间接光照，基本不提供透射，但是简介光照主要提供表面散射，是头发暗部底色的主要贡献</span><br>                float3 <span class="hljs-built_in">reflect</span>=<span class="hljs-built_in">normalize</span>(viewDir-sh.Normal*<span class="hljs-built_in">dot</span>(sh.Normal,viewDir));<br>                <span class="hljs-comment">// 此时贡献光源不是来自灯光，而是根据视线反射对应的反射处，别忘了乘直径</span><br>                c.rgb+=gi.indirect.diffuse*<span class="hljs-number">6.28</span>f*HairBxDF(sh,sh.Normal,viewDir,<span class="hljs-built_in">reflect</span>,<span class="hljs-number">0.5</span>f,<span class="hljs-number">0.0</span>f,<span class="hljs-number">0.5</span>f);<br><br>                <span class="hljs-keyword">return</span> c;<br>            &#125;<br><br>            fixed4 frag(v2f i) : SV_TARGET&#123;<br>                float3 l=<span class="hljs-built_in">normalize</span>(UnityWorldSpaceLightDir(i.worldPos));<br>                float3 v=<span class="hljs-built_in">normalize</span>(UnityWorldSpaceViewDir(i.worldPos));<br>                float3 n=getNormal(i.TtoW0,i.TtoW1,i.TtoW2,i.uv);<br>                <span class="hljs-comment">// float3 n = normalize(i.normal);</span><br><br>                float3 albedo = tex2D(_MainTex,i.uv);<br>                <span class="hljs-type">float</span> ao =tex2D(_AoTex,i.uv);<br>                <span class="hljs-type">float</span> alpha=tex2D(_AlphaTex,i.uv);<br>                <span class="hljs-type">float</span> roughness=tex2D(_RoughnessTex,i.uv);<br>                <span class="hljs-type">float</span> metallic=tex2D(_MetallicTex,i.uv);<br>                float3 emission=tex2D(_EmissionTex,i.uv);<br><br>                SurfaceOutputHair sh;<br>                UNITY_INITIALIZE_OUTPUT(SurfaceOutputHair, sh);<span class="hljs-comment">//初始化归零</span><br>                sh.Normal=n;<br>                sh.AO=ao;<br>                sh.Albedo = fixed4(albedo*_DiffuseColor,alpha); <br>                sh.Roughness=roughness;<br>                sh.Emission=emission;<br>                sh.Alpha=alpha;<br>                sh.Metallic=metallic;<br>                sh.Shift=_Shift;<br><br>                <span class="hljs-comment">// compute lighting &amp; shadowing factor</span><br>                <span class="hljs-comment">//计算光照衰减和阴影</span><br>                UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos)<br><br>                <span class="hljs-comment">// 计算全局光照</span><br>                UnityGI gi;<br>                UNITY_INITIALIZE_OUTPUT(UnityGI, gi);<span class="hljs-comment">//初始化归零</span><br>                gi.indirect.diffuse=<span class="hljs-number">0</span>;<br>                gi.indirect.specular=<span class="hljs-number">0</span>;<br>                gi.light.color = _LightColor0.rgb;<br>                gi.light.dir=l;<br><br>                UnityGIInput giInput;<br>                UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);<span class="hljs-comment">//初始化归零</span><br>                giInput.light=gi.light;<br>                giInput.worldPos=i.worldPos;<br>                giInput.worldViewDir=v;<br>                giInput.atten=atten;<br>                giInput.probeHDR[<span class="hljs-number">0</span>]=unity_SpecCube0_HDR;<br>                giInput.probeHDR[<span class="hljs-number">1</span>]=unity_SpecCube1_HDR;<br><br>                <span class="hljs-comment">// 计算全局光照</span><br>                LightingHair_GI(sh,giInput,gi);<br>                <span class="hljs-comment">// 计算最终颜色值</span><br>                fixed4 col = LightingHair(sh,v,gi);<br>                <span class="hljs-comment">// fixed4 col = fixed4(gi.light.color,1.0);</span><br>                <span class="hljs-keyword">return</span> col;<br>            &#125;   <br><br>            ENDCG<br>        &#125;<br>    &#125;<br>    <br>    FallBack &quot;Diffuse&quot;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="实现思路与细节探讨"><a class="markdownIt-Anchor" href="#实现思路与细节探讨"></a> 实现思路与细节探讨</h2>
+<h3 id="全局光照"><a class="markdownIt-Anchor" href="#全局光照"></a> 全局光照</h3>
+<p>由于我们需要实现基于物理的光照渲染，因此不能直接通过光线与法线求一个三角函数再乘上颜色来实现了，因为这样我们无法实现背光的间接光照效果，会导致背光头发基本上全暗非常不真实，在Kajiya-Kay中我们只是认为添加了一圈镜面反光效果来模拟，但是这会导致背光处的高光基本上和面光处的高光强度一致，这在现实世界中显然是不可能的。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Kajiya%E8%83%8C%E5%85%89.png" alt="" /></p>
+<p>因此在Marschner中的实现，我们首先要调用全局光照实时计算头发不同地方的光照强度，这里我们可以使用globalIllumination来实现，因此我们需要初始化UnityGIInput和UntiyGI传入初始的光照信息计算，这里具体参考代码的358-366行，同时需要添加背光阴影，因此我们还需要使用forwardbase计算光照的衰减和阴影效果，并存储到一个光照贴图中，使用阴影坐标进行采样，具体参考代码的355行和72行。具体的全局光照计算需要在globalIllumination中传入三个参数，见代码的312行：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs glsl">inline <span class="hljs-type">void</span>  LightingHair_GI(SurfaceOutputHair sh,UnityGIInput giInput,<span class="hljs-keyword">inout</span> UnityGI gi)&#123;<br>                <span class="hljs-comment">// 计算全局光照效果，会更新gi中的light和diffuse参数，参考了giInput,法线和环境光遮蔽生成</span><br>                gi=UnityGlobalIllumination(giInput,sh.AO,sh.Normal);<br>            &#125;<br><br></code></pre></td></tr></table></figure>
+<p>其中sh使我们自定义的一个结构体用来存储，第二个参数是计算全局光照前的一些列光照信息，我们使用giInput存储，而第三个参数就是最终会将间接光照颜色以及散射系数存储的变量，他既作为输入变量也是最终的输出变量gi。这里我们可以暂时将377行注释掉并将378行解注释查看最终全局光照的效果：</p>
+<div class="tag-plugin tabs"id="tab_48"><div class="nav-tabs"><div class="tab active"><a href="#tab_48-1">正面效果</a></div><div class="tab"><a href="#tab_48-2">侧面效果</a></div></div><div class="tab-content"><div class="tab-pane active" id="tab_48-1"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E6%AD%A3%E9%9D%A2%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7.png" alt="" /></p>
+<!-- endtab --></div><div class="tab-pane" id="tab_48-2"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E4%BE%A7%E9%9D%A2%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7.png" alt="" /></p>
+<!-- endtab --></div></div></div>
+<p>可以看到随着光照方向不同，生成的全局光照贴图也会随之变化，正式基于这种贴图效果我们再通过加上渲染方程着色即可得到真实的背光效果。</p>
+<h3 id="着色函数"><a class="markdownIt-Anchor" href="#着色函数"></a> 着色函数</h3>
+<p>查看代码317行，我们可以看到g函数主要是通过融合直接光照与间接光照两个部分实现头发额着色，其中BSDF是实现的核心我们会在后面讲解，这里主要注意一下Shadow，Backlit以及Area参数：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs glsl">inline fixed4 LightingHair(SurfaceOutputHair sh,float3 viewDir,UnityGI gi)&#123;<br>               fixed4 c = fixed4(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,sh.Alpha);<br>               <span class="hljs-comment">// 直接光照，由于光照直射强度高，所以是提供透射的主要因素，但是散射能力弱</span><br>               c.rgb=gi.light.color*HairBxDF(sh,sh.Normal,viewDir,gi.light.dir,<span class="hljs-number">0.1</span>f,<span class="hljs-number">0.5</span>f,<span class="hljs-number">0.0</span>f);<br>               <span class="hljs-comment">// 间接光照，基本不提供透射，但是简介光照主要提供表面散射，是头发暗部底色的主要贡献</span><br>               float3 <span class="hljs-built_in">reflect</span>=<span class="hljs-built_in">normalize</span>(viewDir-sh.Normal*<span class="hljs-built_in">dot</span>(sh.Normal,viewDir));<br>               <span class="hljs-comment">// 此时贡献光源不是来自灯光，而是根据视线反射对应的反射处，别忘了乘直径</span><br>               c.rgb+=gi.indirect.diffuse*<span class="hljs-number">6.28</span>f*HairBxDF(sh,sh.Normal,viewDir,<span class="hljs-built_in">reflect</span>,<span class="hljs-number">0.5</span>f,<span class="hljs-number">0.0</span>f,<span class="hljs-number">0.5</span>f);<br><br>               <span class="hljs-keyword">return</span> c;<br>           &#125;<br></code></pre></td></tr></table></figure>
+<p>其中Shadow主要决定阴影强度，这里为了得到和图片相似的效果设定了直接光照0.1f和间接光照0.5f，我们要注意直接光照是光源直接提供的，而间接光照是光经过多次反弹最终打到渲染物体上的，因此直接光照照射的物体颜色会较明亮，阴影不会非常明显，因此值要小于间接光照。</p>
+<p>Backlit主要是用来决定Marschner特有的透光效果，前文我们讲解过头发在背光时并不是全暗的，而是再边缘厚度薄的地方会有透光效果，因此仍能看到亮色，而这里就是决定透光颜色强度的，首先光能透过头发肯定是强光能量光穿过的效果，因此间接光照基本上不提供透光效果，全部由直接光照提供，而具体的透光多少可以调整，这里我们为了最终观察效果明显设定为0.5f。</p>
+<p>Area其实在MarschnerSpecular函数中找到，主要是用来计算粗糙度的，我们可以理解为决定散射的强度，因此这里直接光照较少，而间接光照提供主要贡献。</p>
+<h3 id="kajiya-kay散射"><a class="markdownIt-Anchor" href="#kajiya-kay散射"></a> Kajiya-Kay散射</h3>
+<p>虽然我们是使用Marschner模型计算，但是其主要是计算头发的高光效果，提供了R,TRT,TT等不同的光照反射，但是头发由于表面粗糙还会有散射效果，这里我们也是参考了UE4的实现，加入一种基于Kajiya的散射作为头发的底色，因此我们可以在代码的296行看到无论是直接光照还是间接光照我们都是融合了基于MarschnerSpecular高光和Kajiya_Kay散射效果，那么首先我们查看一下Kajiya_Kay的散射效果，这里我们将299行暂时注释掉然后查看效果：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Kajiay%E6%95%A3%E5%B0%84.png" alt="" /></p>
+<p>可以看到结合之前计算的全局光照贴图，我们得到了一个不错的头发效果，但是还有几点问题没有解决，一个是背光时透光效果还未实现，同时并未加入高光的计算因此头发的天使环效果并不明显，接下来我们看一下MarschnerSpecular中对R,TRT,TT的逼近来实现更加真实的高光效果。</p>
+<h3 id="marschner模型的rtrttt近似渲染效果"><a class="markdownIt-Anchor" href="#marschner模型的rtrttt近似渲染效果"></a> Marschner模型的R,TRT,TT近似渲染效果</h3>
+<p>这里为了减少实时计算开销，我们采用近似逼近的R,TRT,TT的N项和M项计算，同时将三者累加到S中得到最终颜色计算结果，这里我们加入高光以后首先可以看到出现了天使环效果，并且由于是使用R,TRT实时计算的，因此并不向Kajiya-Kay中那样手动移动主高光和次高光得到的，而是根据光照以及不同的头发位置自动计算得到的，因此渐变效果也更加真实：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E9%AB%98%E5%85%89.png" alt="" /></p>
+<p>最后我们再重点看一下Marschner主要解决的透光效果，这里可以注释掉254行查看透光和不透光的效果，这里给出对比图：</p>
+<div class="tag-plugin tabs"id="tab_49"><div class="nav-tabs"><div class="tab active"><a href="#tab_49-1">透光</a></div><div class="tab"><a href="#tab_49-2">不透光</a></div></div><div class="tab-content"><div class="tab-pane active" id="tab_49-1"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E9%80%8F%E5%85%89%E6%95%88%E6%9E%9C.png" alt="" /></p>
+<!-- endtab --></div><div class="tab-pane" id="tab_49-2"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E4%B8%8D%E9%80%8F%E5%85%89.png" alt="" /></p>
+<!-- endtab --></div></div></div>
+<h2 id="思考什么是基于物理的渲染"><a class="markdownIt-Anchor" href="#思考什么是基于物理的渲染"></a> 思考：什么是基于物理的渲染？</h2>
+<p>最后参考下面两张对比图我们很容易就可以理解基于物理渲染的优势：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E5%AF%B9%E6%AF%94%E5%9B%BE1.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E5%AF%B9%E6%AF%94%E5%9B%BE2.png" alt="" /></p>
+<p>所谓基于物理并不是指完全像真实世界一样获取各种物理量的参数计算，而是指我们是通过一定的数学公式推导得到最终的渲染计算效果，物理量未必数值上和真实世界完全一致，但是由于是以一种物理量带入数学公式计算得到的着色效果，因此当我们更改渲染物体表面材质或者光照角度等环境属性时无需再调整即可得到基本正确的着色效果，这也正是基于物理的渲染相较于非物理渲染的优势，但是缺陷就是实现更为复杂，同时计算开销也会较大，也正是如此<strong>实际上最终选择何种方法是仁者见仁，智者见智的，最终的目的都是要能够用最小的成本“以假乱真”</strong></p>
+<h2 id="效果图"><a class="markdownIt-Anchor" href="#效果图"></a> 效果图</h2>
+<p>最终祭出我这几天实现的一个效果图吧，由于本人技术能力太差，最终实现效果并不理想但毕竟是自己第一次实现还是记录一下吧😁</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt="" /></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html">Kajiya-Kay头发渲染</a></div><div class="item" id="next"></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="GraduationDesign"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://www.qiniu.com//" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

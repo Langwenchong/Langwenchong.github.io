@@ -17,8 +17,8 @@ var _hmt = _hmt || [];
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
-  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -32,12 +32,12 @@ var _hmt = _hmt || [];
   <title>ComputerSystem：存储器与CPU连接 - 雨中•学圃堂</title>
 
   
-    <meta name="description" content="主存储器与CPU的连接原理  主存储器通过数据总线、地址总线和控制总线（读&#x2F;写）和CPU相连 数据总线的位数与工作频率的乘积正比于数据传输率 地址总线的位数决定了可寻址的最大内存空间 控制总线指出总线周期的类型和本次输入&#x2F;输出操作完成的时间  主存容量的扩展单个存储芯片的容量肯定是有限的，他在字数或者字长方面与实际存储器的要求都有一定的差距，因此我们需要在字和位两方面进行扩展来满足实际存储器的要求">
+    <meta name="description" content="主存储器与CPU的连接原理   主存储器通过数据总线、地址总线和控制总线（读&#x2F;写）和CPU相连 数据总线的位数与工作频率的乘积正比于数据传输率 地址总线的位数决定了可寻址的最大内存空间 控制总线指出总线周期的类型和本次输入&#x2F;输出操作完成的时间   主存容量的扩展 单个存储芯片的容量肯定是有限的，他在字数或者字长方面与实际存储器的要求都有一定的差距，因此我们需要在字和位两方面进行扩展来满足实际存储">
 <meta property="og:type" content="website">
 <meta property="og:title" content="存储器与CPU连接">
 <meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E8%BF%9E%E6%8E%A5/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
-<meta property="og:description" content="主存储器与CPU的连接原理  主存储器通过数据总线、地址总线和控制总线（读&#x2F;写）和CPU相连 数据总线的位数与工作频率的乘积正比于数据传输率 地址总线的位数决定了可寻址的最大内存空间 控制总线指出总线周期的类型和本次输入&#x2F;输出操作完成的时间  主存容量的扩展单个存储芯片的容量肯定是有限的，他在字数或者字长方面与实际存储器的要求都有一定的差距，因此我们需要在字和位两方面进行扩展来满足实际存储器的要求">
+<meta property="og:description" content="主存储器与CPU的连接原理   主存储器通过数据总线、地址总线和控制总线（读&#x2F;写）和CPU相连 数据总线的位数与工作频率的乘积正比于数据传输率 地址总线的位数决定了可寻址的最大内存空间 控制总线指出总线周期的类型和本次输入&#x2F;输出操作完成的时间   主存容量的扩展 单个存储芯片的容量肯定是有限的，他在字数或者字长方面与实际存储器的要求都有一定的差距，因此我们需要在字和位两方面进行扩展来满足实际存储">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210221130131.png">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210221132958.png">
@@ -69,11 +69,15 @@ var _hmt = _hmt || [];
   
 
   
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
 
   
-    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
   
 
 
@@ -82,6 +86,8 @@ var _hmt = _hmt || [];
       <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
     
       <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
     
   
 </head>
@@ -107,7 +113,7 @@ var _hmt = _hmt || [];
 
 
 
-<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">什么是计算机系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html#start"><span class="toc-text">计算机系统概述</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据的表示和运算</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%88%B6%E4%B8%8E%E7%BC%96%E7%A0%81%E8%A7%84%E5%88%99/index.html"><span class="toc-text">数制与编码规则</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B8%8E%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83ALU/index.html"><span class="toc-text">算术逻辑单元ALU</span></a></div></div><div class="widget-header cap dis-select"><span class="name">存储系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">存储器概述</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">主存储器</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E8%BF%9E%E6%8E%A5/index.html"><span class="toc-text">存储器与CPU连接</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%8E%9F%E7%90%86"><span class="toc-text">主存储器与CPU的连接原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%AE%B9%E9%87%8F%E7%9A%84%E6%89%A9%E5%B1%95"><span class="toc-text">主存容量的扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E6%89%A9%E5%B1%95%E6%B3%95"><span class="toc-text">位扩展法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%89%A9%E5%B1%95%E6%B3%95"><span class="toc-text">字扩展法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E4%BD%8D%E5%90%8C%E6%97%B6%E6%89%A9%E5%B1%95%E6%B3%95"><span class="toc-text">字位同时扩展法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%8A%AF%E7%89%87%E7%9A%84%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E5%92%8C%E7%89%87%E9%80%89"><span class="toc-text">存储芯片的地址分配和片选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E9%80%89%E6%B3%95"><span class="toc-text">线选法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%91%E7%A0%81%E7%89%87%E9%80%89%E6%B3%95"><span class="toc-text">译码片选法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text">存储器与CPU的连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E7%90%86%E9%80%89%E6%8B%A9%E5%AD%98%E5%82%A8%E8%8A%AF%E7%89%87"><span class="toc-text">合理选择存储芯片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%BA%BF%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text">地址线的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BA%BF%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text">数据线的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB-%E5%86%99%E5%91%BD%E4%BB%A4%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text">读&#x2F;写命令的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%87%E9%80%89%E7%BA%BF%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text">片选线的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-text">例题</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">高性能存储器</span></a></div></div></widget>
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">什么是计算机系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html#start"><span class="toc-text">计算机系统概述</span></a></div></div><div class="widget-header cap dis-select"><span class="name">数据的表示和运算</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%88%B6%E4%B8%8E%E7%BC%96%E7%A0%81%E8%A7%84%E5%88%99/index.html"><span class="toc-text">数制与编码规则</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AE%9A%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B8%8E%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%BF%90%E7%AE%97/index.html"><span class="toc-text">定点数的表示与运算</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E5%8D%95%E5%85%83ALU/index.html"><span class="toc-text">算术逻辑单元ALU</span></a></div></div><div class="widget-header cap dis-select"><span class="name">存储系统</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E6%A6%82%E8%BF%B0/index.html"><span class="toc-text">存储器概述</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">主存储器</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E8%BF%9E%E6%8E%A5/index.html"><span class="toc-text">存储器与CPU连接</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8Ecpu%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%8E%9F%E7%90%86"><span class="toc-text"> 主存储器与CPU的连接原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%AE%B9%E9%87%8F%E7%9A%84%E6%89%A9%E5%B1%95"><span class="toc-text"> 主存容量的扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E6%89%A9%E5%B1%95%E6%B3%95"><span class="toc-text"> 位扩展法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%89%A9%E5%B1%95%E6%B3%95"><span class="toc-text"> 字扩展法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E4%BD%8D%E5%90%8C%E6%97%B6%E6%89%A9%E5%B1%95%E6%B3%95"><span class="toc-text"> 字位同时扩展法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%8A%AF%E7%89%87%E7%9A%84%E5%9C%B0%E5%9D%80%E5%88%86%E9%85%8D%E5%92%8C%E7%89%87%E9%80%89"><span class="toc-text"> 存储芯片的地址分配和片选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E9%80%89%E6%B3%95"><span class="toc-text"> 线选法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%91%E7%A0%81%E7%89%87%E9%80%89%E6%B3%95"><span class="toc-text"> 译码片选法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text"> 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8Ecpu%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text"> 存储器与CPU的连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E7%90%86%E9%80%89%E6%8B%A9%E5%AD%98%E5%82%A8%E8%8A%AF%E7%89%87"><span class="toc-text"> 合理选择存储芯片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%BA%BF%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text"> 地址线的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BA%BF%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text"> 数据线的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E5%91%BD%E4%BB%A4%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text"> 读&#x2F;写命令的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%87%E9%80%89%E7%BA%BF%E7%9A%84%E8%BF%9E%E6%8E%A5"><span class="toc-text"> 片选线的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-text"> 例题</span></a></li></ol></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/%E9%AB%98%E6%80%A7%E8%83%BD%E5%AD%98%E5%82%A8%E5%99%A8/index.html"><span class="toc-text">高性能存储器</span></a></div></div></widget>
 
 
 
@@ -137,21 +143,25 @@ var _hmt = _hmt || [];
 
   <article class='md-text content wiki reveal'>
   <h1 class="article-title"><span>存储器与CPU连接</span></h1>
-  <h2 id="主存储器与CPU的连接原理"><a href="#主存储器与CPU的连接原理" class="headerlink" title="主存储器与CPU的连接原理"></a>主存储器与CPU的连接原理</h2><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221130131.png" alt=""></p>
+  <h2 id="主存储器与cpu的连接原理"><a class="markdownIt-Anchor" href="#主存储器与cpu的连接原理"></a> 主存储器与CPU的连接原理</h2>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221130131.png" alt="" /></p>
 <ul>
 <li>主存储器通过数据总线、地址总线和控制总线（读/写）和CPU相连</li>
 <li>数据总线的位数与工作频率的乘积正比于数据传输率</li>
 <li>地址总线的位数决定了可寻址的最大内存空间</li>
 <li>控制总线指出总线周期的类型和本次输入/输出操作完成的时间</li>
 </ul>
-<h2 id="主存容量的扩展"><a href="#主存容量的扩展" class="headerlink" title="主存容量的扩展"></a>主存容量的扩展</h2><p>单个存储芯片的容量肯定是有限的，他在字数或者字长方面与实际存储器的要求都有一定的差距，因此我们需要在字和位两方面进行扩展来满足实际存储器的要求。通常的方法有位扩展法，字扩展法和字位同时扩展法来扩展主存容量。</p>
+<h2 id="主存容量的扩展"><a class="markdownIt-Anchor" href="#主存容量的扩展"></a> 主存容量的扩展</h2>
+<p>单个存储芯片的容量肯定是有限的，他在字数或者字长方面与实际存储器的要求都有一定的差距，因此我们需要在字和位两方面进行扩展来满足实际存储器的要求。通常的方法有位扩展法，字扩展法和字位同时扩展法来扩展主存容量。</p>
 <p>在学习这些内容前，我们先来了解一下为何要进行字、位扩展以及扩展的特点。我们前面学习了存储器的容量表示是XB×Y位。也就是说寻址范围是0~2^X，每一次输出的数据位数是Y位。但是在实际应用中，可能会出现需要4KB×16位的存储器，然而我们只有1KB×8位的存储器，那么寻址范围太小不够4KB，且一次性输出的数据位数是8位少于16位，那么此时地址线和数据线与存储芯片的型号就有矛盾了，所以我们需要将这有限个存储芯片以一定的方式组合扩展成4KB×16位。其中数据线位数应该总是等于一次输出的数据位数也就是等于扩展后的存储芯片位数。地址线至少能够表示组合扩展后存储芯片的寻址范围，但是可能会大于这个范围，因为部分地址线会成为片选信号线。</p>
-<h3 id="位扩展法"><a href="#位扩展法" class="headerlink" title="位扩展法"></a>位扩展法</h3><p>那么我们首先来学习以下位扩展，顾名思义，仅仅是需要扩展位数。CPU的数据线数与存储芯片的数据位数不相等，此时必须对存储芯片进行位扩展，方法很简单，就是用多个存储器件组合对数据字长进行扩充，增加存储字长即可，使得一次输出的数据尾位数等于数据线数。比如，现在我们要使用8个8K×1位的存储芯片组合进行位扩展成一个8K×8位的存储器件。如下图组合：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221132958.png" alt=""></p>
+<h3 id="位扩展法"><a class="markdownIt-Anchor" href="#位扩展法"></a> 位扩展法</h3>
+<p>那么我们首先来学习以下位扩展，顾名思义，仅仅是需要扩展位数。CPU的数据线数与存储芯片的数据位数不相等，此时必须对存储芯片进行位扩展，方法很简单，就是用多个存储器件组合对数据字长进行扩充，增加存储字长即可，使得一次输出的数据尾位数等于数据线数。比如，现在我们要使用8个8K×1位的存储芯片组合进行位扩展成一个8K×8位的存储器件。如下图组合：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221132958.png" alt="" /></p>
 <p>首先我们讲解一下上图，A0~A12表示的是地址线（Address)，D0~D7是数据线（Data)。那么很明显一个存储芯片一次性只能输出一位数据，并且寻址范围仅是8K，而现在我们要求寻址范围不变仍是8K，但是一次性输出的数据必须是8位（和数据线数相等）。那么很容易想到，我们只需要每次输出数据的时候，每一个存储芯片都贡献一位，这样组合出来就是一个8位数据了，所以每一个RAM芯片都连接一个不同的数据线，而这8个RAM芯片肯定是同时工作的，即要输出必定同时输出各贡献一位数据。所以8片RAM芯片的地址线A12~A0，非CS,非WE都连在一起，即他们同时控制着这8片芯片的工作方式。</p>
 <p>所以我们可以总结出在采用位扩展时，各芯片连接地址线的方式相同（每一个芯片都同时连接着A12~A0来表示4K的寻址范围)，但是连接数据线的方式不同（各连接一个不同的数据线,输出数据时各贡献1位数据）。</p>
-<h3 id="字扩展法"><a href="#字扩展法" class="headerlink" title="字扩展法"></a>字扩展法</h3><p>字扩展是指增加存储器字的数量，而位数不变，即仅增大寻址范围。比如现在我们要用4个16K×8位的存储芯片组成一个64K×8位存储器件。此时已经满足了每一个存储芯片即可输出与数据总线位数相同的数据了。但是要用这4个芯片（寻址范围都是0~2\^14-1)组合扩展成一个寻址范围为0~2\^16-1的存储器件。组合方式如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221134133.png" alt=""></p>
+<h3 id="字扩展法"><a class="markdownIt-Anchor" href="#字扩展法"></a> 字扩展法</h3>
+<p>字扩展是指增加存储器字的数量，而位数不变，即仅增大寻址范围。比如现在我们要用4个16K×8位的存储芯片组成一个64K×8位存储器件。此时已经满足了每一个存储芯片即可输出与数据总线位数相同的数据了。但是要用这4个芯片（寻址范围都是0~2^14-1)组合扩展成一个寻址范围为0~2^16-1的存储器件。组合方式如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221134133.png" alt="" /></p>
 <p>此时芯片的地址线，控制线，读写控制线相应并联，而不再是串联统一由一个信号管理了。我们可以看出每一个芯片还是都连接着A13~A0地址线来表示自己的16K寻址范围，但是此时A15A14却和译码器相连接用来传送片选信号（顾名思义，就是选择哪一个存储芯片工作的信号)。那么此时我们就可以用一下方式来实现寻址范围（字）扩展：</p>
 <ul>
 <li>第一片芯片工作时满足A15A14=00，所以寻址范围是0000000000000000-0011111111111111</li>
@@ -161,11 +171,12 @@ var _hmt = _hmt || [];
 </ul>
 <p>所以我们可以看出译码器可以用A1514来控制片选信号从而选择每次工作时由哪一个芯片工作，并且最终的地址拼接着A15A14也就变成了16位即寻址范围扩大了，但是从每一个芯片的视角来看，他们的寻址范围并没有变化只是起始地址不再都从0开始了而已。每一个芯片都同时连接着D7~D08个数据线，所以每一次只有一个芯片工作，他一次性就输出了满足数据线位数的8位数据。</p>
 <p>采用字扩展时，各芯片连接地址的方式相同（都是同时连接着A0~15，一次性接受16位地址），连接数据线的方式也是相同的（都连接着D7~D0，一次性输出8位数据）。但在某一个时刻只需选中一个芯片，所以通过片选信号非CS或采用译码器设计连接到相应的芯片）。</p>
-<h3 id="字位同时扩展法"><a href="#字位同时扩展法" class="headerlink" title="字位同时扩展法"></a>字位同时扩展法</h3><p>既然有字扩展和位扩展，那么就肯定还有更加复杂的组合扩展方法即字位同时扩展。这种方法既增加存储字的数量，又增加存储字长。比如用8片16K×4位的RAM芯片组合扩展成一个64K×8位的存储器。那么组合方式如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221140104.png" alt=""></p>
+<h3 id="字位同时扩展法"><a class="markdownIt-Anchor" href="#字位同时扩展法"></a> 字位同时扩展法</h3>
+<p>既然有字扩展和位扩展，那么就肯定还有更加复杂的组合扩展方法即字位同时扩展。这种方法既增加存储字的数量，又增加存储字长。比如用8片16K×4位的RAM芯片组合扩展成一个64K×8位的存储器。那么组合方式如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210221140104.png" alt="" /></p>
 <p>即8个芯片每两个芯片采用位扩展组合成4个16K×8位的芯片，这4个组合芯片再采用字扩展扩展成64K×8位的芯片。所以A15A14仍然是片选信号，4个16K×8位组合芯片每次只只有一个工作，但是这个组合芯片的两个16K×4位存储芯片总是要同时工作的，一个输出数据的前4位，一个输出数据的后4位从而拼接组合成一个8位的数据。</p>
 <p>所以采用字位同时扩展时，各芯片连接地址线的方式相同（都是连接着A15~A0)，但是连接数据线的方式不同（每一个存储芯片都只连接4个数据线），而且需要通过片选信好非CS或采用译码器设计连接到相应的芯片。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><div class="table-container">
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
 <table>
 <thead>
 <tr>
@@ -192,10 +203,10 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="存储芯片的地址分配和片选"><a href="#存储芯片的地址分配和片选" class="headerlink" title="存储芯片的地址分配和片选"></a>存储芯片的地址分配和片选</h2><p>前面我们学习了片选信号可以控制不同的存储芯片工作，下面我们就来细分以下不同的片选信号产生方式。首先我们要知道CPU要想实现对存储芯片的访问，首先要选择存储芯片，即进行片选，然后为选中的芯片依地址码选择相对应的存储单元，以进行数据的存取，即进行字选。片内的字选通常是由CPU传出的N条地址线完成的，地址线直接接到所有存储芯片的地址输入端（N由片内存储量2^N决定）。所以我们不关注由地址直接决定的片内字选，而是学习一下片选信号的产生方法。</p>
-<h3 id="线选法"><a href="#线选法" class="headerlink" title="线选法"></a>线选法</h3><p>线选法用除片内寻址的高位地址线（或经反相器）分别接至各个存储芯片的片选端，当某地址线信息为“0”位时，就选中与之对应的存储芯片。这些片选地址每次寻址时只能有一位有效，不允许多位有效，这样就能保证每次只选中一个芯片（或芯片组）。假设4片2K×8位存储芯片用线选法构成8K×8位存储器，各芯片的片选信号如下表</p>
-<div class="table-container">
+<h2 id="存储芯片的地址分配和片选"><a class="markdownIt-Anchor" href="#存储芯片的地址分配和片选"></a> 存储芯片的地址分配和片选</h2>
+<p>前面我们学习了片选信号可以控制不同的存储芯片工作，下面我们就来细分以下不同的片选信号产生方式。首先我们要知道CPU要想实现对存储芯片的访问，首先要选择存储芯片，即进行片选，然后为选中的芯片依地址码选择相对应的存储单元，以进行数据的存取，即进行字选。片内的字选通常是由CPU传出的N条地址线完成的，地址线直接接到所有存储芯片的地址输入端（N由片内存储量2^N决定）。所以我们不关注由地址直接决定的片内字选，而是学习一下片选信号的产生方法。</p>
+<h3 id="线选法"><a class="markdownIt-Anchor" href="#线选法"></a> 线选法</h3>
+<p>线选法用除片内寻址的高位地址线（或经反相器）分别接至各个存储芯片的片选端，当某地址线信息为“0”位时，就选中与之对应的存储芯片。这些片选地址每次寻址时只能有一位有效，不允许多位有效，这样就能保证每次只选中一个芯片（或芯片组）。假设4片2K×8位存储芯片用线选法构成8K×8位存储器，各芯片的片选信号如下表</p>
 <table>
 <thead>
 <tr>
@@ -222,11 +233,11 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
 <p>4个芯片，所以需要额外的四个高位地址线来表示片选信号，一般都是1表示不工作，当第i位为0时就表示选中第i个芯片工作，比如上表中A11这个最低位为0就表示0号芯片工作，1101就是2号芯片。而片内字选的地址码就是A10~A0用于寻址。</p>
 <p>很明显这种方法优点是线路简单，不需要地址译码器。但是缺点却也很大，首先地址空间不连续了，1110是1号芯片地址的高位部分，但是3号芯片高位地址部分反而是小的0111，这不好表示地址连续。并且选片的地址线必须分时为低电平（否则不能工作，即每位表示一个芯片的编号，每次只能有一位为0来表示选中一个芯片0）。这种方法不能充分利用系统的存储空间，造成地址资源的浪费。比如现在有4位高位地址，明明可以有2^4=16中组合方案，但是却只能用来控制4个芯片即只能使用其中的4中组合方案来表示片选信号。当芯片很多时，这种方法弊端太大。</p>
-<h3 id="译码片选法"><a href="#译码片选法" class="headerlink" title="译码片选法"></a>译码片选法</h3><p>译码片选法就是解决上面线选法的局限性的，他可以充分利用剩余的高位地址线。比如8片8K×8位的存储芯片组成64K×8位存储器（地址线16位，数据线8位），需要8个片选信号，若采用线选法，除去用于片内寻址的13位地址线，还额外需要8个地址线来表示8个片选信号。但是现在仅余下3个地址线了即只有3位可以表示片选信号了。此时使用译码片选法，即用一片74LS138作为地址译码器，则A15A14A13=000时选中第一片，A15A14A13=001时选中第二片，以此类推，3位8种组合刚好可以表示8个芯片的片选信好，充分利用了系统的存储空间。</p>
-<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><div class="table-container">
+<h3 id="译码片选法"><a class="markdownIt-Anchor" href="#译码片选法"></a> 译码片选法</h3>
+<p>译码片选法就是解决上面线选法的局限性的，他可以充分利用剩余的高位地址线。比如8片8K×8位的存储芯片组成64K×8位存储器（地址线16位，数据线8位），需要8个片选信号，若采用线选法，除去用于片内寻址的13位地址线，还额外需要8个地址线来表示8个片选信号。但是现在仅余下3个地址线了即只有3位可以表示片选信号了。此时使用译码片选法，即用一片74LS138作为地址译码器，则A15A14A13=000时选中第一片，A15A14A13=001时选中第二片，以此类推，3位8种组合刚好可以表示8个芯片的片选信好，充分利用了系统的存储空间。</p>
+<h3 id="总结-2"><a class="markdownIt-Anchor" href="#总结-2"></a> 总结</h3>
 <table>
 <thead>
 <tr>
@@ -251,25 +262,32 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="存储器与CPU的连接"><a href="#存储器与CPU的连接" class="headerlink" title="存储器与CPU的连接"></a>存储器与CPU的连接</h2><h3 id="合理选择存储芯片"><a href="#合理选择存储芯片" class="headerlink" title="合理选择存储芯片"></a>合理选择存储芯片</h3><p>要组成一个主存系统，选择存储芯片是第一步，主要指存储芯片的类型（RAM或者ROM）和数量的选择。通常选用ROM存放系统程序，标准子程序和各类程序（因为不易修改且断电后不易丢失），RAM则是为用户编程而设置的。此外，在考虑芯片数量时，要尽量是连线简单，方便。</p>
-<h3 id="地址线的连接"><a href="#地址线的连接" class="headerlink" title="地址线的连接"></a>地址线的连接</h3><p>存储芯片的容量不同，其地址线数也不同，CPU的地址线往往比存储芯片的地址线数要多，因为部分地址线需要和译码器组合来控制片选信号的产生。通常是将CPU的地址线的低位和存储芯片的地址线相连，以选择芯片的某一单元（字选），这部分的译码是由芯片的片内逻辑完成的。而CPU地址线的高位则在扩充存储芯片时使用，用来选择存储芯片（片选），这部分译码由外接译码器逻辑完成。</p>
+<h2 id="存储器与cpu的连接"><a class="markdownIt-Anchor" href="#存储器与cpu的连接"></a> 存储器与CPU的连接</h2>
+<h3 id="合理选择存储芯片"><a class="markdownIt-Anchor" href="#合理选择存储芯片"></a> 合理选择存储芯片</h3>
+<p>要组成一个主存系统，选择存储芯片是第一步，主要指存储芯片的类型（RAM或者ROM）和数量的选择。通常选用ROM存放系统程序，标准子程序和各类程序（因为不易修改且断电后不易丢失），RAM则是为用户编程而设置的。此外，在考虑芯片数量时，要尽量是连线简单，方便。</p>
+<h3 id="地址线的连接"><a class="markdownIt-Anchor" href="#地址线的连接"></a> 地址线的连接</h3>
+<p>存储芯片的容量不同，其地址线数也不同，CPU的地址线往往比存储芯片的地址线数要多，因为部分地址线需要和译码器组合来控制片选信号的产生。通常是将CPU的地址线的低位和存储芯片的地址线相连，以选择芯片的某一单元（字选），这部分的译码是由芯片的片内逻辑完成的。而CPU地址线的高位则在扩充存储芯片时使用，用来选择存储芯片（片选），这部分译码由外接译码器逻辑完成。</p>
 <p>例如CPU地址线为16位，即A15~A0，1K×4位的存储芯片仅有10根地址线，那么此时CPU的低地址位A9~A0与存储芯片的地址线A9~A0相连。</p>
-<h3 id="数据线的连接"><a href="#数据线的连接" class="headerlink" title="数据线的连接"></a>数据线的连接</h3><p>CPU的数据线往往与存储芯片的数据线不一定相等，在相等时直接连接即可，如果不相等必须使用存储芯片位扩展，使得其数据位数和CPU的数据线数相等。</p>
-<h3 id="读-写命令的连接"><a href="#读-写命令的连接" class="headerlink" title="读/写命令的连接"></a>读/写命令的连接</h3><p>CPU读/写命令线一般可直接与存储芯片读/写控制端相连，通常高电平为读，低电平为写。有些CPU读写命令线是分开的（读为非RD，写为非WE，均为低电平有效），此时CPU的读命令线应与存储芯片的允许读控制端相连，而CPU的写命令线则应与存储芯片的允许写控制端相连。</p>
-<h3 id="片选线的连接"><a href="#片选线的连接" class="headerlink" title="片选线的连接"></a>片选线的连接</h3><p>片选线的连接是CPU与存储芯片连接的关键。存储器由许多存储芯片叠加而成，哪一片被选中完全取决于该存储芯片的片选控制端非CS是否能接收到来自CPU的片选有效信号。</p>
+<h3 id="数据线的连接"><a class="markdownIt-Anchor" href="#数据线的连接"></a> 数据线的连接</h3>
+<p>CPU的数据线往往与存储芯片的数据线不一定相等，在相等时直接连接即可，如果不相等必须使用存储芯片位扩展，使得其数据位数和CPU的数据线数相等。</p>
+<h3 id="读写命令的连接"><a class="markdownIt-Anchor" href="#读写命令的连接"></a> 读/写命令的连接</h3>
+<p>CPU读/写命令线一般可直接与存储芯片读/写控制端相连，通常高电平为读，低电平为写。有些CPU读写命令线是分开的（读为非RD，写为非WE，均为低电平有效），此时CPU的读命令线应与存储芯片的允许读控制端相连，而CPU的写命令线则应与存储芯片的允许写控制端相连。</p>
+<h3 id="片选线的连接"><a class="markdownIt-Anchor" href="#片选线的连接"></a> 片选线的连接</h3>
+<p>片选线的连接是CPU与存储芯片连接的关键。存储器由许多存储芯片叠加而成，哪一片被选中完全取决于该存储芯片的片选控制端非CS是否能接收到来自CPU的片选有效信号。</p>
 <p>片选有效信号与CPU的访存控制信号非MREQ（低电平有效）有关，因为只有当CPU要求访存时，才要求选中存储芯片。若CPU访问I/O，则非MREQ为高，表示CPU不需要访存，不要求存储器工作。</p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>设CPU有16根地址线，8根数据线，并且用非MREQ作为访存控制信号（低电平有效），用非WR作为读/写控制信号（高电平为读，低电平为写）。现在有下列存储芯片：1K×4位RAM，4K×8位RAM，8K×8位RAM，2K×8位ROM，4K×8位ROM，8K×8位ROM以及74LS138译码器和各种门电路。画出CPU与存储器的连接图。要求主存地址空间分配的6000H~67FFH是系统程序区，6800H~6BFFH为用户程序区。</p>
+<h3 id="例题"><a class="markdownIt-Anchor" href="#例题"></a> 例题</h3>
+<p>设CPU有16根地址线，8根数据线，并且用非MREQ作为访存控制信号（低电平有效），用非WR作为读/写控制信号（高电平为读，低电平为写）。现在有下列存储芯片：1K×4位RAM，4K×8位RAM，8K×8位RAM，2K×8位ROM，4K×8位ROM，8K×8位ROM以及74LS138译码器和各种门电路。画出CPU与存储器的连接图。要求主存地址空间分配的6000H~67FFH是系统程序区，6800H~6BFFH为用户程序区。</p>
 <p>首先我们需要确定系统程序区使用ROM，用户程序区使用RAM，所以ROM和RAM芯片都要选择。然后我们确定存储器数据线尾数应扩展为8位。然后我们来查看所选芯片的寻址范围。</p>
 <p>首先是6000H~67FFH之间的寻址空间范围是800H=2K。所以需要一片1K×8位的ROM。ROM地址线11根。然后是6800H~6BFFH之间的寻址空间范围是400H=1K，所以需要一片1K×8位的RAM。发现没有1K×8位的RAM芯片，所以使用两个1K×4位的RAM芯片进行位扩展。RAM地址线10根。然后我们发现CPU的总地址线是16根，不满足为每一个存储器都分配全部的地址线，所以ROM存储器和由两个RAM组成的存储器要并联组成字扩展，所以他们需要连接一个译码器。并且此时我们观察一下地址范围：</p>
-<script type="math/tex; mode=display">
-\begin{cases}
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>6000</mn><mi>H</mi><mo>∼</mo><mn>67</mn><mi>F</mi><mi>F</mi><mi>H</mi><mo>:</mo><mn>0110000000000000</mn><mo>∼</mo><mn>0111001111111111</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mn>6800</mn><mi>H</mi><mo>∼</mo><mn>6</mn><mi>B</mi><mi>F</mi><mi>F</mi><mi>H</mi><mo>:</mo><mn>0110100000000000</mn><mo>∼</mo><mn>0110101111111111</mn></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\begin{cases}
 6000H\sim67FFH:0110000000000000\sim0111001111111111\\
 6800H\sim6BFFH:0110100000000000\sim0110101111111111
-\end{cases}</script><p>我们知道ROM存储器的地址码需要用到A0~A10，RAM存储器的地址码需要用到A0~A9。所以A11~A15可以用来当做片选信号线。所以地址的高5位是片选信号位，而对于ROM存储器，剩下的11位刚好全部用来表示字选的片内地址码即可。而对于RAM存储器低10位就已经可以用来表示字选的片内地址码了，第6位不会使用到，所以一直是0，如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210222100555.png" alt=""></p>
+\end{cases}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.0000299999999998em;vertical-align:-1.25003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">{</span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.69em;"><span style="top:-3.69em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">6</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">6</span><span class="mord">7</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord">6</span><span class="mord">8</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">6</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.19em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>我们知道ROM存储器的地址码需要用到A0~A10，RAM存储器的地址码需要用到A0~A9。所以A11~A15可以用来当做片选信号线。所以地址的高5位是片选信号位，而对于ROM存储器，剩下的11位刚好全部用来表示字选的片内地址码即可。而对于RAM存储器低10位就已经可以用来表示字选的片内地址码了，第6位不会使用到，所以一直是0，如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210222100555.png" alt="" /></p>
 <p>所以当红框内的是100即十进制为4时就是ROM地址，如果红框内是101即十进制为5且第11位A10不会用到永为0那么就是RAM地址（两个条件需要同时成立，所以需要一个5&amp;！0，所以使用的是与非门）。又因为高两位用不到因为都是01没有区分作用，所以片选信号只需要A13A12A11即可。所以连接图如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210222100907.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210222100907.png" alt="" /></p>
 <p>我们观察上图果然A0~A9作为了RAM的地址线，同时两个RAM芯片是位扩展的方式，同时A0~A10作为了ROM的地址线，又因为地址线有共享部分，所以两个存储器芯片组最终并联字扩展，一次只能有一个工作，A13A12A11连接着译码器的CBA三位片选信号位同时A15A14没用到。非MREQ控制线也连接上了，同时数据线数和存储器的线数也相等了。</p>
 
   
@@ -428,7 +446,7 @@ var _hmt = _hmt || [];
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
   if ('local_search') {
@@ -446,19 +464,19 @@ var _hmt = _hmt || [];
   stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
     stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
@@ -484,7 +502,7 @@ var _hmt = _hmt || [];
       if (!path) {
         path = decodeURI(window.location.pathname);
       }
-      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
         el: '#waline_container',
         path: path,
       }));

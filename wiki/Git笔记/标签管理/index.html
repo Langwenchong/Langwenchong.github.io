@@ -17,8 +17,8 @@ var _hmt = _hmt || [];
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
-  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -32,12 +32,12 @@ var _hmt = _hmt || [];
   <title>Git：多人协作 - 雨中•学圃堂</title>
 
   
-    <meta name="description" content="标签管理git还引入了标签的概念，实际上就是对于一个对应着commit ID的版本提交一个简便的称号，这样我们就可以轻松的和他人交流某一个特殊的提交节点了。例如我们将commit ID为6a5819e…打上标签为版本v1.2。这样我们在和别人交流这个提交节点时就不用了说commitID了，而是标签v1.2了。 创建标签我们使用如下命令为当前分支所在节点打上标签： 1git tag [tagname">
+    <meta name="description" content="标签管理 git还引入了标签的概念，实际上就是对于一个对应着commit ID的版本提交一个简便的称号，这样我们就可以轻松的和他人交流某一个特殊的提交节点了。例如我们将commit ID为6a5819e…打上标签为版本v1.2。这样我们在和别人交流这个提交节点时就不用了说commitID了，而是标签v1.2了。  创建标签 我们使用如下命令为当前分支所在节点打上标签： 1git tag [tag">
 <meta property="og:type" content="website">
 <meta property="og:title" content="多人协作">
 <meta property="og:url" content="https://scholar.coolchong.cn/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
-<meta property="og:description" content="标签管理git还引入了标签的概念，实际上就是对于一个对应着commit ID的版本提交一个简便的称号，这样我们就可以轻松的和他人交流某一个特殊的提交节点了。例如我们将commit ID为6a5819e…打上标签为版本v1.2。这样我们在和别人交流这个提交节点时就不用了说commitID了，而是标签v1.2了。 创建标签我们使用如下命令为当前分支所在节点打上标签： 1git tag [tagname">
+<meta property="og:description" content="标签管理 git还引入了标签的概念，实际上就是对于一个对应着commit ID的版本提交一个简便的称号，这样我们就可以轻松的和他人交流某一个特殊的提交节点了。例如我们将commit ID为6a5819e…打上标签为版本v1.2。这样我们在和别人交流这个提交节点时就不用了说commitID了，而是标签v1.2了。  创建标签 我们使用如下命令为当前分支所在节点打上标签： 1git tag [tag">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210129150149.png">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210129152652.png">
@@ -72,11 +72,15 @@ var _hmt = _hmt || [];
   
 
   
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
 
   
-    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
   
 
 
@@ -85,6 +89,8 @@ var _hmt = _hmt || [];
       <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
     
       <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
     
   
 </head>
@@ -110,7 +116,7 @@ var _hmt = _hmt || [];
 
 
 
-<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html#start"><span class="toc-text">本地仓库</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/index.html"><span class="toc-text">远程仓库</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">分支管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/index.html"><span class="toc-text">多人协作</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">多人协作</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="toc-text">标签管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE"><span class="toc-text">创建标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%A0%87%E7%AD%BE"><span class="toc-text">操作标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%8F%82%E4%B8%8E"><span class="toc-text">项目参与</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE%E8%AF%AD"><span class="toc-text">结尾语</span></a></li></ol></div></div></widget>
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html#start"><span class="toc-text">本地仓库</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/index.html"><span class="toc-text">远程仓库</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">分支管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/index.html"><span class="toc-text">多人协作</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">多人协作</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="toc-text"> 标签管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE"><span class="toc-text"> 创建标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%A0%87%E7%AD%BE"><span class="toc-text"> 操作标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%8F%82%E4%B8%8E"><span class="toc-text"> 项目参与</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE%E8%AF%AD"><span class="toc-text"> 结尾语</span></a></li></ol></div></div></widget>
 
 
 
@@ -140,55 +146,60 @@ var _hmt = _hmt || [];
 
   <article class='md-text content wiki reveal'>
   <h1 class="article-title"><span>多人协作</span></h1>
-  <h2 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h2><p>git还引入了标签的概念，实际上就是对于一个对应着commit ID的版本提交一个简便的称号，这样我们就可以轻松的和他人交流某一个特殊的提交节点了。例如我们将commit ID为6a5819e…打上标签为版本v1.2。这样我们在和别人交流这个提交节点时就不用了说commitID了，而是标签v1.2了。</p>
-<h2 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h2><p>我们使用如下命令为当前分支所在节点打上标签：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag [tagname]</span><br></pre></td></tr></table></figure>
+  <h2 id="标签管理"><a class="markdownIt-Anchor" href="#标签管理"></a> 标签管理</h2>
+<p>git还引入了标签的概念，实际上就是对于一个对应着commit ID的版本提交一个简便的称号，这样我们就可以轻松的和他人交流某一个特殊的提交节点了。例如我们将commit ID为6a5819e…打上标签为版本v1.2。这样我们在和别人交流这个提交节点时就不用了说commitID了，而是标签v1.2了。</p>
+<h2 id="创建标签"><a class="markdownIt-Anchor" href="#创建标签"></a> 创建标签</h2>
+<p>我们使用如下命令为当前分支所在节点打上标签：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git tag [tagname]<br></code></pre></td></tr></table></figure>
 <p>但是我们有时候可能需要将所在分支之前的提交节点打上标签，而非当前的最新版本，此时我们不可能是使用版本回退来回到之前的节点的，因为这样会丢失当前最新版本，只需要使用如下指令:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag [tagname] [commit ID]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git tag [tagname] [commit ID]<br></code></pre></td></tr></table></figure>
 <p>我们可以使用如下指令查看标签列表：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git tag<br></code></pre></td></tr></table></figure>
 <p>但是一定要注意tag的排列不是按照时间顺序的，而是按照字母排序的，所以从tag顺序中无法知道版本节点的先后。同时我们想要查看某个标签对应的版本详细信息时只需要输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show [tagname]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git show [tagname]<br></code></pre></td></tr></table></figure>
 <p>这样可比查看冗长的git log要方便了许多。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git show v0.9</span><br><span class="line">commit f52c63349bc3c1593499807e5c8e972b82c8f286 (tag: v0.9)</span><br><span class="line">Author: Michael Liao &lt;askxuefeng@gmail.com&gt;</span><br><span class="line">Date:   Fri May 18 21:56:54 2018 +0800</span><br><span class="line"></span><br><span class="line">    add merge</span><br><span class="line"></span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs gas">$ git show v0.9<br>commit f52c63349bc3c1593499807e5c8e972b82c8f286 (tag: v0.9)<br>Author: Michael Liao &lt;askxuefeng@gmail.com&gt;<br>Date:   Fri May 18 21:56:54 2018 +0800<br><br>    add merge<br><br>diff --git a/readme.txt b/readme.txt<br>...<br></code></pre></td></tr></table></figure>
 <p>同时我们还可以在打标签的时候再次添加说明信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag -a [tagname] -m &quot;message&quot; [commit ID]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git tag -a [tagname] -m &quot;message&quot; [commit ID]<br></code></pre></td></tr></table></figure>
 <p>这样当我们再次使用git show的时候就可以得到两条说明文字，一个是之前git commit时的，一个是git tag时的，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git show v0.1</span><br><span class="line">tag v0.1</span><br><span class="line">Tagger: Michael Liao &lt;askxuefeng@gmail.com&gt;</span><br><span class="line">Date:   Fri May 18 22:48:43 2018 +0800</span><br><span class="line"></span><br><span class="line">version 0.1 released</span><br><span class="line"></span><br><span class="line">commit 1094adb7b9b3807259d8cb349e7df1d4d6477073 (tag: v0.1)</span><br><span class="line">Author: Michael Liao &lt;askxuefeng@gmail.com&gt;</span><br><span class="line">Date:   Fri May 18 21:06:15 2018 +0800</span><br><span class="line"></span><br><span class="line">    append GPL</span><br><span class="line"></span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs gas">$ git show v0.1<br>tag v0.1<br>Tagger: Michael Liao &lt;askxuefeng@gmail.com&gt;<br>Date:   Fri May 18 22:48:43 2018 +0800<br><br>version 0.1 released<br><br>commit 1094adb7b9b3807259d8cb349e7df1d4d6477073 (tag: v0.1)<br>Author: Michael Liao &lt;askxuefeng@gmail.com&gt;<br>Date:   Fri May 18 21:06:15 2018 +0800<br><br>    append GPL<br><br>diff --git a/readme.txt b/readme.txt<br>...<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：当某个节点是合并共享的版本节点，即同时处于master分支和dev分支上，那么无论处于哪个分支的这个节点上，我们都可以查看到这个标签。</p>
 </blockquote>
-<h2 id="操作标签"><a href="#操作标签" class="headerlink" title="操作标签"></a>操作标签</h2><p>我们肯定有打错标签的时候，那么可以使用如下指令删除标签：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag -d [tagname]</span><br></pre></td></tr></table></figure>
+<h2 id="操作标签"><a class="markdownIt-Anchor" href="#操作标签"></a> 操作标签</h2>
+<p>我们肯定有打错标签的时候，那么可以使用如下指令删除标签：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git tag -d [tagname]<br></code></pre></td></tr></table></figure>
 <p>创建的标签都只会存储在本地，不会自动推送到远程分支，所以删除标签可以再本地安全删除，当我们想要将标签推送到远程仓库时，使用git push即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin [tagname]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push origin [tagname]<br></code></pre></td></tr></table></figure>
 <p>既可以将本地的某一个标签推送到远程仓库分支，当然你也可以一次性将这条分支上的所有标签全部推送到远程仓库：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --tags</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push origin --tags<br></code></pre></td></tr></table></figure>
 <p>但是如果已经推送到远程仓库的标签要删除，那么我们需要先将本地分支上的标签删除：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag -d [tagname]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git tag -d [tagname]<br></code></pre></td></tr></table></figure>
 <p>然后再推送删除操作将远程仓库的同样的标签也删除：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin :refs/tags/[tagname]</span><br></pre></td></tr></table></figure>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129150149.png" alt=""></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push origin :refs/tags/[tagname]<br></code></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129150149.png" alt="" /></p>
 <p>我们可以在github上查看远程仓库的标签是否添加和删除成功。</p>
-<h2 id="项目参与"><a href="#项目参与" class="headerlink" title="项目参与"></a>项目参与</h2><p>由于github上的大部分项目开源存储，所以我们可以参与到这个项目中的开发中，但是我们知道对于别人的远程仓库由于我们没有sshkey绑定是不能够给将我们本地的修改推送到别人的远程仓库中的，那么我们如何才能够参与这个开源项目呢？很简单，我们点击一下某个人的开源仓库项目fork按钮</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129152652.png" alt=""></p>
+<h2 id="项目参与"><a class="markdownIt-Anchor" href="#项目参与"></a> 项目参与</h2>
+<p>由于github上的大部分项目开源存储，所以我们可以参与到这个项目中的开发中，但是我们知道对于别人的远程仓库由于我们没有sshkey绑定是不能够给将我们本地的修改推送到别人的远程仓库中的，那么我们如何才能够参与这个开源项目呢？很简单，我们点击一下某个人的开源仓库项目fork按钮</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129152652.png" alt="" /></p>
 <p>就可以将这个开源项目添加到了我们自己的远程仓库中（其中star按钮表示点赞）。这样我们就可以在自己的远程仓库中查看到这个项目（显示fork from…)</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129153311.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129153311.png" alt="" /></p>
 <p>然后我们克隆自己远程仓库中的这个项目到本地就可以参与开发修改了，这样我们自己新建一个分支然后修改这个项目或者在master分支后面新增修改提交，然后我们将自己的修改提交到我们自己的远程仓库（一定要注意是自己的仓库）。那么如果我们想要将自己的一些修改想法分享给原创作者只需要创建一个pull request，然后选择自己的修改即可，同时我们还需要添加一下修改的标题和一些介绍即可，最后将pull request提交给作者，作者审核通过同意后即可将我们的修改添加到他的远程仓库了。</p>
 <p>比如现在我们想要向廖雪峰老师发送一份感谢信的pull request，我们首先需要fork他的仓库，这里我已经完成了。然后我们克隆这个仓库到我们的本地，然后我们根据廖雪峰老师的提示，在相应的日期下新建我们的感谢信，我处于2021一月份，所以在202001中添加一个md：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129155300.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129155300.png" alt="" /></p>
 <p>然后我们将这个文件提交并上传到我们的远程仓库</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129155816.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129155816.png" alt="" /></p>
 <p>然后我们就可以在自己的远程仓库查看到这个修改了。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129155922.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129155922.png" alt="" /></p>
 <p>这样我们的仓库已经有了我们的修改，接下来我们将自己的修改通过pull request发给廖雪峰老师，只需要点击pull request一栏创建一个新的pull request即可：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129160038.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129160038.png" alt="" /></p>
 <p>这里提示可以将我们的master分支下的修改提交合并到廖雪峰老师的learngit仓库的master分支，然后我们点击创建：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129160223.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129160223.png" alt="" /></p>
 <p>然后我们添加一下标题和一些说明文字就可以提交pull request了。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129160302.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210129160302.png" alt="" /></p>
 <p>那么现在我们就可以查看到自己的pull request已经成功提交了，接下来就是等待廖老师的审核啦。</p>
-<h2 id="结尾语"><a href="#结尾语" class="headerlink" title="结尾语"></a>结尾语</h2><p>那么此次我们历时5天的git学习历程就到此结束啦，回想起来，git学习也不是一件多难的事情，凡事都重在持之以恒，敢于尝试吧😜！</p>
+<h2 id="结尾语"><a class="markdownIt-Anchor" href="#结尾语"></a> 结尾语</h2>
+<p>那么此次我们历时5天的git学习历程就到此结束啦，回想起来，git学习也不是一件多难的事情，凡事都重在持之以恒，敢于尝试吧😜！</p>
 
   
 
@@ -346,7 +357,7 @@ var _hmt = _hmt || [];
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
   if ('local_search') {
@@ -364,19 +375,19 @@ var _hmt = _hmt || [];
   stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
     stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
@@ -402,7 +413,7 @@ var _hmt = _hmt || [];
       if (!path) {
         path = decodeURI(window.location.pathname);
       }
-      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
         el: '#waline_container',
         path: path,
       }));

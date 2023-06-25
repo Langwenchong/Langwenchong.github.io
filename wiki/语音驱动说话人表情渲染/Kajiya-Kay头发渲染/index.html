@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fc63ac4843a697431e3d43c4d48b99de";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>GraduationDesign：Kajiya-Kay头发渲染 - 雨中•学圃堂</title>
+
+  
+    <meta name="description" content="本文在讲解之前，请您先仔细阅读《头发着色原理》 理解Kajiya-Kay的基本推导，同时需要掌握Unity的基础使用方法，对渲染管线有基本了解后再根据本文进行实验。非常感谢 《Hair Rendering and Shading》 提供的基于Kajiya-Kay模型头发渲染的伪代码。  实验材料 本实验我们将实现一个红色头发的少女，同时要实现基本的主高光与次高光和各向异型材料的特性，为了使得渲染效">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kajiya-Kay头发渲染">
+<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html">
+<meta property="og:site_name" content="雨中•学圃堂">
+<meta property="og:description" content="本文在讲解之前，请您先仔细阅读《头发着色原理》 理解Kajiya-Kay的基本推导，同时需要掌握Unity的基础使用方法，对渲染管线有基本了解后再根据本文进行实验。非常感谢 《Hair Rendering and Shading》 提供的基于Kajiya-Kay模型头发渲染的伪代码。  实验材料 本实验我们将实现一个红色头发的少女，同时要实现基本的主高光与次高光和各向异型材料的特性，为了使得渲染效">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Base.jpg">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Primary_Shift.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Second_Shift.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hari_Alpha.png">
+<meta property="og:image" content="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Normal.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/20230418235106.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/shift.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/TW.png">
+<meta property="og:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C%E5%9B%BE.png">
+<meta property="article:published_time" content="2023-05-15T07:34:54.934Z">
+<meta property="article:modified_time" content="2023-05-15T07:34:54.934Z">
+<meta property="article:author" content="Wenchong Lang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Base.jpg">
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="雨中•学圃堂" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://cdn.coolchong.cn/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/langwenchong.png">
+  
+
+  
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
+
+  
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  
+
+
+  
+    
+      <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
+    
+      <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有笔记</a><a class="title" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html"><div class="main" ff="title">GraduationDesign</div><div class="sub cap">AI&CG毕业设计</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/语音驱动说话人表情渲染/" placeholder="想找点什么？"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">好像并未找到什么！</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">课题调研</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html#start"><span class="toc-text">项目简介&技术调研</span></a></div></div><div class="widget-header cap dis-select"><span class="name">毛发真实感渲染</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%A4%B4%E5%8F%91%E7%9D%80%E8%89%B2%E5%8E%9F%E7%90%86/index.html"><span class="toc-text">头发着色原理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%89%96%E6%9E%90UE4%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B%E6%BA%90%E7%A0%81/index.html"><span class="toc-text">剖析UE4着色模型源码</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html"><span class="toc-text">Kajiya-Kay头发渲染</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%9D%90%E6%96%99"><span class="toc-text"> 实验材料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E5%8E%9F%E7%90%86%E8%AE%B2%E8%A7%A3"><span class="toc-text"> 重要原理讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sin%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-text"> Sin的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89%E6%A8%A1%E6%8B%9F"><span class="toc-text"> 高光模拟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%85%89%E5%81%8F%E7%A7%BB"><span class="toc-text"> 高光偏移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%B9%E7%BC%98%E6%B6%88%E8%9E%8D%E6%95%88%E6%9E%9C"><span class="toc-text"> 边缘消融效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nromalmap%E7%9A%84%E9%87%87%E6%A0%B7"><span class="toc-text"> NromalMap的采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E5%88%B0%E5%BA%95%E7%94%A8%E5%88%87%E7%BA%BF%E8%BF%98%E6%98%AF%E5%89%AF%E5%88%87%E7%BA%BF"><span class="toc-text"> 采样到底用切线还是副切线？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shader%E4%BB%A3%E7%A0%81"><span class="toc-text"> Shader代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="toc-text"> 最终效果图</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html"><span class="toc-text">Marschner头发渲染</span></a></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?fc63ac4843a697431e3d43c4d48b99de";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">笔记</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B&%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/index.html">GraduationDesign</a></div><div id="post-meta">更新于&nbsp;<time datetime="2023-05-15T07:34:54.934Z">2023-05-15</time></div></div>
+
+  <article class='md-text content wiki reveal'>
+  <h1 class="article-title"><span>Kajiya-Kay头发渲染</span></h1>
+  <div class="tag-plugin note" color="cyan"><div class="title">本文在讲解之前，请您先仔细阅读</div><div class="body"><p><a href="https://scholar.coolchong.cn/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%A4%B4%E5%8F%91%E7%9D%80%E8%89%B2%E5%8E%9F%E7%90%86/index.html">《头发着色原理》</a> 理解Kajiya-Kay的基本推导，同时需要掌握Unity的基础使用方法，对渲染管线有基本了解后再根据本文进行实验。非常感谢 <a target="_blank" rel="noopener" href="https://web.engr.oregonstate.edu/~mjb/cs557/Projects/Papers/HairRendering.pdf">《Hair Rendering and Shading》 </a>提供的基于Kajiya-Kay模型头发渲染的伪代码。</p></div></div>
+<h2 id="实验材料"><a class="markdownIt-Anchor" href="#实验材料"></a> 实验材料</h2>
+<p>本实验我们将实现一个红色头发的少女，同时要实现基本的主高光与次高光和各向异型材料的特性，为了使得渲染效果更加真实，我们还将根据NormalMap进行法线采样贴图，因此下面的网盘中提供了一个基本的少女模型以及5张纹理图片：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="提取码：wssb" href="https://pan.baidu.com/s/1Ez4Y0t0LQH3XYM0Rkf82cw" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">提取码：wssb</span><span class="cap link fs12">https://pan.baidu.com/s/1Ez4Y0t0LQH3XYM0Rkf82cw</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>下面简单介绍一下五张图片的作用：</p>
+<div class="tag-plugin tabs"id="tab_46"><div class="nav-tabs"><div class="tab active"><a href="#tab_46-1">Hair_Base</a></div><div class="tab"><a href="#tab_46-2">Primary_Shift</a></div><div class="tab"><a href="#tab_46-3">Second_Shift</a></div><div class="tab"><a href="#tab_46-4">Hair_Alpha</a></div><div class="tab"><a href="#tab_46-5">Hair_Normal</a></div></div><div class="tab-content"><div class="tab-pane active" id="tab_46-1"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Base.jpg" alt="" /></p>
+<p>纹理贴图用来模拟头发效果，不提供颜色，透明度等贡献，采样贴图后可以得到一个类似于头发的蓝图。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_46-2"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Primary_Shift.png" alt="" /></p>
+<p>使用上面的纹理贴图后虽然可以得到一个类似于头发的效果，但是由于会repeat贴图因此头发会显得非常规则，但是实际上头发丝之间应该是不规则重叠状，因此我们需要实现一个扰动，这样也可以使得最终的天使环是一个不规则的圆环更加真实。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_46-3"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Second_Shift.png" alt="" /></p>
+<p>多重扰动，可以实现更好的渲染效果，同时次高光的扰动将使用这张纹理图进行采样。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_46-4"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hari_Alpha.png" alt="" /></p>
+<p>头发灰度渐变实现纵向的渐变效果从而得到更加真实的头发效果，采样后主要是最终体现在color的alpha值上。</p>
+<!-- endtab --></div><div class="tab-pane" id="tab_46-5"><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/Hair_Normal.png" alt="" /></p>
+<p>由于头发建模不可能真的一根一根头发丝构建，因此实际上细看是有多个mesh组成，但是这在高光处会体现的非常不真实，因此这里引入发现贴图来加深头发丝之间的凹凸从而给观察者一种“许多头发丝”的假象。</p>
+<!-- endtab --></div></div></div>
+<h2 id="重要原理讲解"><a class="markdownIt-Anchor" href="#重要原理讲解"></a> 重要原理讲解</h2>
+<h3 id="sin的计算"><a class="markdownIt-Anchor" href="#sin的计算"></a> Sin的计算</h3>
+<p>在Kajiya-Kay模型中，我们使用了切线来代替法线进行计算，这样可以节省许多开销，同时公式也变成了求解sin值，但是我们知道使用三角函数计算计算量仍然较为复杂，在实时渲染中开销能省则省，因此我们这里对Sin的公式进行一个变形，以下面为例：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.24999999999999992em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>sin</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>T</mi><mo separator="true">,</mo><mi>H</mi><msup><mo stretchy="false">)</mo><mtext>specularity </mtext></msup><mo>=</mo><msup><msqrt><mrow><mn>1</mn><mo>−</mo><mi mathvariant="normal">dot</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>T</mi><mo separator="true">,</mo><mi>H</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></msqrt><mtext>specularity </mtext></msup></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+&amp; \sin (T, H)^{\text {specularity }}=  \sqrt{1-\operatorname{dot}(T, H)^2}^{\text {specularity }}
+\end{aligned}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.882883em;vertical-align:-0.6914415em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1914415em;"><span style="top:-3.1914415em;"><span class="pstrut" style="height:3.222883em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.6914415em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1914415em;"><span style="top:-3.1914415em;"><span class="pstrut" style="height:3.222883em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">specularity </span></span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.983875em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mop"><span class="mord mathrm">d</span><span class="mord mathrm">o</span><span class="mord mathrm">t</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9438750000000002em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119
+c34,79.3,68.167,158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120
+c340,-704.7,510.7,-1060.3,512,-1067
+l0 -0
+c4.7,-7.3,11,-11,19,-11
+H40000v40H1012.3
+s-271.3,567,-271.3,567c-38.7,80.7,-84,175,-136,283c-52,108,-89.167,185.3,-111.5,232
+c-22.3,46.7,-33.8,70.3,-34.5,71c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1
+s-109,-253,-109,-253c-72.7,-168,-109.3,-252,-110,-252c-10.7,8,-22,16.7,-34,26
+c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26s76,-59,76,-59s76,-60,76,-60z
+M1001 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.25612499999999994em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.222883em;"><span style="top:-3.4367750000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">specularity </span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.6914415em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>这里我们对求解高光的计算公式进行了一个简单的转换，这样的好处是cos可以通过点乘进行计算，而点乘即可将三角函数计算转换为了坐标之间简单的加乘运算从而减少开销。</p>
+<h3 id="高光模拟"><a class="markdownIt-Anchor" href="#高光模拟"></a> 高光模拟</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/20230418235106.png" alt="" /></p>
+<p>前面我们讲解过高光的计算公式原理，这里我们又进一步分为了主次高光，这是为了模拟真实的效果，参考上图我们可以很明显有一个天使环即各向异性的特点，但是细看可以发现其实高光的颜色并不相同，可以拆分为多个过渡的颜色其中主高光颜色更靠近发梢同时颜色较浅，但是次高光更靠近发根同时贡献了更多的头发底色，因此我们可以用两个相近的“天使环”去模拟。</p>
+<h3 id="高光偏移"><a class="markdownIt-Anchor" href="#高光偏移"></a> 高光偏移</h3>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/shift.png" alt="" /></p>
+<p>从上图也可以看出其实头发的高光并不是严格规则的，在边缘部分是有类似于“锯齿状”的，这是因为头发之间相互不规则重叠导致的，因此我们需要通过设置偏移参数以及采样偏移纹理图进行一个头发高光之间的扰动，为了实现高光沿着头发的延伸方向进行偏移，我们可以沿着发现的方向略微移动切线，假设T是一个从头发根部指向头发尖端的切线，我们可以将其进行向法线方向或者逆法线方向移动切线，具体移动幅度可以根据shift值决定，正shift推动将高光移向根部，负shift推动将高光移向头发尖端。具体的偏移量shift可以一部分采样于扰动纹理，同时一部分来自我们设置的偏移量。（上图看成是三维图更容易理解偏移原理）</p>
+<h3 id="边缘消融效果"><a class="markdownIt-Anchor" href="#边缘消融效果"></a> 边缘消融效果</h3>
+<p>为了实现头发高光与周边底色的渐变效果，我们可以设置一个参数值用来控制消融效果，使用smoothstep即可轻松实现，具体原理可以参考下文：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="Unity中SmoothStep介绍和应用: 溶解特效优化" href="https://blog.csdn.net/woodengm/article/details/125597326" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">Unity中SmoothStep介绍和应用: 溶解特效优化</span><span class="cap link fs12">https://blog.csdn.net/woodengm/article/details/125597326</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<h3 id="nromalmap的采样"><a class="markdownIt-Anchor" href="#nromalmap的采样"></a> NromalMap的采样</h3>
+<p>在采样发现时，如果仅仅是二维物体采样二维发现贴图那么很简单，因为物体的所有面都朝向一个发现，但是对于一个具有多个面或者多个不同朝向的三维物体进行法线贴图时则需要进一步处理，因此我们实际开发中一般只会有一张二维法线纹理图，而我们需要将其贴到朝向不同的mesh上，解决办法很简单，我们只需要实现一个切线空间与世界空间下的转换即可，这里有两种思路：</p>
+<ol>
+<li>将世界空间下的光线向量，法线向量等转换到切线空间下从而与某个顶点采样后得到的切线空间下的法线进行着色公式的计算得到最终的光照效果。</li>
+<li>将二维NromalMap中采样得到的某点切线空间下的法线转换到世界坐标系下再进一步计算，这里我青睐于这种方法，因为这样可以直接得到世界坐标系下的发现向量方便进行后面的所有计算操作。</li>
+</ol>
+<p>这个内容涉及到TBN矩阵可以参考下面文章进一步理解其原理：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="TBN矩阵是什么" href="https://zhuanlan.zhihu.com/p/449823180" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">TBN矩阵是什么</span><span class="cap link fs12">https://zhuanlan.zhihu.com/p/449823180</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="Unity Shader-法线贴图（Normal）及其原理" href="https://blog.csdn.net/puppet_master/article/details/53591167" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">Unity Shader-法线贴图（Normal）及其原理</span><span class="cap link fs12">https://blog.csdn.net/puppet_master/article/details/53591167</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>这里说一下我对UV空间，切向空间，局部模型空间，世界空间的浅显理解，所谓UV空间就是一个二维贴图的两个正交坐标轴（<strong>U轴其实就对应世界坐标系下的切线方向</strong>），由于每一个三维坐标都与UV下的坐标一一映射，<strong>因此实际上XYZ坐标系可以看成是关于UV的函数</strong>，而切向空间是一个以某一个顶点为原点重新根据U和V求得的N，T和B组成的坐标系，法线N方向不变，<strong>其中T表示切线可以用x,y,z对u的梯度求得</strong>，B可由法线N与T叉乘得到，因此如果这个顶点的法线就是和其所在的网格垂直，那么求得的T和B一般也在网格上，但是如果这个顶点的法线是差值平均求得的，那么可能求得的B和T不在面上。而局部模型空间就是<strong>以模型中心为原点建立的XYZ坐标系</strong>，世界空间坐标系就是<strong>以世界坐标原点建立的XYZ坐标系</strong>。</p>
+<p>而我们在进行法线贴图采样时一般采样得到的都是切线空间下的法线向量，（其实就是根据三维坐标xyz转换为二维采样坐标uv去采样三通道值再转换得到切线空间下的N），我们需要进一步将其转换为世界坐标系，此时就是使用TBN（世界坐标系下的T,BN三个向量罗列组成）矩阵了。下面是一个非常易懂的切线空间与世界空间的关系图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/TW.png" alt="" /></p>
+<h3 id="采样到底用切线还是副切线"><a class="markdownIt-Anchor" href="#采样到底用切线还是副切线"></a> 采样到底用切线还是副切线？</h3>
+<p>这个问题困惑了我好久，首先副切线又名副法线，实际上就是根据法线与切线叉乘得到的，那么它们之间的关系是什么呢？首先可以参考下文进行了解：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="关于顶点的法线、切线、副切线" href="https://zhuanlan.zhihu.com/p/103546030" target="_blank" rel="external nofollow noopener noreferrer" cardlink autofill="icon"><div class="left"><span class="title">关于顶点的法线、切线、副切线</span><span class="cap link fs12">https://zhuanlan.zhihu.com/p/103546030</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<p>总之我们要知道切线总是与U方向相同（可以理解成二维图片中从左下角为原点，向右延伸的方向），那么这里我们采样肯定是要按照从上到下沿着头发丝的方向采样，因此这里我们需要用副切线进行采样，也就是说具体是用切线还是副切线采样需要根据具体图片的情况分析，这我们的纹理图都是头发丝纵向的，那么我们又需要沿着头发丝采样，因此需要沿着V方向也即副切线方向进行采样。同时这里还要注意一个非常重要的问题，即副切线的计算中叉乘使用的向量需要是世界坐标系下的顶点法线与顶点切线，因此我们首先需要将向量从（模型）局部坐标系转换到世界坐标系下。</p>
+<h2 id="shader代码"><a class="markdownIt-Anchor" href="#shader代码"></a> Shader代码</h2>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><code class="hljs glsl"><span class="hljs-comment">// Upgrade <span class="hljs-doctag">NOTE:</span> replaced &#x27;mul(UNITY_MATRIX_MVP,*)&#x27; with &#x27;UnityObjectToClipPos(*)&#x27;</span><br><br>Shader &quot;Custom/Kajiya-Kay&quot;<br>&#123;<br>    Properties&#123;<br>        <span class="hljs-comment">// 漫反射颜色，决定头发主色色调</span><br>        _DiffuseColor(&quot;Hair Diffuse Color&quot;,Color)= (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        <span class="hljs-comment">// 主高光颜色</span><br>        _SpecularColor_1(&quot;Hair Primary Specular Color&quot;,Color)=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        <span class="hljs-comment">// 次高光颜色</span><br>        _SpecularColor_2(&quot;Hair Second Specular Color&quot;,Color)=(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        <span class="hljs-comment">// 头发贴图模拟头发丝</span><br>        _BaseTex(&quot;BaseTexture&quot;,<span class="hljs-number">2</span>D) = &quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 高光偏移纹理</span><br>        _PrimaryShiftTex(&quot;PrimaryShiftTexture&quot;,<span class="hljs-number">2</span>D)=&quot;white&quot; &#123;&#125;<br>        _SecondShiftTex(&quot;SecondShiftTexture&quot;,<span class="hljs-number">2</span>D)=&quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 透明渐变纹理</span><br>        _AlphaTex(&quot;AlphaTexture&quot;,<span class="hljs-number">2</span>D) = &quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 头发高光消融效果</span><br>        _SpecularWidth(&quot;Specular Width&quot;,Range(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>))=<span class="hljs-number">1</span><br>        <span class="hljs-comment">// 头发高光收敛</span><br>        _Specularity_1(&quot;Hair Primary Specularity&quot;,range(<span class="hljs-number">0</span>,<span class="hljs-number">300</span>))=<span class="hljs-number">20</span><br>        _Specularity_2(&quot;Hair Second Specularity&quot;,range(<span class="hljs-number">0</span>,<span class="hljs-number">300</span>))=<span class="hljs-number">20</span><br>        <span class="hljs-comment">// 头发高光强度</span><br>        _SpecularScale(&quot;Hair Specular Scale&quot;,Range(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>))=<span class="hljs-number">0.381</span><br>        <span class="hljs-comment">// 高光偏移量</span><br>        _PrimaryShift(&quot;Primary Shift&quot;,Range(<span class="hljs-number">-5</span>,<span class="hljs-number">5</span>))=<span class="hljs-number">0</span><br>        _SecondShift(&quot;Second Shift&quot;,Range(<span class="hljs-number">-5</span>,<span class="hljs-number">5</span>))=<span class="hljs-number">0</span><br>        <span class="hljs-comment">// 发现贴图</span><br>        _NormalMap(&quot;Nromal Map&quot;,<span class="hljs-number">2</span>D)=&quot;white&quot; &#123;&#125;<br>        <span class="hljs-comment">// 设置凹凸程度</span><br>        _BumpScale(&quot;Hair Bump Scale&quot;,Range(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>))=<span class="hljs-number">2</span><br>    &#125;<br><br><br>    SubShader<br>    &#123;<br>        LOD <span class="hljs-number">200</span><br>        Cull off<br>        Pass&#123;<br>            CGPROGRAM<br><br>            <span class="hljs-comment">// 使用顶点与片元着色器</span><br>            <span class="hljs-meta">#pragma vertex vert</span><br>            <span class="hljs-meta">#pragma fragment frag</span><br><br>            <span class="hljs-comment">// 需要引得库</span><br>            <span class="hljs-meta">#include &quot;UnityCG.cginc&quot;</span><br>            <span class="hljs-meta">#include &quot;Lighting.cginc&quot;</span><br>            <br><br>            struct appdata&#123;<br>                <span class="hljs-comment">// 顶点坐标，采样坐标，法线，切线</span><br>                float4 vertex : POSITION;<br>                float2 uv : TEXCOORD0;<br>                float3 normal : NORMAL;<br>                float4 tangent : TANGENT;<br>            &#125;;<br><br>            struct v2f&#123;<br>                <span class="hljs-comment">// 采样坐标，裁剪顶点坐标（即MVP视口变换后的），法线，副切线，世界顶点坐标，切线空间到世界空间的转换矩阵</span><br>                float2 uv : TEXCOORD0;<br>                float4 vertex : SV_POSITION;<br>                float3 normal : TEXCOORD1;<br>                float3 bitangent : TEXCOORD2;<br>                float3 pos : TEXCOORD3;<br>                <span class="hljs-comment">// 变换矩阵</span><br>                float4 TtoW0 : TEXCOORD4;<br>                float4 TtoW1 : TEXCOORD5;<br>                float4 TtoW2 : TEXCOORD6;<br>            &#125;;<br>            <br>            <span class="hljs-type">sampler2D</span> _BaseTex;<br>            float4 _BaseTex_ST;<br>            <span class="hljs-type">sampler2D</span> _AlphaTex;<br>            float4 _AlphaTex_ST;<br>            <span class="hljs-type">sampler2D</span> _PrimaryShiftTex;<br>            float4 _PrimaryShiftTex_ST;<br>            <span class="hljs-type">sampler2D</span> _SecondShiftTex;<br>            float4 _SecondShiftTex_ST;<br>            <span class="hljs-type">sampler2D</span> _NormalMap;<br>            float4 _NormalMap_ST;<br><br>            float4 _DiffuseColor;<br>            float4 _SpecularColor_1;<br>            float4 _SpecularColor_2;<br>            fixed _SpecularWidth;<br>            fixed _SpecularScale;<br>            fixed _PrimaryShift;<br>            fixed _SecondShift;<br>            fixed _Specularity_1;<br>            fixed _Specularity_2;<br>            fixed _BumpScale;<br><br>            v2f vert(appdata v)&#123;<br>                v2f o;<br>                o.vertex = UnityObjectToClipPos(v.vertex);<br>                o.uv = v.uv;<br>                float3 worldPos=mul(unity_ObjectToWorld, v.vertex).xyz;<br>                float3 worldNormal=UnityObjectToWorldNormal(v.normal);<br>                float3 worldTangent=UnityWorldToObjectDir(v.tangent).xyz;<br>                float3 worldBitangent=<span class="hljs-built_in">cross</span>(worldTangent,worldNormal)*v.tangent.w;<br>                o.pos = worldPos;<br>                o.normal=UnityObjectToWorldNormal(v.normal);<br>                o.bitangent =<span class="hljs-built_in">cross</span>(v.normal,v.tangent.xyz)*v.tangent.w*unity_WorldTransformParams.w;<br>                o.TtoW0 = float4(worldTangent.x,worldBitangent.x,worldNormal.x,worldPos.x);<br>                o.TtoW1 = float4(worldTangent.y,worldBitangent.y,worldNormal.y,worldPos.y);<br>                o.TtoW2 = float4(worldTangent.z,worldBitangent.z,worldNormal.z,worldPos.z);<br>                <span class="hljs-keyword">return</span> o;<br>            &#125;<br><br>            half3 ShiftedTangent(float3 t,float3 n,<span class="hljs-type">float</span> shift)&#123;<br>                <span class="hljs-comment">// 偏移量，沿着头发丝方向</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">normalize</span>(t+shift*n);<br>            &#125;<br><br>            <span class="hljs-type">float</span> StrandSpecular(float3 t,float3 v,float3 l,<span class="hljs-type">int</span> exponent)&#123;<br>                <span class="hljs-comment">// 使用半程向量与沿着头发丝的切线计算反射</span><br>                float3 h=<span class="hljs-built_in">normalize</span>(l+v);<br>                <span class="hljs-type">float</span> dotTH=<span class="hljs-built_in">dot</span>(t,h);<br>                <span class="hljs-type">float</span> sinTH=<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">1.0</span>-dotTH*dotTH);<br>                <span class="hljs-comment">// 边缘消融效果</span><br>                <span class="hljs-type">float</span> dirAtten=<span class="hljs-built_in">smoothstep</span>(-_SpecularWidth,<span class="hljs-number">0</span>,dotTH);<br>                <span class="hljs-comment">// 同时还收到收敛指数，高光强度模拟吸收</span><br>                <span class="hljs-keyword">return</span> dirAtten*<span class="hljs-built_in">pow</span>(sinTH,exponent)*_SpecularScale;<br>            &#125;<br><br>            float3 HairSpecular(float3 t,float3 n,float3 l,float3 v,float2 uv)&#123;<br>                <span class="hljs-comment">// 计算主高光与次高光的偏移量</span><br>                <span class="hljs-type">float</span> shiftTex_1=tex2D(_PrimaryShiftTex,uv*_PrimaryShiftTex_ST.xy+_PrimaryShiftTex_ST.zw)<span class="hljs-number">-0.5</span>;<br>                float3 t1=ShiftedTangent(t,n,_PrimaryShift+shiftTex_1);<br>                <span class="hljs-comment">// </span><br>                float3 specular1=_SpecularColor_1*StrandSpecular(t1,v,l,_Specularity_1);<br><br>                <span class="hljs-type">float</span> shiftTex_2=tex2D(_SecondShiftTex,uv*_SecondShiftTex_ST.xy+_SecondShiftTex_ST.zw)<span class="hljs-number">-0.5</span>;<br>                float3 t2=ShiftedTangent(t,n,_SecondShift+shiftTex_2);<br>                float3 specular2=_SpecularColor_2*StrandSpecular(t2,v,l,_Specularity_2);<br><br>                <span class="hljs-comment">// 两者相加即为高光结果</span><br>                <span class="hljs-keyword">return</span> specular1+specular2;<br><br>            &#125;<br>            float3 HairDiffuse(float3 t,float3 l,float2 uv)&#123;<br>                <span class="hljs-comment">// 同样需要使用切线与光线的sin计算</span><br>                <span class="hljs-type">float</span> cosTL=<span class="hljs-built_in">dot</span>(t,l);<br>                <span class="hljs-type">float</span> sinTL=<span class="hljs-built_in">sqrt</span>(<span class="hljs-number">1.0</span>-cosTL*cosTL);<br>                <span class="hljs-keyword">return</span> tex2D(_BaseTex,uv).rgb*_DiffuseColor*sinTL;<br>            &#125;<br>            <br>            <span class="hljs-type">float</span> HairAlpha(float2 uv)&#123;<br>                <span class="hljs-comment">// 读取灰度</span><br>                <span class="hljs-keyword">return</span> tex2D(_AlphaTex,uv);<br>            &#125;<br><br>            float3 getNormal(float4 TtoW0,float4 TtoW1,float4 TtoW2,float2 uv)&#123;<br>                <span class="hljs-comment">// 采样发现，这里注意必须是设置为NromalMap</span><br>                float4 packedNormal = tex2D(_NormalMap,uv);<br>                <span class="hljs-comment">//图片没有设置成normal map</span><br>                <span class="hljs-comment">//float33 tangentNormal;</span><br>                <span class="hljs-comment">//tangentNormal.xy = (packedNormal.xy * 2 - 1)*_BumpScale;</span><br>                <span class="hljs-comment">//tangentNormal.z = sqrt(1 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));</span><br>                <span class="hljs-comment">// 解码得到采样后的切线坐标系下的发现</span><br>                float3 tangentNormal=UnpackNormal(packedNormal);<br>                tangentNormal.xy*=_BumpScale;<br>                <span class="hljs-comment">// 需要转换为世界坐标系下的发现</span><br>                float3 worldNormal = <span class="hljs-built_in">normalize</span>(float3(<span class="hljs-built_in">dot</span>(TtoW0.xyz,tangentNormal),<span class="hljs-built_in">dot</span>(TtoW1.xyz,tangentNormal),<span class="hljs-built_in">dot</span>(TtoW2.xyz,tangentNormal)));<br>                <span class="hljs-keyword">return</span> worldNormal;<br><br>            &#125;<br>            fixed4 frag(v2f i) : SV_TARGET&#123;<br>                float3 l=<span class="hljs-built_in">normalize</span>(UnityWorldSpaceLightDir(i.pos));<br>                float3 v=<span class="hljs-built_in">normalize</span>(UnityWorldSpaceViewDir(i.pos));<br>                float3 n=getNormal(i.TtoW0,i.TtoW1,i.TtoW2,i.uv);<br>                float3 b=<span class="hljs-built_in">normalize</span>(i.bitangent);<br>                float3 diff=HairDiffuse(b,l,i.uv);<br>                float3 spec=HairSpecular(b,n,l,v,i.uv);<br>                float4 col=float4(_LightColor0*(spec+diff),HairAlpha(i.uv));<br>                <span class="hljs-keyword">return</span> col;<br>            &#125;<br>            ENDCG<br>        &#125;<br>    &#125;<br>    FallBack &quot;Diffuse&quot;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>导入模型后，我们对头发进行编辑，并调节参数，这里给出我最终实验使用的参数：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Specular Width</td>
+<td style="text-align:center">0.809</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Primary Specularity</td>
+<td style="text-align:center">285</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Second Specularity</td>
+<td style="text-align:center">204</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Specular Scale</td>
+<td style="text-align:center">0.01</td>
+</tr>
+<tr>
+<td style="text-align:center">Primary Shift</td>
+<td style="text-align:center">-1.01</td>
+</tr>
+<tr>
+<td style="text-align:center">Second Shift</td>
+<td style="text-align:center">-0.19</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Bump Scale</td>
+<td style="text-align:center">0.54</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Diffuse Color (Red/Gold)</td>
+<td style="text-align:center">#A43932/#5F3F23</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Primary Specular Color（Red/Gold)</td>
+<td style="text-align:center">#CCB4B4/#E8B674</td>
+</tr>
+<tr>
+<td style="text-align:center">Hair Second Specular Color (Red/Gold)</td>
+<td style="text-align:center">#D4948D/#AA825E</td>
+</tr>
+</tbody>
+</table>
+<div class="tag-plugin note" color="yellow"><div class="body"><p>要注意前文说过主高光更靠近发尖端，次高光更靠近发根，同时shift越大越靠近发根，因此这里PrimaryShift&gt;SecondShift​,同时主高光颜色要浅于次高光颜色。</p></div></div>
+<h2 id="最终效果图"><a class="markdownIt-Anchor" href="#最终效果图"></a> 最终效果图</h2>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="http://cdn.coolchong.cn/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Kajiya-Kay%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C%E5%9B%BE.png" alt="" /></p>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/%E5%89%96%E6%9E%90UE4%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B%E6%BA%90%E7%A0%81/index.html">剖析UE4着色模型源码</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/%E8%AF%AD%E9%9F%B3%E9%A9%B1%E5%8A%A8%E8%AF%B4%E8%AF%9D%E4%BA%BA%E8%A1%A8%E6%83%85%E6%B8%B2%E6%9F%93/Marschner%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93/index.html">Marschner头发渲染</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body waline'>
+      
+
+<div id="waline_container" class="waline_thread" comment_id="GraduationDesign"><svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+  <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
+    <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
+  </a>
+  <a style="color: #fff" href="https://www.qiniu.com//" target="_blank" title="静态资源托管于 七牛云" >
+    <span class="badge-subject">Powered</span><span class="badge-value bg-orange">七牛云</span>
+  </a>
+  <a style="color: #fff" href="https://xaoxuu.com/wiki/stellar/" target="_blank" title="站点使用 Stellar 主题" >
+    <span class="badge-subject">Theme</span><span class="badge-value bg-brightgreen">Stellar</span>
+  </a>
+  <a style="color: #fff" href="https://beian.miit.gov.cn/)" target="_blank" title="网站已备案授权开放">
+    <span class="badge-subject">Record</span><span class="badge-value bg-red">津ICP备2021009044</span>
+  </a>
+</div>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function load_comment(){
+    if(!document.getElementById("waline_container"))return;
+    stellar.loadCSS('https://unpkg.com/@waline/client@2.14.1/dist/waline.css');
+    stellar.loadScript('https://unpkg.com/@waline/client@2.14.1/dist/waline.js', {defer:true}).then(function () {
+      const el = document.getElementById("waline_container");
+      var path = el.getAttribute('comment_id');
+      if (!path) {
+        path = decodeURI(window.location.pathname);
+      }
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+        el: '#waline_container',
+        path: path,
+      }));
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    load_comment();
+  });
+
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

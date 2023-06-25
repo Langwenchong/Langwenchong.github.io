@@ -17,8 +17,8 @@ var _hmt = _hmt || [];
   
 
   <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
-  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
   <link rel='dns-prefetch' href='//unpkg.com'>
 
   <meta name="renderer" content="webkit">
@@ -32,12 +32,12 @@ var _hmt = _hmt || [];
   <title>Git：远程仓库 - 雨中•学圃堂</title>
 
   
-    <meta name="description" content="什么是远程仓库实际上我们之前所做的工作都是在本地进行的，即只有这台计算机可以看到进行版本库的修改等。然而实际生活中我们经常需要将这个仓库上传到云端，这样我们可以随时在不同的电脑上进行“克隆”获得之前版本的库文件，在这个版本的基础上继续进行工作，或者从本地提交新的版本至远程的仓库来更新版本，这就是github的最大魅力。那么接下来我们就来学习使用github。 首先我们需要github账号，注册一个">
+    <meta name="description" content="什么是远程仓库 实际上我们之前所做的工作都是在本地进行的，即只有这台计算机可以看到进行版本库的修改等。然而实际生活中我们经常需要将这个仓库上传到云端，这样我们可以随时在不同的电脑上进行“克隆”获得之前版本的库文件，在这个版本的基础上继续进行工作，或者从本地提交新的版本至远程的仓库来更新版本，这就是github的最大魅力。那么接下来我们就来学习使用github。 首先我们需要github账号，注册">
 <meta property="og:type" content="website">
 <meta property="og:title" content="远程仓库">
 <meta property="og:url" content="https://scholar.coolchong.cn/wiki/Git%E7%AC%94%E8%AE%B0/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
-<meta property="og:description" content="什么是远程仓库实际上我们之前所做的工作都是在本地进行的，即只有这台计算机可以看到进行版本库的修改等。然而实际生活中我们经常需要将这个仓库上传到云端，这样我们可以随时在不同的电脑上进行“克隆”获得之前版本的库文件，在这个版本的基础上继续进行工作，或者从本地提交新的版本至远程的仓库来更新版本，这就是github的最大魅力。那么接下来我们就来学习使用github。 首先我们需要github账号，注册一个">
+<meta property="og:description" content="什么是远程仓库 实际上我们之前所做的工作都是在本地进行的，即只有这台计算机可以看到进行版本库的修改等。然而实际生活中我们经常需要将这个仓库上传到云端，这样我们可以随时在不同的电脑上进行“克隆”获得之前版本的库文件，在这个版本的基础上继续进行工作，或者从本地提交新的版本至远程的仓库来更新版本，这就是github的最大魅力。那么接下来我们就来学习使用github。 首先我们需要github账号，注册">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210125130324.png">
 <meta property="og:image" content="https://langwenchong.gitee.io/figure-bed/20210125131704.png">
@@ -86,11 +86,15 @@ var _hmt = _hmt || [];
   
 
   
+    
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/github.min.css">
 
   
-    <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
-    <script defer src="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+  
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" ></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
   
 
 
@@ -99,6 +103,8 @@ var _hmt = _hmt || [];
       <link href="https://fonts.font.im/css?family=Dancing+Script" rel="stylesheet">
     
       <link href="https://fastly.jsdelivr.net/gh/volantis-x/cdn-fontawesome-pro@master/css/all.min.css" rel="stylesheet">
+    
+      <link href="https://gcore.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/github-dark.min.css">
     
   
 </head>
@@ -124,7 +130,7 @@ var _hmt = _hmt || [];
 
 
 
-<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html#start"><span class="toc-text">本地仓库</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/index.html"><span class="toc-text">远程仓库</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text">什么是远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E6%9C%89SSH-Key"><span class="toc-text">检查是否有SSH Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BASSH-key"><span class="toc-text">创建SSH key</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E7%9A%84SSHkey%E6%98%AF%E7%81%B0%E8%89%B2%E7%9A%84%EF%BC%9F"><span class="toc-text">思考：为什么我的SSHkey是灰色的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text">添加远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%B0%86%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%85%B3%E8%81%94"><span class="toc-text">方法一：将本地仓库与远程仓库关联</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83-HTTPS%E5%92%8CSSH%E7%9A%84%E4%BB%93%E5%BA%93%E5%9C%B0%E5%9D%80%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">思考:HTTPS和SSH的仓库地址区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8sshkey%E8%BF%9B%E8%A1%8Cclone%E6%88%96%E8%80%85push%E6%97%B6%E7%9A%84%E6%8A%A5%E9%94%99"><span class="toc-text">注意：第一次使用sshkey进行clone或者push时的报错</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%85%8B%E9%9A%86%E8%BF%99%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%84%B6%E5%90%8E%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E8%BD%AC%E7%A7%BB"><span class="toc-text">方法二：克隆这个远程仓库然后本地文件转移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E4%B8%A4%E7%A7%8D%E4%B8%8A%E4%BC%A0%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">思考：两种上传方式的区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E5%BA%A6%E4%B8%80%EF%BC%9A%E6%8C%87%E4%BB%A4%E8%BE%93%E5%85%A5%E6%96%B9%E9%9D%A2"><span class="toc-text">角度一：指令输入方面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E5%BA%A6%E4%BA%8C%EF%BC%9A%E5%85%B3%E8%81%94%E6%96%B9%E5%BC%8F"><span class="toc-text">角度二：关联方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8B%E9%9A%86%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text">克隆远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE%E8%AF%AD"><span class="toc-text">结尾语</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">分支管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/index.html"><span class="toc-text">多人协作</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">多人协作</span></a></div></div></widget>
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">基础知识</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html#start"><span class="toc-text">本地仓库</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/index.html"><span class="toc-text">远程仓库</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text"> 什么是远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E6%9C%89ssh-key"><span class="toc-text"> 检查是否有SSH Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAssh-key"><span class="toc-text"> 创建SSH key</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E7%9A%84sshkey%E6%98%AF%E7%81%B0%E8%89%B2%E7%9A%84"><span class="toc-text"> 思考：为什么我的SSHkey是灰色的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text"> 添加远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%E5%B0%86%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%85%B3%E8%81%94"><span class="toc-text"> 方法一：将本地仓库与远程仓库关联</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83https%E5%92%8Cssh%E7%9A%84%E4%BB%93%E5%BA%93%E5%9C%B0%E5%9D%80%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考:HTTPS和SSH的仓库地址区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8sshkey%E8%BF%9B%E8%A1%8Cclone%E6%88%96%E8%80%85push%E6%97%B6%E7%9A%84%E6%8A%A5%E9%94%99"><span class="toc-text"> 注意：第一次使用sshkey进行clone或者push时的报错</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E5%85%8B%E9%9A%86%E8%BF%99%E4%B8%AA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%84%B6%E5%90%8E%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E8%BD%AC%E7%A7%BB"><span class="toc-text"> 方法二：克隆这个远程仓库然后本地文件转移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E4%B8%A4%E7%A7%8D%E4%B8%8A%E4%BC%A0%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text"> 思考：两种上传方式的区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E5%BA%A6%E4%B8%80%E6%8C%87%E4%BB%A4%E8%BE%93%E5%85%A5%E6%96%B9%E9%9D%A2"><span class="toc-text"> 角度一：指令输入方面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%92%E5%BA%A6%E4%BA%8C%E5%85%B3%E8%81%94%E6%96%B9%E5%BC%8F"><span class="toc-text"> 角度二：关联方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8B%E9%9A%86%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-text"> 克隆远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%B0%BE%E8%AF%AD"><span class="toc-text"> 结尾语</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">分支管理</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C/index.html"><span class="toc-text">多人协作</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Git%E7%AC%94%E8%AE%B0/%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86/index.html"><span class="toc-text">多人协作</span></a></div></div></widget>
 
 
 
@@ -154,50 +160,56 @@ var _hmt = _hmt || [];
 
   <article class='md-text content wiki reveal'>
   <h1 class="article-title"><span>远程仓库</span></h1>
-  <h2 id="什么是远程仓库"><a href="#什么是远程仓库" class="headerlink" title="什么是远程仓库"></a>什么是远程仓库</h2><p>实际上我们之前所做的工作都是在本地进行的，即只有这台计算机可以看到进行版本库的修改等。然而实际生活中我们经常需要将这个仓库上传到云端，这样我们可以随时在不同的电脑上进行“克隆”获得之前版本的库文件，在这个版本的基础上继续进行工作，或者从本地提交新的版本至远程的仓库来更新版本，这就是github的最大魅力。那么接下来我们就来学习使用github。</p>
+  <h2 id="什么是远程仓库"><a class="markdownIt-Anchor" href="#什么是远程仓库"></a> 什么是远程仓库</h2>
+<p>实际上我们之前所做的工作都是在本地进行的，即只有这台计算机可以看到进行版本库的修改等。然而实际生活中我们经常需要将这个仓库上传到云端，这样我们可以随时在不同的电脑上进行“克隆”获得之前版本的库文件，在这个版本的基础上继续进行工作，或者从本地提交新的版本至远程的仓库来更新版本，这就是github的最大魅力。那么接下来我们就来学习使用github。</p>
 <p>首先我们需要github账号，注册一个即可。然后我们需要进行以下几个步骤</p>
-<h3 id="检查是否有SSH-Key"><a href="#检查是否有SSH-Key" class="headerlink" title="检查是否有SSH Key"></a>检查是否有SSH Key</h3><p>首先在任意地方打开git终端，输入以下指令检查是否已为此电脑配置了ssh key：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<h3 id="检查是否有ssh-key"><a class="markdownIt-Anchor" href="#检查是否有ssh-key"></a> 检查是否有SSH Key</h3>
+<p>首先在任意地方打开git终端，输入以下指令检查是否已为此电脑配置了ssh key：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">ssh -T git@github.com<br></code></pre></td></tr></table></figure>
 <p>如果已经配置过sshkey了，那么应该会出现下图的提示：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125130324.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125130324.png" alt="" /></p>
 <p>那么就说明这个电脑可以通过ssh key免密登录上传本地仓库到远端，否则每次提交都需要输入账号和密码。</p>
-<h3 id="创建SSH-key"><a href="#创建SSH-key" class="headerlink" title="创建SSH key"></a>创建SSH key</h3><p>如果很不幸你没有设置ssh key，其实也没啥，如果你觉得每次上传输入一次账号和密码也是可以得，那你可以选择不设置SSH Key，但是如果你想上传本地仓库到远端github时不用输入密码，那么就需要配置SSH key,并且你是用的每一个设备都需要配置一个SSH Key（包括你的虚拟机），这样gitHub就可以通过ssh秘钥知道这台设备是你允许免密登录的设备。以后在上传时你就可以免密上传啦！</p>
+<h3 id="创建ssh-key"><a class="markdownIt-Anchor" href="#创建ssh-key"></a> 创建SSH key</h3>
+<p>如果很不幸你没有设置ssh key，其实也没啥，如果你觉得每次上传输入一次账号和密码也是可以得，那你可以选择不设置SSH Key，但是如果你想上传本地仓库到远端github时不用输入密码，那么就需要配置SSH key,并且你是用的每一个设备都需要配置一个SSH Key（包括你的虚拟机），这样gitHub就可以通过ssh秘钥知道这台设备是你允许免密登录的设备。以后在上传时你就可以免密上传啦！</p>
 <blockquote>
 <p>所以sshkey的作用一句话概括就是可以让你这台计算机免密上传本地仓库到远端，实际上他是通过rsa密钥对实现了你设置过SSH key的计算机和远端加密传输。</p>
 </blockquote>
 <p>创建ssh key实际上很简单，首先我们需要打开git终端，然后输入以下指令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;<br></code></pre></td></tr></table></figure>
 <p>上面的邮箱请输入自己的邮箱，然后一路回车就行了。然后我们就可以到用户目录下找到.ssh目录了（不同的系统路径是不同的，这里我给出win的路径：C:\用户\user(应该是你的设备名字）.ssh。其它系统的请自己努力查找，大致路径是相同的）。然后这个.ssh路径下应该有三个文件，其中id_rsa就是sshkey的私钥，不能告知他人的，而id_rsa.pub是公钥，可以告诉别人。我们现在要将公钥加入到github上，这样远端就可以通过sshkey公钥找到你的这台设备来验证私钥，如果你的这台计算机可以提供正确的私钥，那么就可以免密登陆了。</p>
 <p>所以接下来我们登陆github，打开settings中的ssh栏，如图：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125131704.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125131704.png" alt="" /></p>
 <p>新建ssh Key:</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125131755.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125131755.png" alt="" /></p>
 <p>然后我们就可以看到新建sshKey的输入框了，这里我们先介绍一下都是什么意思：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125131816.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125131816.png" alt="" /></p>
 <p>我们想，那么一个git账户ssh key肯定不只是有一个，比如你同事有mac,win两台电脑外加一个ubuntu虚拟机，那么现在这三个设备都要免密登录就需要都设置一个sshkey所以你的这个账号下肯定会有许多个sshKey(当然如果你就是穷，只有一个计算机，那当我没说😝)，但是总的来说每台设备都只对应唯一的一个sshkey，所以title就是用来区分每一个秘钥对应的是你的那台设备，你可千万不要命名为sshkey1,sshkey2…。这样以后你也不好区分这个sshkey对应的是那台电脑，我推荐你将title处填写你的设备名，比如我的是win10联想电脑，那么我就命名为Chong’s Win laptop,相对应的mac就是Chong’s Mac laptop等等。这样我们就可以区分出sshkey对应的设备了，然后我们将刚刚.ssh文件夹下的id_rsa.pub（一定要注意是公钥)复制到下方key处。然后点击add就完成了一个sshkey的添加，从此你的这台设备可以免密登录上传了。此时你在打开终端输入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">ssh -T git@github.com<br></code></pre></td></tr></table></figure>
 <p>应该就会出现成功的那句话了，见上面检查sshkey截图。</p>
-<h4 id="思考：为什么我的SSHkey是灰色的？"><a href="#思考：为什么我的SSHkey是灰色的？" class="headerlink" title="思考：为什么我的SSHkey是灰色的？"></a>思考：为什么我的SSHkey是灰色的？</h4><p>你会发现你刚刚创建的SSHKey应该和下图的灰色要是一样，写着NeverUsed，这正常，因为你现在只是创建成功了，还未使用过。当使用过这个SSHKey免密登录后就会变成绿色的并且显示上一次使用的时间。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-01-25%20140933.png" alt=""></p>
+<h4 id="思考为什么我的sshkey是灰色的"><a class="markdownIt-Anchor" href="#思考为什么我的sshkey是灰色的"></a> 思考：为什么我的SSHkey是灰色的？</h4>
+<p>你会发现你刚刚创建的SSHKey应该和下图的灰色要是一样，写着NeverUsed，这正常，因为你现在只是创建成功了，还未使用过。当使用过这个SSHKey免密登录后就会变成绿色的并且显示上一次使用的时间。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-01-25%20140933.png" alt="" /></p>
 <p>所以如果你创建完成后一定要使用免密登录的方法，否则你创建SSHkey又是为了什么？当然如果你用了很长时间的git后发现某个🔑一直是灰色的或者很久没用了，请仔细想一想是不是你更换了那个设备导致这个SSHkey不会再用到了，那么就可以删除这个🔑了。</p>
-<h2 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h2><p>那么我们现在配置完了sshkey了，接下来我们尝试将之前的learngit仓库推送到github上。首先我们需要在github上创建一个远程仓库：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125132810.png" alt=""></p>
+<h2 id="添加远程仓库"><a class="markdownIt-Anchor" href="#添加远程仓库"></a> 添加远程仓库</h2>
+<p>那么我们现在配置完了sshkey了，接下来我们尝试将之前的learngit仓库推送到github上。首先我们需要在github上创建一个远程仓库：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125132810.png" alt="" /></p>
 <p>然后我们就会进入到新建仓库编辑处如下：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125132931.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125132931.png" alt="" /></p>
 <p>这里名字就命名为本地仓库相同的即可，然后选择public即公开仓库，这样别人就可以看到我们的这个仓库，也就可以查看并克隆我们的仓库（所以不要存储敏感信息，比如银行卡密码等），如果是隐私信息请设置为private，然后下方的discription是仓库介绍，一般写2~3句话简单介绍一下即可，以后他会显示在这个地方：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133220.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133220.png" alt="" /></p>
 <p>然后同时我们勾选Add a Readme file，他是进入这个仓库后的详细信息，以后这个readme.md中的内容会显示在仓库下方，你可以写一些介绍文档，版本迭代信息，致谢等等，他最后会显示在这个地方：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133433.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133433.png" alt="" /></p>
 <p>并且以后我们可以通过点击绿色劝处的钢笔直接在github上对这个readme.md进行编辑。例如现在我们创建完learngit后（create respository后),他会默认在reame.md中填写的是我们之前的discription,现在我们修改这个readme:</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133713.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133713.png" alt="" /></p>
 <p>编辑完成后我们看下方：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133814.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125133814.png" alt="" /></p>
 <p>这里会有一个commit表，就是类似于git commit，可以写一些这次修改的注释。这里我们然后点击commit changes。我们会发现learngit下的介绍信息被修改了：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125134006.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125134006.png" alt="" /></p>
 <p>多了一句刚刚我们添加的话，并且上面的红圈处注释了我们commit时修改的注释信息。此时首页的仓库介绍就只有“翀翀学习git的仓库😎”这句话，而仓库具体的介绍即readme的信息就有我们新添加的话。所以我们以后关于仓库的具体介绍信息都可以写到readme文件中。</p>
 <p>但是现在我们github上的仓库还是空的，没有和我们本地的learngit仓库关联，所以也就还没有readme.txt文件呢，接下来我们将本地方库提交至github上的远程仓库。这里有两种方法：①将本地仓库与远程仓库关联②克隆这个远程仓库然后本地文件转移</p>
 <p>两种方法无好坏都可以，这里我们先教第一种：</p>
-<h3 id="方法一：将本地仓库与远程仓库关联"><a href="#方法一：将本地仓库与远程仓库关联" class="headerlink" title="方法一：将本地仓库与远程仓库关联"></a>方法一：将本地仓库与远程仓库关联</h3><p>首先我们需要在github上将仓库地址获取，这里点击仓库的绿色code按钮，我们可以看到有5中方法：</p>
+<h3 id="方法一将本地仓库与远程仓库关联"><a class="markdownIt-Anchor" href="#方法一将本地仓库与远程仓库关联"></a> 方法一：将本地仓库与远程仓库关联</h3>
+<p>首先我们需要在github上将仓库地址获取，这里点击仓库的绿色code按钮，我们可以看到有5中方法：</p>
 <ol>
 <li>HTTPS格式的远程仓库地址</li>
 <li>SSH格式的远程仓库地址</li>
@@ -206,50 +218,54 @@ var _hmt = _hmt || [];
 <li>以压缩包方式下载</li>
 </ol>
 <p>前三种方法比较常见，都是获取地址关联，其中HTTPS格式和SSH格式是我们今后会常用的方法，我们需要分辨以下这两者的区别：</p>
-<h4 id="思考-HTTPS和SSH的仓库地址区别？"><a href="#思考-HTTPS和SSH的仓库地址区别？" class="headerlink" title="思考:HTTPS和SSH的仓库地址区别？"></a>思考:HTTPS和SSH的仓库地址区别？</h4><p>我们知道HTTPS协议一般安全性很强，所以按照理解，凡事使用https的地址关联的仓库，那么无论你这个设备是否注册过sshkey，push时是都需要输入密码的。而SSH地址就是利用SSH验证私钥，如果你的电脑有SSHkey私钥且验证正确，那么推送时就可以免密啦，当然如果私钥验证不正确那么你是无权免密推送，会报错你无权push。一定要注意ssh只是能够允许你将仓库推送到自己的远程仓库时免密的，否则你是无权将本地仓库推送到别人的远程仓库的。</p>
+<h4 id="思考https和ssh的仓库地址区别"><a class="markdownIt-Anchor" href="#思考https和ssh的仓库地址区别"></a> 思考:HTTPS和SSH的仓库地址区别？</h4>
+<p>我们知道HTTPS协议一般安全性很强，所以按照理解，凡事使用https的地址关联的仓库，那么无论你这个设备是否注册过sshkey，push时是都需要输入密码的。而SSH地址就是利用SSH验证私钥，如果你的电脑有SSHkey私钥且验证正确，那么推送时就可以免密啦，当然如果私钥验证不正确那么你是无权免密推送，会报错你无权push。一定要注意ssh只是能够允许你将仓库推送到自己的远程仓库时免密的，否则你是无权将本地仓库推送到别人的远程仓库的。</p>
 <p>那么我们之前刚刚设置完SSH，所以尝试使用SSH来免密推送我们的本地仓库到远程仓库github/learngit.git。首先我们复制SSH地址：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125135526.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125135526.png" alt="" /></p>
 <p>注意SSH地址一定是git@github.com开头的，后面的是你的账号名称/仓库名称.git。并且点击右边的小面板按钮就会复制这个地址，然后我们在本地仓库中打开git终端，即在learngit文件夹中右键鼠标选择git-bash-here(这个是win的方法)：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125135925.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125135925.png" alt="" /></p>
 <p>如果是linux的，那么就需要cd 这个文件夹，总之最后你打开的终端最末尾处的应该写的是你的仓库名称learngit，然后我们关联这个仓库输入以下指令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:Langwenchong/learngit.git</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git remote add origin git@github.com:Langwenchong/learngit.git<br></code></pre></td></tr></table></figure>
 <p>一定要注意后面的地址应该是你自己的地址，即Langwenchong处应该是你自己的账号名称，否则你就会推送到我的远程仓库，当然了你是无权推送到我的远程仓库的（因为密码验证无法通过，最终会报错）。</p>
 <p>然后关联完成后，我们就可以push将本地仓库的文件推送到远程仓库了：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master <span class="comment">//注意如果你是新版本的话可能是main</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">git push -u origin master <span class="hljs-comment">//注意如果你是新版本的话可能是main</span><br></code></pre></td></tr></table></figure>
 <p>一定要注意请查看github上的默认分枝是master还是main,一般最新版本都是main了，那么代码应该是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push -u origin main<br></code></pre></td></tr></table></figure>
 <p>如果顺利的话，你应该不用输入密码就可以直接上传成功了，最后如下图：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125141139.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125141139.png" alt="" /></p>
 <p>现在我们查看一下github上的learngit仓库，应该发生了变化增加了readme.txt文件：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125142057.png" alt=""></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125142057.png" alt="" /></p>
 <p>如果你上传成功后发现github上没有变化，请查看是否上传到了master分支上：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125142200.png" alt=""></p>
-<p>所以我们知道了git push origin “branch”是将本地仓库的最新版本关联到远程仓库的branch分支上，如果你选择的是master，那么就关联到了master分支上，如果是main,那么就关联到了main分支上。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125142200.png" alt="" /></p>
+<p>所以我们知道了git push origin &quot;branch&quot;是将本地仓库的最新版本关联到远程仓库的branch分支上，如果你选择的是master，那么就关联到了master分支上，如果是main,那么就关联到了main分支上。</p>
 <p>这里我们只有第一次关联时使用这个指令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:Langwenchong/learngit.git</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git remote add origin git@github.com:Langwenchong/learngit.git<br>git push -u origin master<br></code></pre></td></tr></table></figure>
 <p>上面的第一句指令是关联仓库，一个远程仓库只能和一个本地仓库关联，而第二句就是将最新的版本上传到github上的哪一个分支上，其中-u参数是不仅把本地master分枝内容推送到远程仓库的目标分支master上，同时还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令了。</p>
 <p>即以后我们在push或者pull时不用加上-u直接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push origin master<br>git pull origin master<br></code></pre></td></tr></table></figure>
 <p>就可以完成将本地仓库的最新分支版本上传远端或者从远端获取某个分支的版本了。</p>
-<h4 id="注意：第一次使用sshkey进行clone或者push时的报错"><a href="#注意：第一次使用sshkey进行clone或者push时的报错" class="headerlink" title="注意：第一次使用sshkey进行clone或者push时的报错"></a>注意：第一次使用sshkey进行clone或者push时的报错</h4><p>当我们刚刚弄完sshkey还从未使用过，这次是第一次使用时那么可能会出现如下询问：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125143031.png" alt=""></p>
+<h4 id="注意第一次使用sshkey进行clone或者push时的报错"><a class="markdownIt-Anchor" href="#注意第一次使用sshkey进行clone或者push时的报错"></a> 注意：第一次使用sshkey进行clone或者push时的报错</h4>
+<p>当我们刚刚弄完sshkey还从未使用过，这次是第一次使用时那么可能会出现如下询问：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125143031.png" alt="" /></p>
 <p>这个是正常的，他需要你确认GitHub的Key的指纹信息是否真的来自GitHub的服务器，输入yes后回车即可。自此我们就学会了将本地仓库关联到远程仓库并且上传文件了。这种方法比较好，建议牢记，当然你也可以学习方法二：</p>
-<h3 id="方法二：克隆这个远程仓库然后本地文件转移"><a href="#方法二：克隆这个远程仓库然后本地文件转移" class="headerlink" title="方法二：克隆这个远程仓库然后本地文件转移"></a>方法二：克隆这个远程仓库然后本地文件转移</h3><p>这里我们的方法优点不同，但最终的效果是一样的。其实只是思路相反了，这里我们是先将远程仓库克隆下来为本地仓库，这样他就自动完成了两个仓库的关联，然后我们将readme.txt文件移动到这个新的本地仓库在提交，然后以后我们就在这个新的本地仓库进行文件的修改了。</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125143753.png" alt=""></p>
+<h3 id="方法二克隆这个远程仓库然后本地文件转移"><a class="markdownIt-Anchor" href="#方法二克隆这个远程仓库然后本地文件转移"></a> 方法二：克隆这个远程仓库然后本地文件转移</h3>
+<p>这里我们的方法优点不同，但最终的效果是一样的。其实只是思路相反了，这里我们是先将远程仓库克隆下来为本地仓库，这样他就自动完成了两个仓库的关联，然后我们将readme.txt文件移动到这个新的本地仓库在提交，然后以后我们就在这个新的本地仓库进行文件的修改了。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125143753.png" alt="" /></p>
 <p>我们还是先复制SSH地址这样可以免密上传，但是接下来我们是在桌面上打开终端克隆这个仓库从而创建一个与远程仓库已经关联了的本地仓库。所以我先克隆这个远程仓库到本地</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:Langwenchong/learngit.git</span><br></pre></td></tr></table></figure>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125144014.png" alt=""></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git clone git@github.com:Langwenchong/learngit.git<br></code></pre></td></tr></table></figure>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125144014.png" alt="" /></p>
 <p>然后我们就可以发现主目录下多了一个本地文件夹仓库就是learngit，我们在这里创建readme.txt文件。然后编辑完成这个readme.txt一定要注意接下来的步骤有略微差异：</p>
 <p>我们思考现在这个本地仓库中新建了一个readme.txt文件，但是还未加入到本地仓库中，所以需要先</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;create a readme.txt&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git add .<br>git commit -m &quot;create a readme.txt&quot;<br></code></pre></td></tr></table></figure>
 <p>然后我们在上传</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin main </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git push -u origin main <br></code></pre></td></tr></table></figure>
 <p>这样也完成了免密本地上传</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125144250.png" alt=""></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125144513.png" alt=""></p>
-<h3 id="思考：两种上传方式的区别？"><a href="#思考：两种上传方式的区别？" class="headerlink" title="思考：两种上传方式的区别？"></a>思考：两种上传方式的区别？</h3><p>我想你现在肯定是看的云里雾里了，确实这里不太好理解尤其对于github小白来说，你现在可以思考这些，随便学一种方法会用即可，反正最终学习的目的就是实用。当然如果你要想弄清楚两种方法需要熟练实用上传的方法再次反复温习就可以很容易辨析两种方法的区别了，这里我总结了以下两种方法的区别：</p>
-<h4 id="角度一：指令输入方面"><a href="#角度一：指令输入方面" class="headerlink" title="角度一：指令输入方面"></a>角度一：指令输入方面</h4><p>方法一的提交步骤</p>
-<div class="table-container">
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125144250.png" alt="" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125144513.png" alt="" /></p>
+<h3 id="思考两种上传方式的区别"><a class="markdownIt-Anchor" href="#思考两种上传方式的区别"></a> 思考：两种上传方式的区别？</h3>
+<p>我想你现在肯定是看的云里雾里了，确实这里不太好理解尤其对于github小白来说，你现在可以思考这些，随便学一种方法会用即可，反正最终学习的目的就是实用。当然如果你要想弄清楚两种方法需要熟练实用上传的方法再次反复温习就可以很容易辨析两种方法的区别了，这里我总结了以下两种方法的区别：</p>
+<h4 id="角度一指令输入方面"><a class="markdownIt-Anchor" href="#角度一指令输入方面"></a> 角度一：指令输入方面</h4>
+<p>方法一的提交步骤</p>
 <table>
 <thead>
 <tr>
@@ -268,9 +284,7 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
 <p>方法二的提交步骤</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -297,13 +311,15 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="角度二：关联方式"><a href="#角度二：关联方式" class="headerlink" title="角度二：关联方式"></a>角度二：关联方式</h4><p>方法一是将本地仓库关联到远程仓库从而实现了文件上传，所以需要将本地的分支和远程仓库的分支关联，同时上传的是最新的版本和注释信息，但是之前的版本即gitlog也会上传到远程仓库，所以一次提交后远程仓库的分支可能就已经存储了许多版本了。而方法二是先将新建的远程仓库克隆到本地从而实现创建了一个已经和远程仓库分支关联的新的空本地仓库，修改文件add和commit后加入到本地仓库在上传提交，即第一次提交就是只提交一次版本节点。两种方法都可以在SSHKey的帮助下免密提交。</p>
-<h2 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h2><p>实际上方法二就是在克隆仓库的基础上完成的，即克隆就是获得一个仓库的地址，然后</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone 仓库地址</span><br></pre></td></tr></table></figure>
+<h4 id="角度二关联方式"><a class="markdownIt-Anchor" href="#角度二关联方式"></a> 角度二：关联方式</h4>
+<p>方法一是将本地仓库关联到远程仓库从而实现了文件上传，所以需要将本地的分支和远程仓库的分支关联，同时上传的是最新的版本和注释信息，但是之前的版本即gitlog也会上传到远程仓库，所以一次提交后远程仓库的分支可能就已经存储了许多版本了。而方法二是先将新建的远程仓库克隆到本地从而实现创建了一个已经和远程仓库分支关联的新的空本地仓库，修改文件add和commit后加入到本地仓库在上传提交，即第一次提交就是只提交一次版本节点。两种方法都可以在SSHKey的帮助下免密提交。</p>
+<h2 id="克隆远程仓库"><a class="markdownIt-Anchor" href="#克隆远程仓库"></a> 克隆远程仓库</h2>
+<p>实际上方法二就是在克隆仓库的基础上完成的，即克隆就是获得一个仓库的地址，然后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git clone 仓库地址<br></code></pre></td></tr></table></figure>
 <p>就可以将自己（当然别人的远程仓库也可以）克隆到自己的本地设备上。当然如果是克隆的别人的远程仓库的文件，那么你修改后是不能将修改文件提交到别人的远程仓库的，只能上传到自己的远程仓库。那么这个仓库就会显示为你在别人的仓库基础上修改后上传到了自己的远程仓库即你们两个都是这个仓库的贡献者，这也就就是我们常在github上看到的多人贡献过的仓库，如下图：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125150628.png" alt=""></p>
-<h2 id="结尾语"><a href="#结尾语" class="headerlink" title="结尾语"></a>结尾语</h2><p>那么本次我们就学习到这里，我们要重点掌握SSHkey的创建和两种方式的提交（尤其是免密）的方法。希望你能有所收获😁~</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210125150628.png" alt="" /></p>
+<h2 id="结尾语"><a class="markdownIt-Anchor" href="#结尾语"></a> 结尾语</h2>
+<p>那么本次我们就学习到这里，我们要重点掌握SSHkey的创建和两种方式的提交（尤其是免密）的方法。希望你能有所收获😁~</p>
 
   
 
@@ -461,7 +477,7 @@ var _hmt = _hmt || [];
 
   // required plugins (only load if needs)
   stellar.plugins = {
-    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
   };
 
   if ('local_search') {
@@ -479,19 +495,19 @@ var _hmt = _hmt || [];
   stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
   // optional plugins
   if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
   }
   if ('true' == 'true') {
     stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
   }
   if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
   }
   if ('true' == 'true') {
-    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
@@ -517,7 +533,7 @@ var _hmt = _hmt || [];
       if (!path) {
         path = decodeURI(window.location.pathname);
       }
-      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
+      Waline.init(Object.assign({"js":"https://unpkg.com/@waline/client@2.14.1/dist/waline.js","css":"https://unpkg.com/@waline/client@2.14.1/dist/waline.css","serverURL":"https://waline.coolchong.cn","commentCount":true,"pageview":false,"emoji":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/","https://unpkg.com/@waline/emojis@1.1.0/tw-emoji","https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/alus","https://unpkg.com/@waline/emojis@1.1.0/bmoji"],"locale":{"reactionTitle":null,"placeholder":"任何想法畅所欲言，记得填写邮箱方便及时收到回复哦~"},"reaction":["https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatheart.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatattentionreverse.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatrainbow.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/ablobcatwave.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatalt.png","https://fastly.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/blobcatscared.png"]}, {
         el: '#waline_container',
         path: path,
       }));
