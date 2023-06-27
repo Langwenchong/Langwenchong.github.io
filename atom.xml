@@ -3,11 +3,11 @@
   <title>雨中•学圃堂</title>
   
   <subtitle>纵有疾风起，人生不言弃👊 | 别再学习啦，人家都困了🥱</subtitle>
-  <link href="https://scholar.coolchong.cn/atom.xml" rel="self"/>
+  <link href="https://coolchong.cn/atom.xml" rel="self"/>
   
-  <link href="https://scholar.coolchong.cn/"/>
+  <link href="https://coolchong.cn/"/>
   <updated>2023-06-27T21:26:36.999Z</updated>
-  <id>https://scholar.coolchong.cn/</id>
+  <id>https://coolchong.cn/</id>
   
   <author>
     <name>Wenchong Lang</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>致亲爱学弟的一封信</title>
-    <link href="https://scholar.coolchong.cn/2023/06/28/letter2fresh/"/>
-    <id>https://scholar.coolchong.cn/2023/06/28/letter2fresh/</id>
+    <link href="https://coolchong.cn/2023/06/28/letter2fresh/"/>
+    <id>https://coolchong.cn/2023/06/28/letter2fresh/</id>
     <published>2023-06-27T18:04:54.000Z</published>
     <updated>2023-06-27T21:26:36.999Z</updated>
     
@@ -30,17 +30,17 @@
     
     
     
-    <category term="毕业" scheme="https://scholar.coolchong.cn/categories/%E6%AF%95%E4%B8%9A/"/>
+    <category term="毕业" scheme="https://coolchong.cn/categories/%E6%AF%95%E4%B8%9A/"/>
     
     
-    <category term="毕业" scheme="https://scholar.coolchong.cn/tags/%E6%AF%95%E4%B8%9A/"/>
+    <category term="毕业" scheme="https://coolchong.cn/tags/%E6%AF%95%E4%B8%9A/"/>
     
   </entry>
   
   <entry>
     <title>浅谈用一维数组dp解决0/1背包问题</title>
-    <link href="https://scholar.coolchong.cn/2022/02/24/dp01bag/"/>
-    <id>https://scholar.coolchong.cn/2022/02/24/dp01bag/</id>
+    <link href="https://coolchong.cn/2022/02/24/dp01bag/"/>
+    <id>https://coolchong.cn/2022/02/24/dp01bag/</id>
     <published>2022-02-24T06:41:56.000Z</published>
     <updated>2023-01-29T04:22:01.705Z</updated>
     
@@ -51,19 +51,19 @@
     
     
     
-    <category term="算法总结" scheme="https://scholar.coolchong.cn/categories/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"/>
+    <category term="算法总结" scheme="https://coolchong.cn/categories/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"/>
     
     
-    <category term="dp" scheme="https://scholar.coolchong.cn/tags/dp/"/>
+    <category term="dp" scheme="https://coolchong.cn/tags/dp/"/>
     
-    <category term="背包问题" scheme="https://scholar.coolchong.cn/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
+    <category term="背包问题" scheme="https://coolchong.cn/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title>前后端跨域请求解决策略</title>
-    <link href="https://scholar.coolchong.cn/2022/01/11/cross-origin/"/>
-    <id>https://scholar.coolchong.cn/2022/01/11/cross-origin/</id>
+    <link href="https://coolchong.cn/2022/01/11/cross-origin/"/>
+    <id>https://coolchong.cn/2022/01/11/cross-origin/</id>
     <published>2022-01-11T06:33:09.000Z</published>
     <updated>2023-01-29T03:02:41.727Z</updated>
     
@@ -74,19 +74,19 @@
     
     
     
-    <category term="开发技能" scheme="https://scholar.coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
+    <category term="开发技能" scheme="https://coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
     
     
-    <category term="跨域" scheme="https://scholar.coolchong.cn/tags/%E8%B7%A8%E5%9F%9F/"/>
+    <category term="跨域" scheme="https://coolchong.cn/tags/%E8%B7%A8%E5%9F%9F/"/>
     
-    <category term="springboot" scheme="https://scholar.coolchong.cn/tags/springboot/"/>
+    <category term="springboot" scheme="https://coolchong.cn/tags/springboot/"/>
     
   </entry>
   
   <entry>
     <title>vuex从入门到实战</title>
-    <link href="https://scholar.coolchong.cn/2021/12/12/vuex/"/>
-    <id>https://scholar.coolchong.cn/2021/12/12/vuex/</id>
+    <link href="https://coolchong.cn/2021/12/12/vuex/"/>
+    <id>https://coolchong.cn/2021/12/12/vuex/</id>
     <published>2021-12-12T06:26:45.000Z</published>
     <updated>2023-01-29T10:27:41.746Z</updated>
     
@@ -97,19 +97,19 @@
     
     
     
-    <category term="开发技能" scheme="https://scholar.coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
+    <category term="开发技能" scheme="https://coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
     
     
-    <category term="vue" scheme="https://scholar.coolchong.cn/tags/vue/"/>
+    <category term="vue" scheme="https://coolchong.cn/tags/vue/"/>
     
-    <category term="vuex" scheme="https://scholar.coolchong.cn/tags/vuex/"/>
+    <category term="vuex" scheme="https://coolchong.cn/tags/vuex/"/>
     
   </entry>
   
   <entry>
     <title>浅谈vue项目部署到nginx</title>
-    <link href="https://scholar.coolchong.cn/2021/10/18/nginx-web/"/>
-    <id>https://scholar.coolchong.cn/2021/10/18/nginx-web/</id>
+    <link href="https://coolchong.cn/2021/10/18/nginx-web/"/>
+    <id>https://coolchong.cn/2021/10/18/nginx-web/</id>
     <published>2021-10-18T10:32:42.000Z</published>
     <updated>2023-01-28T11:56:03.182Z</updated>
     
@@ -120,19 +120,19 @@
     
     
     
-    <category term="开发技能" scheme="https://scholar.coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
+    <category term="开发技能" scheme="https://coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
     
     
-    <category term="nginx" scheme="https://scholar.coolchong.cn/tags/nginx/"/>
+    <category term="nginx" scheme="https://coolchong.cn/tags/nginx/"/>
     
-    <category term="vue" scheme="https://scholar.coolchong.cn/tags/vue/"/>
+    <category term="vue" scheme="https://coolchong.cn/tags/vue/"/>
     
   </entry>
   
   <entry>
     <title>浅谈《SpringBoot》数据请求响应</title>
-    <link href="https://scholar.coolchong.cn/2021/08/30/request/"/>
-    <id>https://scholar.coolchong.cn/2021/08/30/request/</id>
+    <link href="https://coolchong.cn/2021/08/30/request/"/>
+    <id>https://coolchong.cn/2021/08/30/request/</id>
     <published>2021-08-30T01:49:30.000Z</published>
     <updated>2023-01-29T04:20:06.178Z</updated>
     
@@ -143,19 +143,19 @@
     
     
     
-    <category term="开发技能" scheme="https://scholar.coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
+    <category term="开发技能" scheme="https://coolchong.cn/categories/%E5%BC%80%E5%8F%91%E6%8A%80%E8%83%BD/"/>
     
     
-    <category term="java" scheme="https://scholar.coolchong.cn/tags/java/"/>
+    <category term="java" scheme="https://coolchong.cn/tags/java/"/>
     
-    <category term="http request" scheme="https://scholar.coolchong.cn/tags/http-request/"/>
+    <category term="http request" scheme="https://coolchong.cn/tags/http-request/"/>
     
   </entry>
   
   <entry>
     <title>序言--博客再起航寄语</title>
-    <link href="https://scholar.coolchong.cn/2020/10/21/hello-world/"/>
-    <id>https://scholar.coolchong.cn/2020/10/21/hello-world/</id>
+    <link href="https://coolchong.cn/2020/10/21/hello-world/"/>
+    <id>https://coolchong.cn/2020/10/21/hello-world/</id>
     <published>2020-10-20T16:00:00.000Z</published>
     <updated>2023-01-29T04:11:29.116Z</updated>
     
@@ -166,10 +166,10 @@
     
     
     
-    <category term="简介" scheme="https://scholar.coolchong.cn/categories/%E7%AE%80%E4%BB%8B/"/>
+    <category term="简介" scheme="https://coolchong.cn/categories/%E7%AE%80%E4%BB%8B/"/>
     
     
-    <category term="简介" scheme="https://scholar.coolchong.cn/tags/%E7%AE%80%E4%BB%8B/"/>
+    <category term="简介" scheme="https://coolchong.cn/tags/%E7%AE%80%E4%BB%8B/"/>
     
   </entry>
   

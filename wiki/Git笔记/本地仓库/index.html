@@ -35,7 +35,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="git安装与注册  linux安装 我使用的是ubuntu(linux内核)，所以这里我首先给出linux的安装方法，输入以下指令（需要密码）： 1sudo apt-get install git 如果是老一点的设备或者输入上条指令报错那么请尝试输入 1sudo apt-get install git-core  win安装 去git官网下载安装文件然后全部默认安装即可。然后使用git-bash">
 <meta property="og:type" content="website">
 <meta property="og:title" content="本地仓库">
-<meta property="og:url" content="https://scholar.coolchong.cn/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html">
+<meta property="og:url" content="https://coolchong.cn/wiki/Git%E7%AC%94%E8%AE%B0/%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
 <meta property="og:description" content="git安装与注册  linux安装 我使用的是ubuntu(linux内核)，所以这里我首先给出linux的安装方法，输入以下指令（需要密码）： 1sudo apt-get install git 如果是老一点的设备或者输入上条指令报错那么请尝试输入 1sudo apt-get install git-core  win安装 去git官网下载安装文件然后全部默认安装即可。然后使用git-bash">
 <meta property="og:locale" content="zh_CN">
@@ -176,7 +176,7 @@ var _hmt = _hmt || [];
 <p>这个是我的步骤仅供参考，当然这个不会有泄密风险，他只是一个自报家门的步骤方便用来记录的，后面真正的提交需要相对应的密码验证才可以提交。</p>
 <h2 id="版本库创建"><a class="markdownIt-Anchor" href="#版本库创建"></a> 版本库创建</h2>
 <h3 id="创建新文件"><a class="markdownIt-Anchor" href="#创建新文件"></a> 创建新文件</h3>
-<p>我们按照廖雪峰老师的教学步骤来进行，你可以参考我的过程截图来确认自己是否正在正确进行。我们先创建gitlearn然后输入git init初始化这个仓库，至此这个本地的库就建好了，实际上就是多了一个.git文件并且一般是隐藏的。我们在做<a target="_blank" rel="noopener" href="https://coolchong.cn/tags/nemu/">nemu</a>时也知道.git文件中有一个叫做git log的功能可以实现记录我们的每一次改动从而做到版本回溯实际上就是在.git中实现的。现在我们检验一下.git文件是否存在。</p>
+<p>我们按照廖雪峰老师的教学步骤来进行，你可以参考我的过程截图来确认自己是否正在正确进行。我们先创建gitlearn然后输入git init初始化这个仓库，至此这个本地的库就建好了，实际上就是多了一个.git文件并且一般是隐藏的。我们在做<a href="https://coolchong.cn/tags/nemu/">nemu</a>时也知道.git文件中有一个叫做git log的功能可以实现记录我们的每一次改动从而做到版本回溯实际上就是在.git中实现的。现在我们检验一下.git文件是否存在。</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210124132504.png" alt="" /></p>
 <p>我们发现果然如廖大大所说，.git是隐藏文件，只有在ls加上-ah才能看到并且同时还有两个文件叫做.和…实际上我们大概也能理解这个是什么，他们是两个隐藏的特殊文件用来表示同级和父级文件的。</p>
 <blockquote>
@@ -323,7 +323,7 @@ var _hmt = _hmt || [];
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
   <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
     <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
   </a>

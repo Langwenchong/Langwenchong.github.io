@@ -35,7 +35,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="位单元 上一讲我们学习了存储器阵列，而存储器阵列是由位单元阵列组成的，每一个位单元只存储1位数据，每一个位单元与一个字线（wordline）和一个位线（bitline)相连，如下图：  读写数据主要是通过位线来完成的：  那么现在我们再来从整体上观察一下存储器阵列的结构：  可以得到以下几点规律：  字线与使能端类似 用于控制阵列中一行数据的读&#x2F;写 对应着唯一的地址 同一时刻至多有一个字线位高电">
 <meta property="og:type" content="website">
 <meta property="og:title" content="存储器建模">
-<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E5%BB%BA%E6%A8%A1/index.html">
+<meta property="og:url" content="https://coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%AD%98%E5%82%A8%E5%99%A8%E5%BB%BA%E6%A8%A1/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
 <meta property="og:description" content="位单元 上一讲我们学习了存储器阵列，而存储器阵列是由位单元阵列组成的，每一个位单元只存储1位数据，每一个位单元与一个字线（wordline）和一个位线（bitline)相连，如下图：  读写数据主要是通过位线来完成的：  那么现在我们再来从整体上观察一下存储器阵列的结构：  可以得到以下几点规律：  字线与使能端类似 用于控制阵列中一行数据的读&#x2F;写 对应着唯一的地址 同一时刻至多有一个字线位高电">
 <meta property="og:locale" content="zh_CN">
@@ -180,7 +180,7 @@ var _hmt = _hmt || [];
 </ol>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>我们要注意到由于每次只有一个字线处于高电平，因此虽然位线控制着一列位单元，但是实际上每次每一个位线上也只有一个位单元处于<code>读/写</code>状态，但是同一时刻，可能会有多个处于同一个字线的位单元处于<code>读/写</code>状态。</p></div></div> 
 <h3 id="存储器的类型"><a class="markdownIt-Anchor" href="#存储器的类型"></a> 存储器的类型</h3>
-<p>这里实际上我们在<a target="_blank" rel="noopener" href="https://coolchong.cn/2021/02/19/comsys-note7/">《计算机组成原理》</a>中介绍过，但是当时并没有从存储器阵列的角度去分析。这里我们会以存储器阵列的角度去介绍，首先我们回忆一下存储器的类型。</p>
+<p>这里实际上我们在<a href="https://coolchong.cn/2021/02/19/comsys-note7/">《计算机组成原理》</a>中介绍过，但是当时并没有从存储器阵列的角度去分析。这里我们会以存储器阵列的角度去介绍，首先我们回忆一下存储器的类型。</p>
 <ul>
 <li>随机访问存储器（RAM）：易失的
 <ul>
@@ -389,7 +389,7 @@ t_{cd}=25ps,t_{hold}-t_{ccq}=70-30=40ps
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
   <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
     <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
   </a>

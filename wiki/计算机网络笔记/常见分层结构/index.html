@@ -35,7 +35,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="title: 计算机网络笔记–Part3 comments: false top: false date: 2021-03-27 19:35:05 tags: [408,计算机网络] categories: - [个人笔记,计算机网络]  这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战">
 <meta property="og:type" content="website">
 <meta property="og:title" content="常见分层结构">
-<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:url" content="https://coolchong.cn/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
 <meta property="og:description" content="title: 计算机网络笔记–Part3 comments: false top: false date: 2021-03-27 19:35:05 tags: [408,计算机网络] categories: - [个人笔记,计算机网络]  这系列记录翀翀🤠学习计算机网络时的核心笔记以及自己的思考，作为408组成学科之一，一定要认真学习。赠一言与君共勉：一个人的一生总会遇到这样的时刻，一个人的战">
 <meta property="og:locale" content="zh_CN">
@@ -235,7 +235,7 @@ categories:<br />
 <p>数据链路层的传输单位是帧，任务是将网络层传来的IP数据报组装成帧。数据链路层的功能可以概括为成帧、差错控制、流量控制和传输管理等。</p>
 <p>由于外界噪声的干扰，原始的物理连接在传输比特流时可能发生错误：左边节点想向右边节点传输数字0，于是发送了信号A，但是由于传输过程中受到了干扰，信号A变成了限号B，而信号B又刚好代表1，右边节点接收到信号B时，就会误以为左边节点传送了数字1，从而发生差错。这种差错我们称之为信号翻转，即0变成了1,1变成了0，其实我们在学习了数字逻辑以后就知道导致这种现象的原因是电平电压受噪音干扰发生了波动导致的。此时我们需要通过适当的办法避免这种错误的干扰，于是两个节点之间如果规定了数据链路层协议，那么就可以检测出这些数据翻转的差错，然后把收到的错误信息丢弃，这就是差错控制功能。因此差错控制功能是通过数据链路层完成的。</p>
 <p>同时，在两个相邻接点之间传送数据时，由于两个节点的性能不同，可能节点A发送数据速率会快于节点B接受数据的速率，如果不加以控制，那么节点B就会丢弃很多来不及接受的正确数据，造成传输线路效率的下降。流量控制可以协调两个节点的速率，使节点A发送数据的速率刚好是节点B可以接受到的速率。总之就是A节点发送数据的速率要小于等于节点B接受数据的速率。</p>
-<p>广播式网络在数据链路层还要处理新的问题（快速跳转-&gt;<a target="_blank" rel="noopener" href="https://coolchong.cn/2021/03/03/comnet-note1/">《广播式网络》</a>），即如何控制对共享信道的访问，数据链路层的一个特殊的子层–介质访问子层，就是专门处理这个问题的以保证公共信道不会出现信息传输冲突。</p>
+<p>广播式网络在数据链路层还要处理新的问题（快速跳转-&gt;<a href="https://coolchong.cn/2021/03/03/comnet-note1/">《广播式网络》</a>），即如何控制对共享信道的访问，数据链路层的一个特殊的子层–介质访问子层，就是专门处理这个问题的以保证公共信道不会出现信息传输冲突。</p>
 <p>典型的数据链路层协议有SDLC,HDLC,PPP,STP和帧中继等。</p>
 <p>下面我们总结一下数据链路层的功能：</p>
 <ul>
@@ -424,7 +424,7 @@ categories:<br />
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
   <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
     <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
   </a>

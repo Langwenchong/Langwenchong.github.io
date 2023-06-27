@@ -35,7 +35,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="硬件描述语言的起源 有名为HDL，是一种和C++,JAVA不同的硬件描述语言。他产生的原因是因为我们发现对于复杂逻辑的元件设计，使用卡诺图和组合逻辑电路很难实现，即使实现也会有许多细节上的纰漏，比如毛刺，延迟过大等问题，所以此时我们就需要学习硬件描述语言了。硬件描述语言和电子设计自动化工具搭配使用，可以轻松优化电路得到我们最满意的电路设计图。 我们首先要知道，HDL是具有特殊结构能够对硬件逻辑电">
 <meta property="og:type" content="website">
 <meta property="og:title" content="硬件描述语言">
-<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/index.html">
+<meta property="og:url" content="https://coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
 <meta property="og:description" content="硬件描述语言的起源 有名为HDL，是一种和C++,JAVA不同的硬件描述语言。他产生的原因是因为我们发现对于复杂逻辑的元件设计，使用卡诺图和组合逻辑电路很难实现，即使实现也会有许多细节上的纰漏，比如毛刺，延迟过大等问题，所以此时我们就需要学习硬件描述语言了。硬件描述语言和电子设计自动化工具搭配使用，可以轻松优化电路得到我们最满意的电路设计图。 我们首先要知道，HDL是具有特殊结构能够对硬件逻辑电">
 <meta property="og:locale" content="zh_CN">
@@ -276,7 +276,7 @@ var _hmt = _hmt || [];
 <p>其中除了数值，其他项都可以缺省。&lt;+/-&gt;表示正负，&lt;位宽&gt;用10进制数来描述常量对应的二进制数的宽度，&lt;进制&gt;定义了整数型常量的进制格式，可以是二进制（用b或者B表示）、八进制表示（用o或O表示）、十进制数（用d或D表示)，十六进制（用h或者H表示），数值表示具体的取值，EDA工具按照无符号数进行处理，因此如果是二进制格式，可以是0,1,x和z,如果是十六进制格式，那么A-F不区分大小写。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>如果常量带有负号，那么EDA工具按照有符号数的补码进行处理。</p></div></div> 
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210325155611.png" alt="" /></p>
-<p>上图给出了部分常量的表示方法，一定要注意位宽一定是二进制表示的位数，而负数常量是要按照有符号数补码的格式在EDA中表示。求补码的方法见<a target="_blank" rel="noopener" href="https://coolchong.cn/2021/02/01/comsys-note3/">《机组原理》</a></p>
+<p>上图给出了部分常量的表示方法，一定要注意位宽一定是二进制表示的位数，而负数常量是要按照有符号数补码的格式在EDA中表示。求补码的方法见<a href="https://coolchong.cn/2021/02/01/comsys-note3/">《机组原理》</a></p>
 <p>为了增加数字的可读性，可以在数字之间增加下划线（类似于银行显示余额时使用的逗号），比如8’b1001_0011就是表示的位宽为8位的二进制常量数10010011。</p>
 <p>并且如果没有给出位宽，那么该常量被指定为当前表达式的位数当位宽比数值的实际二进制位数少时，高位部分被舍去即截取时永远从低位向高位截取，当位宽比数值的实际二进制位数多时，那么高位补0。比如assign w=b1101(没有声明位宽)，那么如果w是2位，w=2’b01即只要低2位，当w时6位，那么w=6’b001101即高位补0，只有当w=4时，w=4’b1101。</p>
 <div class="tag-plugin note" color="yellow"><div class="body"><p>注意低位截断时数值会发生变化可能不等于右侧表达式的值了，但是当位宽大于等于右侧表达式的长度时，那么数值并不会发生变化。</p></div></div> 
@@ -365,7 +365,7 @@ var _hmt = _hmt || [];
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
   <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
     <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
   </a>

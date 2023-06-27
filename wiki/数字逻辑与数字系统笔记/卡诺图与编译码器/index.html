@@ -35,7 +35,7 @@ var _hmt = _hmt || [];
     <meta name="description" content="使用卡诺图化简表达式 我们接下来回忆总结一下卡诺图化简逻辑函数的过程，首先有以下几个概念：  卡诺图上的每一个圈都代表一个蕴含项 主蕴含项：扩展到最大的蕴含项 奇异“1单元”：卡诺图中仅能被单一主蕴含项覆盖的方格 质主蕴含项：包含着一个或者多个奇异”1“单元的主蕴含项  最终我们是要将逻辑表达式化简为最简与或式，最简与或式就要求化简时：  项数最少，意味着卡诺图中圈数最少 每一项中的变量数最少，">
 <meta property="og:type" content="website">
 <meta property="og:title" content="卡诺图与编译码器">
-<meta property="og:url" content="https://scholar.coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E4%B8%8E%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8/index.html">
+<meta property="og:url" content="https://coolchong.cn/wiki/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E4%B8%8E%E6%95%B0%E5%AD%97%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/%E5%8D%A1%E8%AF%BA%E5%9B%BE%E4%B8%8E%E7%BC%96%E8%AF%91%E7%A0%81%E5%99%A8/index.html">
 <meta property="og:site_name" content="雨中•学圃堂">
 <meta property="og:description" content="使用卡诺图化简表达式 我们接下来回忆总结一下卡诺图化简逻辑函数的过程，首先有以下几个概念：  卡诺图上的每一个圈都代表一个蕴含项 主蕴含项：扩展到最大的蕴含项 奇异“1单元”：卡诺图中仅能被单一主蕴含项覆盖的方格 质主蕴含项：包含着一个或者多个奇异”1“单元的主蕴含项  最终我们是要将逻辑表达式化简为最简与或式，最简与或式就要求化简时：  项数最少，意味着卡诺图中圈数最少 每一项中的变量数最少，">
 <meta property="og:locale" content="zh_CN">
@@ -248,7 +248,7 @@ var _hmt = _hmt || [];
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210320142322.png" alt="" /></p>
 <p>当然上面仅是一个4线-2线编码器的电路图，更加复杂的电路图我们需要按照上面的步骤重新推导。</p>
 <h4 id="译码器"><a class="markdownIt-Anchor" href="#译码器"></a> 译码器</h4>
-<p>译码器我们并不陌生，在<a target="_blank" rel="noopener" href="https://coolchong.cn/2021/02/21/comsys-note8/">《机组原理》</a>中我们学习了译码器是用来解析生成片选信号用的，那么译码器到底是如何通过电路实现的呢？实际上译码就是编码的逆过程，所以对于4线-2线的编码器生成的指令，我们需要使用2线-4线译码器来进行译码。并且由于是逆过程，编码器是接收的有效输入信号然后输出有效输入信号的编号，那么译码器就是接受有效输入信号的编号，然后相应的将对应编号的输出端输出信号1。如下：</p>
+<p>译码器我们并不陌生，在<a href="https://coolchong.cn/2021/02/21/comsys-note8/">《机组原理》</a>中我们学习了译码器是用来解析生成片选信号用的，那么译码器到底是如何通过电路实现的呢？实际上译码就是编码的逆过程，所以对于4线-2线的编码器生成的指令，我们需要使用2线-4线译码器来进行译码。并且由于是逆过程，编码器是接收的有效输入信号然后输出有效输入信号的编号，那么译码器就是接受有效输入信号的编号，然后相应的将对应编号的输出端输出信号1。如下：</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210320142921.png" alt="" /></p>
 <p>当接收到10编号，那么就是Y2应该输出有效信号1。那么我们同样可以使用卡诺图进行化简写出表达式然后画出译码器的电路：</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://langwenchong.gitee.io/figure-bed/20210320143023.png" alt="" /></p>
@@ -366,7 +366,7 @@ var _hmt = _hmt || [];
 
 
       
-<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a target="_blank" rel="noopener" href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
+<footer class="page-footer reveal fs12"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs14">博客</span><a href="/">随想录</a><a href="/intro">言堂序</a><a href="/archives">归档册</a></div><div class="sitemap-group"><span class="fs14">笔记</span><a href="/wiki/tags/%E7%AC%AC%E4%B9%9D%E8%89%BA%E6%9C%AF">第九艺术</a><a href="/wiki/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算基础</a><a href="/wiki/tags/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80">语言基础</a><a href="/wiki/tags/%E8%BF%9B%E9%98%B6%E6%8A%80%E8%83%BD">进阶技能</a></div><div class="sitemap-group"><span class="fs14">便笺</span><a href="/notes/%E7%A7%91%E7%A0%94%E5%AD%A6%E4%B9%A0">科研学习</a><a href="/notes/%E5%BB%BA%E7%AB%99%E5%BF%85%E5%A4%87">建站必备</a><a href="/notes/%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7">建站必备</a></div><div class="sitemap-group"><span class="fs14">更多</span><a href="https://coolchong.cn">个人主页</a><a target="_blank" rel="noopener" href="https://blog.coolchong.cn/friends.html">友情链接</a></div></div><div class="text"><div class="github-badge">
   <a style="color: #fff"  href="https://coolchong.cn/" target="_blank" title="由 Langwenchong 搭建运营">
     <span class="badge-subject">Built</span><span class="badge-value bg-blue">雨中 @2022-2023</span>
   </a>
